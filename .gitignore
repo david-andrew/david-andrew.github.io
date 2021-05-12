@@ -9,7 +9,8 @@
 /coverage
 
 # production
-# /build #used by github pages
+/build
+# /docs #used by github pages
 
 # misc
 .DS_Store
