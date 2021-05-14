@@ -1,27 +1,28 @@
 {
   "files": {
-    "main.css": "/website/static/css/main.6dea0f05.chunk.css",
-    "main.js": "/website/static/js/main.ed961878.chunk.js",
-    "main.js.map": "/website/static/js/main.ed961878.chunk.js.map",
-    "runtime-main.js": "/website/static/js/runtime-main.7be37fa5.js",
-    "runtime-main.js.map": "/website/static/js/runtime-main.7be37fa5.js.map",
+    "main.css": "/website/static/css/main.b24b4136.chunk.css",
+    "main.js": "/website/static/js/main.014d4b41.chunk.js",
+    "main.js.map": "/website/static/js/main.014d4b41.chunk.js.map",
+    "runtime-main.js": "/website/static/js/runtime-main.2ffe4605.js",
+    "runtime-main.js.map": "/website/static/js/runtime-main.2ffe4605.js.map",
     "static/css/2.cbfeca77.chunk.css": "/website/static/css/2.cbfeca77.chunk.css",
-    "static/js/2.1e7429af.chunk.js": "/website/static/js/2.1e7429af.chunk.js",
-    "static/js/2.1e7429af.chunk.js.map": "/website/static/js/2.1e7429af.chunk.js.map",
-    "static/js/3.f7d350be.chunk.js": "/website/static/js/3.f7d350be.chunk.js",
-    "static/js/3.f7d350be.chunk.js.map": "/website/static/js/3.f7d350be.chunk.js.map",
+    "static/js/2.cc6dbbea.chunk.js": "/website/static/js/2.cc6dbbea.chunk.js",
+    "static/js/2.cc6dbbea.chunk.js.map": "/website/static/js/2.cc6dbbea.chunk.js.map",
+    "static/js/3.1ade836f.chunk.js": "/website/static/js/3.1ade836f.chunk.js",
+    "static/js/3.1ade836f.chunk.js.map": "/website/static/js/3.1ade836f.chunk.js.map",
     "index.html": "/website/index.html",
     "static/css/2.cbfeca77.chunk.css.map": "/website/static/css/2.cbfeca77.chunk.css.map",
-    "static/css/main.6dea0f05.chunk.css.map": "/website/static/css/main.6dea0f05.chunk.css.map",
-    "static/js/2.1e7429af.chunk.js.LICENSE.txt": "/website/static/js/2.1e7429af.chunk.js.LICENSE.txt",
+    "static/css/main.b24b4136.chunk.css.map": "/website/static/css/main.b24b4136.chunk.css.map",
+    "static/js/2.cc6dbbea.chunk.js.LICENSE.txt": "/website/static/js/2.cc6dbbea.chunk.js.LICENSE.txt",
+    "static/media/quadon.css": "/website/static/media/Quadon-UltraBoldItalic.ecd2de73.woff",
     "static/media/semantic.less": "/website/static/media/outline-icons.ddae9b1b.woff",
     "static/media/profile.2f44e726.jpg": "/website/static/media/profile.2f44e726.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.7be37fa5.js",
+    "static/js/runtime-main.2ffe4605.js",
     "static/css/2.cbfeca77.chunk.css",
-    "static/js/2.1e7429af.chunk.js",
-    "static/css/main.6dea0f05.chunk.css",
-    "static/js/main.ed961878.chunk.js"
+    "static/js/2.cc6dbbea.chunk.js",
+    "static/css/main.b24b4136.chunk.css",
+    "static/js/main.014d4b41.chunk.js"
   ]
 }
