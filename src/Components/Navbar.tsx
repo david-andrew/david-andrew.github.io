@@ -19,7 +19,7 @@ const NavbarButton = ({ content, onClick, active }: NavbarButtonProps): JSX.Elem
                 textAlign: 'center',
                 fontFamily: 'quadon',
                 fontSize: '2vmin',
-                margin: '2%',
+                margin: '1%',
                 color: '#FFFFFF',
                 border: '0.08em solid #000000',
                 borderColor: 'transparent',
@@ -30,7 +30,7 @@ const NavbarButton = ({ content, onClick, active }: NavbarButtonProps): JSX.Elem
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
         >
-            <div style={{ padding: '0.8em' }}>{content}</div>
+            <div style={{ padding: '0.8em 1.2em 0.8em 1.2em' }}>{content}</div>
         </div>
     )
 }
