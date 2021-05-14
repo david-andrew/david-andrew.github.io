@@ -20,23 +20,25 @@ const App = (): JSX.Element => {
         >
             <Router basename="/website">
                 <Navbar />
-                <Switch>
-                    <Route exact path={['/', '/home']}>
-                        <Home />
-                    </Route>
-                    <Route path="/projects">
-                        <Projects />
-                    </Route>
-                    <Route path="/about">
-                        <About />
-                    </Route>
-                    <Route path="/misc">
-                        <Misc />
-                    </Route>
-                    <Route path="/contact">
-                        <Contact />
-                    </Route>
-                </Switch>
+                <div id="PageBody" style={{ width: '100vw', height: '100vh' }}>
+                    <Switch>
+                        <Route exact path={['/', '/home']}>
+                            <Home />
+                        </Route>
+                        <Route path="/projects">
+                            <Projects />
+                        </Route>
+                        <Route path="/about">
+                            <About />
+                        </Route>
+                        <Route path="/misc">
+                            <Misc />
+                        </Route>
+                        <Route path="/contact">
+                            <Contact />
+                        </Route>
+                    </Switch>
+                </div>
             </Router>
         </div>
     )
