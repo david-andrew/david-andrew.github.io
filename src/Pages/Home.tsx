@@ -17,10 +17,7 @@ export const Home = (): JSX.Element => {
             <div style={{ fontFamily: 'quadon', fontSize: '10vmin', textAlign: 'center' }}>
                 <p>David-Andrew Samson</p>
             </div>
-            <img
-                src={profile}
-                style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', width: '50vmin' }}
-            ></img>
+            <img src={profile} style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', width: '50vmin' }}></img>
             <div style={{ fontFamily: 'quadon', fontSize: '5vmin', textAlign: 'center' }}>
                 <p>AI/ML - Music - Game Dev</p>
             </div>
