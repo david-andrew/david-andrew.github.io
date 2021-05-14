@@ -27,8 +27,8 @@ const NavbarButton = ({ content, onClick, active }: NavbarButtonProps): JSX.Elem
                 ...(active ? { backgroundColor: '#002d72' } : {}),
             }}
             onClick={onClick}
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
+            onMouseEnter={(): void => setHover(true)}
+            onMouseLeave={(): void => setHover(false)}
         >
             <div style={{ padding: '0.8em 1.2em 0.8em 1.2em' }}>{content}</div>
         </div>
@@ -51,19 +51,11 @@ export const Navbar = (): JSX.Element => {
             }}
         >
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <NavbarButton
-                    content="Home"
-                    onClick={() => history.push('/home')}
-                    active={path === '/home' || path === '/'}
-                />
-                <NavbarButton
-                    content="Projects"
-                    onClick={() => history.push('/projects')}
-                    active={path === '/projects'}
-                />
-                <NavbarButton content="About" onClick={() => history.push('/about')} active={path === '/about'} />
-                <NavbarButton content="Misc" onClick={() => history.push('/misc')} active={path === '/misc'} />
-                <NavbarButton content="Contact" onClick={() => history.push('/contact')} active={path === '/contact'} />
+                <NavbarButton content="Home" onClick={(): void => history.push('/home')} active={path === '/home' || path === '/'} />
+                <NavbarButton content="Projects" onClick={(): void => history.push('/projects')} active={path === '/projects'} />
+                <NavbarButton content="About" onClick={(): void => history.push('/about')} active={path === '/about'} />
+                <NavbarButton content="Misc" onClick={(): void => history.push('/misc')} active={path === '/misc'} />
+                <NavbarButton content="Contact" onClick={(): void => history.push('/contact')} active={path === '/contact'} />
             </div>
         </div>
     )
