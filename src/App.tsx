@@ -18,7 +18,7 @@ const App = (): JSX.Element => {
                 // overflow: 'hidden',
             }}
         >
-            <Router basename="/website">
+            <Router>
                 <div id="PageNav" style={{ flexGrow: 0 }}>
                     <Navbar />
                 </div>
