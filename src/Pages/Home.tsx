@@ -1,10 +1,5 @@
-import React from 'react';
+import React from 'react'
 
-export const HomePage = (): JSX.Element => {
-
-    return (
-        <div>
-            Home Page
-        </div>
-    )
+export const Home = (): JSX.Element => {
+    return <div>Home Page</div>
 }
