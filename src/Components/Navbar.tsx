@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-// import { Button, ButtonProps } from 'semantic-ui-react'
 import { useHistory, useLocation } from 'react-router-dom'
 import '../fonts/quadon/quadon.css'
 
-//
+//props for each link/button in the navbar
 interface NavbarButtonProps {
     content: string
     active: boolean
