@@ -1,6 +1,9 @@
 import React from 'react'
 import profile from '../images/profile.jpg'
 import '../fonts/quadon/quadon.css'
+import '../fonts/arnhem/arnhem.css'
+import '../fonts/gentona/gentona.css'
+// import '../fonts/titling-gothic/titling-gothic.css'
 
 export const Home = (): JSX.Element => {
     return (
