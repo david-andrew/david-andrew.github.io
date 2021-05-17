@@ -5,33 +5,41 @@
 
 //imports for images used in the projects
 import logo from '../../images/logo.png'
+import logo_slim from '../../images/logo_slim.png'
+import escort_mission from '../../images/escort_mission_lamb.png'
+import dewy_dandelion from '../../images/dewy_dandelion.jpg'
 
 export interface ProjectContent {
     title: string
-    //githubUrl?: string
-    //lastUpdated?: string
-    imgSrc?: string
-    summary: string
+    github?: string //name of the github repo to pull timestamp from
+    lastUpdated?: string //raw timestamp string if not a github project
+    imgSrc?: string //image to display on summary card
+    summary: string //blurb for this card
+    internalLink?: string //link on the site to navigate to, e.g. /projects/dewy
+    externalLink?: string //external link to navigate to for this card
 }
 
 export const projects: ProjectContent[] = [
     {
-        title: 'Example Project',
-        imgSrc: logo,
+        title: 'Dewy Programming Language',
+        github: 'dewy',
+        imgSrc: dewy_dandelion,
+        internalLink: '/projects/dewy',
         summary: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ipsum risus, fermentum non tellus nec, ultricies sollicitudin turpis. Mauris eu tincidunt felis, sit amet gravida sapien. Nullam dapibus nec velit pellentesque dapibus. Duis in purus ornare, pharetra metus non, commodo risus. Nunc condimentum augue eget elementum efficitur. In et lorem a risus rutrum pretium. Fusce at fringilla libero, sed molestie diam. Mauris lobortis metus vel sollicitudin vulputate. Ut vel rutrum eros. Pellentesque molestie ante eu diam sollicitudin, in pellentesque dolor finibus. Donec mattis quis mi id posuere. Nam enim justo, venenatis quis diam sed, luctus tempus nisi. Cras viverra tellus justo, vel scelerisque ex eleifend quis. Etiam malesuada aliquet ultrices. Pellentesque luctus nibh vel posuere tempus.
         Praesent posuere fringilla rhoncus. Morbi viverra porta elit, tincidunt aliquet enim blandit a. Proin mollis leo consequat, consequat justo quis, vulputate metus. In ut dignissim nunc, eget efficitur eros. Integer sit amet viverra lectus. Aliquam erat volutpat. Donec egestas facilisis eros. In dictum est a enim congue malesuada suscipit commodo urna. Etiam condimentum eu ex vel ultricies. Curabitur pulvinar nisl sed diam semper porta. Sed mi quam, efficitur ut quam eu, aliquet tincidunt ipsum. Cras non diam dignissim, sollicitudin quam id, dignissim ligula.
         Phasellus quis ipsum consectetur, tincidunt quam quis, semper mauris. Donec nec dui nec eros facilisis porttitor. Ut mi eros, consectetur et ex sed, hendrerit consequat nibh. Vivamus eu odio vel lorem interdum mollis et at magna. Etiam iaculis nisl ex, et mattis turpis aliquet quis. Ut velit nibh, dignissim ultrices velit semper, egestas sollicitudin libero. Vestibulum commodo sodales enim a bibendum. Aliquam aliquet, dui bibendum suscipit sollicitudin, ipsum ligula scelerisque eros, ac efficitur odio ex sed sem. Proin quis quam nec enim efficitur porta. Aenean luctus posuere nisi id tempor. Pellentesque non hendrerit nibh. Proin efficitur suscipit neque. Suspendisse faucibus suscipit dolor in efficitur. Quisque vitae tempor enim. Nulla dolor nisi, finibus ac tortor a, euismod interdum eros.`,
     },
     {
-        title: 'Another Example',
-        imgSrc: logo,
-        summary: `Fusce dictum dolor varius orci aliquet posuere. Donec interdum dui condimentum elit posuere, eu iaculis metus tincidunt. Curabitur pulvinar vitae leo ut placerat. Suspendisse interdum sollicitudin magna, quis iaculis risus. Nunc dictum consequat lacus, quis fermentum sapien congue ut. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed sit amet porttitor neque. Donec sit amet euismod urna. Cras sit amet molestie est.
-        Praesent ultricies, enim sed tincidunt pretium, magna mi suscipit mi, in efficitur neque nunc a massa. Donec tempus pretium iaculis. Nulla eget auctor dolor, eget ultrices sapien. Suspendisse maximus felis vel velit vehicula ullamcorper. Donec sit amet bibendum nibh. Nunc eget luctus nisl. Nunc eleifend velit ipsum, eu facilisis diam vulputate ac. In facilisis magna non lorem sollicitudin, quis volutpat enim lobortis. In ornare diam et risus vestibulum, sit amet viverra nunc varius. Donec sollicitudin ligula ac ligula bibendum sagittis. Cras vehicula nisl elementum, dictum erat sollicitudin, maximus lacus. Nunc suscipit leo lobortis velit rutrum, at egestas lacus dignissim. Nunc sit amet dapibus odio, non facilisis mi. Ut in libero vitae quam convallis fringilla nec et tortor. Aliquam vel diam felis.
-        Phasellus mollis tellus vitae mi consequat semper. Sed congue dolor nec metus tincidunt mollis. Mauris odio odio, ultrices sed congue id, gravida quis arcu. Etiam scelerisque dui hendrerit pretium hendrerit. Praesent congue odio ac scelerisque tristique. Praesent nec porta ex, in bibendum nisl. Mauris consectetur diam et nisi fermentum rhoncus. Phasellus et ex ut eros placerat elementum ac in enim. Suspendisse eu quam efficitur, tincidunt metus tempor, lacinia dui. Quisque sollicitudin magna nec nibh vestibulum, in viverra libero faucibus. Morbi gravida massa id commodo dignissim. Mauris posuere ut ligula nec cursus. Nunc convallis urna non enim dapibus placerat. `,
+        title: 'Personal Website',
+        github: 'website',
+        imgSrc: logo_slim,
+        externalLink: 'https://github.com/david-andrew/website',
+        summary: `My personal website, written in react/typescript`,
     },
     {
-        title: 'Another Example 2',
-        imgSrc: logo,
+        title: 'Escort Mission 2020',
+        imgSrc: escort_mission,
+        lastUpdated: 'December 21 2012',
         summary: `Fusce dictum dolor varius orci aliquet posuere. Donec interdum dui condimentum elit posuere, eu iaculis metus tincidunt. Curabitur pulvinar vitae leo ut placerat. Suspendisse interdum sollicitudin magna, quis iaculis risus. Nunc dictum consequat lacus, quis fermentum sapien congue ut. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed sit amet porttitor neque. Donec sit amet euismod urna. Cras sit amet molestie est.
         Praesent ultricies, enim sed tincidunt pretium, magna mi suscipit mi, in efficitur neque nunc a massa. Donec tempus pretium iaculis. Nulla eget auctor dolor, eget ultrices sapien. Suspendisse maximus felis vel velit vehicula ullamcorper. Donec sit amet bibendum nibh. Nunc eget luctus nisl. Nunc eleifend velit ipsum, eu facilisis diam vulputate ac. In facilisis magna non lorem sollicitudin, quis volutpat enim lobortis. In ornare diam et risus vestibulum, sit amet viverra nunc varius. Donec sollicitudin ligula ac ligula bibendum sagittis. Cras vehicula nisl elementum, dictum erat sollicitudin, maximus lacus. Nunc suscipit leo lobortis velit rutrum, at egestas lacus dignissim. Nunc sit amet dapibus odio, non facilisis mi. Ut in libero vitae quam convallis fringilla nec et tortor. Aliquam vel diam felis.
         Phasellus mollis tellus vitae mi consequat semper. Sed congue dolor nec metus tincidunt mollis. Mauris odio odio, ultrices sed congue id, gravida quis arcu. Etiam scelerisque dui hendrerit pretium hendrerit. Praesent congue odio ac scelerisque tristique. Praesent nec porta ex, in bibendum nisl. Mauris consectetur diam et nisi fermentum rhoncus. Phasellus et ex ut eros placerat elementum ac in enim. Suspendisse eu quam efficitur, tincidunt metus tempor, lacinia dui. Quisque sollicitudin magna nec nibh vestibulum, in viverra libero faucibus. Morbi gravida massa id commodo dignissim. Mauris posuere ut ligula nec cursus. Nunc convallis urna non enim dapibus placerat.

@@ -1,12 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Navbar } from './Components/Navbar'
 import { About, Contact, Home, Misc, Projects } from './Pages'
-import { HashRouter as Router, Switch, Route, useHistory } from 'react-router-dom'
+import { HashRouter as Router, Switch, Route } from 'react-router-dom'
+import { DewySpeak } from './Pages/Projects/DewySpeak'
 
 const App = (): JSX.Element => {
-    //scale for high dpi displays
-    const scale = window.devicePixelRatio
-
     return (
         <div
             id="View"
@@ -20,8 +18,6 @@ const App = (): JSX.Element => {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                // fontSize: `${scale}vmin`, //normally 1vmin
-                // overflow: 'hidden',
             }}
         >
             <Router>
@@ -33,16 +29,19 @@ const App = (): JSX.Element => {
                         <Route exact path={['/', '/home']}>
                             <Home />
                         </Route>
-                        <Route path="/projects">
+                        <Route exact path="/projects">
                             <Projects />
                         </Route>
-                        <Route path="/about">
+                        <Route exact path="/projects/dewy">
+                            <DewySpeak />
+                        </Route>
+                        <Route exact path="/about">
                             <About />
                         </Route>
-                        <Route path="/misc">
+                        <Route exact path="/misc">
                             <Misc />
                         </Route>
-                        <Route path="/contact">
+                        <Route exact path="/contact">
                             <Contact />
                         </Route>
                     </Switch>
