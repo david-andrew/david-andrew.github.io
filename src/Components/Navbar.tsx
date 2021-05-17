@@ -18,7 +18,7 @@ const NavbarButton = ({ content, onClick, active }: NavbarButtonProps): JSX.Elem
                 textAlign: 'center',
                 fontFamily: 'quadon',
                 fontSize: '2vmin',
-                margin: '1%',
+                margin: '1.5% 1% 1.5% 1%',
                 color: '#FFFFFF',
                 border: '0.08em solid #000000',
                 borderColor: 'transparent',
@@ -46,7 +46,8 @@ export const Navbar = (): JSX.Element => {
                 width: '100vw',
                 display: 'flex',
                 justifyContent: 'center',
-                marginTop: '0.5%',
+                margin: 'auto',
+                backgroundColor: 'black',
             }}
         >
             <div style={{ display: 'flex', justifyContent: 'center' }}>
