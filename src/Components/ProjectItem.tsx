@@ -94,7 +94,7 @@ export const ProjectItem = ({ title, github, lastUpdated, imgSrc, internalLink, 
             onMouseEnter={(): void => setHover(true)}
             onMouseLeave={(): void => setHover(false)}
         >
-            <Item.Image verticalAlign="middle" src={imgSrc} />
+            <Item.Image verticalAlign="middle" src={imgSrc} style={{ width: '7.5em' }} />
             <Item.Content>
                 <Item.Header style={{ color: 'white', fontFamily: 'quadon', fontWeight: 'normal' }}>
                     <p>{title}</p>

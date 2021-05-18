@@ -12,7 +12,7 @@ export const PageContainer = ({ children }: Props): JSX.Element => {
         <div style={{ backgroundColor: 'black' }}>
             <DummyNavBar />
             <Container>
-                <div style={{ fontFamily: 'gentona', fontSize: '200%', textAlign: 'justify', paddingTop: '1em', paddingBottom: '1em' }}>{children}</div>
+                <div style={{ fontFamily: 'gentona', fontSize: '100%', textAlign: 'justify', paddingTop: '1em', paddingBottom: '1em' }}>{children}</div>
             </Container>
         </div>
     )
