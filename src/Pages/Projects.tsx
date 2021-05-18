@@ -40,11 +40,19 @@ const ProjectPagination = ({ pageSize, activePage, setActivePage }: ProjectPagin
 
     //render pagination menu
     return (
-        <>
-            <div style={{ width: '100%', display: 'flex', justifyContent: 'center', paddingBottom: '10px' }}>
+        <div
+            id="paginationmenu"
+            style={{
+                position: 'fixed',
+                width: '100vw',
+                bottom: 0,
+                backgroundColor: 'black',
+                zIndex: 100,
+            }}
+        >
+            <div style={{ width: '100%', display: 'flex', justifyContent: 'center', margin: '0.5% 0% 0.5% 0%' }}>
                 <Pagination
                     inverted
-                    // size="small"
                     style={{
                         backgroundColor: 'black',
                         fontFamily: 'quadon',
@@ -57,7 +65,25 @@ const ProjectPagination = ({ pageSize, activePage, setActivePage }: ProjectPagin
                     onPageChange={handlePageChange}
                 />
             </div>
-        </>
+        </div>
+    )
+}
+const DummyProjectPagination = (): JSX.Element => {
+    return (
+        <div style={{ width: '100%', display: 'flex', justifyContent: 'center', paddingBottom: '10px' }}>
+            <Pagination
+                inverted
+                style={{
+                    backgroundColor: 'black',
+                    fontFamily: 'quadon',
+                    fontSize: '100%',
+                }}
+                firstItem={null}
+                lastItem={null}
+                totalPages={3}
+                activePage={1}
+            />
+        </div>
     )
 }
 
@@ -78,7 +104,7 @@ export const Projects = (): JSX.Element => {
     return (
         <div style={{ backgroundColor: 'black' }}>
             <DummyNavBar />
-            <Container>
+            <Container style={{ marginBottom: '1em' }}>
                 <div style={{ fontSize: '100%', fontFamily: 'gentona', backgroundColor: 'black', marginTop: '1em' }}>
                     <Item.Group style={{ color: 'white' }}>
                         {pageProjects.map((project: ProjectContent, i: number) => (
@@ -87,9 +113,8 @@ export const Projects = (): JSX.Element => {
                     </Item.Group>
                 </div>
             </Container>
-            <Divider />
-            <ClearFixAfter />
             <ProjectPagination {...{ pageSize, activePage, setActivePage }} />
+            <DummyProjectPagination />
         </div>
     )
 }
