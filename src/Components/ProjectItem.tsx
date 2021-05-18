@@ -5,12 +5,12 @@ import { ProjectContent } from '../Pages'
 import axios from 'axios'
 
 //TODO->move to utilities
-function sleep(ms: number) {
+function sleep(ms: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
 //asynchronously fetch the most recent update timestamp for the github project
-const getGithubTimestamp = async (repoName: string, callback: (timestamp: Date | undefined) => void) => {
+const getGithubTimestamp = async (repoName: string, callback: (timestamp: Date | undefined) => void): Promise<void> => {
     try {
         await sleep(500) //TODO->DEBUG to verify loader displays correctly
         //API call to github for the repo update timestamp
@@ -59,9 +59,9 @@ export const ProjectItem = ({ title, github, lastUpdated, imgSrc, internalLink, 
         } else {
             setUpdate('Last Update: Unknown')
         }
-        return () => {
-            setUpdate(undefined)
-        }
+
+        //cleanup function
+        return (): void => setUpdate(undefined)
     }, [github, lastUpdated])
 
     //loading symbol while update timestamp is undefined
@@ -71,7 +71,7 @@ export const ProjectItem = ({ title, github, lastUpdated, imgSrc, internalLink, 
     const [hover, setHover] = useState<boolean>(false)
 
     //handle click events for internal linked projects, and fallback for projects with no links
-    const onClick = () => {
+    const onClick = (): void => {
         if (internalLink !== undefined) {
             history.push(internalLink)
         } else if (externalLink === undefined) {

@@ -30,7 +30,7 @@ const ProjectPagination = ({ pageSize, activePage, setActivePage }: ProjectPagin
     }
 
     //handle when pagination changes the page
-    const handlePageChange = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, data: PaginationProps) => {
+    const handlePageChange = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, data: PaginationProps): void => {
         setActivePage(data.activePage)
     }
 
@@ -94,11 +94,6 @@ export const Projects = (): JSX.Element => {
 
     //slice the list of projects based on current page. no-op if not paginating
     const pageProjects = getPageSlice(projects, pageSize, activePage)
-
-    //when pagination changes the page
-    const handlePageChange = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, data: PaginationProps) => {
-        setActivePage(data.activePage)
-    }
 
     return (
         <div style={{ backgroundColor: 'black' }}>
