@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { DummyNavBar, ProjectItem } from '../Components'
-import { ClearFixAfter } from '../utilities'
-import { Container, Divider, Item, Pagination, PaginationProps } from 'semantic-ui-react'
+import { Container, Item, Pagination, PaginationProps } from 'semantic-ui-react'
 import { projects, ProjectContent } from './Projects/ProjectSummaries'
 
 //Get a page of elements from an array. pages start at 1

@@ -1,4 +1,5 @@
 import React from 'react'
+// import ReactDomServer from 'react-dom/server'
 import { Navbar } from './Components/Navbar'
 import { About, Contact, Home, Misc, NotFound, NotImplemented, Projects } from './Pages'
 import { HashRouter as Router, Switch, Route } from 'react-router-dom'

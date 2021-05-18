@@ -96,9 +96,7 @@ export const ProjectItem = ({ title, github, lastUpdated, imgSrc, internalLink, 
         >
             <Item.Image verticalAlign="middle" src={imgSrc} style={{ width: '7.5em' }} />
             <Item.Content>
-                <Item.Header style={{ color: 'white', fontFamily: 'quadon', fontWeight: 'normal' }}>
-                    <p>{title}</p>
-                </Item.Header>
+                <Item.Header style={{ color: 'white', fontFamily: 'quadon', fontWeight: 'normal' }}>{title}</Item.Header>
                 <Item.Meta style={{ color: 'white' }}>{updateElement}</Item.Meta>
                 <Item.Description style={{ color: 'white' }}>{summary}</Item.Description>
                 {tags && <Item.Extra style={{ color: '#DDDDDD', fontSize: '80%' }}>Tags: {tags.join(', ')}</Item.Extra>}
