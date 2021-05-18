@@ -1,10 +1,11 @@
 import React from 'react'
 import { PageContainer } from '../../Components'
+import { H1 } from '../../utilities'
 
 export const DewySpeak = (): JSX.Element => {
     return (
         <PageContainer>
-            <h1>Dewy ProgrammingLanguage</h1>
+            <H1>Dewy Programming Language</H1>
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas efficitur mi a blandit faucibus. Praesent vitae dapibus lorem, eget egestas
                 nisl. Suspendisse condimentum vulputate turpis id sagittis. Nunc sodales augue velit, et porta ante scelerisque ut. Phasellus dapibus suscipit

@@ -1,20 +1,19 @@
 import React from 'react'
-import { DummyNavBar } from '../Components/Navbar'
+import { PageContainer } from '../Components'
+import { H1 } from '../utilities'
 
 export const NotFound = (): JSX.Element => {
     return (
-        <>
-            <DummyNavBar />
-            <div>404 Page not found</div>
-        </>
+        <PageContainer>
+            <H1>404: Page not found</H1>
+        </PageContainer>
     )
 }
 
 export const NotImplemented = (): JSX.Element => {
     return (
-        <>
-            <DummyNavBar />
-            <div>This page is still under construction</div>
-        </>
+        <PageContainer>
+            <H1>This page is still under construction</H1>
+        </PageContainer>
     )
 }

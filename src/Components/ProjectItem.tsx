@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Icon, Item } from 'semantic-ui-react'
 import { useHistory } from 'react-router-dom'
-import { ProjectContent } from '../Pages/Projects/ProjectSummaries'
+import { ProjectContent } from '../Pages'
 import axios from 'axios'
 
 //TODO->move to utilities

@@ -1,6 +1,4 @@
 import React from 'react'
-import { DummyNavBar } from '../Components'
-import { Container } from 'semantic-ui-react'
 import { PageContainer } from '../Components'
 
 export const About = (): JSX.Element => {

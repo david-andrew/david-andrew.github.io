@@ -1,13 +1,9 @@
-//by making this a compiled ts file, we guarantee all pieces of content are present
-
-//TODO->articles might want to be their own page
-//TODO->summary might want to be a JSX.Element rather than a string... can wrap in <></> for just string
-
-//imports for images used in the projects
 import logo from '../../images/logo.png'
-import logo_slim from '../../images/logo_slim.png'
+// import logo_slim from '../../images/logo_slim.png'
 import escort_mission from '../../images/escort_mission_lamb.png'
 import dewy_dandelion from '../../images/dewy_dandelion.jpg'
+
+//by making this a compiled ts file, we guarantee all pieces of content are present when building
 
 export interface ProjectContent {
     title: string
