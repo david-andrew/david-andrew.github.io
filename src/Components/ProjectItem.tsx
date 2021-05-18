@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { ProjectContent } from '../Pages/Projects/ProjectSummaries'
 import axios from 'axios'
 
+//TODO->move to utilities
 function sleep(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms))
 }
@@ -11,7 +12,7 @@ function sleep(ms: number) {
 //asynchronously fetch the most recent update timestamp for the github project
 const getGithubTimestamp = async (repoName: string, callback: (timestamp: Date | undefined) => void) => {
     try {
-        await sleep(500) //TODO->DEBUG
+        await sleep(500) //TODO->DEBUG to verify loader displays correctly
         //API call to github for the repo update timestamp
         const response = await axios.get(`https://api.github.com/repos/david-andrew/${repoName}`)
         const updatedAt = new Date(response.data['updated_at'])
@@ -19,6 +20,10 @@ const getGithubTimestamp = async (repoName: string, callback: (timestamp: Date |
     } catch {
         callback(undefined)
     }
+}
+//convert a date to a nice string
+const dateToString = (t: Date): string => {
+    return t.toLocaleDateString('default', { day: '2-digit', month: 'long', year: 'numeric' })
 }
 //build the jsx for displaying the update timestamp. display a loading icon while loading
 const getUpdateElement = (update: string | undefined): JSX.Element => {
@@ -34,7 +39,7 @@ const getUpdateElement = (update: string | undefined): JSX.Element => {
 }
 
 //clickable cards for each project
-export const ProjectItem = ({ title, github, lastUpdated, imgSrc, internalLink, externalLink, summary }: ProjectContent): JSX.Element => {
+export const ProjectItem = ({ title, github, lastUpdated, imgSrc, internalLink, externalLink, summary, tags }: ProjectContent): JSX.Element => {
     //history object for navigating when clicking an item
     const history = useHistory()
 
@@ -44,7 +49,7 @@ export const ProjectItem = ({ title, github, lastUpdated, imgSrc, internalLink, 
         if (github !== undefined) {
             getGithubTimestamp(github, (timestamp: Date | undefined) => {
                 if (timestamp !== undefined) {
-                    setUpdate(`Last Updated: ${timestamp.toDateString()}`)
+                    setUpdate(`Last Updated: ${dateToString(timestamp)}`)
                 } else {
                     setUpdate('Last Updated: <Failed to fetch timestamp>')
                 }
@@ -59,36 +64,41 @@ export const ProjectItem = ({ title, github, lastUpdated, imgSrc, internalLink, 
     //loading symbol while update timestamp is undefined
     const updateElement = getUpdateElement(update)
 
-    //summary text. TODO->should display the whole summary
-    // const maxSummaryLength = 600
-    // const displaySummary: string = summary.length < maxSummaryLength ? summary : `${summary.slice(0, maxSummaryLength)} ...`
-
-    //formatting to make each item highlightable
     //track if the mouse is hovering over the element
     const [hover, setHover] = useState<boolean>(false)
+
+    //handle click events for internal linked projects, and fallback for projects with no links
     const onClick = () => {
-        if (internalLink !== undefined) history.push(internalLink)
+        if (internalLink !== undefined) {
+            history.push(internalLink)
+        } else if (externalLink === undefined) {
+            history.push('/wip')
+        }
     }
+    //props for internal vs external links. internal links handled by router, external links open a new tab
+    const linkProps = externalLink !== undefined ? { as: 'a', href: externalLink, target: '_blank' } : { as: 'div', onClick: onClick }
 
     return (
         <Item
-            {...(externalLink !== undefined ? { as: 'a', href: externalLink, target: '_blank' } : { as: 'div', onClick: onClick })}
+            {...linkProps}
             style={{
                 color: 'white',
                 padding: '1em',
                 border: '0.08em solid #000000',
-                borderColor: 'transparent',
-                ...(hover ? { borderColor: '#FFFFFF' } : {}),
+                borderColor: hover ? '#FFFFFF' : 'transparent',
             }}
             onClick={onClick}
             onMouseEnter={(): void => setHover(true)}
             onMouseLeave={(): void => setHover(false)}
         >
-            <Item.Image src={imgSrc} />
+            <Item.Image verticalAlign="middle" src={imgSrc} />
             <Item.Content>
-                <Item.Header style={{ color: 'white', fontFamily: 'quadon', fontWeight: 'normal' }}>{title}</Item.Header>
+                <Item.Header style={{ color: 'white', fontFamily: 'quadon', fontWeight: 'normal' }}>
+                    <p>{title}</p>
+                </Item.Header>
                 <Item.Meta style={{ color: 'white' }}>{updateElement}</Item.Meta>
                 <Item.Description style={{ color: 'white' }}>{summary}</Item.Description>
+                {tags && <Item.Extra style={{ color: '#DDDDDD', fontSize: '80%' }}>Tags: {tags.join(', ')}</Item.Extra>}
             </Item.Content>
         </Item>
     )

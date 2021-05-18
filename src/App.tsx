@@ -1,10 +1,17 @@
 import React from 'react'
 import { Navbar } from './Components/Navbar'
-import { About, Contact, Home, Misc, Projects } from './Pages'
+import { About, Contact, Home, Misc, NotFound, NotImplemented, Projects } from './Pages'
 import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 import { DewySpeak } from './Pages/Projects/DewySpeak'
 
 const App = (): JSX.Element => {
+    //list of all project pages
+    interface PageProps {
+        page: () => JSX.Element
+        path: string
+    }
+    const projectPages: PageProps[] = [{ page: DewySpeak, path: '/projects/dewy' }]
+
     return (
         <div
             id="View"
@@ -34,9 +41,11 @@ const App = (): JSX.Element => {
                         <Route exact path="/projects">
                             <Projects />
                         </Route>
-                        <Route exact path="/projects/dewy">
-                            <DewySpeak />
-                        </Route>
+                        {projectPages.map(({ page, path }: PageProps, i: number) => (
+                            <Route exact path={path} key={i}>
+                                {page()}
+                            </Route>
+                        ))}
                         <Route exact path="/about">
                             <About />
                         </Route>
@@ -45,6 +54,12 @@ const App = (): JSX.Element => {
                         </Route>
                         <Route exact path="/contact">
                             <Contact />
+                        </Route>
+                        <Route exact path="/wip">
+                            <NotImplemented />
+                        </Route>
+                        <Route path="*">
+                            <NotFound />
                         </Route>
                     </Switch>
                 </div>

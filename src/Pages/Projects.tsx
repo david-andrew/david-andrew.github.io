@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Navbar, DummyNavBar } from '../Components/Navbar'
 import { Container, Item } from 'semantic-ui-react'
 import { ProjectItem } from '../Components/ProjectItem'
 import { projects, ProjectContent } from './Projects/ProjectSummaries'
 
 export const Projects = (): JSX.Element => {
-    const currentDate = new Date()
+    //pagination control
+    const pageSize: number = 10
+    const paginate: boolean = projects.length > pageSize
+    const [page, setPage] = useState<number>(0)
 
     return (
         <div style={{ backgroundColor: 'black' }}>
