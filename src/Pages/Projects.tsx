@@ -14,7 +14,7 @@ function getPageSlice<T>(arr: T[], pageSize: number, page: number | string | und
 export const Projects = (): JSX.Element => {
     //pagination control
     const [activePage, setActivePage] = useState<string | number | undefined>(1)
-    const pageSize: number = 2
+    const pageSize: number = 7
     const paginate: boolean = projects.length > pageSize
     const numPages: number = Math.ceil(projects.length / pageSize)
 
@@ -40,7 +40,7 @@ export const Projects = (): JSX.Element => {
             {paginate && (
                 <>
                     <Divider />
-                    <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                    <div style={{ width: '100%', display: 'flex', justifyContent: 'center', paddingBottom: '10%' }}>
                         <Pagination
                             inverted
                             size="massive"
