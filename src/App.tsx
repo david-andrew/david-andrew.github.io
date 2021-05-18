@@ -26,7 +26,6 @@ const App = (): JSX.Element => {
                 flexDirection: 'column',
                 justifyContent: 'space-between',
                 fontFamily: 'gentona',
-                // fontSize: '200%', //TODO->see if we can have this globally?
             }}
         >
             <Router>
