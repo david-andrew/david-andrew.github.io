@@ -59,7 +59,10 @@ export const ProjectItem = ({ title, github, lastUpdated, imgSrc, internalLink, 
         } else {
             setUpdate('Last Update: Unknown')
         }
-    }, [])
+        return () => {
+            setUpdate(undefined)
+        }
+    }, [github, lastUpdated])
 
     //loading symbol while update timestamp is undefined
     const updateElement = getUpdateElement(update)

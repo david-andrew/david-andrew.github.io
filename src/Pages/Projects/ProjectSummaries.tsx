@@ -71,4 +71,9 @@ export const projects: ProjectContent[] = [
         imgSrc: logo,
         summary: `Fusce dictum dolor varius orci aliquet posuere. Donec interdum dui condimentum `,
     },
+    {
+        title: 'Ensemble (Hacking Harmony)',
+        imgSrc: logo,
+        summary: '',
+    },
 ]
