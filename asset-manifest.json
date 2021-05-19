@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/website/static/css/main.d038ff2d.chunk.css",
-    "main.js": "/website/static/js/main.29232f8b.chunk.js",
-    "main.js.map": "/website/static/js/main.29232f8b.chunk.js.map",
+    "main.js": "/website/static/js/main.965d4b74.chunk.js",
+    "main.js.map": "/website/static/js/main.965d4b74.chunk.js.map",
     "runtime-main.js": "/website/static/js/runtime-main.8244f4ed.js",
     "runtime-main.js.map": "/website/static/js/runtime-main.8244f4ed.js.map",
     "static/css/2.cbfeca77.chunk.css": "/website/static/css/2.cbfeca77.chunk.css",
@@ -17,16 +17,19 @@
     "static/media/arnhem.css": "/website/static/media/Arnhem-BoldItalic.c7de2e5c.eot",
     "static/media/gentona.css": "/website/static/media/Gentona-ThinItalic.f4259371.eot",
     "static/media/quadon.css": "/website/static/media/Quadon-UltraBoldItalic.ecd2de73.woff",
+    "static/media/blob_opera_nox.c22b954a.png": "/website/static/media/blob_opera_nox.c22b954a.png",
+    "static/media/boat_simulator.d7ac99b6.jpg": "/website/static/media/boat_simulator.d7ac99b6.jpg",
     "static/media/semantic.less": "/website/static/media/outline-icons.ddae9b1b.woff",
     "static/media/dewy_dandelion.bfc731f1.jpg": "/website/static/media/dewy_dandelion.bfc731f1.jpg",
     "static/media/logo.354ef2ec.png": "/website/static/media/logo.354ef2ec.png",
-    "static/media/profile.2f44e726.jpg": "/website/static/media/profile.2f44e726.jpg"
+    "static/media/profile.2f44e726.jpg": "/website/static/media/profile.2f44e726.jpg",
+    "static/media/rewind_title.e1c109ce.png": "/website/static/media/rewind_title.e1c109ce.png"
   },
   "entrypoints": [
     "static/js/runtime-main.8244f4ed.js",
     "static/css/2.cbfeca77.chunk.css",
     "static/js/2.095925dc.chunk.js",
     "static/css/main.d038ff2d.chunk.css",
-    "static/js/main.29232f8b.chunk.js"
+    "static/js/main.965d4b74.chunk.js"
   ]
 }
