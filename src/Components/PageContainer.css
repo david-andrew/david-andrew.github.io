@@ -1,0 +1,10 @@
+.PageContainer p {
+    font-family: 'gentona';
+    font-size: 100%;
+    text-align: justify;
+}
+
+.PageContainer h1 {
+    font-family: 'quadon';
+    font-weight: normal;
+}

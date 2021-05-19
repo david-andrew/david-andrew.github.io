@@ -4,6 +4,7 @@ import { PageContainer } from '../Components'
 export const About = (): JSX.Element => {
     return (
         <PageContainer>
+            <h1>About David</h1>
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sodales odio a semper elementum. Cras non rhoncus neque, scelerisque dignissim
                 nisl. Proin ac augue sit amet magna eleifend lacinia. Vivamus sollicitudin luctus posuere. Nulla mattis purus vel vehicula bibendum. Nunc non
