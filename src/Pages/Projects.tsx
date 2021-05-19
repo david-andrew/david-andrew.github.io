@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { DummyNavBar, ProjectItem } from '../Components'
 import { Container, Item, Pagination, PaginationProps } from 'semantic-ui-react'
 import { projects, ProjectContent } from './Projects/ProjectSummaries'
+import { ClearFixAfter } from '../utilities'
 
 //Get a page of elements from an array. pages start at 1
 function getPageSlice<T>(arr: T[], pageSize: number, page: number | string | undefined): T[] {
@@ -67,13 +68,16 @@ const ProjectPagination = ({ pageSize, activePage, setActivePage }: ProjectPagin
         </div>
     )
 }
-const DummyProjectPagination = (): JSX.Element => {
+const DummyProjectPagination = ({ pageSize }: { pageSize: number }): JSX.Element => {
+    //don't paginate if a single page is large enough
+    if (projects.length <= pageSize) {
+        return <></>
+    }
+
     return (
-        <div style={{ width: '100%', display: 'flex', justifyContent: 'center', paddingBottom: '10px' }}>
+        <div style={{ width: '100%', display: 'flex', justifyContent: 'center', paddingBottom: '10px', visibility: 'hidden' }}>
             <Pagination
-                inverted
                 style={{
-                    backgroundColor: 'black',
                     fontFamily: 'quadon',
                     fontSize: '100%',
                 }}
@@ -89,7 +93,7 @@ const DummyProjectPagination = (): JSX.Element => {
 //projects page
 export const Projects = (): JSX.Element => {
     //pagination control
-    const pageSize: number = 10
+    const pageSize: number = 5
     const [activePage, setActivePage] = useState<string | number | undefined>(1)
 
     //slice the list of projects based on current page. no-op if not paginating
@@ -108,7 +112,8 @@ export const Projects = (): JSX.Element => {
                 </div>
             </Container>
             <ProjectPagination {...{ pageSize, activePage, setActivePage }} />
-            <DummyProjectPagination />
+            <DummyProjectPagination pageSize={pageSize} />
+            <ClearFixAfter />
         </div>
     )
 }
