@@ -4,8 +4,11 @@ import { Container, Item, Pagination, PaginationProps } from 'semantic-ui-react'
 import { projects, ProjectContent } from './Projects/ProjectSummaries'
 import { ClearFixAfter } from '../utilities'
 
+//Number of elements on a page
+const pageSize: number = 10
+
 //Get a page of elements from an array. pages start at 1
-function getPageSlice<T>(arr: T[], pageSize: number, page: number | string | undefined): T[] {
+function getPageSlice<T>(arr: T[], page: number | string | undefined): T[] {
     //if page is undefined, assume page 1
     page = page ?? 1
 
@@ -20,11 +23,10 @@ function getPageSlice<T>(arr: T[], pageSize: number, page: number | string | und
 
 //handle the pagination menu
 interface ProjectPaginationProps {
-    pageSize: number
     activePage: number | string | undefined
     setActivePage: (activePage: number | string | undefined) => void
 }
-const ProjectPagination = ({ pageSize, activePage, setActivePage }: ProjectPaginationProps): JSX.Element => {
+const ProjectPagination = ({ activePage, setActivePage }: ProjectPaginationProps): JSX.Element => {
     //don't paginate if a single page is large enough
     if (projects.length <= pageSize) {
         return <></>
@@ -40,24 +42,11 @@ const ProjectPagination = ({ pageSize, activePage, setActivePage }: ProjectPagin
 
     //render pagination menu
     return (
-        <div
-            id="paginationmenu"
-            style={{
-                position: 'fixed',
-                width: '100vw',
-                bottom: 0,
-                backgroundColor: 'black',
-                zIndex: 100,
-            }}
-        >
+        <div style={{ position: 'fixed', width: '100vw', bottom: 0, backgroundColor: 'black', zIndex: 100 }}>
             <div style={{ width: '100%', display: 'flex', justifyContent: 'center', margin: '0.5% 0% 0.5% 0%' }}>
                 <Pagination
                     inverted
-                    style={{
-                        backgroundColor: 'black',
-                        fontFamily: 'quadon',
-                        fontSize: '100%',
-                    }}
+                    style={{ backgroundColor: 'black', fontFamily: 'quadon', fontSize: '100%' }}
                     firstItem={null}
                     lastItem={null}
                     totalPages={numPages}
@@ -68,7 +57,7 @@ const ProjectPagination = ({ pageSize, activePage, setActivePage }: ProjectPagin
         </div>
     )
 }
-const DummyProjectPagination = ({ pageSize }: { pageSize: number }): JSX.Element => {
+const DummyProjectPagination = (): JSX.Element => {
     //don't paginate if a single page is large enough
     if (projects.length <= pageSize) {
         return <></>
@@ -76,16 +65,7 @@ const DummyProjectPagination = ({ pageSize }: { pageSize: number }): JSX.Element
 
     return (
         <div style={{ width: '100%', display: 'flex', justifyContent: 'center', paddingBottom: '10px', visibility: 'hidden' }}>
-            <Pagination
-                style={{
-                    fontFamily: 'quadon',
-                    fontSize: '100%',
-                }}
-                firstItem={null}
-                lastItem={null}
-                totalPages={3}
-                activePage={1}
-            />
+            <Pagination style={{ fontFamily: 'quadon', fontSize: '100%' }} firstItem={null} lastItem={null} totalPages={3} activePage={1} />
         </div>
     )
 }
@@ -93,11 +73,10 @@ const DummyProjectPagination = ({ pageSize }: { pageSize: number }): JSX.Element
 //projects page
 export const Projects = (): JSX.Element => {
     //pagination control
-    const pageSize: number = 5
     const [activePage, setActivePage] = useState<string | number | undefined>(1)
 
     //slice the list of projects based on current page. no-op if not paginating
-    const pageProjects = getPageSlice(projects, pageSize, activePage)
+    const pageProjects = getPageSlice(projects, activePage)
 
     return (
         <div style={{ backgroundColor: 'black' }}>
@@ -111,8 +90,8 @@ export const Projects = (): JSX.Element => {
                     </Item.Group>
                 </div>
             </Container>
-            <ProjectPagination {...{ pageSize, activePage, setActivePage }} />
-            <DummyProjectPagination pageSize={pageSize} />
+            <ProjectPagination {...{ activePage, setActivePage }} />
+            <DummyProjectPagination />
             <ClearFixAfter />
         </div>
     )
