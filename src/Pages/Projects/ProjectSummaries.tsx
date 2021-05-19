@@ -4,6 +4,7 @@ import escort_mission from '../../images/escort_mission_lamb.png'
 import dewy_dandelion from '../../images/dewy_dandelion.jpg'
 import boat_simulator from '../../images/boat_simulator.jpg'
 import rewind_title from '../../images/rewind_title.png'
+import blob_opera_nox from '../../images/blob_opera_nox.png'
 
 //by making this a compiled ts file, we guarantee all pieces of content are present when building
 
@@ -89,5 +90,26 @@ export const projects: ProjectContent[] = [
         summary: 'React based composing software that acts as a front-end interface for LilyPond',
         lastUpdated: 'January 3, 2021', //TODO->Repo is private
         tags: ['React', 'TypeScript', 'SMuFL', 'LilyPond', 'music', 'composition'],
+    },
+    {
+        title: 'Blob Opera Performances',
+        imgSrc: blob_opera_nox,
+        summary: 'Virtual choir performances leveraging the blob opera as a front end for voice synthesis',
+        lastUpdated: 'February 10, 2021', //TODO->repo is private
+        tags: ['Python', 'Blob Opera', 'choir', 'music', 'synthesis'],
+    },
+    {
+        title: 'Lords of Sola',
+        imgSrc: logo,
+        summary: 'Concept for a Real-Time-Strategy crossed with First-Person-Shooter',
+        lastUpdated: 'January 8, 2021', //TODO->repo is private
+        tags: ['Godot', 'GDScript', 'FPS x RTS', '3D game'],
+    },
+    {
+        title: 'Mehve',
+        imgSrc: logo,
+        summary: '3D adventure game inspire by "Nausicaa of the Valley of the Wind"',
+        github: 'mehve',
+        tags: ['Godot', 'GDScript', '3D game'],
     },
 ]
