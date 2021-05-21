@@ -1,27 +1,8 @@
 import React from 'react'
 import { PageContainer } from '../../Components'
-import { Code, CodeBlock } from '@atlaskit/code'
+import { CodeBlock } from '@atlaskit/code'
 
 export const DewySpeak = (): JSX.Element => {
-    const markdown = `
-# Dewy Programming language
-
-\`\`\`
-#w = [\x20\n];
-#S = #S #w* '+' #w* #S; 
-\`\`\`
-
-* apple
-* banana
-* peach
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas efficitur mi a blandit faucibus. Praesent vitae dapibus lorem, eget egestas
-nisl. Suspendisse condimentum vulputate turpis id sagittis. Nunc sodales augue velit, et porta ante scelerisque ut. Phasellus dapibus suscipit
-nulla, quis elementum lectus consectetur ut. Pellentesque eu lacus eget libero lacinia posuere. Morbi a arcu ut diam feugiat rutrum. Donec
-tristique, lacus id mollis ullamcorper, nibh elit ultrices metus, at tincidunt nibh metus ac quam. Donec convallis consequat magna eu ultricies.
-Pellentesque id libero et lectus venenatis tincidunt. Phasellus vestibulum risus at lorem dignissim sodales. Nam ac varius eros.
-    `
-
     return (
         <>
             <PageContainer>

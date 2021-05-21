@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { DummyNavBar, ProjectItem } from '../Components'
 import { Container, Item, Pagination, PaginationProps } from 'semantic-ui-react'
 import { projects, ProjectContent } from './Projects/ProjectSummaries'
@@ -74,6 +74,11 @@ const DummyProjectPagination = (): JSX.Element => {
 export const Projects = (): JSX.Element => {
     //pagination control
     const [activePage, setActivePage] = useState<string | number | undefined>(1)
+
+    //scroll to the top of the page if activePage changes
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [activePage])
 
     //slice the list of projects based on current page. no-op if not paginating
     const pageProjects = getPageSlice(projects, activePage)
