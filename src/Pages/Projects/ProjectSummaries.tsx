@@ -46,12 +46,26 @@ export const projects: ProjectContent[] = [
         tags: ['Godot', 'GDScript', '2D game'],
     },
     {
+        title: 'Ensemble',
+        imgSrc: logo,
+        internalLink: '/projects/ensemble',
+        summary: 'Choral music synthesis with deep learning (Continuation of Musical DL)',
+        tags: ['Python', 'Pytorch', 'AI/ML', 'choral', 'music', 'synthesis'],
+    },
+    {
         title: 'Musical DL Voice Synthesizer',
         github: 'MusicalDL',
         imgSrc: logo,
         internalLink: '/projects/musical_dl',
         summary: `2019 Machine Learning: Deep Learning (EN.601.682) capstone project`,
         tags: ['Python', 'PyTorch', 'AI/ML', 'choral', 'music', 'synthesis'],
+    },
+    {
+        title: 'Ensemble (Hacking Harmony)',
+        imgSrc: logo,
+        internalLink: '/projects/ensemble_peabody',
+        summary: '2019 Peabody Hackathon Submission. Autotunes google text-to-speech to produce music synthesis',
+        tags: ['Google text-to-speech API', 'matlab(python?)'],
     },
     {
         title: 'Boat Simulator',
@@ -95,13 +109,6 @@ export const projects: ProjectContent[] = [
         internalLink: '/projects/rewind',
         summary: '2019 Video Game Desgn (EN.601.355) capstone project',
         tags: ['Unity', 'C#', '2D game'],
-    },
-    {
-        title: 'Ensemble (Hacking Harmony)',
-        imgSrc: logo,
-        internalLink: '/projects/ensemble_peabody',
-        summary: '2019 Peabody Hackathon Submission. Autotunes google text-to-speech to produce music synthesis',
-        tags: ['Google text-to-speech API', 'matlab(python?)'],
     },
     {
         title: 'uSkipSpoilers (Github Link?)',
