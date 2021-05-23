@@ -68,12 +68,19 @@ export const projects: ProjectContent[] = [
         tags: ['Arduino', 'C++', 'SolidWorks', 'mechanical design'],
     },
     {
-        title: 'PRS2019',
+        title: 'PRS19',
         github: 'PRS_robot',
         imgSrc: prs2019_preview,
-        internalLink: '/projects/prs2019',
-        summary: "Automatic guitar fret presser robot. Mechanical Engineering Master's design captsone project",
+        internalLink: '/projects/prs19',
+        summary: "Automatic guitar fret presser robot. Mechanical Engineering Master's Design captsone project",
         tags: ['C++', 'Arduino', 'mechanical design'],
+    },
+    {
+        title: 'WSE18',
+        imgSrc: logo,
+        internalLink: '/projects/wse18',
+        summary: 'Machine shop biometric interlock system. Mechanical Engineering Senior Design capstone project',
+        tags: ['Raspberry Pi', 'Python', 'C++', 'Qt', 'interlock', 'fingerprint', 'biometric'],
     },
     {
         title: 'Draw Robot',

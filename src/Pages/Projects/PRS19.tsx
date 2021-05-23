@@ -1,11 +1,11 @@
 import React from 'react'
 import { PageContainer } from '../../Components'
 
-export const PRS2019 = (): JSX.Element => {
+export const PRS19 = (): JSX.Element => {
     return (
         <>
             <PageContainer>
-                <h1>PRS 2019</h1>
+                <h1>PRS19</h1>
             </PageContainer>
         </>
     )

@@ -15,9 +15,10 @@ import {
     Mechatronics,
     Mehve,
     MusicalDL,
-    PRS2019,
+    PRS19,
     Rewind,
     uSkipSpoilers,
+    WSE18,
 } from './Pages'
 
 const App = (): JSX.Element => {
@@ -38,9 +39,10 @@ const App = (): JSX.Element => {
         { page: Mechatronics, path: '/projects/mechatronics' },
         { page: Mehve, path: '/projects/mehve' },
         { page: MusicalDL, path: '/projects/musical_dl' },
-        { page: PRS2019, path: '/projects/prs2019' },
+        { page: PRS19, path: '/projects/prs19' },
         { page: Rewind, path: '/projects/rewind' },
         { page: uSkipSpoilers, path: '/projects/uskipspoilers' },
+        { page: WSE18, path: '/projects/wse18' },
     ]
 
     return (
