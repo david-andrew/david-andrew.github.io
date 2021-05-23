@@ -7,6 +7,6 @@ export { Projects } from './Projects'
 export { NotFound, NotImplemented } from './NotFound'
 
 //specific pages from projects
-export { DewySpeak } from './Projects/DewySpeak'
+export * from './Projects/'
 export { projects } from './Projects/ProjectSummaries'
 export type { ProjectContent } from './Projects/ProjectSummaries'

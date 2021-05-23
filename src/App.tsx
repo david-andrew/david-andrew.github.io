@@ -3,7 +3,22 @@ import React from 'react'
 import { Navbar } from './Components/Navbar'
 import { About, Contact, Home, Misc, NotFound, NotImplemented, Projects } from './Pages'
 import { HashRouter as Router, Switch, Route } from 'react-router-dom'
-import { DewySpeak } from './Pages/Projects/DewySpeak'
+import {
+    BlobOpera,
+    BoatSimulator,
+    Composer,
+    DewySpeak,
+    DrawRobot,
+    EnsemblePeabody,
+    EscortMision,
+    LordsOfSola,
+    Mechatronics,
+    Mehve,
+    MusicalDL,
+    PRS2019,
+    Rewind,
+    uSkipSpoilers,
+} from './Pages'
 
 const App = (): JSX.Element => {
     //list of all project pages
@@ -11,7 +26,22 @@ const App = (): JSX.Element => {
         page: () => JSX.Element
         path: string
     }
-    const projectPages: PageProps[] = [{ page: DewySpeak, path: '/projects/dewy' }]
+    const projectPages: PageProps[] = [
+        { page: BlobOpera, path: '/projects/blob_opera' },
+        { page: BoatSimulator, path: '/projects/boat_simulator' },
+        { page: Composer, path: '/projects/composer' },
+        { page: DewySpeak, path: '/projects/dewy' },
+        { page: DrawRobot, path: '/projects/drawbot' },
+        { page: EnsemblePeabody, path: '/projects/ensemble_peabody' },
+        { page: EscortMision, path: '/projects/escort_mission' },
+        { page: LordsOfSola, path: '/projects/lords_of_sola' },
+        { page: Mechatronics, path: '/projects/mechatronics' },
+        { page: Mehve, path: '/projects/mehve' },
+        { page: MusicalDL, path: '/projects/musical_dl' },
+        { page: PRS2019, path: '/projects/prs2019' },
+        { page: Rewind, path: '/projects/rewind' },
+        { page: uSkipSpoilers, path: '/projects/uskipspoilers' },
+    ]
 
     return (
         <div

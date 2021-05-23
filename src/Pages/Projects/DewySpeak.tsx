@@ -1,6 +1,26 @@
 import React from 'react'
 import { PageContainer } from '../../Components'
 import { CodeBlock } from '@atlaskit/code'
+import { AtlaskitThemeProvider } from '@atlaskit/theme/components'
+
+/*
+Layout
+
+Abstract:
+- basic summary
+--> what
+--> why
+--> how
+- important links
+--> github
+--> documentation
+--> trello
+
+Work so far
+- RNGLR parser
+
+
+*/
 
 export const DewySpeak = (): JSX.Element => {
     return (
@@ -9,9 +29,10 @@ export const DewySpeak = (): JSX.Element => {
                 <h1>Dewy Programming Language</h1>
 
                 <h2>Meta Language Syntax CFG</h2>
-                <CodeBlock
-                    showLineNumbers={false}
-                    text={`#eps = 'ϵ' | '\\\\e' | "''" | '""' | "{}";                    // ϵ, \\e, '', "", or {} indicates empty element, i.e. nullable
+                <AtlaskitThemeProvider mode="dark">
+                    <CodeBlock
+                        showLineNumbers={false}
+                        text={`#eps = 'ϵ' | '\\\\e' | "''" | '""' | "{}";                    // ϵ, \\e, '', "", or {} indicates empty element, i.e. nullable
 //#wschar = [\\x9-\\xD\\x20\\x85\\xA0\\x1680\\x2000-\\x200A\\x2028\\x2029\\x202F\\x205F\\x3000]; //ascii + unicode whitespace chars
 #wschar = [\\x9-\\xD\\x20];                                    // ascii whitespace characters.
 #line_comment = '/' '/' (ξ - '\\n')* '\\n';                   // single line comment
@@ -67,7 +88,9 @@ export const DewySpeak = (): JSX.Element => {
 #rule = #hashtag #ws '=' #ws #expr #ws ';';
 #grammar = (#ws #rule)* #ws;
 #start = #grammar;`}
-                />
+                    />
+                </AtlaskitThemeProvider>
+
                 <br />
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas efficitur mi a blandit faucibus. Praesent vitae dapibus lorem, eget

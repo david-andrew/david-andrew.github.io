@@ -5,6 +5,7 @@ import dewy_dandelion from '../../images/dewy_dandelion.jpg'
 import boat_simulator from '../../images/boat_simulator.jpg'
 import rewind_title from '../../images/rewind_title.png'
 import blob_opera_nox from '../../images/blob_opera_nox.png'
+import prs2019_preview from '../../images/prs2019_preview.png'
 
 //by making this a compiled ts file, we guarantee all pieces of content are present when building
 
@@ -29,7 +30,7 @@ export const projects: ProjectContent[] = [
         tags: ['C', 'compilers', 'parsers', 'SRNGLR', 'LLVM'],
     },
     {
-        title: 'Personal Website',
+        title: 'Personal Website (Github Link)',
         github: 'website',
         imgSrc: logo,
         externalLink: 'https://github.com/david-andrew/website',
@@ -40,6 +41,7 @@ export const projects: ProjectContent[] = [
         title: 'Escort Mission 2020',
         github: 'escort_mission_2020',
         imgSrc: escort_mission,
+        internalLink: '/projects/escort_mission',
         summary: `Submission for the 2020 GMTK Game Jam`,
         tags: ['Godot', 'GDScript', '2D game'],
     },
@@ -47,39 +49,58 @@ export const projects: ProjectContent[] = [
         title: 'Musical DL Voice Synthesizer',
         github: 'MusicalDL',
         imgSrc: logo,
+        internalLink: '/projects/musical_dl',
         summary: `2019 Machine Learning: Deep Learning (EN.601.682) capstone project`,
         tags: ['Python', 'PyTorch', 'AI/ML', 'choral', 'music', 'synthesis'],
     },
     {
         title: 'Boat Simulator',
         imgSrc: boat_simulator,
+        internalLink: '/projects/boat_simulator',
         summary: `HopHacks 20XX submission`,
         tags: ['Unity', 'C#', '3D game'],
     },
     {
-        title: 'Mechatronics Robot',
+        title: 'Mechatronics Robots',
         imgSrc: logo,
-        summary: `Robot from mechatronics`,
+        internalLink: '/projects/mechatronics',
+        summary: `Robots from mechatronics`,
+        tags: ['Arduino', 'C++', 'SolidWorks', 'mechanical design'],
+    },
+    {
+        title: 'PRS2019',
+        github: 'PRS_robot',
+        imgSrc: prs2019_preview,
+        internalLink: '/projects/prs2019',
+        summary: "Automatic guitar fret presser robot. Mechanical Engineering Master's design captsone project",
+        tags: ['C++', 'Arduino', 'mechanical design'],
     },
     {
         title: 'Draw Robot',
         imgSrc: logo,
+        internalLink: '/projects/drawbot',
         summary: `UR5 robot arm project`,
+        tags: ['Matlab', 'UR5 robot', 'ROS'],
     },
     {
         title: 'Rewind',
         imgSrc: rewind_title,
-        summary: `Fusce dictum dolor varius orci aliquet posuere. Donec interdum dui condimentum `,
-        tags: [],
+        internalLink: '/projects/rewind',
+        summary: '2019 Video Game Desgn (EN.601.355) capstone project',
+        tags: ['Unity', 'C#', '2D game'],
     },
     {
         title: 'Ensemble (Hacking Harmony)',
         imgSrc: logo,
-        summary: 'Fusce dictum dolor varius orci aliquet posuere. Donec interdum dui condimentum',
+        internalLink: '/projects/ensemble_peabody',
+        summary: '2019 Peabody Hackathon Submission. Autotunes google text-to-speech to produce music synthesis',
+        tags: ['Google text-to-speech API', 'matlab(python?)'],
     },
     {
-        title: 'uSkipSpoilers',
+        title: 'uSkipSpoilers (Github Link?)',
         imgSrc: logo,
+        // externalLink: 'https://github.com/david-andrew/uSkipSpoilers',
+        internalLink: '/projects/uskipspoilers',
         summary: 'A small chrome extension for blocking spoilers in YouTube videos',
         tags: ['React', 'TypeScript', 'Chrome', 'Extension'],
         github: 'uSkipSpoilers',
@@ -87,6 +108,7 @@ export const projects: ProjectContent[] = [
     {
         title: 'Composer',
         imgSrc: logo,
+        internalLink: '/projects/composer',
         summary: 'React based composing software that acts as a front-end interface for LilyPond',
         lastUpdated: 'January 3, 2021', //TODO->Repo is private
         tags: ['React', 'TypeScript', 'SMuFL', 'LilyPond', 'music', 'composition'],
@@ -94,6 +116,7 @@ export const projects: ProjectContent[] = [
     {
         title: 'Blob Opera Performances',
         imgSrc: blob_opera_nox,
+        internalLink: '/projects/blob_opera',
         summary: 'Virtual choir performances leveraging the blob opera as a front end for voice synthesis',
         lastUpdated: 'February 10, 2021', //TODO->repo is private
         tags: ['Python', 'Blob Opera', 'choir', 'music', 'synthesis'],
@@ -101,6 +124,7 @@ export const projects: ProjectContent[] = [
     {
         title: 'Lords of Sola',
         imgSrc: logo,
+        internalLink: '/projects/lords_of_sola',
         summary: 'Concept for a Real-Time-Strategy crossed with First-Person-Shooter',
         lastUpdated: 'January 8, 2021', //TODO->repo is private
         tags: ['Godot', 'GDScript', 'FPS x RTS', '3D game'],
@@ -108,6 +132,7 @@ export const projects: ProjectContent[] = [
     {
         title: 'Mehve',
         imgSrc: logo,
+        internalLink: '/projects/mehve',
         summary: '3D adventure game inspire by "Nausicaa of the Valley of the Wind"',
         github: 'mehve',
         tags: ['Godot', 'GDScript', '3D game'],
