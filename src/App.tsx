@@ -51,8 +51,6 @@ const App = (): JSX.Element => {
         <div
             id="View"
             style={{
-                // backgroundColor: 'purple',
-                // color: 'orange',
                 backgroundColor: 'black',
                 color: 'white',
                 width: '100vw',

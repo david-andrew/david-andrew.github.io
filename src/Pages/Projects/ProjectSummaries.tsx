@@ -6,6 +6,8 @@ import boat_simulator from '../../images/boat_simulator.jpg'
 import rewind_title from '../../images/rewind_title.png'
 import blob_opera_nox from '../../images/blob_opera_nox.png'
 import prs2019_preview from '../../images/prs2019_preview.png'
+import slapstick_animatronic from '../../images/slapstick_animatronic.png'
+import rebel_scum from '../../images/rebel_scum.jpg'
 
 //by making this a compiled ts file, we guarantee all pieces of content are present when building
 
@@ -26,7 +28,7 @@ export const projects: ProjectContent[] = [
         github: 'dewy',
         imgSrc: dewy_dandelion,
         internalLink: '/projects/dewy',
-        summary: `An engineering focused programming language I am developing. Leverages a custom SRNGLR parser written entierly in C, which allows for much flexibility in the langiage Context Free Grammar specification`,
+        summary: `An engineering focused programming language I am developing. Leverages a custom SRNGLR parser written entierly in C`,
         tags: ['C', 'compilers', 'parsers', 'SRNGLR', 'LLVM'],
     },
     {
@@ -73,6 +75,14 @@ export const projects: ProjectContent[] = [
         internalLink: '/projects/boat_simulator',
         summary: `HopHacks 20XX submission`,
         tags: ['Unity', 'C#', '3D game'],
+    },
+    {
+        title: 'Foxing Animatronic',
+        imgSrc: slapstick_animatronic,
+        internalLink: '/projects/slapstick_animatronic',
+        summary: "Manually actuated animatronic robot featured in the Foxing music video 'Slapstick'",
+        lastUpdated: 'June 18, 2018',
+        tags: ['Solidworks', 'mechanical design', 'animatronic', 'Foxing', 'music'],
     },
     {
         title: 'Mechatronics Robots',
@@ -150,5 +160,22 @@ export const projects: ProjectContent[] = [
         summary: '3D adventure game inspire by "Nausicaa of the Valley of the Wind"',
         github: 'mehve',
         tags: ['Godot', 'GDScript', '3D game'],
+    },
+    {
+        title: 'Rebel Scum Rocket',
+        imgSrc: rebel_scum,
+        internalLink: '/projects/rebel_scum',
+        summary: 'Level 1 & 2 High Powered Rocket built with the Johns Hopkins Rocketry Club',
+        tags: ['High Power Rocketry', 'Arduino', 'C++', 'mechanical design', 'Tripoli'],
+        lastUpdated: 'January 17, 2018',
+    },
+    {
+        title: 'Sea Perch ROV',
+        //imgSrc: seaperch,
+        summary: 'Underwater Remote Operated Vehicle...',
+    },
+    {
+        title: 'pOngBot',
+        summary: 'Autonomous robot for shooting ping pong balls into cups',
     },
 ]
