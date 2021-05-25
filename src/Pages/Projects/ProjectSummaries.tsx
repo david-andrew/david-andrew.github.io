@@ -6,7 +6,7 @@ import boat_simulator from '../../images/boat_simulator.jpg'
 import rewind_title from '../../images/rewind_title.png'
 import blob_opera_nox from '../../images/blob_opera_nox.png'
 import prs2019_preview from '../../images/prs2019_preview.png'
-import slapstick_animatronic from '../../images/slapstick_animatronic.png'
+import foxing_animatronic from '../../images/foxing_animatronic.png'
 import rebel_scum from '../../images/rebel_scum.jpg'
 
 //by making this a compiled ts file, we guarantee all pieces of content are present when building
@@ -78,8 +78,8 @@ export const projects: ProjectContent[] = [
     },
     {
         title: 'Foxing Animatronic',
-        imgSrc: slapstick_animatronic,
-        internalLink: '/projects/slapstick_animatronic',
+        imgSrc: foxing_animatronic,
+        internalLink: '/projects/foxing_animatronic',
         summary: "Manually actuated animatronic robot featured in the Foxing music video 'Slapstick'",
         lastUpdated: 'June 18, 2018',
         tags: ['Solidworks', 'mechanical design', 'animatronic', 'Foxing', 'music'],
@@ -176,6 +176,9 @@ export const projects: ProjectContent[] = [
     },
     {
         title: 'pOngBot',
+        imgSrc: logo,
+        internalLink: '/projects/pongbot',
         summary: 'Autonomous robot for shooting ping pong balls into cups',
+        tags: ['Arduino', 'C++', 'computer vision', 'Viola-Jones', 'mechanical design'],
     },
 ]
