@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { DummyNavBar, ProjectItem } from '../Components'
 import { Container, Item, Pagination, PaginationProps } from 'semantic-ui-react'
 import { projects, ProjectContent } from './Projects/ProjectSummaries'
-import { ClearFixAfter } from '../utilities'
+import { ClearFixAfter, useQuery } from '../utilities'
 
 //Number of elements on a page
 const pageSize: number = 10
@@ -27,14 +27,14 @@ interface ProjectPaginationProps {
     setActivePage: (activePage: number | string | undefined) => void
 }
 const ProjectPagination = ({ activePage, setActivePage }: ProjectPaginationProps): JSX.Element => {
-    //don't paginate if a single page is large enough
-    if (projects.length <= pageSize) {
-        return <></>
-    }
-
     //handle when pagination changes the page
     const handlePageChange = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, data: PaginationProps): void => {
         setActivePage(data.activePage)
+    }
+
+    //don't paginate if a single page is large enough
+    if (projects.length <= pageSize) {
+        return <></>
     }
 
     //number of pages in pagination menu
@@ -72,8 +72,12 @@ const DummyProjectPagination = (): JSX.Element => {
 
 //projects page
 export const Projects = (): JSX.Element => {
-    //pagination control
-    const [activePage, setActivePage] = useState<string | number | undefined>(1)
+    //get/set page number with url params
+    const { params, setParam } = useQuery()
+    const activePage = params.page ?? '1'
+    const setActivePage = (page: string | number | undefined): void => {
+        setParam('page', (page ?? '1').toString())
+    }
 
     //scroll to the top of the page if activePage changes
     useEffect(() => {
