@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/website/static/css/main.3e47f1ef.chunk.css",
-    "main.js": "/website/static/js/main.c9c4fb8e.chunk.js",
-    "main.js.map": "/website/static/js/main.c9c4fb8e.chunk.js.map",
+    "main.js": "/website/static/js/main.4009f561.chunk.js",
+    "main.js.map": "/website/static/js/main.4009f561.chunk.js.map",
     "runtime-main.js": "/website/static/js/runtime-main.3ac76208.js",
     "runtime-main.js.map": "/website/static/js/runtime-main.3ac76208.js.map",
     "static/css/2.cbfeca77.chunk.css": "/website/static/css/2.cbfeca77.chunk.css",
@@ -102,6 +102,8 @@
     "static/media/semantic.less": "/website/static/media/outline-icons.ddae9b1b.woff",
     "static/media/dewy_dandelion.bfc731f1.jpg": "/website/static/media/dewy_dandelion.bfc731f1.jpg",
     "static/media/foxing_animatronic.d72a0cf8.png": "/website/static/media/foxing_animatronic.d72a0cf8.png",
+    "static/media/idt_starburst.75d5d7ea.jpeg": "/website/static/media/idt_starburst.75d5d7ea.jpeg",
+    "static/media/jhuapl_shield.1ca53830.png": "/website/static/media/jhuapl_shield.1ca53830.png",
     "static/media/logo.354ef2ec.png": "/website/static/media/logo.354ef2ec.png",
     "static/media/music_staff.4170c4bd.png": "/website/static/media/music_staff.4170c4bd.png",
     "static/media/profile.2f44e726.jpg": "/website/static/media/profile.2f44e726.jpg",
@@ -115,6 +117,6 @@
     "static/css/2.cbfeca77.chunk.css",
     "static/js/2.4234b349.chunk.js",
     "static/css/main.3e47f1ef.chunk.css",
-    "static/js/main.c9c4fb8e.chunk.js"
+    "static/js/main.4009f561.chunk.js"
   ]
 }
