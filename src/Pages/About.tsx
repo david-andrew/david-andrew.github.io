@@ -11,15 +11,13 @@ const LogoIcon = (src: string, width: string = '30em', height: string = '30em'):
 }
 
 export const About = (): JSX.Element => {
-    const JHUShieldIcon = () => LogoIcon(shield_logo, '28.04347em', '30em')
-    const APLShieldIcon = () => LogoIcon(jhuapl_shield, '30em', '30em')
-    const IDTStarburstIcon = () => LogoIcon(idt_starburst, '30em', '30em')
+    const JHUShieldIcon = (): JSX.Element => LogoIcon(shield_logo, '28.04347em', '30em')
+    const APLShieldIcon = (): JSX.Element => LogoIcon(jhuapl_shield, '30em', '30em')
+    const IDTStarburstIcon = (): JSX.Element => LogoIcon(idt_starburst, '30em', '30em')
 
     return (
         <PageContainer>
-            <h1>About David</h1>
-
-            <h2>Skills</h2>
+            <h1>Skills</h1>
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sodales odio a semper elementum. Cras non rhoncus neque, scelerisque dignissim
                 nisl. Proin ac augue sit amet magna eleifend lacinia. Vivamus sollicitudin luctus posuere. Nulla mattis purus vel vehicula bibendum. Nunc non
@@ -28,8 +26,7 @@ export const About = (): JSX.Element => {
                 malesuada fames ac turpis egestas.
             </p>
 
-            <br />
-            <h2>Education</h2>
+            <h1>Education</h1>
             <h3>Johns Hopkins University</h3>
             <List inverted relaxed>
                 <List.Item>
@@ -48,8 +45,7 @@ export const About = (): JSX.Element => {
                 </List.Item>
             </List>
 
-            <br />
-            <h2>Work History</h2>
+            <h1>Work History</h1>
             <h3>Johns Hopkins Applied Physics Lab</h3>
             <List inverted relaxed>
                 <List.Item>
@@ -86,8 +82,7 @@ export const About = (): JSX.Element => {
                 </List.Item>
             </List>
 
-            <br />
-            <h2>General</h2>
+            <h1>General</h1>
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sodales odio a semper elementum. Cras non rhoncus neque, scelerisque dignissim
                 nisl. Proin ac augue sit amet magna eleifend lacinia. Vivamus sollicitudin luctus posuere. Nulla mattis purus vel vehicula bibendum. Nunc non
