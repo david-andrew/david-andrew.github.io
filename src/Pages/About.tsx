@@ -1,10 +1,46 @@
 import React from 'react'
 import { PageContainer } from '../Components'
+import { List } from 'semantic-ui-react'
+import shield_logo from '../images/icons/university.shield.small.white.png'
+
+const JHUShieldIcon = (): JSX.Element => {
+    return <img style={{ float: 'left' }} className="icon" width="30em" height="30em" src={shield_logo} />
+}
 
 export const About = (): JSX.Element => {
     return (
         <PageContainer>
             <h1>About David</h1>
+
+            <h2>Skills</h2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sodales odio a semper elementum. Cras non rhoncus neque, scelerisque dignissim
+                nisl. Proin ac augue sit amet magna eleifend lacinia. Vivamus sollicitudin luctus posuere. Nulla mattis purus vel vehicula bibendum. Nunc non
+                auctor turpis, a posuere velit. In eleifend sem id vehicula dictum. Integer eros magna, porttitor vel lectus at, dictum hendrerit metus. Class
+                aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque habitant morbi tristique senectus et netus et
+                malesuada fames ac turpis egestas.
+            </p>
+
+            <h2>Education</h2>
+            <h3>The Johns Hopkins University</h3>
+            <List inverted relaxed>
+                <List.Item>
+                    <List.Icon as={JHUShieldIcon} verticalAlign="middle" size="large" />
+                    <List.Content>
+                        <List.Header>Bachelor of Science in Mechanical Engineering</List.Header>
+                        <List.Description>Sept. 2014 - May 2018</List.Description>
+                    </List.Content>
+                </List.Item>
+                <List.Item>
+                    <List.Icon as={JHUShieldIcon}></List.Icon>
+                    <List.Content>
+                        <List.Header>Master of Science in Engineering in Robotics (Machine Learning concentration)</List.Header>
+                        <List.Description>Sept. 2018 - May 2019</List.Description>
+                    </List.Content>
+                </List.Item>
+            </List>
+
+            <h2>General</h2>
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sodales odio a semper elementum. Cras non rhoncus neque, scelerisque dignissim
                 nisl. Proin ac augue sit amet magna eleifend lacinia. Vivamus sollicitudin luctus posuere. Nulla mattis purus vel vehicula bibendum. Nunc non
@@ -31,24 +67,6 @@ export const About = (): JSX.Element => {
                 id sapien semper blandit id eget risus. Nullam vulputate dolor nec tempus dignissim. Vivamus ultricies viverra libero id finibus. Ut vitae nisi
                 condimentum, maximus sapien quis, accumsan est. Quisque mollis dolor id justo condimentum, a pharetra orci ultrices. Phasellus tincidunt, velit
                 ac lacinia sodales, metus eros accumsan tortor, ultricies consequat massa nibh in nunc.
-                <br />
-                <br />
-                Nulla dapibus massa in quam maximus convallis in sed ipsum. Nam commodo ac elit ullamcorper bibendum. Aenean pulvinar quam enim, eu porttitor
-                massa suscipit eu. In fermentum quam sed arcu dignissim elementum. Cras tellus nunc, elementum id nisl vel, tristique rhoncus risus. Morbi
-                dignissim semper mollis. Pellentesque feugiat purus sed efficitur feugiat. Maecenas vestibulum magna id nunc posuere, sit amet rhoncus lectus
-                maximus. Aenean tristique, libero et pellentesque varius, arcu ligula luctus mauris, vel imperdiet nulla massa in turpis. Donec congue, mauris
-                ac ornare lobortis, lacus metus bibendum enim, vel dapibus mauris erat ac lectus. Aliquam eu elit vel sem elementum scelerisque vel id libero.
-                Duis cursus laoreet elit. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed eu est a dui consequat
-                lacinia. Aenean ipsum ex, congue in nunc in, blandit consectetur erat. Maecenas in scelerisque magna, non ullamcorper est.
-                <br />
-                <br />
-                Nulla dapibus massa in quam maximus convallis in sed ipsum. Nam commodo ac elit ullamcorper bibendum. Aenean pulvinar quam enim, eu porttitor
-                massa suscipit eu. In fermentum quam sed arcu dignissim elementum. Cras tellus nunc, elementum id nisl vel, tristique rhoncus risus. Morbi
-                dignissim semper mollis. Pellentesque feugiat purus sed efficitur feugiat. Maecenas vestibulum magna id nunc posuere, sit amet rhoncus lectus
-                maximus. Aenean tristique, libero et pellentesque varius, arcu ligula luctus mauris, vel imperdiet nulla massa in turpis. Donec congue, mauris
-                ac ornare lobortis, lacus metus bibendum enim, vel dapibus mauris erat ac lectus. Aliquam eu elit vel sem elementum scelerisque vel id libero.
-                Duis cursus laoreet elit. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed eu est a dui consequat
-                lacinia. Aenean ipsum ex, congue in nunc in, blandit consectetur erat. Maecenas in scelerisque magna, non ullamcorper est.
             </p>
         </PageContainer>
     )
