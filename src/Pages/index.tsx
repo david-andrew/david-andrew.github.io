@@ -2,7 +2,7 @@
 export { About } from './About'
 export { Contact } from './Contact'
 export { Home } from './Home'
-export { Misc } from './Misc'
+export { Clovers } from './Clovers'
 export { Projects } from './Projects'
 export { NotFound, NotImplemented } from './NotFound'
 

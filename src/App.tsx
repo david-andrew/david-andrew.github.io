@@ -1,7 +1,7 @@
 import React from 'react'
 // import ReactDomServer from 'react-dom/server'
 import { Navbar } from './Components/Navbar'
-import { About, Contact, Home, Misc, NotFound, NotImplemented, Projects } from './Pages'
+import { About, Contact, Home, Clovers, NotFound, NotImplemented, Projects } from './Pages'
 import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 import {
     BlobOpera,
@@ -89,8 +89,8 @@ const App = (): JSX.Element => {
                         <Route exact path="/about">
                             <About />
                         </Route>
-                        <Route exact path="/misc">
-                            <Misc />
+                        <Route exact path="/clovers">
+                            <Clovers />
                         </Route>
                         <Route exact path="/contact">
                             <Contact />
