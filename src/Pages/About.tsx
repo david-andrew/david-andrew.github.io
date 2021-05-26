@@ -2,12 +2,19 @@ import React from 'react'
 import { PageContainer } from '../Components'
 import { List } from 'semantic-ui-react'
 import shield_logo from '../images/icons/university.shield.small.white.png'
+import jhuapl_shield from '../images/icons/jhuapl_shield.png'
+import idt_starburst from '../images/icons/idt_starburst.jpeg'
 
-const JHUShieldIcon = (): JSX.Element => {
-    return <img style={{ float: 'left' }} className="icon" width="30em" height="30em" src={shield_logo} />
+//Generate a react icon component for the given image
+const LogoIcon = (src: string, width: string = '30em', height: string = '30em'): JSX.Element => {
+    return <img style={{ float: 'left' }} className="icon" width={width} height={height} src={src} />
 }
 
 export const About = (): JSX.Element => {
+    const JHUShieldIcon = () => LogoIcon(shield_logo, '28.04347em', '30em')
+    const APLShieldIcon = () => LogoIcon(jhuapl_shield, '30em', '30em')
+    const IDTStarburstIcon = () => LogoIcon(idt_starburst, '30em', '30em')
+
     return (
         <PageContainer>
             <h1>About David</h1>
@@ -21,8 +28,9 @@ export const About = (): JSX.Element => {
                 malesuada fames ac turpis egestas.
             </p>
 
+            <br />
             <h2>Education</h2>
-            <h3>The Johns Hopkins University</h3>
+            <h3>Johns Hopkins University</h3>
             <List inverted relaxed>
                 <List.Item>
                     <List.Icon as={JHUShieldIcon} verticalAlign="middle" size="large" />
@@ -40,6 +48,45 @@ export const About = (): JSX.Element => {
                 </List.Item>
             </List>
 
+            <br />
+            <h2>Work History</h2>
+            <h3>Johns Hopkins Applied Physics Lab</h3>
+            <List inverted relaxed>
+                <List.Item>
+                    <List.Icon as={APLShieldIcon} verticalAlign="middle" size="large" />
+                    <List.Content>
+                        <List.Header>SPUR Intern</List.Header>
+                        <List.Description>June 2016 - Aug. 2016</List.Description>
+                    </List.Content>
+                </List.Item>
+                <List.Item>
+                    <List.Icon as={APLShieldIcon} verticalAlign="middle" size="large" />
+                    <List.Content>
+                        <List.Header>Temp-on-Call Staff</List.Header>
+                        <List.Description>Sept. 2016 - July 2017</List.Description>
+                    </List.Content>
+                </List.Item>
+            </List>
+
+            <h3>Innovative Defense Technologies</h3>
+            <List inverted relaxed>
+                <List.Item>
+                    <List.Icon as={IDTStarburstIcon} verticalAlign="middle" size="large" />
+                    <List.Content>
+                        <List.Header>Associate Systems Engineer</List.Header>
+                        <List.Description>June 2019 - Oct. 2020</List.Description>
+                    </List.Content>
+                </List.Item>
+                <List.Item>
+                    <List.Icon as={IDTStarburstIcon} verticalAlign="middle" size="large" />
+                    <List.Content>
+                        <List.Header>Systems Engineer II (Data Science)</List.Header>
+                        <List.Description>Oct. 2020 - Present</List.Description>
+                    </List.Content>
+                </List.Item>
+            </List>
+
+            <br />
             <h2>General</h2>
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sodales odio a semper elementum. Cras non rhoncus neque, scelerisque dignissim
