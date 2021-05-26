@@ -1,13 +1,14 @@
 import logo from '../../images/logo.png'
 // import logo_slim from '../../images/logo_slim.png'
-import escort_mission from '../../images/escort_mission_lamb.png'
-import dewy_dandelion from '../../images/dewy_dandelion.jpg'
-import boat_simulator from '../../images/boat_simulator.jpg'
-import rewind_title from '../../images/rewind_title.png'
-import blob_opera_nox from '../../images/blob_opera_nox.png'
-import prs2019_preview from '../../images/prs2019_preview.png'
-import foxing_animatronic from '../../images/foxing_animatronic.png'
-import rebel_scum from '../../images/rebel_scum.jpg'
+import escort_mission from '../../images/projects/escort_mission_lamb.png'
+import dewy_dandelion from '../../images/projects/dewy_dandelion.jpg'
+import boat_simulator from '../../images/projects/boat_simulator.jpg'
+import rewind_title from '../../images/projects/rewind_title.png'
+import blob_opera_nox from '../../images/projects/blob_opera_nox.png'
+import prs2019_preview from '../../images/projects/prs2019_preview.png'
+import foxing_animatronic from '../../images/projects/foxing_animatronic.png'
+import rebel_scum from '../../images/projects/rebel_scum.jpg'
+import music_staff from '../../images/projects/music_staff.png'
 
 //by making this a compiled ts file, we guarantee all pieces of content are present when building
 
@@ -180,5 +181,13 @@ export const projects: ProjectContent[] = [
         internalLink: '/projects/pongbot',
         summary: 'Autonomous robot for shooting ping pong balls into cups',
         tags: ['Arduino', 'C++', 'computer vision', 'Viola-Jones', 'mechanical design'],
+    },
+    {
+        title: 'Choir Compositions',
+        imgSrc: music_staff,
+        internalLink: '/projects/compositions',
+        summary: '',
+        lastUpdated: 'May 3, 2015',
+        tags: ['music', 'choral', 'composition'],
     },
 ]
