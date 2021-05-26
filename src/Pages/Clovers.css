@@ -1,0 +1,4 @@
+/*Remove the borders around the react collage component*/
+div.CloverCollageDiv * {
+    border: none;
+}

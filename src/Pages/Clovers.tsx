@@ -1,12 +1,11 @@
 import React from 'react'
 import { ReactPhotoCollage } from 'react-photo-collage'
 import { PageContainer } from '../Components'
+import './Clovers.css'
 
-const r = require
-const importClovers = () => {
+const importClovers = (): any[] => {
     const r = require.context('../images/clovers')
     const images = r.keys().map((path: string) => r(path))
-    console.log(images)
     return images
 }
 
@@ -31,7 +30,9 @@ export const Clovers = (): JSX.Element => {
 
     return (
         <PageContainer>
-            <ReactPhotoCollage width="100%" height={height} layout={layout} photos={photos} showNumOfRemainingPhotos />
+            <div className="CloverCollageDiv">
+                <ReactPhotoCollage width="100%" height={height} layout={layout} photos={photos} showNumOfRemainingPhotos />
+            </div>
         </PageContainer>
     )
 }
