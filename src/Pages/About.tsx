@@ -1,30 +1,96 @@
 import React from 'react'
 import { PageContainer } from '../Components'
-import { List } from 'semantic-ui-react'
+import { List, Icon, SemanticICONS } from 'semantic-ui-react'
 import shield_logo from '../images/icons/university.shield.small.white.png'
 import jhuapl_shield from '../images/icons/jhuapl_shield.png'
 import idt_starburst from '../images/icons/idt_starburst.jpeg'
+import hashtag from '../images/icons/hashtag.png'
+import code from '../images/icons/code.png'
+import blocks from '../images/icons/blocks.png'
+import branch from '../images/icons/branch.png'
+import circuit from '../images/icons/circuit.png'
+import gears from '../images/icons/gears.png'
 
 //Generate a react icon component for the given image
-const LogoIcon = (src: string, width: string = '30em', height: string = '30em'): JSX.Element => {
-    return <img style={{ float: 'left' }} className="icon" width={width} height={height} src={src} />
+const LogoIcon = (src: string, width: string = '30em'): JSX.Element => {
+    return <img style={{ float: 'left' }} className="icon" width={width} src={src} />
 }
 
+const SemanticIcon = (name: SemanticICONS, inverted: boolean = false): JSX.Element => {
+    return (
+        <div style={{ width: '30em', height: '30em' }}>
+            <Icon name={name} fitted inverted={inverted} />
+        </div>
+    )
+}
+
+const BR = () => (
+    <>
+        <br />
+        <br />
+    </>
+)
+
 export const About = (): JSX.Element => {
-    const JHUShieldIcon = (): JSX.Element => LogoIcon(shield_logo, '28.04347em', '30em')
-    const APLShieldIcon = (): JSX.Element => LogoIcon(jhuapl_shield, '30em', '30em')
-    const IDTStarburstIcon = (): JSX.Element => LogoIcon(idt_starburst, '30em', '30em')
+    const JHUShieldIcon = (): JSX.Element => LogoIcon(shield_logo)
+    const APLShieldIcon = (): JSX.Element => LogoIcon(jhuapl_shield)
+    const IDTStarburstIcon = (): JSX.Element => LogoIcon(idt_starburst)
+    const HashtagIcon = (): JSX.Element => LogoIcon(hashtag)
+    const CodeIcon = (): JSX.Element => LogoIcon(code)
+    const BlocksIcon = (): JSX.Element => LogoIcon(blocks)
+    const BranchIcon = (): JSX.Element => LogoIcon(branch)
+    const CircuitIcon = (): JSX.Element => LogoIcon(circuit)
+    const GearsIcon = (): JSX.Element => LogoIcon(gears)
 
     return (
         <PageContainer>
             <h1>Skills</h1>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sodales odio a semper elementum. Cras non rhoncus neque, scelerisque dignissim
-                nisl. Proin ac augue sit amet magna eleifend lacinia. Vivamus sollicitudin luctus posuere. Nulla mattis purus vel vehicula bibendum. Nunc non
-                auctor turpis, a posuere velit. In eleifend sem id vehicula dictum. Integer eros magna, porttitor vel lectus at, dictum hendrerit metus. Class
-                aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque habitant morbi tristique senectus et netus et
-                malesuada fames ac turpis egestas.
-            </p>
+            <List inverted relaxed>
+                <List.Item>
+                    <List.Icon as={HashtagIcon} verticalAlign="middle" />
+                    <List.Content>
+                        <List.Header>Programming (Advanced)</List.Header>
+                        <List.Description>Python, C, Typescript, MATLAB</List.Description>
+                    </List.Content>
+                </List.Item>
+                <List.Item>
+                    <List.Icon as={CodeIcon} verticalAlign="middle" />
+                    <List.Content>
+                        <List.Header>Programming (Moderate)</List.Header>
+                        <List.Description>Rust, Julia, C++, Java, Go, 6502 ASM, FORTRAN 77, Ti-BASIC</List.Description>
+                    </List.Content>
+                </List.Item>
+                <List.Item>
+                    <List.Icon as={BlocksIcon} verticalAlign="middle" />
+                    <List.Content>
+                        <List.Header>Frameworks</List.Header>
+                        <List.Description>PyTorch, React, Robot Operating System, OpenCV</List.Description>
+                    </List.Content>
+                </List.Item>
+                <List.Item>
+                    <List.Icon as={BranchIcon} verticalAlign="middle" />
+                    <List.Content>
+                        <List.Header>Misc. Software</List.Header>
+                        <List.Description>Unix, Git, Godot, Unity3D, SolidWorks, PTC-Creo, Inkscape, Microsoft Office</List.Description>
+                    </List.Content>
+                </List.Item>
+                <List.Item>
+                    <List.Icon as={CircuitIcon} verticalAlign="middle" />
+                    <List.Content>
+                        <List.Header>Electronics</List.Header>
+                        <List.Description>
+                            Raspberry Pi, Arduino, radio control, basic digital electronics (servos, logic gates, op-amps, etc.)
+                        </List.Description>
+                    </List.Content>
+                </List.Item>
+                <List.Item>
+                    <List.Icon as={GearsIcon} verticalAlign="middle" />
+                    <List.Content>
+                        <List.Header>Manufacturing</List.Header>
+                        <List.Description>laser cutter, mill, lathe, MIG welding, drill press, band saw, chop saw</List.Description>
+                    </List.Content>
+                </List.Item>
+            </List>
 
             <h1>Education</h1>
             <h3>Johns Hopkins University</h3>
@@ -84,31 +150,18 @@ export const About = (): JSX.Element => {
 
             <h1>General</h1>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sodales odio a semper elementum. Cras non rhoncus neque, scelerisque dignissim
-                nisl. Proin ac augue sit amet magna eleifend lacinia. Vivamus sollicitudin luctus posuere. Nulla mattis purus vel vehicula bibendum. Nunc non
-                auctor turpis, a posuere velit. In eleifend sem id vehicula dictum. Integer eros magna, porttitor vel lectus at, dictum hendrerit metus. Class
-                aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque habitant morbi tristique senectus et netus et
-                malesuada fames ac turpis egestas. Proin ornare orci quis diam porttitor dapibus. Morbi eget euismod odio. Maecenas quis varius est, id aliquet
-                lectus.
-                <br />
-                <br />
-                Curabitur malesuada porttitor mauris, eget faucibus justo malesuada non. Maecenas venenatis, felis sit amet hendrerit facilisis, est massa
-                tempus dolor, ac ultrices turpis urna vitae enim. Pellentesque lacus erat, vehicula ut ante quis, semper semper ligula. Aliquam eu viverra
-                magna. In iaculis dapibus magna, nec convallis turpis commodo eu. Aliquam bibendum ipsum turpis. Pellentesque faucibus ipsum in convallis
-                laoreet. Suspendisse leo eros, aliquam ut elit a, blandit bibendum lectus. Suspendisse sed semper sapien. Aliquam auctor, tellus id aliquet
-                accumsan, lorem ante placerat velit, quis maximus tellus eros interdum tellus. Integer nibh turpis, auctor vel vulputate eu, sollicitudin ut
-                tortor.
-                <br />
-                <br />
-                Vestibulum iaculis elementum dui euismod viverra. Nullam a facilisis felis. Praesent vehicula nisl ac urna commodo, in vulputate lacus blandit.
-                Maecenas vitae faucibus libero, a gravida lacus. Mauris orci est, fringilla ut eros faucibus, vestibulum lobortis sem. Aliquam erat volutpat.
-                Curabitur convallis tincidunt ex, sit amet accumsan massa varius ac. Praesent dignissim enim dui, at blandit ligula rhoncus non. Suspendisse vel
-                arcu turpis. Mauris facilisis luctus congue. Nullam ornare id ipsum eget dictum. Maecenas dapibus sapien et lectus semper, quis dignissim justo
-                tempor. Etiam nec dignissim metus. Integer id egestas nibh, et pellentesque mi. Suspendisse eget viverra magna. Morbi congue lectus vitae orci
-                semper pellentesque. Aenean tristique erat id purus imperdiet tempor. In vitae velit vitae tortor placerat consectetur ac a urna. In vel velit
-                id sapien semper blandit id eget risus. Nullam vulputate dolor nec tempus dignissim. Vivamus ultricies viverra libero id finibus. Ut vitae nisi
-                condimentum, maximus sapien quis, accumsan est. Quisque mollis dolor id justo condimentum, a pharetra orci ultrices. Phasellus tincidunt, velit
-                ac lacinia sodales, metus eros accumsan tortor, ultricies consequat massa nibh in nunc.
+                I have expertise in cutting edge machine learning, and data science techniques. He has 2 years of professional software engineering experience,
+                and experience working with many state-of-the-art machine learning approaches. Mr. Samson joined IDT in 2019, where he has focused on front end
+                development, and machine learning. Of note, he designed a novel machine learning architecture for efficiently allocating compute resources to
+                minimize the execution time of High Level Architecture (HLA) federated simulations.
+                <BR />
+                During his master&apos;s coursework he implemented from scratch a variety of ML algorithms including MLP, SVM, Expectation Maximization, PCA,
+                autoencoding, and autocorrelation/cross-correlation. Additionally, he worked with CNNs, VGG, ResNet, U-net, Viola Jones, and a variety of other
+                architectures. For a capstone project he developed a novel architecture that leveraged the WaveNet vocoder model paired with a custom
+                convolutional transformer network to create a realistic choral voice synthesizer. Prior to that, at an internship with the Johns Hopkins Applied
+                Physics Lab (JHUAPL), Mr. Samson developed machine learning capabilities for controlling a robotic limb by analyzing electromyogram (EMG)
+                signals in an individual&apos;s upper arm.
+                <BR />
             </p>
         </PageContainer>
     )
