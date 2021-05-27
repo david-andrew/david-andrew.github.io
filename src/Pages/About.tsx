@@ -156,15 +156,19 @@ export const About = (): JSX.Element => {
                 internship with the Johns Hopkins Applied Physics Lab (JHUAPL), I worked on machine learning capabilities for controlling a robotic limb by
                 analyzing electromyogram (EMG) signals in an individual&apos;s upper arm.
                 <BR />
-                For my undergraduate coursework, I mainly focused on mechanical design, and pure software development. Additionally, I participated in the Johns
-                Hopkins Robotics Club, where I worked on several interesting robotics projects, including a{' '}
-                <Link to="/projects/pongbot">defintely not a beer pong robot</Link>, and a <Link to="/projects/robojay">Balancing tour guide robot</Link>.
+                For my undergraduate coursework, I mainly focused on mechanical design, and pure software development. Additionally, I participated in the JHU
+                Robotics Club, where I worked on several interesting robotics projects, including a{' '}
+                <Link to="/projects/drawbot">picture drawing robot arm</Link>, a <Link to="/projects/pongbot">defintely not beer pong robot</Link>, and a{' '}
+                <Link to="/projects/robojay">Balancing tour guide robot</Link>. I also was a member of the JHU Rocketry Club, where I earned my level 1 High
+                Power Rocketry certification, <Link to="/projects/rebel_scum">attempted unsuccessfully</Link> to earn my level 2 certification, and participated
+                in the <Link to="/projects/spaceport_america_cup">2018 Spaceport America Cup</Link>.
                 <BR />
                 In my spare time, I&apos;ve worked on a number of interesting side projects, including a{' '}
                 <Link to="/projects/dewy">custom programming language</Link>, a <Link to="/projects/ensemble">deep learning music synthesizer</Link>,{' '}
                 <Link to="/projects/escort_mission">several</Link> <Link to="/projects/mehve">video</Link> <Link to="/projects/lords_of_sola">games</Link>, as
                 well as a few other <Link to="/projects/blob_opera">odds</Link> and <Link to="/projects/composer">ends</Link>. Typically, I like to work on
-                things that contain one or more elements of machine learning, music, or game development, though that is by no means exhaustive.
+                things that contain one or more elements of machine learning, music, or game development, but I also frequently find myself working on
+                completely unrelated things, like hydroponics, sewing, or baking.
                 <BR />
             </p>
         </PageContainer>

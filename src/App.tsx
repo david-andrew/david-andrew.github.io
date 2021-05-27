@@ -22,6 +22,8 @@ import {
     PRS19,
     RebelScum,
     Rewind,
+    RoboJay,
+    SpaceportAmericaCup,
     uSkipSpoilers,
     WSE18,
 } from './Pages'
@@ -51,6 +53,8 @@ const App = (): JSX.Element => {
         { page: PRS19, path: '/projects/prs19' },
         { page: RebelScum, path: '/projects/rebel_scum' },
         { page: Rewind, path: '/projects/rewind' },
+        { page: RoboJay, path: '/projects/robojay' },
+        { page: SpaceportAmericaCup, path: '/projects/spaceport_america_cup' },
         { page: uSkipSpoilers, path: '/projects/uskipspoilers' },
         { page: WSE18, path: '/projects/wse18' },
     ]

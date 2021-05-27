@@ -171,6 +171,11 @@ export const projects: ProjectContent[] = [
         lastUpdated: 'January 17, 2018',
     },
     {
+        title: '2018 Spaceport America Cup',
+        summary: 'Level 3 High Power Rocket build by the Astrojays (JHU rocketry team) for the Spaceport America Cup',
+        internalLink: '/projects/spaceport_america_cup',
+    },
+    {
         title: 'Sea Perch ROV',
         //imgSrc: seaperch,
         summary: 'Underwater Remote Operated Vehicle...',
@@ -181,6 +186,11 @@ export const projects: ProjectContent[] = [
         internalLink: '/projects/pongbot',
         summary: 'Autonomous robot for shooting ping pong balls into cups',
         tags: ['Arduino', 'C++', 'computer vision', 'Viola-Jones', 'mechanical design'],
+    },
+    {
+        title: 'RoboJay',
+        summary: 'A balancing robot designed to give campus tours to incoming JHU freshmen',
+        internalLink: '/projects/robojay',
     },
     {
         title: 'Choir Compositions',
