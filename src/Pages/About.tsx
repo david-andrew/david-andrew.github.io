@@ -161,14 +161,14 @@ export const About = (): JSX.Element => {
                 <Link to="/projects/drawbot">picture drawing robot arm</Link>, a <Link to="/projects/pongbot">defintely not beer pong robot</Link>, and a{' '}
                 <Link to="/projects/robojay">Balancing tour guide robot</Link>. I also was a member of the JHU Rocketry Club, where I earned my level 1 High
                 Power Rocketry certification, <Link to="/projects/rebel_scum">attempted unsuccessfully</Link> to earn my level 2 certification, and participated
-                in the <Link to="/projects/spaceport_america_cup">2018 Spaceport America Cup</Link>.
+                in the <Link to="/projects/spaceport_america_cup">2018 Spaceport America Cup</Link>. (TODO-&gt;hackathons)
                 <BR />
                 In my spare time, I&apos;ve worked on a number of interesting side projects, including a{' '}
                 <Link to="/projects/dewy">custom programming language</Link>, a <Link to="/projects/ensemble">deep learning music synthesizer</Link>,{' '}
                 <Link to="/projects/escort_mission">several</Link> <Link to="/projects/mehve">video</Link> <Link to="/projects/lords_of_sola">games</Link>, as
                 well as a few other <Link to="/projects/blob_opera">odds</Link> and <Link to="/projects/composer">ends</Link>. Typically, I like to work on
                 things that contain one or more elements of machine learning, music, or game development, but I also frequently find myself working on
-                completely unrelated things, like hydroponics, sewing, or baking.
+                completely unrelated things, e.g. hydroponics, sewing, or celestial navigation.
                 <BR />
             </p>
         </PageContainer>
