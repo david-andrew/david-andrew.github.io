@@ -1,6 +1,7 @@
 import React from 'react'
 import { PageContainer } from '../Components'
-import { List, Icon, SemanticICONS } from 'semantic-ui-react'
+import { List, Divider } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 import shield_logo from '../images/icons/university.shield.small.white.png'
 import jhuapl_shield from '../images/icons/jhuapl_shield.png'
 import idt_starburst from '../images/icons/idt_starburst.jpeg'
@@ -16,15 +17,7 @@ const LogoIcon = (src: string, width: string = '30em'): JSX.Element => {
     return <img style={{ float: 'left' }} className="icon" width={width} src={src} />
 }
 
-const SemanticIcon = (name: SemanticICONS, inverted: boolean = false): JSX.Element => {
-    return (
-        <div style={{ width: '30em', height: '30em' }}>
-            <Icon name={name} fitted inverted={inverted} />
-        </div>
-    )
-}
-
-const BR = () => (
+const BR = (): JSX.Element => (
     <>
         <br />
         <br />
@@ -91,9 +84,9 @@ export const About = (): JSX.Element => {
                     </List.Content>
                 </List.Item>
             </List>
-
+            <Divider />
             <h1>Education</h1>
-            <h3>Johns Hopkins University</h3>
+            <h3 style={{ marginTop: 0 }}>Johns Hopkins University</h3>
             <List inverted relaxed>
                 <List.Item>
                     <List.Icon as={JHUShieldIcon} verticalAlign="middle" size="large" />
@@ -110,9 +103,9 @@ export const About = (): JSX.Element => {
                     </List.Content>
                 </List.Item>
             </List>
-
+            <Divider />
             <h1>Work History</h1>
-            <h3>Johns Hopkins Applied Physics Lab</h3>
+            <h3 style={{ marginTop: 0 }}>Johns Hopkins Applied Physics Lab</h3>
             <List inverted relaxed>
                 <List.Item>
                     <List.Icon as={APLShieldIcon} verticalAlign="middle" size="large" />
@@ -147,20 +140,31 @@ export const About = (): JSX.Element => {
                     </List.Content>
                 </List.Item>
             </List>
+            <Divider />
 
             <h1>General</h1>
             <p>
-                I have expertise in cutting edge machine learning, and data science techniques. He has 2 years of professional software engineering experience,
-                and experience working with many state-of-the-art machine learning approaches. Mr. Samson joined IDT in 2019, where he has focused on front end
-                development, and machine learning. Of note, he designed a novel machine learning architecture for efficiently allocating compute resources to
-                minimize the execution time of High Level Architecture (HLA) federated simulations.
+                I have over 3 years of professional software engineering experience, as well as experience working with many state-of-the-art machine learning
+                techniques. At IDT, I focused on both front end development, and machine learning. Of note, I designed a novel machine learning architecture for
+                efficiently allocating compute resources to minimize the execution time of High Level Architecture (HLA) federated simulations. I also
+                reimplemented a custom Python ensemble anomaly detection framework in Julia, as well as developed a custom React UI for visualizing the results.
                 <BR />
-                During his master&apos;s coursework he implemented from scratch a variety of ML algorithms including MLP, SVM, Expectation Maximization, PCA,
-                autoencoding, and autocorrelation/cross-correlation. Additionally, he worked with CNNs, VGG, ResNet, U-net, Viola Jones, and a variety of other
-                architectures. For a capstone project he developed a novel architecture that leveraged the WaveNet vocoder model paired with a custom
-                convolutional transformer network to create a realistic choral voice synthesizer. Prior to that, at an internship with the Johns Hopkins Applied
-                Physics Lab (JHUAPL), Mr. Samson developed machine learning capabilities for controlling a robotic limb by analyzing electromyogram (EMG)
-                signals in an individual&apos;s upper arm.
+                During my master&apos;s coursework I implemented a variety of ML algorithms from scratch, including MLP, SVM, Expectation Maximization, PCA,
+                autoencoding, and autocorrelation/cross-correlation. Additionally, I&apos;ve worked with CNNs, VGG, ResNet, U-net, Viola Jones, and a variety of
+                other architectures. For a <Link to="/projects/musical_dl">capstone project</Link> I developed a novel architecture that leveraged the WaveNet
+                vocoder model paired with a custom convolutional transformer network to create a realistic choral voice synthesizer. Prior to that, at an
+                internship with the Johns Hopkins Applied Physics Lab (JHUAPL), I worked on machine learning capabilities for controlling a robotic limb by
+                analyzing electromyogram (EMG) signals in an individual&apos;s upper arm.
+                <BR />
+                For my undergraduate coursework, I mainly focused on mechanical design, and pure software development. Additionally, I participated in the Johns
+                Hopkins Robotics Club, where I worked on several interesting robotics projects, including a{' '}
+                <Link to="/projects/pongbot">defintely not a beer pong robot</Link>, and a <Link to="/projects/robojay">Balancing tour guide robot</Link>.
+                <BR />
+                In my spare time, I&apos;ve worked on a number of interesting side projects, including a{' '}
+                <Link to="/projects/dewy">custom programming language</Link>, a <Link to="/projects/ensemble">deep learning music synthesizer</Link>,{' '}
+                <Link to="/projects/escort_mission">several</Link> <Link to="/projects/mehve">video</Link> <Link to="/projects/lords_of_sola">games</Link>, as
+                well as a few other <Link to="/projects/blob_opera">odds</Link> and <Link to="/projects/composer">ends</Link>. Typically, I like to work on
+                things that contain one or more elements of machine learning, music, or game development, though that is by no means exhaustive.
                 <BR />
             </p>
         </PageContainer>
