@@ -17,7 +17,7 @@ export const Contact = (): JSX.Element => {
                             justifyContent: 'center',
                         }}
                     >
-                        <div style={{ fontFamily: 'quadon', fontSize: '125%', display: 'flex', justifyContent: 'center' }}>
+                        <div style={{ fontFamily: 'quadon', fontSize: '140%', display: 'flex', justifyContent: 'center' }}>
                             <List>
                                 <List.Item>
                                     <span>
