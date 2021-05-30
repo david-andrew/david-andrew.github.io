@@ -6,6 +6,7 @@ import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 import {
     BlobOpera,
     BoatSimulator,
+    BuellerBoard,
     Composer,
     Compositions,
     DewySpeak,
@@ -37,6 +38,7 @@ const App = (): JSX.Element => {
     const projectPages: PageProps[] = [
         { page: BlobOpera, path: '/projects/blob_opera' },
         { page: BoatSimulator, path: '/projects/boat_simulator' },
+        { page: BuellerBoard, path: '/projects/bueller_board' },
         { page: Composer, path: '/projects/composer' },
         { page: Compositions, path: '/projects/compositions' },
         { page: DewySpeak, path: '/projects/dewy' },

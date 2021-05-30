@@ -145,9 +145,9 @@ export const About = (): JSX.Element => {
             <h1>General</h1>
             <p>
                 I have over 3 years of professional software engineering experience, as well as experience working with many state-of-the-art machine learning
-                techniques. At IDT, I focused on both front end development, and machine learning. Of note, I designed a novel machine learning architecture for
+                techniques. At IDT, I focused on both machine learning, and front end development. Of note, I designed a novel machine learning architecture for
                 efficiently allocating compute resources to minimize the execution time of High Level Architecture (HLA) federated simulations. I also
-                reimplemented a custom Python ensemble anomaly detection framework in Julia, as well as developed a custom React UI for visualizing the results.
+                implemented a custom time series anomaly detection ensemble model in Julia, and developed the React UI for visualizing the results.
                 <BR />
                 During my master&apos;s coursework I implemented a variety of ML algorithms from scratch, including MLP, SVM, Expectation Maximization, PCA,
                 autoencoding, and autocorrelation/cross-correlation. Additionally, I&apos;ve worked with CNNs, VGG, ResNet, U-net, Viola Jones, and a variety of
@@ -161,7 +161,10 @@ export const About = (): JSX.Element => {
                 <Link to="/projects/drawbot">picture drawing robot arm</Link>, a <Link to="/projects/pongbot">defintely not beer pong robot</Link>, and a{' '}
                 <Link to="/projects/robojay">Balancing tour guide robot</Link>. I also was a member of the JHU Rocketry Club, where I earned my level 1 High
                 Power Rocketry certification, <Link to="/projects/rebel_scum">attempted unsuccessfully</Link> to earn my level 2 certification, and participated
-                in the <Link to="/projects/spaceport_america_cup">2018 Spaceport America Cup</Link>. (TODO-&gt;hackathons)
+                in the <Link to="/projects/spaceport_america_cup">2018 Spaceport America Cup</Link>. And also, whenever I had the opportunity, I enjoyed
+                participating in the JHU hackathons held twice a year, leading to projects like{' '}
+                <Link to="/projects/ensemble_peabody">Ensemble (Hacking Harmony)</Link>, <Link to="/projects/boat_simulator">Boat Simulator</Link>, and{' '}
+                <Link to="/projects/bueller_board">Bueller Board</Link>.
                 <BR />
                 In my spare time, I&apos;ve worked on a number of interesting side projects, including a{' '}
                 <Link to="/projects/dewy">custom programming language</Link>, a <Link to="/projects/ensemble">deep learning music synthesizer</Link>,{' '}

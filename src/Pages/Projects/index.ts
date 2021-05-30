@@ -1,5 +1,6 @@
 export { BlobOpera } from './BlobOpera'
 export { BoatSimulator } from './BoatSimulator'
+export { BuellerBoard } from './BuellerBoard'
 export { Composer } from './Composer'
 export { Compositions } from './Compositions'
 export { DewySpeak } from './DewySpeak'

@@ -172,12 +172,13 @@ export const projects: ProjectContent[] = [
     },
     {
         title: '2018 Spaceport America Cup',
+        imgSrc: logo,
         summary: 'Level 3 High Power Rocket build by the Astrojays (JHU rocketry team) for the Spaceport America Cup',
         internalLink: '/projects/spaceport_america_cup',
     },
     {
         title: 'Sea Perch ROV',
-        //imgSrc: seaperch,
+        imgSrc: logo,
         summary: 'Underwater Remote Operated Vehicle...',
     },
     {
@@ -189,6 +190,7 @@ export const projects: ProjectContent[] = [
     },
     {
         title: 'RoboJay',
+        imgSrc: logo,
         summary: 'A balancing robot designed to give campus tours to incoming JHU freshmen',
         internalLink: '/projects/robojay',
     },
@@ -199,5 +201,12 @@ export const projects: ProjectContent[] = [
         summary: '',
         lastUpdated: 'May 3, 2015',
         tags: ['music', 'choral', 'composition'],
+    },
+    {
+        title: 'Bueller Board',
+        imgSrc: logo,
+        internalLink: '/projects/bueller_board',
+        summary: "Fall 2016 HopHacks submission: Midi keyboard that used user provided audio samples, a.k.a. the 'goat keyboard'",
+        tags: ['midi', 'music'],
     },
 ]
