@@ -79,7 +79,8 @@ export const ProjectItem = ({ title, github, lastUpdated, imgSrc, internalLink, 
         }
     }
     //props for internal vs external links. internal links handled by router, external links open a new tab
-    const linkProps = externalLink !== undefined ? { as: 'a', href: externalLink, target: '_blank' } : { as: 'div', onClick: onClick }
+    const linkProps =
+        externalLink !== undefined ? { as: 'a', href: externalLink, target: '_blank', rel: 'noreferrer noopener' } : { as: 'div', onClick: onClick }
 
     return (
         <Item

@@ -22,13 +22,20 @@ export const Contact = (): JSX.Element => {
                                 <List.Item>
                                     <span>
                                         <Icon name="mail" size="big" />
-                                        <a href="mailto:david.andrew.engineer@gmail.com">david.andrew.engineer@gmail.com</a>
+                                        <a href="mailto:david.andrew.engineer@gmail.com" style={{ whiteSpace: 'nowrap' }}>
+                                            david.andrew.engineer@gmail.com
+                                        </a>
                                     </span>
                                 </List.Item>
                                 <List.Item>
                                     <span>
                                         <Icon name="linkedin" size="big" />
-                                        <a href="https://www.linkedin.com/in/david-andrew-engineer/" target="_blank" rel="noreferrer noopener">
+                                        <a
+                                            href="https://www.linkedin.com/in/david-andrew-engineer/"
+                                            target="_blank"
+                                            rel="noreferrer noopener"
+                                            style={{ whiteSpace: 'nowrap' }}
+                                        >
                                             linkedin.com/in/david-andrew-engineer
                                         </a>
                                     </span>
