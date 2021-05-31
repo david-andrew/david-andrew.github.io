@@ -15,6 +15,7 @@ export const PageContainer = ({ children }: Props): JSX.Element => {
             <Container>
                 <div style={{ fontFamily: 'gentona', fontSize: '100%', textAlign: 'justify', paddingTop: '1em', paddingBottom: '1em' }}>{children}</div>
             </Container>
+            <div style={{ height: '1em' }} />
         </div>
     )
 }

@@ -19,7 +19,6 @@ export const BuellerBoard = (): JSX.Element => {
                 </p>
                 <h3>HopHacks Demo</h3>
                 <Youtube videoId="rpgYMfEShjQ" opts={{ width: '100%' }} />
-                <div style={{ height: '1em' }} />
             </PageContainer>
         </>
     )

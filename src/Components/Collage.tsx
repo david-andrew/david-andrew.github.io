@@ -17,11 +17,11 @@ const getLayout = (numPhotos: number): number[] => {
     return layout
 }
 
-export const Collage = ({ imageObjs }: { imageObjs: any[] }): JSX.Element => {
-    const layout = getLayout(imageObjs.length)
+export const Collage = ({ imageSrcs }: { imageSrcs: string[] }): JSX.Element => {
+    const layout = getLayout(imageSrcs.length)
     const heights = layout.map(() => '250px')
-    const photos = imageObjs.map((obj: any) => {
-        return { source: obj.default }
+    const photos = imageSrcs.map((src: string) => {
+        return { source: src }
     })
 
     return (

@@ -172,7 +172,6 @@ export const About = (): JSX.Element => {
                 well as a few other <Link to="/projects/blob_opera">odds</Link> and <Link to="/projects/composer">ends</Link>. Typically, I like to work on
                 things that contain one or more elements of machine learning, music, or game development, but I also frequently find myself working on
                 completely unrelated things, e.g. hydroponics, sewing, or celestial navigation.
-                <BR />
             </p>
         </PageContainer>
     )

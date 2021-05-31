@@ -3,11 +3,11 @@ import { Collage, PageContainer } from '../Components'
 
 export const Clovers = (): JSX.Element => {
     const r = require.context('../images/clovers')
-    const imageObjs = r.keys().map((path: string) => r(path))
+    const imageSrcs: string[] = r.keys().map((path: string) => r(path).default) as string[]
 
     return (
         <PageContainer>
-            <Collage imageObjs={imageObjs} />
+            <Collage imageSrcs={imageSrcs} />
         </PageContainer>
     )
 }

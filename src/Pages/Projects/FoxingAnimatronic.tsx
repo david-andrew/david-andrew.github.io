@@ -1,14 +1,15 @@
 import React from 'react'
-import { PageContainer, PageHeading } from '../../Components'
+import { Collage, PageContainer, PageHeading } from '../../Components'
 import { ClearFixAfter } from '../../utilities'
 import Youtube from 'react-youtube'
 import cad_design from '../../images/foxing_animatronic/cad_design.png'
 import joystick_demo from '../../images/foxing_animatronic/joystick_demo.gif'
-import full_robot_and_joystick from '../../images/foxing_animatronic/full_robot_and_joystick.jpg'
-import body_control_example from '../../images/foxing_animatronic/body_control_example.jpg'
-import { ReactPhotoCollage } from 'react-photo-collage'
 
 export const FoxingAnimatronic = (): JSX.Element => {
+    //image objects for photo collage
+    const r = require.context('../../images/foxing_animatronic/album')
+    const imageSrcs = r.keys().map((path: string) => r(path).default) as string[]
+
     return (
         <>
             <PageContainer>
@@ -53,15 +54,10 @@ export const FoxingAnimatronic = (): JSX.Element => {
                     and delicate work to ensure the whole mechanism would work as intended without breaking.
                 </p>
                 <h3>Pictures</h3>
-                <ReactPhotoCollage layout={[]} photos={[]} width="100%" showNumOfRemainingPhotos />
+                <Collage imageSrcs={imageSrcs} />
 
-                <h3>Final Music Video (Warning: Gore)</h3>
+                <h3>Final Music Video (Warning: Blood/Unsettling Medical Imagery)</h3>
                 <Youtube videoId="AopbOIH37gs" opts={{ width: '100%' }} />
-
-                {/* <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <img src={body_control_example} style={{ width: '33%' }} />
-                    <img src={full_robot_and_joystick} style={{ width: '33%' }} />
-                </div> */}
             </PageContainer>
         </>
     )
