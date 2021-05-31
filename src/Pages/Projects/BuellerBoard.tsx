@@ -1,6 +1,6 @@
 import React from 'react'
 import { PageContainer, PageHeading } from '../../Components'
-import YouTube from 'react-youtube'
+import Youtube from 'react-youtube'
 
 export const BuellerBoard = (): JSX.Element => {
     return (
@@ -18,7 +18,7 @@ export const BuellerBoard = (): JSX.Element => {
                     While quite silly, our project actually ended up winning a prize for crowd favorite.
                 </p>
                 <h3>HopHacks Demo</h3>
-                <YouTube videoId="rpgYMfEShjQ" opts={{ width: '100%' }} />
+                <Youtube videoId="rpgYMfEShjQ" opts={{ width: '100%' }} />
                 <div style={{ height: '1em' }} />
             </PageContainer>
         </>
