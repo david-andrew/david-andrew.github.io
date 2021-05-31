@@ -4,3 +4,11 @@ import React from 'react'
 export const ClearFixAfter = (): JSX.Element => {
     return <div style={{ clear: 'both', display: 'table' }}></div>
 }
+
+export const ExternalLink = ({ href, children, ...props }: { href: string; children?: React.ReactNode }): JSX.Element => {
+    return (
+        <a href={href} target="_blank" rel="noreferrer noopener" {...props}>
+            {children}
+        </a>
+    )
+}

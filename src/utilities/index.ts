@@ -1,2 +1,2 @@
-export { ClearFixAfter } from './UtilityComponents'
+export { ClearFixAfter, ExternalLink } from './UtilityComponents'
 export { useQuery } from './hooks'
