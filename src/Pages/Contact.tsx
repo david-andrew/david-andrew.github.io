@@ -1,5 +1,6 @@
 import React from 'react'
 import { List, Icon, Container } from 'semantic-ui-react'
+import { ExternalLink } from '../utilities'
 
 export const Contact = (): JSX.Element => {
     return (
@@ -18,29 +19,26 @@ export const Contact = (): JSX.Element => {
                         }}
                     >
                         <div style={{ fontFamily: 'quadon', fontSize: '140%', display: 'flex', justifyContent: 'center' }}>
-                            <List>
-                                <List.Item>
-                                    <span>
-                                        <Icon name="mail" size="big" />
-                                        <a href="mailto:david.andrew.engineer@gmail.com" style={{ whiteSpace: 'nowrap' }}>
-                                            david.andrew.engineer@gmail.com
-                                        </a>
-                                    </span>
-                                </List.Item>
-                                <List.Item>
-                                    <span>
-                                        <Icon name="linkedin" size="big" />
-                                        <a
-                                            href="https://www.linkedin.com/in/david-andrew-engineer/"
-                                            target="_blank"
-                                            rel="noreferrer noopener"
-                                            style={{ whiteSpace: 'nowrap' }}
-                                        >
-                                            linkedin.com/in/david-andrew-engineer
-                                        </a>
-                                    </span>
-                                </List.Item>
-                            </List>
+                            <div style={{ margin: '1em' }}>
+                                <List>
+                                    <List.Item>
+                                        <span>
+                                            <Icon name="mail" size="big" />
+                                            <a href="mailto:david.andrew.engineer@gmail.com" style={{ whiteSpace: 'nowrap' }}>
+                                                david.andrew.engineer@gmail.com
+                                            </a>
+                                        </span>
+                                    </List.Item>
+                                    <List.Item>
+                                        <span>
+                                            <Icon name="linkedin" size="big" />
+                                            <ExternalLink href="https://www.linkedin.com/in/david-andrew-engineer/" style={{ whiteSpace: 'nowrap' }}>
+                                                linkedin.com/in/david-andrew-engineer
+                                            </ExternalLink>
+                                        </span>
+                                    </List.Item>
+                                </List>
+                            </div>
                         </div>
                     </div>
                 </Container>
