@@ -3,6 +3,7 @@ import { PageContainer, PageHeading } from '../../Components'
 import { Link } from 'react-router-dom'
 import { ExternalLink } from '../../utilities'
 import Youtube from 'react-youtube'
+import { Divider } from 'semantic-ui-react'
 
 export const BlobOpera = (): JSX.Element => {
     return (
@@ -12,9 +13,11 @@ export const BlobOpera = (): JSX.Element => {
                 <p>
                     While working on my <Link to="/projects/ensemble">choral music synthesis engine</Link>, Google Arts &amp; Culture Experiments released a fun
                     little project called <ExternalLink href="https://artsandculture.google.com/experiment/blob-opera/AAHWrq360NcGbw">Blob Opera</ExternalLink>.
-                    My brother and I recognized that the back end of Ensemble would be perfect for reading in sheet music which could then be piped into the
-                    Blob Opera, and so we hacked together a hilarious synthesis engine. Most of the code was already written, but I handled all new code, while
-                    my brother handled producing suitable MusicXML files that the Ensemble engine could handle.
+                    My brother and I recognized that the Ensemble back end would be perfect for reading in sheet music which could then be piped into the Blob
+                    Opera, and so we hacked together a hilarious synthesis engine. Most of the code was already written, but I handled all new code, while my
+                    brother handled producing suitable MusicXML files that the Ensemble engine could handle. Music is then{' '}
+                    <ExternalLink href="https://github.com/OverlappingElvis/blob-opera-midi#sideloading-the-json-file">side loaded</ExternalLink> into Blob
+                    Opera, 4 voices at a time, and then recorded.
                 </p>
                 <h3>When David Heard - Eric Whitacre</h3>
                 <iframe
@@ -24,11 +27,14 @@ export const BlobOpera = (): JSX.Element => {
                     frameBorder="no"
                     allow="autoplay"
                     src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1059273385&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"
-                ></iframe>
+                />
+                <Divider />
                 <h3>Nox Arumque - Eric Whitacre</h3>
                 <Youtube videoId="RTEZeaxUP2U" opts={{ width: '100%' }} />
+                <Divider />
+                <h1>Coming Soon™</h1>
+                <h3>Seek Him that Maketh the Seven Stars - Jonathan Dove</h3>
                 <h3>Duel of the Fates - John Williams</h3>
-                <p>Coming Soon. Will incorperate both Blob Opera, and Note Performer for synthesis.</p>
             </PageContainer>
         </>
     )
