@@ -8,7 +8,7 @@ export const Compositions = (): JSX.Element => {
     return (
         <>
             <PageContainer>
-                <PageHeading title="Choir Compositions" subtitile="May 2015" />
+                <PageHeading title="Choir Compositions" subtitle="May 2015" />
                 <p>
                     These are two pieces I composed for my high school choir, and was able to get good recordings of. I also have several other unrecorded
                     pieces, which I&apos;m hoping to add here once <Link to="/projects/so_voice">SoVoice</Link> is able to produce good enough recordings.

@@ -13,7 +13,7 @@ export const FoxingAnimatronic = (): JSX.Element => {
     return (
         <>
             <PageContainer>
-                <PageHeading title="Foxing Animatronic" subtitile="June 2018" />
+                <PageHeading title="Foxing Animatronic" subtitle="June 2018" />
                 <p>
                     Early in 2018, I was tasked by the band Foxing to help develop an animatronic for an upcoming music video they were shooting. They were
                     looking for a mechanically controlled puppet reminiscent of the alien chestburster puppet used in the original Alien movie:

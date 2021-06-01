@@ -17,7 +17,7 @@ export const SkipSpoilers = (): JSX.Element => {
     return (
         <>
             <PageContainer>
-                <PageHeading title="uSkipSpoilers" subtitile={subtitle} />
+                <PageHeading title="uSkipSpoilers" subtitle={subtitle} />
                 <p>
                     uSkipSpoilers is a small chrome extension I made mostly as a joke for my brother who is extremely spoiler averse. Beyond that, my goal was
                     to gain experience developing browser extensions which would help me to build more in the future.

@@ -6,7 +6,7 @@ export const BuellerBoard = (): JSX.Element => {
     return (
         <>
             <PageContainer>
-                <PageHeading title="Bueller Board" subtitile="September 2015" />
+                <PageHeading title="Bueller Board" subtitle="September 2015" />
                 <h3>About</h3>
                 <p>
                     In fall 2015 I attended my first hackathon. With a team of 3, we built a very simple app that allowed you to use custom sounds for a midi

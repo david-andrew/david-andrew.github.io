@@ -11,7 +11,7 @@ export const BoatSimulator = (): JSX.Element => {
     return (
         <>
             <PageContainer>
-                <PageHeading title="Boat Simulator" subtitile="March 2017" />
+                <PageHeading title="Boat Simulator" subtitle="March 2017" />
                 <p>
                     Boat Simulator was a small Unity3D game I made at the Spring 2017 JHU hackathon. My initial goal was to build a game that demonstrated the
                     physics of sailing, especially the fact that sailing with the wind is one of the slower directions you can sail. Ultimately, building a

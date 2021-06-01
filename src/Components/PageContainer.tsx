@@ -20,11 +20,11 @@ export const PageContainer = ({ children }: Props): JSX.Element => {
     )
 }
 
-export const PageHeading = ({ title, subtitile }: { title: string; subtitile: string }): JSX.Element => {
+export const PageHeading = ({ title, subtitle }: { title: string; subtitle: string }): JSX.Element => {
     return (
         <>
             <h1 style={{ marginBottom: 0 }}>{title}</h1>
-            <p>{subtitile}</p>
+            <p>{subtitle}</p>
         </>
     )
 }
