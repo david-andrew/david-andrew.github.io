@@ -167,7 +167,7 @@ export const About = (): JSX.Element => {
                 <Link to="/projects/bueller_board">Bueller Board</Link>.
                 <BR />
                 In my spare time, I&apos;ve worked on a number of interesting side projects, including a{' '}
-                <Link to="/projects/dewy">custom programming language</Link>, a <Link to="/projects/ensemble">deep learning music synthesizer</Link>,{' '}
+                <Link to="/projects/dewy">custom programming language</Link>, a <Link to="/projects/so_voice">deep learning music synthesizer</Link>,{' '}
                 <Link to="/projects/escort_mission">several</Link> <Link to="/projects/mehve">video</Link> <Link to="/projects/lords_of_sola">games</Link>, as
                 well as a few other <Link to="/projects/blob_opera">odds</Link> and <Link to="/projects/composer">ends</Link>. Typically, I like to work on
                 things that contain one or more elements of machine learning, music, or game development, but I also frequently find myself working on

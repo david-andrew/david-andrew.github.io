@@ -40,9 +40,10 @@ export const projects: ProjectContent[] = [
         tags: ['React', 'TypeScript', 'Semantic UI', 'CSS', 'HTML'],
     },
     {
-        title: 'Ensemble',
+        title: 'so voice!',
         imgSrc: logo,
-        internalLink: '/projects/ensemble',
+        lastUpdated: 'January 18, 2021',
+        internalLink: '/projects/so_voice',
         summary: 'Choral music synthesis with deep learning (Continuation of Musical DL)',
         tags: ['Python', 'Pytorch', 'AI/ML', 'choral', 'music', 'synthesis'],
     },
