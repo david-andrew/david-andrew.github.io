@@ -37,11 +37,11 @@ const AudioExamplePair = ({ title, pairs }: { title: string; pairs: AudioPair[] 
                     <Table.Row key={`${audio1.label}${audio1.src}${audio2.label}${audio2.src}`}>
                         <Table.Cell>
                             <h4>{audio1.label}</h4>
-                            <ReactAudioPlayer src={audio1.src} controls />
+                            <ReactAudioPlayer src={audio1.src} style={{ width: '100%' }} controls />
                         </Table.Cell>
                         <Table.Cell>
                             <h4>{audio2.label}</h4>
-                            <ReactAudioPlayer src={audio2.src} controls />
+                            <ReactAudioPlayer src={audio2.src} style={{ width: '100%' }} controls />
                         </Table.Cell>
                     </Table.Row>
                 ))}
