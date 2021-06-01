@@ -153,6 +153,7 @@ export const projects: ProjectContent[] = [
     {
         title: 'Boat Simulator',
         imgSrc: boat_simulator,
+        lastUpdated: 'March 5, 2017',
         internalLink: '/projects/boat_simulator',
         summary: `HopHacks 20XX submission`,
         tags: ['Unity', 'C#', '3D game'],
