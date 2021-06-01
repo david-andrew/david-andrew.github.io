@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Icon, Item } from 'semantic-ui-react'
 import { useHistory } from 'react-router-dom'
 import { ProjectContent } from '../Pages'
+import { toMonthDayYearString } from '../utilities'
 import axios from 'axios'
 
 //TODO->move to utilities
@@ -10,9 +11,8 @@ function sleep(ms: number): Promise<void> {
 }
 
 //asynchronously fetch the most recent update timestamp for the github project
-const getGithubTimestamp = async (repoName: string, callback: (timestamp: Date | undefined) => void): Promise<void> => {
+export const getGithubTimestamp = async (repoName: string, callback: (timestamp: Date | undefined) => void): Promise<void> => {
     try {
-        await sleep(500) //TODO->DEBUG to verify loader displays correctly
         //API call to github for the repo update timestamp
         const response = await axios.get(`https://api.github.com/repos/david-andrew/${repoName}`)
         const updatedAt = new Date(response.data['updated_at'])
@@ -21,10 +21,7 @@ const getGithubTimestamp = async (repoName: string, callback: (timestamp: Date |
         callback(undefined)
     }
 }
-//convert a date to a nice string
-const dateToString = (t: Date): string => {
-    return t.toLocaleDateString('default', { day: '2-digit', month: 'long', year: 'numeric' })
-}
+
 //build the jsx for displaying the update timestamp. display a loading icon while loading
 const getUpdateElement = (update: string | undefined): JSX.Element => {
     if (update !== undefined) {
@@ -49,7 +46,7 @@ export const ProjectItem = ({ title, github, lastUpdated, imgSrc, internalLink, 
         if (github !== undefined) {
             getGithubTimestamp(github, (timestamp: Date | undefined) => {
                 if (timestamp !== undefined) {
-                    setUpdate(`Last Updated: ${dateToString(timestamp)}`)
+                    setUpdate(`Last Updated: ${toMonthDayYearString(timestamp)}`)
                 } else {
                     setUpdate('Last Updated: <Failed to fetch timestamp>')
                 }

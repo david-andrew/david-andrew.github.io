@@ -25,7 +25,7 @@ import {
     Rewind,
     RoboJay,
     SpaceportAmericaCup,
-    uSkipSpoilers,
+    SkipSpoilers,
     WSE18,
 } from './Pages'
 
@@ -57,7 +57,7 @@ const App = (): JSX.Element => {
         { page: Rewind, path: '/projects/rewind' },
         { page: RoboJay, path: '/projects/robojay' },
         { page: SpaceportAmericaCup, path: '/projects/spaceport_america_cup' },
-        { page: uSkipSpoilers, path: '/projects/uskipspoilers' },
+        { page: SkipSpoilers, path: '/projects/uskipspoilers' },
         { page: WSE18, path: '/projects/wse18' },
     ]
 
