@@ -1,7 +1,7 @@
 import React from 'react'
 import { Collage, PageContainer, PageHeading } from '../../Components'
 import { ClearFixAfter, ExternalLink } from '../../utilities'
-import Youtube from 'react-youtube'
+import YouTube from 'react-youtube'
 import cad_design from '../../images/foxing_animatronic/cad_design.png'
 import joystick_demo from '../../images/foxing_animatronic/joystick_demo.gif'
 
@@ -18,7 +18,7 @@ export const FoxingAnimatronic = (): JSX.Element => {
                     Early in 2018, I was tasked by the band Foxing to help develop an animatronic for an upcoming music video they were shooting. They were
                     looking for a mechanically controlled puppet reminiscent of the alien chestburster puppet used in the original Alien movie:
                 </p>
-                <Youtube videoId="I6D5sPitfgo" opts={{ width: '100%' }} />
+                <YouTube videoId="I6D5sPitfgo" opts={{ width: '100%' }} />
                 <br />
                 <p>
                     They wanted the same style of mechanism, but wanted it to be more slender, reminiscent of a plant or flower. The band had also hired
@@ -52,7 +52,7 @@ export const FoxingAnimatronic = (): JSX.Element => {
                 <Collage imageSrcs={imageSrcs} />
 
                 <h3>Final Music Video (Warning: Blood/Unsettling Medical Imagery)</h3>
-                <Youtube videoId="AopbOIH37gs" opts={{ width: '100%' }} />
+                <YouTube videoId="AopbOIH37gs" opts={{ width: '100%' }} />
             </PageContainer>
         </>
     )

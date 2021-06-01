@@ -2,7 +2,7 @@ import React from 'react'
 import { PageContainer, PageHeading } from '../../Components'
 import { Link } from 'react-router-dom'
 import { ExternalLink } from '../../utilities'
-import Youtube from 'react-youtube'
+import YouTube from 'react-youtube'
 import { Divider } from 'semantic-ui-react'
 
 export const BlobOpera = (): JSX.Element => {
@@ -30,7 +30,7 @@ export const BlobOpera = (): JSX.Element => {
                 />
                 <Divider />
                 <h3>Nox Arumque - Eric Whitacre</h3>
-                <Youtube videoId="RTEZeaxUP2U" opts={{ width: '100%' }} />
+                <YouTube videoId="RTEZeaxUP2U" opts={{ width: '100%' }} />
                 <Divider />
                 <h1>Coming Soon™</h1>
                 <h3>Seek Him that Maketh the Seven Stars - Jonathan Dove</h3>
