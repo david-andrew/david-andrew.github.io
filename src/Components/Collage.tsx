@@ -2,12 +2,12 @@ import React from 'react'
 import { ReactPhotoCollage } from 'react-photo-collage'
 import './Collage.css'
 
-const getLayout = (numPhotos: number): number[] => {
+const getLayout = (numPhotos: number, rowSizes: number[] = [3, 4, 5]): number[] => {
     const layout: number[] = []
     {
         let remaining = numPhotos
         let i = 0
-        const rowSizes = [3, 4, 5]
+        // const rowSizes = [3, 4, 5]
         while (remaining > 0) {
             const rowSize = rowSizes[i++ % rowSizes.length]
             layout.push(rowSize)
@@ -17,8 +17,8 @@ const getLayout = (numPhotos: number): number[] => {
     return layout
 }
 
-export const Collage = ({ imageSrcs }: { imageSrcs: string[] }): JSX.Element => {
-    const layout = getLayout(imageSrcs.length)
+export const Collage = ({ imageSrcs, rowSizes }: { imageSrcs: string[]; rowSizes?: number[] }): JSX.Element => {
+    const layout = getLayout(imageSrcs.length, rowSizes)
     const heights = layout.map(() => '250px')
     const photos = imageSrcs.map((src: string) => {
         return { source: src }
