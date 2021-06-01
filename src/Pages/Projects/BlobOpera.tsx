@@ -18,7 +18,7 @@ export const BlobOpera = (): JSX.Element => {
                     hacked together a hilarious synthesis engine. Most of the code was already written, but I handled all new code, while my brother handled
                     producing suitable MusicXML files that the Ensemble engine could handle. Music is then{' '}
                     <ExternalLink href="https://github.com/OverlappingElvis/blob-opera-midi#sideloading-the-json-file">side loaded</ExternalLink> into Blob
-                    Opera, 4 voices at a time, and then recorded.
+                    Opera, 4 voices at a time, and recorded.
                 </p>
                 <h3>When David Heard - Eric Whitacre</h3>
                 <iframe
