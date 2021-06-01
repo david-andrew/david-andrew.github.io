@@ -5,11 +5,6 @@ import { ProjectContent } from '../Pages'
 import { toMonthDayYearString } from '../utilities'
 import axios from 'axios'
 
-//TODO->move to utilities
-function sleep(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms))
-}
-
 //asynchronously fetch the most recent update timestamp for the github project
 export const getGithubTimestamp = async (repoName: string, callback: (timestamp: Date | undefined) => void): Promise<void> => {
     try {
