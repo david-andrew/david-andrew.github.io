@@ -1,7 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { PageContainer, PageHeading } from '../../Components'
-import { ExternalLink } from '../../utilities'
+import { ExternalLink, InternalLink } from '../../utilities'
 import { Table } from 'semantic-ui-react'
 import ReactAudioPlayer from 'react-audio-player'
 import atma16000 from '../../audio/so_voice/atma16000.wav'
@@ -56,8 +55,8 @@ export const SoVoice = (): JSX.Element => {
             <PageContainer>
                 <PageHeading title="so voice!" subtitle="January 2021" />
                 <p>
-                    so voice! is the spiritual successor to my <Link to="/projects/musical_dl">Deep Learning Capstone Project</Link>. The goal is to develop a
-                    choir synthesizer that leverages deep learning to produce audio that is indistinguishable from real recordings.
+                    so voice! is the spiritual successor to my <InternalLink to="/projects/musical_dl">Deep Learning Capstone Project</InternalLink>. The goal
+                    is to develop a choir synthesizer that leverages deep learning to produce audio that is indistinguishable from real recordings.
                 </p>
                 <h3>Method</h3>
                 <p>

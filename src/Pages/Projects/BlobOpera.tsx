@@ -1,7 +1,6 @@
 import React from 'react'
 import { PageContainer, PageHeading } from '../../Components'
-import { Link } from 'react-router-dom'
-import { ExternalLink } from '../../utilities'
+import { ExternalLink, InternalLink } from '../../utilities'
 import YouTube from 'react-youtube'
 import { Divider } from 'semantic-ui-react'
 
@@ -11,8 +10,8 @@ export const BlobOpera = (): JSX.Element => {
             <PageContainer>
                 <PageHeading title="Blob Opera Performance" subtitle="February 2021" />
                 <p>
-                    While working on my <Link to="/projects/so_voice">choral music synthesis engine</Link>, SoVoice, Google Arts &amp; Culture Experiments
-                    released a fun little project called{' '}
+                    While working on my <InternalLink to="/projects/so_voice">choral music synthesis engine</InternalLink>, SoVoice, Google Arts &amp; Culture
+                    Experiments released a fun little project called{' '}
                     <ExternalLink href="https://artsandculture.google.com/experiment/blob-opera/AAHWrq360NcGbw">Blob Opera</ExternalLink>. My brother and I
                     recognized that the SoVoice back end would be perfect for reading in sheet music which could then be piped into the Blob Opera, and so we
                     hacked together a hilarious synthesis engine. Most of the code was already written, but I handled all new code, while my brother handled

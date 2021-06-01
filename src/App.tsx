@@ -1,5 +1,4 @@
 import React from 'react'
-// import ReactDomServer from 'react-dom/server'
 import { Navbar } from './Components/Navbar'
 import { About, Contact, Home, Clovers, NotFound, NotImplemented, Projects } from './Pages'
 import { HashRouter as Router, Switch, Route } from 'react-router-dom'
@@ -13,7 +12,7 @@ import {
     DrawRobot,
     SoVoice,
     EnsemblePeabody,
-    EscortMision,
+    EscortMission,
     FoxingAnimatronic,
     LordsOfSola,
     Mechatronics,
@@ -45,7 +44,7 @@ const App = (): JSX.Element => {
         { page: DrawRobot, path: '/projects/drawbot' },
         { page: SoVoice, path: '/projects/so_voice' },
         { page: EnsemblePeabody, path: '/projects/ensemble_peabody' },
-        { page: EscortMision, path: '/projects/escort_mission' },
+        { page: EscortMission, path: '/projects/escort_mission' },
         { page: FoxingAnimatronic, path: '/projects/foxing_animatronic' },
         { page: LordsOfSola, path: '/projects/lords_of_sola' },
         { page: Mechatronics, path: '/projects/mechatronics' },

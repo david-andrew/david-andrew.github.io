@@ -1,7 +1,7 @@
 import React from 'react'
 import { PageContainer } from '../Components'
 import { List, Divider } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
+import { InternalLink } from '../utilities'
 import shield_logo from '../images/icons/university.shield.small.white.png'
 import jhuapl_shield from '../images/icons/jhuapl_shield.png'
 import idt_starburst from '../images/icons/idt_starburst.png'
@@ -151,26 +151,30 @@ export const About = (): JSX.Element => {
                 <BR />
                 During my master&apos;s coursework I implemented a variety of ML algorithms from scratch, including MLP, SVM, Expectation Maximization, PCA,
                 autoencoding, and autocorrelation/cross-correlation. Additionally, I&apos;ve worked with CNNs, VGG, ResNet, U-net, Viola Jones, and a variety of
-                other architectures. For a <Link to="/projects/musical_dl">capstone project</Link> I developed a novel architecture that leveraged the WaveNet
-                vocoder model paired with a custom convolutional transformer network to create a realistic choral voice synthesizer. Prior to that, at an
-                internship with the Johns Hopkins Applied Physics Lab (JHUAPL), I worked on machine learning capabilities for controlling a robotic limb by
-                analyzing electromyogram (EMG) signals in an individual&apos;s upper arm.
+                other architectures. For a <InternalLink to="/projects/musical_dl">capstone project</InternalLink> I developed a novel architecture that
+                leveraged the WaveNet vocoder model paired with a custom convolutional transformer network to create a realistic choral voice synthesizer. Prior
+                to that, at an internship with the Johns Hopkins Applied Physics Lab (JHUAPL), I worked on machine learning capabilities for controlling a
+                robotic limb by analyzing electromyogram (EMG) signals in an individual&apos;s upper arm.
                 <BR />
                 For my undergraduate coursework, I mainly focused on mechanical design, and pure software development. Additionally, I participated in the JHU
                 Robotics Club, where I worked on several interesting robotics projects, including a{' '}
-                <Link to="/projects/drawbot">picture drawing robot arm</Link>, a <Link to="/projects/pongbot">defintely not beer pong robot</Link>, and a{' '}
-                <Link to="/projects/robojay">Balancing tour guide robot</Link>. I also was a member of the JHU Rocketry Club, where I earned my level 1 High
-                Power Rocketry certification, <Link to="/projects/rebel_scum">attempted unsuccessfully</Link> to earn my level 2 certification, and participated
-                in the <Link to="/projects/spaceport_america_cup">2018 Spaceport America Cup</Link>. And also, whenever I had the opportunity, I enjoyed
-                participating in the JHU hackathons held twice a year, leading to projects like{' '}
-                <Link to="/projects/ensemble_peabody">Ensemble (Hacking Harmony)</Link>, <Link to="/projects/boat_simulator">Boat Simulator</Link>, and{' '}
-                <Link to="/projects/bueller_board">Bueller Board</Link>.
+                <InternalLink to="/projects/drawbot">picture drawing robot arm</InternalLink>, a{' '}
+                <InternalLink to="/projects/pongbot">defintely not beer pong robot</InternalLink>, and a{' '}
+                <InternalLink to="/projects/robojay">Balancing tour guide robot</InternalLink>. I also was a member of the JHU Rocketry Club, where I earned my
+                level 1 High Power Rocketry certification, <InternalLink to="/projects/rebel_scum">attempted unsuccessfully</InternalLink> to earn my level 2
+                certification, and participated in the <InternalLink to="/projects/spaceport_america_cup">2018 Spaceport America Cup</InternalLink>. And also,
+                whenever I had the opportunity, I enjoyed participating in the JHU hackathons held twice a year, leading to projects like{' '}
+                <InternalLink to="/projects/ensemble_peabody">Ensemble (Hacking Harmony)</InternalLink>,{' '}
+                <InternalLink to="/projects/boat_simulator">Boat Simulator</InternalLink>, and{' '}
+                <InternalLink to="/projects/bueller_board">Bueller Board</InternalLink>.
                 <BR />
                 In my spare time, I&apos;ve worked on a number of interesting side projects, including a{' '}
-                <Link to="/projects/dewy">custom programming language</Link>, a <Link to="/projects/so_voice">deep learning music synthesizer</Link>,{' '}
-                <Link to="/projects/escort_mission">several</Link> <Link to="/projects/mehve">video</Link> <Link to="/projects/lords_of_sola">games</Link>, as
-                well as a few other <Link to="/projects/blob_opera">odds</Link> and <Link to="/projects/composer">ends</Link>. Typically, I like to work on
-                things that contain one or more elements of machine learning, music, or game development, but I also frequently find myself working on
+                <InternalLink to="/projects/dewy">custom programming language</InternalLink>, a{' '}
+                <InternalLink to="/projects/so_voice">deep learning music synthesizer</InternalLink>,{' '}
+                <InternalLink to="/projects/escort_mission">several</InternalLink> <InternalLink to="/projects/mehve">video</InternalLink>{' '}
+                <InternalLink to="/projects/lords_of_sola">games</InternalLink>, as well as a few other{' '}
+                <InternalLink to="/projects/blob_opera">odds</InternalLink> and <InternalLink to="/projects/composer">ends</InternalLink>. Typically, I like to
+                work on things that contain one or more elements of machine learning, music, or game development, but I also frequently find myself working on
                 completely unrelated things, e.g. hydroponics, sewing, or celestial navigation.
             </p>
         </PageContainer>
