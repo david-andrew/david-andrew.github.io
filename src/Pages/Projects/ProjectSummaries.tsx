@@ -188,11 +188,9 @@ export const projects: ProjectContent[] = [
         summary: 'Level 3 High Power Rocket build by the Astrojays (JHU rocketry team) for the Spaceport America Cup',
         internalLink: '/projects/spaceport_america_cup',
     },
-
     {
-        title: 'uSkipSpoilers (Github Link?)',
+        title: 'uSkipSpoilers',
         imgSrc: logo,
-        // externalLink: 'https://github.com/david-andrew/uSkipSpoilers',
         internalLink: '/projects/uskipspoilers',
         summary: 'A small chrome extension for blocking spoilers in YouTube videos',
         tags: ['React', 'TypeScript', 'Chrome', 'Extension'],

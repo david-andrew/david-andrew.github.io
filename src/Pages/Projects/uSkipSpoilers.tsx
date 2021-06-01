@@ -36,6 +36,11 @@ export const SkipSpoilers = (): JSX.Element => {
                         uSkipSpoilers Chrome Extension
                     </ExternalLink>
                 </span>
+                <h3>Github</h3>
+                <span>
+                    <Icon name="github" size="big" />
+                    <ExternalLink href="https://github.com/david-andrew/uSkipSpoilers">uSkipSpoilers git repo</ExternalLink>
+                </span>
             </PageContainer>
         </>
     )
