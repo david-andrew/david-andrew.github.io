@@ -82,17 +82,17 @@ export const DewySpeak = (): JSX.Element => {
                 />
                 <p>However, because SRNGLR can handle ambiguities, the grammar can be simplified to something like this:</p>
                 <CodeBlock
-                    text={`#E = '(' #ws* #E #ws* ')';  //parenthesis
-#E = #E #ws* [+\\-] #ws* #E; //addition/subtraction
-#E = #E #ws* [*/] #ws* #E;  //multiplication/division
-#E = #E #ws* '^' #ws* #E;   //exponentiation
+                    text={`#E = '(' #w* #E #w* ')';    //parenthesis
+#E = #E #w* [+\\-] #w* #E;   //addition/subtraction
+#E = #E #w* [*/] #w* #E;    //multiplication/division
+#E = #E #w* '^' #w* #E;     //exponentiation
 #E = #N | #I;               //terms (numbers/identifiers)
 #N = [0-9]+;
 #I = [A-Za-z_] [A-Za-z0-9!@%&_?]*;
 
-#ws = [\\n\\x20];             // whitespace
+#w = [\\n\\x20];              // whitespace
 
-#start = (#ws* #E)+;`}
+#start = (#w* #E)+ #w*;`}
                 />
                 <p>
                     Note that for the ambiguous grammar, precedence and associativity still need to be handled at some point in the process. SRNGLR just
@@ -208,15 +208,17 @@ export const DewySpeak = (): JSX.Element => {
                     their definitions, type safety checks, etc.
                 </p>
                 <p>
-                    After semantic analysis, the last step of the compiler is code generation. For dewy, I plan to leverage the LLVM compiler toolchain, meaning
-                    I convert the parse tree into the LLVM Intermediate Representation (i.e. assembly language), which is then optimized and compiled down to a
-                    binary executable. I&apos;m also thinking of having a C code generator, which would allow for extreme levels of portability in the
-                    compiler&mdash;most systems could build and run the Dewy compiler, as a C99 compiler would be the only dependency.
+                    After semantic analysis, the last step of the compiler is code generation. For dewy, I plan to leverage the{' '}
+                    <ExternalLink href="https://llvm.org/">LLVM compiler toolchain</ExternalLink>, meaning I convert the parse tree into{' '}
+                    <ExternalLink href="https://en.wikipedia.org/wiki/LLVM#Intermediate_representation">LLVM IR</ExternalLink> (read LLVM assembly), which is
+                    then optimized and compiled down to a binary executable. I&apos;m also planning to have an optional C code generator, which would allow for
+                    extreme levels of portability in the compiler&mdash;most systems could build and run the Dewy compiler, as a C99 compiler would be the only
+                    dependency.
                 </p>
                 <h3>Try It</h3>
                 <p>
-                    Since the language is far from complete, the most you can try is the SRNGLR parser. The git repo includes several example grammar and source
-                    code pairs that can be run by the current parser.
+                    Since the language is far from complete, the most you can try right now is the SRNGLR parser. The git repo includes several example grammar
+                    and source code pairs that can be run by the current parser.
                 </p>
                 <CodeBlock
                     language="bash"
@@ -239,13 +241,13 @@ $ ./dewy ../../tests/grammar3.dewy ../../tests/source8.dewy #unambiguous version
                     <List.Item>
                         <span>
                             <Icon name="github" size="big" />
-                            <ExternalLink href="https://github.com/david-andrew/dewy">github repo</ExternalLink>
+                            <ExternalLink href="https://github.com/david-andrew/dewy">Github Repo</ExternalLink>
                         </span>
                     </List.Item>
                     <List.Item>
                         <span>
                             <Icon name="trello" size="big" />
-                            <ExternalLink href="https://trello.com/b/YYsedENy/dewyspeak">project trello board</ExternalLink>
+                            <ExternalLink href="https://trello.com/b/YYsedENy/dewyspeak">Project Trello Board</ExternalLink>
                         </span>
                     </List.Item>
                     <List.Item>
