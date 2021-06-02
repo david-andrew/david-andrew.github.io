@@ -3,25 +3,6 @@ import { Icon, List } from 'semantic-ui-react'
 import { PageContainer, PageHeading } from '../../Components'
 import { useGithubTimestamp, Code, CodeBlock, ExternalLink } from '../../utilities'
 
-/*
-Layout
-
-Abstract:
-- basic summary
---> what
---> why
---> how
-- important links
---> github
---> documentation
---> trello
-
-Work so far
-- RNGLR parser
-
-
-*/
-
 export const DewySpeak = (): JSX.Element => {
     const subtitle = useGithubTimestamp('dewy')
 
