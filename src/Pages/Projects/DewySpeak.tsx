@@ -53,11 +53,13 @@ export const DewySpeak = (): JSX.Element => {
                 <p>
                     To parse a mathematical expression like <Code>1 + 2 * 3</Code> we first have to define the grammar for how raw text gets converted to a
                     parse tree. For this, I&apos;ve developed the Dewy Meta Language which allows for the specification of any Context Free Grammar (CFG), as
-                    well as some context sensitive grammars which can be parsed by SRNGLR
+                    well as some context sensitive grammars which can be parsed by SRNGLR. Additionally, the meta-language / parser are optimized to allow for
+                    arbitrary unicode characters as part of the language alphabet, whereas parsers are often limited a much smaller alphabet, e.g. ASCII.
                 </p>
                 <p>
-                    Normally a grammar must be unambiguous to work with standard LR, LALR, etc. parsers. This complicates the process of writing the grammar.
-                    For the math expression <Code>1 + 2 * 3</Code>, or any other math expression, the unambiguous version of the grammar might look like this:
+                    Normally a grammar must be unambiguous to work with standard LR, LALR, etc. parsers. This complicates the process of writing the grammar, as
+                    often times, the natural way to express a language will be ambiguous, and require careful work to disambiguate. For the math expression{' '}
+                    <Code>1 + 2 * 3</Code>, or any other math expression, the unambiguous version of the grammar might look like this:
                 </p>
                 <CodeBlock
                     text={`//addition/subtraction (left associative)
@@ -80,7 +82,11 @@ export const DewySpeak = (): JSX.Element => {
 
 #start = (#w* #S)+ #w*;`}
                 />
-                <p>However, because SRNGLR can handle ambiguities, the grammar can be simplified to something like this:</p>
+                <p>
+                    Precedence is handled by restricting which expressions can be subexpressions, using different grammar symbols. Associativity is also handled
+                    in a similar fashion, namely the left or right hand side is restricted to specific subexpression types that generate the correct
+                    associativity. Ultimately though, because SRNGLR can handle ambiguities, the grammar can be simplified to something like this:
+                </p>
                 <CodeBlock
                     text={`#E = '(' #w* #E #w* ')';    //parenthesis
 #E = #E #w* [+\\-] #w* #E;   //addition/subtraction
@@ -96,7 +102,7 @@ export const DewySpeak = (): JSX.Element => {
                 />
                 <p>
                     Note that for the ambiguous grammar, precedence and associativity still need to be handled at some point in the process. SRNGLR just
-                    provides the flexibility to handle them more conveniently.
+                    provides the flexibility to handle them later in the parsing process, when it is much more convenient.
                 </p>
                 <p>
                     Running the first grammar on <Code>1 + 2 * 3</Code> we get the following parse tree
@@ -147,7 +153,7 @@ export const DewySpeak = (): JSX.Element => {
 │   └── ϵ: #__6
 └── ϵ: #__1`}
                 />
-                <p>while parsing the same input with the ambiguous grammar returns the following parse forests:</p>
+                <p>while parsing the same input with the ambiguous grammar returns the following parse forest:</p>
                 <CodeBlock
                     text={` 0 #start:0
  1 ├── #__4:0
