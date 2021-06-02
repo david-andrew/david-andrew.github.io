@@ -1,4 +1,7 @@
+import { useState, useRef, useEffect } from 'react'
 import { useLocation, useHistory } from 'react-router'
+import { getGithubTimestamp } from '../Components'
+import { toMonthDayYearString, toMonthYearString } from './'
 
 interface useQueryReturn {
     params: { [key: string]: string }
@@ -31,4 +34,31 @@ export const useQuery = (): useQueryReturn => {
     }
 
     return { params, setParam, clearParam }
+}
+
+//Hook for getting a timestamp string for a given git repo
+export const useGithubTimestamp = (repoName: string, includeDay: boolean = false): string => {
+    //fetch the timestamp and store into the timestamp state
+    //undefined indicates not yet returned, null indicates failed to fetch
+    const [timestamp, setTimestamp] = useState<Date | undefined | null>()
+    useEffect(() => {
+        setTimestamp(undefined)
+        getGithubTimestamp(repoName, (repoTimestamp?: Date) => {
+            setTimestamp(repoTimestamp ?? null)
+        })
+    }, [repoName])
+
+    //handle the string output based on the value of the timestamp
+    const [timestampStr, setTimestampStr] = useState<string>('Fetching Date...')
+    useEffect(() => {
+        if (timestamp === undefined) {
+            setTimestampStr('Fetching Date...')
+        } else if (timestamp === null) {
+            setTimestampStr('Unknown Date')
+        } else {
+            setTimestampStr(includeDay ? toMonthDayYearString(timestamp) : toMonthYearString(timestamp))
+        }
+    }, [timestamp, includeDay])
+
+    return timestampStr
 }

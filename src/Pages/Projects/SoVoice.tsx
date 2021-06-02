@@ -56,7 +56,7 @@ export const SoVoice = (): JSX.Element => {
                 <PageHeading title="so voice!" subtitle="January 2021" />
                 <p>
                     so voice! is the spiritual successor to my <InternalLink to="/projects/musical_dl">Deep Learning Capstone Project</InternalLink>. The goal
-                    is to develop a choir synthesizer that leverages deep learning to produce audio that is indistinguishable from real recordings.
+                    is to develop a choir synthesizer that leverages deep learning to produce audio indistinguishable from real recordings.
                 </p>
                 <h3>Method</h3>
                 <p>
@@ -78,7 +78,7 @@ export const SoVoice = (): JSX.Element => {
                 </p>
                 <h3>Current Examples</h3>
                 <AudioExamplePair
-                    title="AudioResynthesis"
+                    title="Audio Resynthesis"
                     pairs={[
                         {
                             audio1: { label: 'Real audio (16000 Hz)', src: atma16000 },
@@ -87,7 +87,7 @@ export const SoVoice = (): JSX.Element => {
                     ]}
                 />
                 <AudioExamplePair
-                    title="Auto-Encoder GAN experiment"
+                    title="Auto-Encoder GAN Experiment"
                     pairs={[
                         {
                             audio1: { label: 'Real audio (16000 Hz)', src: pando_260800_4_y },

@@ -1,18 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Icon } from 'semantic-ui-react'
-import { PageContainer, PageHeading, getGithubTimestamp } from '../../Components'
-import { ExternalLink, toMonthYearString } from '../../utilities'
+import { PageContainer, PageHeading } from '../../Components'
+import { ExternalLink } from '../../utilities'
+import { useGithubTimestamp } from '../../utilities/hooks'
 
 export const SkipSpoilers = (): JSX.Element => {
-    //fetch the update time for the subtitle
-    const [subtitle, setSubtitle] = useState<string>('Fetching Date...')
-    getGithubTimestamp('uSkipSpoilers', (timestamp?: Date) => {
-        if (timestamp !== undefined) {
-            setSubtitle(toMonthYearString(timestamp))
-        } else {
-            setSubtitle('Unknown Date')
-        }
-    })
+    //get the timestamp subtitle
+    const subtitle = useGithubTimestamp('uSkipSpoilers', false)
 
     return (
         <>
