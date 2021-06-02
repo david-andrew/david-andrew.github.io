@@ -1,8 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { CodeBlock as AtlasCodeBlock, Code as AtlasCode } from '@atlaskit/code'
+import { CodeBlock as AtlasCodeBlock, Code as AtlasCode, SupportedLanguages } from '@atlaskit/code'
 import { AtlaskitThemeProvider } from '@atlaskit/theme/components'
-import { ThemeModes } from '@atlaskit/theme'
 
 //place this after any element that needs to be clearfixed
 export const ClearFixAfter = (): JSX.Element => {
@@ -38,11 +37,19 @@ export const Code = ({ children }: { children: React.ReactNode }): JSX.Element =
 }
 
 //full code block
-export const CodeBlock = ({ text, showLineNumbers = false }: { text: string; showLineNumbers?: boolean }): JSX.Element => {
+export const CodeBlock = ({
+    text,
+    showLineNumbers = false,
+    language,
+}: {
+    text: string
+    showLineNumbers?: boolean
+    language?: SupportedLanguages
+}): JSX.Element => {
     return (
         <>
             <AtlaskitThemeProvider mode="dark">
-                <AtlasCodeBlock text={text} showLineNumbers={showLineNumbers} />
+                <AtlasCodeBlock language={language} text={text} showLineNumbers={showLineNumbers} />
             </AtlaskitThemeProvider>
             <br />
         </>
