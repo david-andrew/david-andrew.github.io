@@ -8,6 +8,7 @@ import prs2019_preview from '../../images/projects/prs2019_preview.png'
 import foxing_animatronic from '../../images/projects/foxing_animatronic.png'
 import rebel_scum from '../../images/projects/rebel_scum.jpg'
 import music_staff from '../../images/projects/music_staff.png'
+import ye_arlington_musicke_lab_logo from '../../images/projects/YeArlingtonMusickeLabLogo.png'
 
 //by making this a compiled ts file, we guarantee all pieces of content are present when building
 
@@ -41,7 +42,7 @@ export const projects: ProjectContent[] = [
     },
     {
         title: 'so voice!',
-        imgSrc: logo,
+        imgSrc: ye_arlington_musicke_lab_logo,
         lastUpdated: 'January 18, 2021',
         internalLink: '/projects/so_voice',
         summary: 'Choral music synthesis with deep learning (Continuation of Musical DL)',
@@ -72,9 +73,9 @@ export const projects: ProjectContent[] = [
     },
     {
         title: 'Composer',
-        imgSrc: logo,
+        imgSrc: ye_arlington_musicke_lab_logo,
         internalLink: '/projects/composer',
-        summary: 'React based composing software that acts as a front-end interface for LilyPond',
+        summary: 'React based composing software that acts as a front-end for LilyPond',
         lastUpdated: 'January 3, 2021', //TODO->Repo is private
         tags: ['React', 'TypeScript', 'SMuFL', 'LilyPond', 'music', 'composition'],
     },
@@ -204,9 +205,10 @@ export const projects: ProjectContent[] = [
         summary: "Fall 2016 HopHacks submission: Midi keyboard that used user provided audio samples, a.k.a. the 'goat keyboard'",
         tags: ['midi', 'music'],
     },
-    {
-        title: 'Sea Perch ROV',
-        imgSrc: logo,
-        summary: 'Underwater Remote Operated Vehicle...',
-    },
+    // { //don't include until can find good photos/videos
+    //     title: 'Sea Perch ROV',
+    //     imgSrc: logo,
+    //     internalLink: '/projects/sea_perch',
+    //     summary: 'Underwater Remote Operated Vehicle...',
+    // },
 ]
