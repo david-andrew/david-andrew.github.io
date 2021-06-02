@@ -85,6 +85,12 @@ export const EscortMission = (): JSX.Element => {
                             <ExternalLink href="https://dsamson.itch.io/escort-mission-2020"> Itch.io Game Page</ExternalLink>
                         </span>
                     </List.Item>
+                    <List.Item>
+                        <span>
+                            <Icon name="github" size="big" />
+                            <ExternalLink href="https://github.com/david-andrew/escort_mission_2020"> Github Repo</ExternalLink>
+                        </span>
+                    </List.Item>
                 </List>
             </PageContainer>
         </>
