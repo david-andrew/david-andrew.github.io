@@ -203,7 +203,7 @@ export const DewySpeak = (): JSX.Element => {
 45 └── ϵ: #__5`}
                 />
                 <p>
-                    Notice the ambiguity nodes on for <Code>#E</Code> on lines 4 and 35, representing the two options for parsing the expression, namely{' '}
+                    Notice the ambiguity nodes for <Code>#E</Code> on lines 4 and 35, representing the two options for parsing the expression, namely{' '}
                     <Code>(1 + 2) * 3</Code> vs <Code>1 + (2 * 3)</Code> respectively
                 </p>
                 <h3>Semantic Analysis &amp; Code Generation</h3>
