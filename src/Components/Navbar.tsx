@@ -38,6 +38,13 @@ export const Navbar = (): JSX.Element => {
     const location = useLocation()
     const { pathname: path } = location
 
+    const getOnClick = (path: string): (() => void) => {
+        return (): void => {
+            history.push(path)
+            window.scrollTo(0, 0)
+        }
+    }
+
     //render component
     return (
         <div
@@ -50,11 +57,11 @@ export const Navbar = (): JSX.Element => {
             }}
         >
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <NavbarButton content="Home" onClick={(): void => history.push('/home')} active={path === '/home' || path === '/'} />
-                <NavbarButton content="Projects" onClick={(): void => history.push('/projects')} active={path.startsWith('/projects')} />
-                <NavbarButton content="About" onClick={(): void => history.push('/about')} active={path === '/about'} />
-                <NavbarButton content="Clovers" onClick={(): void => history.push('/clovers')} active={path === '/clovers'} />
-                <NavbarButton content="Contact" onClick={(): void => history.push('/contact')} active={path === '/contact'} />
+                <NavbarButton content="Home" onClick={getOnClick('/home')} active={path === '/home' || path === '/'} />
+                <NavbarButton content="Projects" onClick={getOnClick('/projects')} active={path.startsWith('/projects')} />
+                <NavbarButton content="About" onClick={getOnClick('/about')} active={path === '/about'} />
+                <NavbarButton content="Clovers" onClick={getOnClick('/clovers')} active={path === '/clovers'} />
+                <NavbarButton content="Contact" onClick={getOnClick('/contact')} active={path === '/contact'} />
             </div>
         </div>
     )

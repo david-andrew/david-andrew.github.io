@@ -8,3 +8,8 @@
     font-family: 'quadon';
     font-weight: normal;
 }
+
+.PageContainer code {
+    color: #dce5f5;
+    background-color: #283447;
+}

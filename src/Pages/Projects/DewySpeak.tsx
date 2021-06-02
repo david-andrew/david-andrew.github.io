@@ -1,7 +1,6 @@
 import React from 'react'
-import { PageContainer } from '../../Components'
-import { CodeBlock } from '@atlaskit/code'
-import { AtlaskitThemeProvider } from '@atlaskit/theme/components'
+import { PageContainer, PageHeading } from '../../Components'
+import { useGithubTimestamp, Code, CodeBlock } from '../../utilities'
 
 /*
 Layout
@@ -23,74 +22,182 @@ Work so far
 */
 
 export const DewySpeak = (): JSX.Element => {
+    const subtitle = useGithubTimestamp('dewy')
+
     return (
         <>
             <PageContainer>
-                <h1>Dewy Programming Language</h1>
+                <PageHeading title="Dewy Programming Language" subtitle={subtitle} />
+                <p>
+                    Dewy is a programming language I have been personally developing since 2016. The main goal is to build a language that has the exact feature
+                    set that I&apos;ve always wished existed. Dewy is a general purpose language with a focus on scientific and engineering applications. At a
+                    high level, Dewy is sort of like an amalgam of the best aspects of Matlab, Python, TypeScript, and Rust, but it certainly has it&apos;s own
+                    unique flare.
+                </p>
+                <p>
+                    So far in development, I have developed the syntax for the language (and meta-language), and have built a prototype SRNGLR parser[1][2] from
+                    scratch in C. The next steps are to write out the language Context Free Grammar (CFG) in the meta-language, implement the parser back ends
+                    (LLVM and C) for generating code from the parse tree, and then build out the standard library.
+                </p>
+                <h3>Parsing</h3>
+                <p>
+                    All programming languages start with a compiler, which itself is made of several parts, namely: lexing, parsing, semantic analysis, and code
+                    generation. Dewy makes use of a SRNGLR parser which allows the lexing and parsing phases be combined into a single step.
+                </p>
+                <p>
+                    To parse a mathematical expression like <Code>1 + 2 * 3</Code> we first have to define the grammar for how raw text gets converted to a
+                    parse tree. For this, I&apos;ve developed the Dewy Meta Language which allows for the specification of any Context Free Grammar (CFG), as
+                    well as some context sensitive grammars which can be parsed by SRNGLR
+                </p>
+                <p>
+                    Normally a grammar must be unambiguous to work with standard LR, LALR, etc. parsers. This complicates the process of writing the grammar.
+                    For the math expression <Code>1 + 2 * 3</Code>, or any other math expression, the unambiguous version of the grammar might look like this:
+                </p>
+                <CodeBlock
+                    text={`//addition/subtraction (left associative)
+#S = #S #w* '+' #w* #A | #S #w* '-' #w* #A | #A;
 
-                <h2>Meta Language Syntax CFG</h2>
-                <AtlaskitThemeProvider mode="dark">
-                    <CodeBlock
-                        showLineNumbers={false}
-                        text={`#eps = 'ϵ' | '\\\\e' | "''" | '""' | "{}";                    // ϵ, \\e, '', "", or {} indicates empty element, i.e. nullable
-//#wschar = [\\x9-\\xD\\x20\\x85\\xA0\\x1680\\x2000-\\x200A\\x2028\\x2029\\x202F\\x205F\\x3000]; //ascii + unicode whitespace chars
-#wschar = [\\x9-\\xD\\x20];                                    // ascii whitespace characters.
-#line_comment = '/' '/' (ξ - '\\n')* '\\n';                   // single line comment
-#block_string = ξ* - ξ* '}/';                               // inside of a block comment. Cannot end with block comment delimiter
-#block_comment = '/' '{' (#block_comment | #block_string)* '}/';       // block comment, with allowed nested block comments
-#ws = (#wschar | #line_comment | #block_comment)*;          // optional whitespace sequence
-#anyset = '\\\\' [uUxX] | [VUξ];                              // V, U, ξ, \\U, \\u, \\X, or \\x used to indicate any unicode character
-#hex = '\\\\' [uUxX] [0-9a-fA-F]+ / [0-9a-fA-F];              // hex number literal. Basically skipping the number part makes it #any
-#number = [0-9]+ / [0-9];                                   // decimal number literal. Used to indicate # of repetitions
-#charsetchar = ξ - [\\-\\[\\]] - #wschar;                      // characters allowed in a set are any unicode excluding '-', '[', or ']', and whitespace
-#item = #charsetchar | #escape | #hex;                      // items that make up character sets, i.e. raw chars, escape chars, or hex chars
-#charset = '[' (#ws #item (#ws '-' #ws #item)? #ws)+ ']';   // set of chars specified literally. Whitespace is ignored, and must be escaped.
+//multiplication/division (left associative)
+#A = #A #w* '*' #w* #E | #A #w* '/' #w* #E | #E;
 
-//paired grouping operators
-#group = '(' #ws #expr #ws ')';                             // group together/force precedence
-#char = '"' (ξ - '"' | #escape | #hex) '"';                 // "" single character
-#char = "'" (ξ - "'" | #escape | #hex) "'";                 // '' single character
-#caseless_char = "{" (ξ - [{}] | #escape | #hex) "}";       // {} single character where case is ignored
-#string = '"' (ξ - '"' | #escape | #hex)2+ '"';             // "" string of 2+ characters
-#string = "'" (ξ - "'" | #escape | #hex)2+ "'";             // '' string of 2+ characters
-#caseless_string = "{" (ξ - [{}] | #escape | #hex)2+ "}";   // {} string of 2+ characters where case is ignored for each character
-#escape = '\\\\' ξ;                                           // an escape character. Recognized escaped characters are \\n \\r \\t \\v \\b \\f \\a. 
-                                                            // all others just put the second character literally. Common literals include \\\\ \\' \\" \\[ \\] \\-
+//exponentiation (right associative)
+#E = #T #w* '^' #w* #E | #T;
 
-//post operators
-#capture = #expr #ws '.';                                   // group to capture
-#star = #expr #ws (#number)? #ws '*';                       // zero or (number or more)
-#plus = #expr #ws (#number)? #ws '+';                       // (number or one) or more 
-#option = #expr #ws '?';                                    // optional
-#count = #expr #ws #number;                                 // exactly number of
-#compliment = #set #ws '~';                                 // compliment of. equivalent to #any - #set
+//terms (numbers/identifiers/groups)
+#T = #N | #I | #G;
+#N = [0-9]+;
+#I = [A-Za-z_] [A-Za-z0-9!@%&_?]*;
+#G = '(' #w* #S #w* ')';
 
-//implicit operators
-#cat = #expr (#ws #expr)+;                                  // concatenate left and right
+//whitespace
+#w = [\\x20\\n];
 
-//binary expr operators
-#or = (#expr #ws '|' #ws #expr) - #union;                   // left or right expression
-#reject = (#expr #ws '-' #ws #expr) - #diff;                // reduce left expression only if it is not also the right expression
-#nofollow = #expr #ws '/' #ws #expr;                        // reduce left expression only if not followed by right expression
-#greaterthan = #expr #ws '>' #ws #expr;                     // left expression has higher precedence than right expression
-#lessthan = #expr #ws '<' #ws #expr;                        // left expression has lower precedence than right expression
+#start = (#w* #S)+ #w*;`}
+                />
+                <p>However, because SRNGLR can handle ambiguities, the grammar can be simplified to something like this:</p>
+                <CodeBlock
+                    text={`#E = '(' #ws* #E #ws* ')';  //parenthesis
+#E = #E #ws* [+\\-] #ws* #E; //addition/subtraction
+#E = #E #ws* [*/] #ws* #E;  //multiplication/division
+#E = #E #ws* '^' #ws* #E;   //exponentiation
+#E = #N | #I;               //terms (numbers/identifiers)
+#N = [0-9]+;
+#I = [A-Za-z_] [A-Za-z0-9!@%&_?]*;
 
-//binary set operators
-#diff = #set #ws '-' #ws #set;                              // everything in left that is not in right
-#intersect = #set #ws '&' #ws #set;                         // intersect of left and right. TODO->consider if we should add this as parser filter, rather than just restrict to sets
-#union = #set #ws '|' #ws #set;                             // union of left and right
+#ws = [\\n\\x20];             // whitespace
 
-//syntax constructs
-#set = #anyset | #char | #caseless_char | #hex | #charset | #compliment | #diff | #intersect | #union;
-#expr = #eps | #set | #group | #capture | #string | #caseless_string | #star | #plus | #option | #count 
-    | #cat | #or | #greaterthan | #lessthan | #reject | #nofollow | #identifier;
-#hashtag = '#' [a-zA-Z] [a-zA-Z0-9~!@#$&_?]* / [a-zA-Z0-9~!@#$&_?];
-#rule = #hashtag #ws '=' #ws #expr #ws ';';
-#grammar = (#ws #rule)* #ws;
-#start = #grammar;`}
-                    />
-                </AtlaskitThemeProvider>
-
+#start = (#ws* #E)+;`}
+                />
+                <p>
+                    Note that for the ambiguous grammar, precedence and associativity still need to be handled at some point in the process. SRNGLR just
+                    provides the flexibility to handle them more conveniently.
+                </p>
+                <p>
+                    Running the first grammar on <Code>1 + 2 * 3</Code> we get the following parse tree
+                </p>
+                <CodeBlock
+                    text={`#start:0
+├── #__4:0
+│   ├── #__5:0
+│   │   ├── ϵ
+│   │   └── #S:0
+│   │       ├── #S:2
+│   │       │   └── #A:2
+│   │       │       └── #E:1
+│   │       │           └── #T:0
+│   │       │               └── #N:0
+│   │       │                   ├── 1
+│   │       │                   └── ϵ: #__2
+│   │       ├── #__1:0
+│   │       │   ├── #w:0
+│   │       │   │   └── \\x20
+│   │       │   └── ϵ: #__1
+│   │       ├── +
+│   │       ├── #__1:0
+│   │       │   ├── #w:0
+│   │       │   │   └── \\x20
+│   │       │   └── ϵ: #__1
+│   │       └── #A:0
+│   │           ├── #A:2
+│   │           │   └── #E:1
+│   │           │       └── #T:0
+│   │           │           └── #N:0
+│   │           │               ├── 2
+│   │           │               └── ϵ: #__2
+│   │           ├── #__1:0
+│   │           │   ├── #w:0
+│   │           │   │   └── \\x20
+│   │           │   └── ϵ: #__1
+│   │           ├── *
+│   │           ├── #__1:0
+│   │           │   ├── #w:0
+│   │           │   │   └── \\x20
+│   │           │   └── ϵ: #__1
+│   │           └── #E:1
+│   │               └── #T:0
+│   │                   └── #N:0
+│   │                       ├── 3
+│   │                       └── ϵ: #__2
+│   └── ϵ: #__6
+└── ϵ: #__1`}
+                />
+                <p>while parsing the same input with the ambiguous grammar returns the following parse forests:</p>
+                <CodeBlock
+                    text={` 0 #start:0
+ 1 ├── #__4:0
+ 2 │   ├── ϵ
+ 3 │   └── [#E:2]
+ 4 │       ├───┬── #E:1
+ 5 │       │   │   ├── #E:4
+ 6 │       │   │   │   └── #N:0
+ 7 │       │   │   │       ├── 1
+ 8 │       │   │   │       └── ϵ: #__2
+ 9 │       │   │   ├── #__1:0
+10 │       │   │   │   ├── #ws:0
+11 │       │   │   │   │   └── \\x20
+12 │       │   │   │   └── ϵ: #__1
+13 │       │   │   ├── +
+14 │       │   │   ├── #__1:0
+15 │       │   │   │   ├── #ws:0
+16 │       │   │   │   │   └── \\x20
+17 │       │   │   │   └── ϵ: #__1
+18 │       │   │   └── #E:4
+19 │       │   │       └── #N:0
+20 │       │   │           ├── 2
+21 │       │   │           └── ϵ: #__2
+22 │       │   ├── #__1:0
+23 │       │   │   ├── #ws:0
+24 │       │   │   │   └── \\x20
+25 │       │   │   └── ϵ: #__1
+26 │       │   ├── *
+27 │       │   ├── #__1:0
+28 │       │   │   ├── #ws:0
+29 │       │   │   │   └── \\x20
+30 │       │   │   └── ϵ: #__1
+31 │       │   └── #E:4
+32 │       │       └── #N:0
+33 │       │           ├── 3
+34 │       │           └── ϵ: #__2
+35 │       └───┬── @5
+36 │           ├── @9
+37 │           ├── +
+38 │           ├── @14
+39 │           └── #E:2
+40 │               ├── @18
+41 │               ├── @22
+42 │               ├── *
+43 │               ├── @27
+44 │               └── @31
+45 └── ϵ: #__5`}
+                />
+                <p>
+                    Notice the ambiguity nodes on for <Code>#E</Code> on lines 4 and 35, representing the two options for parsing the expression, namely{' '}
+                    <Code>(1 + 2) * 3</Code> vs <Code>1 + (2 * 3)</Code> respectively
+                </p>
+                <h3>Semantic Analysis</h3>
+                <p>Using the parse forest generated by the SRNGLR parser, </p>
+                <h3>Code Generation</h3>
+                <p>LLVM and potentially C</p>
                 <br />
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas efficitur mi a blandit faucibus. Praesent vitae dapibus lorem, eget
