@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/website/static/css/main.509c4338.chunk.css",
-    "main.js": "/website/static/js/main.7b9d48f9.chunk.js",
-    "main.js.map": "/website/static/js/main.7b9d48f9.chunk.js.map",
+    "main.js": "/website/static/js/main.59dddf27.chunk.js",
+    "main.js.map": "/website/static/js/main.59dddf27.chunk.js.map",
     "runtime-main.js": "/website/static/js/runtime-main.ba36a1e5.js",
     "runtime-main.js.map": "/website/static/js/runtime-main.ba36a1e5.js.map",
     "static/css/2.cbfeca77.chunk.css": "/website/static/css/2.cbfeca77.chunk.css",
@@ -118,6 +118,7 @@
     "static/media/MVIMG_20180324_153556.jpg": "/website/static/media/MVIMG_20180324_153556.e0d359c4.jpg",
     "static/media/MVIMG_20180402_113932.jpg": "/website/static/media/MVIMG_20180402_113932.fa1e4ee4.jpg",
     "static/media/quadon.css": "/website/static/media/Quadon-UltraBoldItalic.ecd2de73.woff",
+    "static/media/YeArlingtonMusickeLabLogo.67ebdeae.png": "/website/static/media/YeArlingtonMusickeLabLogo.67ebdeae.png",
     "static/media/atma16000.487cc550.wav": "/website/static/media/atma16000.487cc550.wav",
     "static/media/atma16000resynth.ca174783.wav": "/website/static/media/atma16000resynth.ca174783.wav",
     "static/media/blob_opera_nox.c22b954a.png": "/website/static/media/blob_opera_nox.c22b954a.png",
@@ -156,6 +157,6 @@
     "static/css/2.cbfeca77.chunk.css",
     "static/js/2.12a7539b.chunk.js",
     "static/css/main.509c4338.chunk.css",
-    "static/js/main.7b9d48f9.chunk.js"
+    "static/js/main.59dddf27.chunk.js"
   ]
 }
