@@ -42,10 +42,10 @@ export const useGithubTimestamp = (repoName: string, includeDay: boolean = false
     //undefined indicates not yet returned, null indicates failed to fetch
     const [timestamp, setTimestamp] = useState<Date | undefined | null>()
     useEffect(() => {
-        setTimestamp(undefined)
         getGithubTimestamp(repoName, (repoTimestamp?: Date) => {
             setTimestamp(repoTimestamp ?? null)
         })
+        return () => setTimestamp(undefined)
     }, [repoName])
 
     //handle the string output based on the value of the timestamp
