@@ -10,12 +10,12 @@ export const BlobOpera = (): JSX.Element => {
             <PageContainer>
                 <PageHeading title="Blob Opera Performance" subtitle="February 2021" />
                 <p>
-                    While working on my <InternalLink to="/projects/so_voice">choral music synthesis engine</InternalLink>, SoVoice, Google Arts &amp; Culture
+                    While working on my <InternalLink to="/projects/so_voice">choral music synthesis engine</InternalLink>, so voice!, Google Arts &amp; Culture
                     Experiments released a fun little project called{' '}
                     <ExternalLink href="https://artsandculture.google.com/experiment/blob-opera/AAHWrq360NcGbw">Blob Opera</ExternalLink>. My brother and I
-                    recognized that the SoVoice back end would be perfect for reading in sheet music which could then be piped into the Blob Opera, and so we
+                    recognized that the so voice! back end would be perfect for reading in sheet music which could then be piped into the Blob Opera, and so we
                     hacked together a hilarious synthesis engine. Most of the code was already written, but I handled all new code, while my brother handled
-                    producing suitable MusicXML files that the SoVoice engine could handle. Music is then{' '}
+                    producing suitable MusicXML files that the so voice! engine could handle. Music is then{' '}
                     <ExternalLink href="https://github.com/OverlappingElvis/blob-opera-midi#sideloading-the-json-file">side loaded</ExternalLink> into Blob
                     Opera, 4 voices at a time, and recorded.
                 </p>
