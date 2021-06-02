@@ -19,7 +19,7 @@ export const InternalLink = ({ to, children }: { to: string; children: React.Rea
     return (
         <Link
             to={to}
-            onClick={() => {
+            onClick={(): void => {
                 window.scrollTo(0, 0)
             }}
         >

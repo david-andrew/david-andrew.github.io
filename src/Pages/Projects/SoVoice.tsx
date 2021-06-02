@@ -106,8 +106,8 @@ export const SoVoice = (): JSX.Element => {
                 />
                 <h3>Future</h3>
                 so voice! is the next project on in my queue to focus on, so I&apos;m hoping to get some good progress in over the coming year. I&apos;ve
-                definitely gained a lot of new machine learning experience since I last worked on it, so I&apos;m excited to take a fresh look and hopefully
-                make some good progress. With any luck, I&apos;ll have many more better examples to add to this page!
+                definitely gained a lot of new machine learning experience since I last worked on it, so I&apos;m excited to take a fresh look&mdash;with any
+                luck, I&apos;ll have many new and better examples to add to this page!
             </PageContainer>
         </>
     )

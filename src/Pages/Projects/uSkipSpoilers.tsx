@@ -2,11 +2,11 @@ import React from 'react'
 import { Icon } from 'semantic-ui-react'
 import { PageContainer, PageHeading } from '../../Components'
 import { ExternalLink } from '../../utilities'
-import { useGithubTimestamp } from '../../utilities/hooks'
+import { useGithubTimestamp } from '../../utilities'
 
 export const SkipSpoilers = (): JSX.Element => {
     //get the timestamp subtitle
-    const subtitle = useGithubTimestamp('uSkipSpoilers', false)
+    const subtitle = useGithubTimestamp('uSkipSpoilers')
 
     return (
         <>

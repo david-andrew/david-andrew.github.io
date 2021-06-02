@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useLocation, useHistory } from 'react-router'
 import { getGithubTimestamp } from '../Components'
 import { toMonthDayYearString, toMonthYearString } from './'
@@ -45,7 +45,7 @@ export const useGithubTimestamp = (repoName: string, includeDay: boolean = false
         getGithubTimestamp(repoName, (repoTimestamp?: Date) => {
             setTimestamp(repoTimestamp ?? null)
         })
-        return () => setTimestamp(undefined)
+        return (): void => setTimestamp(undefined)
     }, [repoName])
 
     //handle the string output based on the value of the timestamp
