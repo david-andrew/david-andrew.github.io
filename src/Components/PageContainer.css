@@ -26,6 +26,7 @@
     background-color: #283447;
     resize: none;
     border: none;
+    outline: solid #dce5f5 1px;
     line-height: 1em;
     overflow-y: hidden;
     white-space: pre;
@@ -36,6 +37,6 @@
     background-color: #cde2ff;
 }
 
-/* .PageContainer textarea:focus {
-    outline: none;
-} */
+.PageContainer textarea:focus {
+    outline: solid white 2px;
+}

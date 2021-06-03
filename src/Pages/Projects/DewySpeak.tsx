@@ -88,9 +88,11 @@ export const DewySpeak = (): JSX.Element => {
     const onSourceChange = onTextAreaChange(setSourceInput, setSourceScroll, sourceRef)
 
     //on window resize/zoom, update the input scrollbars
-    window.addEventListener('resize', () => {
-        updateTextAreaScroll(setGrammarScroll, grammarRef)
-        updateTextAreaScroll(setSourceScroll, sourceRef)
+    useEffect(() => {
+        window.addEventListener('resize', () => {
+            updateTextAreaScroll(setGrammarScroll, grammarRef)
+            updateTextAreaScroll(setSourceScroll, sourceRef)
+        })
     })
 
     //keep text areas large enough for their input. Handle when the horizontal scrollbar is visible, which adds extra height
@@ -289,10 +291,12 @@ export const DewySpeak = (): JSX.Element => {
                 />
                 <h4>Source Input</h4>
                 <TextArea onChange={onSourceChange} style={{ width: '100%', height: sourceHeight }} spellCheck="false" defaultValue={'1+2*3'} />
-                <h3>Try It</h3>
+                <h4>Output</h4>
+                <CodeBlock flatten text={'<tree goes here>'} />
+                <h3>Build It Yourself</h3>
                 <p>
-                    Since the language is far from complete, the most you can try right now is the SRNGLR parser. The git repo includes several example grammar
-                    and source code pairs that can be run by the current parser.
+                    Since the language is far from complete, the most you can build right now is the SRNGLR parser. The git repo includes several example
+                    grammar and source code pairs that can be run by the current parser.
                 </p>
                 <CodeBlock
                     language="bash"

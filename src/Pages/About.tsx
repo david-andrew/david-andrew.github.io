@@ -50,7 +50,7 @@ export const About = (): JSX.Element => {
                     <List.Icon as={CodeIcon} verticalAlign="middle" />
                     <List.Content>
                         <List.Header>Programming (Moderate)</List.Header>
-                        <List.Description>Rust, Julia, C++, Java, Go, 6502 ASM, FORTRAN 77, Ti-BASIC</List.Description>
+                        <List.Description>Rust, Julia, WebAssembly, C++, Java, Go, 6502 ASM, FORTRAN 77, Ti-BASIC</List.Description>
                     </List.Content>
                 </List.Item>
                 <List.Item>
