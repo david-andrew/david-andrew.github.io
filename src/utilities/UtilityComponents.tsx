@@ -41,17 +41,19 @@ export const CodeBlock = ({
     text,
     showLineNumbers = false,
     language,
+    flatten = false,
 }: {
     text: string
     showLineNumbers?: boolean
     language?: SupportedLanguages
+    flatten?: boolean
 }): JSX.Element => {
     return (
-        <>
+        <div className={flatten ? 'flatten' : undefined}>
             <AtlaskitThemeProvider mode="dark">
                 <AtlasCodeBlock language={language} text={text} showLineNumbers={showLineNumbers} />
             </AtlaskitThemeProvider>
             <br />
-        </>
+        </div>
     )
 }

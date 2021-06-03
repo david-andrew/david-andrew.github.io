@@ -1,10 +1,115 @@
-import React from 'react'
-import { Icon, List } from 'semantic-ui-react'
+import React, { useEffect, useRef, useState } from 'react'
+import { Icon, List, TextArea, TextAreaProps } from 'semantic-ui-react'
 import { PageContainer, PageHeading } from '../../Components'
-import { useGithubTimestamp, Code, CodeBlock, ExternalLink } from '../../utilities'
+import { useGithubTimestamp, Code, CodeBlock, ExternalLink, getScrollbarWidth } from '../../utilities'
+
+const unambiguousExpressionGrammar = `//addition/subtraction (left associative)
+#S = #S #w* '+' #w* #A | #S #w* '-' #w* #A | #A;
+
+//multiplication/division (left associative)
+#A = #A #w* '*' #w* #E | #A #w* '/' #w* #E | #E;
+
+//exponentiation (right associative)
+#E = #T #w* '^' #w* #E | #T;
+
+//terms (numbers/identifiers/groups)
+#T = #N | #I | #G;
+#N = [0-9]+;
+#I = [A-Za-z_] [A-Za-z0-9!@%&_?]*;
+#G = '(' #w* #S #w* ')';
+
+//whitespace
+#w = [\\x20\\n];
+
+#start = (#w* #S)+ #w*;`
+
+const ambiguousExpressionGrammar = `#E = '(' #w* #E #w* ')';    //parenthesis
+#E = #E #w* [+\\-] #w* #E;   //addition/subtraction
+#E = #E #w* [*/] #w* #E;    //multiplication/division
+#E = #E #w* '^' #w* #E;     //exponentiation
+#E = #N | #I;               //terms (numbers/identifiers)
+#N = [0-9]+;
+#I = [A-Za-z_] [A-Za-z0-9!@%&_?]*;
+
+#w = [\\n\\x20];              // whitespace
+
+#start = (#w* #E)+ #w*;`
+
+//handle updating the saved state for the body of text inputs
+const onTextAreaChange = (
+    setContentState: React.Dispatch<React.SetStateAction<string>>,
+    setScrollState: React.Dispatch<React.SetStateAction<boolean>>,
+    ref: React.MutableRefObject<HTMLTextAreaElement | undefined>
+) => {
+    return (event: React.ChangeEvent<HTMLTextAreaElement>, data: TextAreaProps): void => {
+        //save the reference to the element
+        ref.current = event.target
+
+        //set whether the scrollbar is visible
+        updateTextAreaScroll(setScrollState, ref)
+
+        //set the content of the text body
+        const txt = data.value?.toString() ?? ''
+        setContentState(txt)
+    }
+}
+
+//determine/update whether a TextInput is displaying a scrollbar
+const updateTextAreaScroll = (
+    setScrollState: React.Dispatch<React.SetStateAction<boolean>>,
+    ref: React.MutableRefObject<HTMLTextAreaElement | undefined>
+): void => {
+    setScrollState((ref.current?.clientWidth ?? 0) < (ref.current?.scrollWidth ?? 0))
+}
+
+//count the number of lines in a string
+const countLines = (txt: string): number => {
+    return (txt.match(/\n/g) || '').length + 1
+}
+
+//size of 1 em in pixels for CodeBlocks / TextAreas
+const emToPx = 12
 
 export const DewySpeak = (): JSX.Element => {
     const subtitle = useGithubTimestamp('dewy')
+
+    //state for live parser demo inputs
+    const grammarRef = useRef<HTMLTextAreaElement>()
+    const [grammarInput, setGrammarInput] = useState<string>(ambiguousExpressionGrammar)
+    const [grammarHeight, setGrammarHeight] = useState<string>('25em')
+    const [grammarScroll, setGrammarScroll] = useState<boolean>(false)
+
+    const sourceRef = useRef<HTMLTextAreaElement>()
+    const [sourceInput, setSourceInput] = useState<string>('1+2*3')
+    const [sourceHeight, setSourceHeight] = useState<string>('3em')
+    const [sourceScroll, setSourceScroll] = useState<boolean>(false)
+
+    const onGrammarChange = onTextAreaChange(setGrammarInput, setGrammarScroll, grammarRef)
+    const onSourceChange = onTextAreaChange(setSourceInput, setSourceScroll, sourceRef)
+
+    //on window resize/zoom, update the input scrollbars
+    window.addEventListener('resize', () => {
+        updateTextAreaScroll(setGrammarScroll, grammarRef)
+        updateTextAreaScroll(setSourceScroll, sourceRef)
+    })
+
+    //keep text areas large enough for their input. Handle when the horizontal scrollbar is visible, which adds extra height
+    useEffect(() => {
+        //determine how much extra height based on if horizontal scrollbar visible
+        const extra = (grammarScroll ? getScrollbarWidth() : 0) + 4
+        const height = countLines(grammarInput) * emToPx + extra
+
+        //set the input height
+        setGrammarHeight(`${height}px`)
+    }, [grammarInput, grammarScroll])
+    useEffect(() => {
+        //determine how much extra height based on if horizontal scrollbar visible
+        const extra = (sourceScroll ? getScrollbarWidth() : 0) + 4
+        const height = countLines(sourceInput) * emToPx + extra
+
+        //set the input height
+        setSourceHeight(`${height}px`)
+    }, [sourceInput, sourceScroll])
 
     return (
         <>
@@ -42,45 +147,13 @@ export const DewySpeak = (): JSX.Element => {
                     often times, the natural way to express a language will be ambiguous, and require careful work to disambiguate. For the math expression{' '}
                     <Code>1 + 2 * 3</Code>, or any other math expression, the unambiguous version of the grammar might look like this:
                 </p>
-                <CodeBlock
-                    text={`//addition/subtraction (left associative)
-#S = #S #w* '+' #w* #A | #S #w* '-' #w* #A | #A;
-
-//multiplication/division (left associative)
-#A = #A #w* '*' #w* #E | #A #w* '/' #w* #E | #E;
-
-//exponentiation (right associative)
-#E = #T #w* '^' #w* #E | #T;
-
-//terms (numbers/identifiers/groups)
-#T = #N | #I | #G;
-#N = [0-9]+;
-#I = [A-Za-z_] [A-Za-z0-9!@%&_?]*;
-#G = '(' #w* #S #w* ')';
-
-//whitespace
-#w = [\\x20\\n];
-
-#start = (#w* #S)+ #w*;`}
-                />
+                <CodeBlock flatten text={unambiguousExpressionGrammar} />
                 <p>
                     Precedence is handled by restricting which expressions can be subexpressions, using different grammar symbols. Associativity is also handled
                     in a similar fashion, namely the left or right hand side is restricted to specific subexpression types that generate the correct
                     associativity. Ultimately though, because SRNGLR can handle ambiguities, the grammar can be simplified to something like this:
                 </p>
-                <CodeBlock
-                    text={`#E = '(' #w* #E #w* ')';    //parenthesis
-#E = #E #w* [+\\-] #w* #E;   //addition/subtraction
-#E = #E #w* [*/] #w* #E;    //multiplication/division
-#E = #E #w* '^' #w* #E;     //exponentiation
-#E = #N | #I;               //terms (numbers/identifiers)
-#N = [0-9]+;
-#I = [A-Za-z_] [A-Za-z0-9!@%&_?]*;
-
-#w = [\\n\\x20];              // whitespace
-
-#start = (#w* #E)+ #w*;`}
-                />
+                <CodeBlock flatten text={ambiguousExpressionGrammar} />
                 <p>
                     Note that for the ambiguous grammar, precedence and associativity still need to be handled at some point in the process. SRNGLR just
                     provides the flexibility to handle them later in the parsing process, when it is much more convenient.
@@ -89,6 +162,7 @@ export const DewySpeak = (): JSX.Element => {
                     Running the first grammar on <Code>1 + 2 * 3</Code> we get the following parse tree
                 </p>
                 <CodeBlock
+                    flatten
                     text={`#start:0
 ├── #__4:0
 │   ├── #__5:0
@@ -134,8 +208,10 @@ export const DewySpeak = (): JSX.Element => {
 │   └── ϵ: #__6
 └── ϵ: #__1`}
                 />
+
                 <p>while parsing the same input with the ambiguous grammar returns the following parse forest:</p>
                 <CodeBlock
+                    flatten
                     text={` 0 #start:0
  1 ├── #__4:0
  2 │   ├── ϵ
@@ -202,6 +278,17 @@ export const DewySpeak = (): JSX.Element => {
                     extreme levels of portability in the compiler&mdash;most systems could build and run the Dewy compiler, as a C99 compiler would be the only
                     dependency.
                 </p>
+                <h3>Live Demo</h3>
+                <p>Try a live version of the parser, compiled with web assembly</p>
+                <h4>Grammar Specification</h4>
+                <TextArea
+                    onChange={onGrammarChange}
+                    style={{ width: '100%', height: grammarHeight }}
+                    spellCheck="false"
+                    defaultValue={ambiguousExpressionGrammar}
+                />
+                <h4>Source Input</h4>
+                <TextArea onChange={onSourceChange} style={{ width: '100%', height: sourceHeight }} spellCheck="false" defaultValue={'1+2*3'} />
                 <h3>Try It</h3>
                 <p>
                     Since the language is far from complete, the most you can try right now is the SRNGLR parser. The git repo includes several example grammar

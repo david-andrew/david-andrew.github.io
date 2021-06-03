@@ -13,3 +13,29 @@
     color: #dce5f5;
     background-color: #283447;
 }
+
+/*allows adjustment of codeblock line heights*/
+.PageContainer .flatten code {
+    line-height: 1em !important;
+}
+
+.PageContainer textarea {
+    font-family: 'SFMono-Medium', 'SF Mono', 'Segoe UI Mono', 'Roboto Mono', 'Ubuntu Mono', Menlo, Consolas, Courier, monospace;
+    font-size: 12px;
+    color: #dce5f5;
+    background-color: #283447;
+    resize: none;
+    border: none;
+    line-height: 1em;
+    overflow-y: hidden;
+    white-space: pre;
+}
+
+.PageContainer textarea::selection {
+    color: #1a1d21;
+    background-color: #cde2ff;
+}
+
+/* .PageContainer textarea:focus {
+    outline: none;
+} */
