@@ -10,7 +10,8 @@
 	],
 	"ignorePatterns": [
 		"src/**/*.stories.*",
-		"src/**/__tests__/*"
+		"src/**/__tests__/*",
+		"src/Components/DewyLiveParser/myModule.js"
 	],
 	"parserOptions": {
 		"ecmaVersion": 2018,
