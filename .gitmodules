@@ -1,0 +1,3 @@
+[submodule "dewy"]
+	path = dewy
+	url = git@github.com:david-andrew/dewy.git
