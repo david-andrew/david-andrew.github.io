@@ -32,6 +32,7 @@
   "scripts": {
     "build:wasm": "emcc -s EXPORT_ES6=1 -s MODULARIZE=1 -s EXPORT_ALL=1 -s EXPORTED_FUNCTIONS=\"['_func']\" -s EXPORTED_RUNTIME_METHODS=\"['cwrap', 'ccall']\" -o src/wasm/hello.js src/wasm/hello.c",
     "build:wasmxx": "em++ --bind -s EXPORT_ES6=1 -s MODULARIZE=1 -s EXPORT_ALL=1 -o src/wasm/hello.js src/wasm/hello.cpp",
+    "prebuild": "git submodule update --init --recursive",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "start": "HOST=0.0.0.0 craco start",
