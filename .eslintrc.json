@@ -11,7 +11,7 @@
 	"ignorePatterns": [
 		"src/**/*.stories.*",
 		"src/**/__tests__/*",
-		"src/Components/DewyLiveParser/myModule.js"
+		"src/wasm/*"
 	],
 	"parserOptions": {
 		"ecmaVersion": 2018,

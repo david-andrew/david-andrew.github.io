@@ -1,13 +1,49 @@
-import React, { useEffect } from 'react'
-// import Module from './myModule'
-import example_module from './myModule.js'
+/* eslint-disable @typescript-eslint/no-var-requires */
 
-export const DewyLiveParser = (): JSX.Element => {
-    useEffect(() => {
-        console.log('before any wasm shenanigans')
-        // const example_function = example_module.cwrap('example_function', 'void')
-        // example_function()
-    }, [])
+import React, { useState } from 'react'
+// this just loads stuff to load the wasm
+import hello from '../../wasm/hello'
 
-    return <></>
+const Loaded = ({ wasm }: { wasm: any }) => (
+    <button
+        onClick={() => {
+            // console.log('would call wasm here')
+            // console.log(wasm)
+            const func = wasm.cwrap('func', ['int', 'int'], 'int')
+            console.log(func(1, 6))
+        }}
+    >
+        Click me
+    </button>
+)
+
+const Unloaded = ({ loading, loadWasm }: { loading: boolean; loadWasm: () => void }) => {
+    return loading ? <div>Loading...</div> : <button onClick={loadWasm}>Load library</button>
+}
+
+export const DewyLiveParser = () => {
+    const [loading, setLoading] = useState(false)
+    const [wasm, setWasm] = useState(null)
+    const loadWasm = async () => {
+        try {
+            setLoading(true)
+            const wasm = hello({
+                onRuntimeInitialized: () => {
+                    ;(async () => {
+                        setWasm(await wasm)
+                    })()
+                },
+                // This overrides the default path used by the wasm/hello.js wrapper
+                locateFile: () => require('../../wasm/hello.wasm').default,
+            })
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    return (
+        <div className="App">
+            <header className="App-header">{wasm ? <Loaded wasm={wasm} /> : <Unloaded loading={loading} loadWasm={loadWasm} />}</header>
+        </div>
+    )
 }
