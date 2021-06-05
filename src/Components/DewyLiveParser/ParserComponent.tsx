@@ -12,9 +12,15 @@ const Loaded = ({ wasm }: { wasm: any }) => (
             const func = wasm.cwrap('func', 'int', ['int', 'int'])
             console.log(func(1, 6))
             const func2 = wasm.cwrap('func2', 'void', ['string', 'string'])
-            const str1 = 'apple'
-            const str2 = 'banana'
-            console.log(func2(str1, str2))
+            console.log(func2('apple', 'banana'))
+            try {
+                const segfault = wasm.cwrap('segfault', 'void', ['string', 'string'])
+                console.log(segfault('apple', 'banana'))
+            } catch {
+                console.log('catching segfault error')
+            }
+
+            //TODO->redirect console output to a variable string...
         }}
     >
         Click me
@@ -39,6 +45,9 @@ export const DewyLiveParser = () => {
                 },
                 // This overrides the default path used by the wasm/hello.js wrapper
                 locateFile: () => require('../../wasm/hello.wasm').default,
+                print: function (text: string) {
+                    console.log(`My custom print statement: \`${text}\``)
+                },
             })
         } finally {
             setLoading(false)

@@ -42,6 +42,12 @@ Module['ready'] = new Promise(function(resolve, reject) {
       }
     
 
+      if (!Object.getOwnPropertyDescriptor(Module['ready'], '_segfault')) {
+        Object.defineProperty(Module['ready'], '_segfault', { configurable: true, get: function() { abort('You are getting _segfault on the Promise object, instead of the instance. Use .then() to get called back with the instance, see the MODULARIZE docs in src/settings.js') } });
+        Object.defineProperty(Module['ready'], '_segfault', { configurable: true, set: function() { abort('You are setting _segfault on the Promise object, instead of the instance. Use .then() to get called back with the instance, see the MODULARIZE docs in src/settings.js') } });
+      }
+    
+
       if (!Object.getOwnPropertyDescriptor(Module['ready'], '_emscripten_stack_get_end')) {
         Object.defineProperty(Module['ready'], '_emscripten_stack_get_end', { configurable: true, get: function() { abort('You are getting _emscripten_stack_get_end on the Promise object, instead of the instance. Use .then() to get called back with the instance, see the MODULARIZE docs in src/settings.js') } });
         Object.defineProperty(Module['ready'], '_emscripten_stack_get_end', { configurable: true, set: function() { abort('You are setting _emscripten_stack_get_end on the Promise object, instead of the instance. Use .then() to get called back with the instance, see the MODULARIZE docs in src/settings.js') } });
@@ -664,7 +670,7 @@ if (!Object.getOwnPropertyDescriptor(Module, 'wasmBinary')) {
     }
   });
 }
-var noExitRuntime = Module['noExitRuntime'] || true;
+var noExitRuntime = Module['noExitRuntime'] || false;
 if (!Object.getOwnPropertyDescriptor(Module, 'noExitRuntime')) {
   Object.defineProperty(Module, 'noExitRuntime', {
     configurable: true,
@@ -1382,6 +1388,8 @@ function initRuntime() {
 
 function exitRuntime() {
   checkStackCookie();
+  callRuntimeCallbacks(__ATEXIT__);
+  flush_NO_FILESYSTEM()
   runtimeExited = true;
 }
 
@@ -1411,6 +1419,7 @@ function addOnPreMain(cb) {
 }
 
 function addOnExit(cb) {
+  __ATEXIT__.unshift(cb);
 }
 
 function addOnPostRun(cb) {
@@ -1606,6 +1615,75 @@ function createExportWrapper(name, fixedasm) {
   };
 }
 
+// When exception catching is enabled (!DISABLE_EXCEPTION_CATCHING)
+// `abortWrapperDepth` counts the recursion level of the wrapper function so
+// that we only handle exceptions at the top level letting the exception
+// mechanics work uninterrupted at the inner level.  Additionally,
+// `abortWrapperDepth` is also manually incremented in callMain so that we know
+// to ignore exceptions from there since they're handled by callMain directly.
+var abortWrapperDepth = 0;
+
+// Creates a wrapper in a closure so that each wrapper gets it's own copy of 'original'
+function makeAbortWrapper(original) {
+  return function() {
+    // Don't allow this function to be called if we're aborted!
+    if (ABORT) {
+      throw "program has already aborted!";
+    }
+
+    try {
+      return original.apply(null, arguments);
+    }
+    catch (e) {
+      if (
+        ABORT // rethrow exception if abort() was called in the original function call above
+        || abortWrapperDepth > 1 // rethrow exceptions not caught at the top level if exception catching is enabled; rethrow from exceptions from within callMain
+        || e === 'longjmp' // rethrow longjmp if enabled
+      ) {
+        throw e;
+      }
+
+      abort("unhandled exception: " + [e, e.stack]);
+    }
+    }
+}
+
+// Instrument all the exported functions to:
+// - abort if an unhandled exception occurs
+// - throw an exception if someone tries to call them after the program has aborted
+// See settings.ABORT_ON_WASM_EXCEPTIONS for more info.
+function instrumentWasmExportsWithAbort(exports) {
+  // Override the exported functions with the wrappers and copy over any other symbols
+  var instExports = {};
+  for (var name in exports) {
+      var original = exports[name];
+      if (typeof original === 'function') {
+        instExports[name] = makeAbortWrapper(original);
+      } else {
+        instExports[name] = original;
+      }
+  }
+
+  return instExports;
+}
+
+function instrumentWasmTableWithAbort() {
+  // Override the wasmTable get function to return the wrappers
+  var realGet = wasmTable.get;
+  var wrapperCache = {};
+  wasmTable.get = function(i) {
+    var func = realGet.call(wasmTable, i);
+    var cached = wrapperCache[i];
+    if (!cached || cached.func !== func) {
+      cached = wrapperCache[i] = {
+        func: func,
+        wrapper: makeAbortWrapper(func)
+      }
+    }
+    return cached.wrapper;
+  };
+}
+
 if (Module['locateFile']) {
   var wasmBinaryFile = 'hello.wasm';
   if (!isDataURI(wasmBinaryFile)) {
@@ -1680,6 +1758,8 @@ function createWasm() {
   function receiveInstance(instance, module) {
     var exports = instance.exports;
 
+    exports = instrumentWasmExportsWithAbort(exports);
+
     Module['asm'] = exports;
 
     wasmMemory = Module['asm']['memory'];
@@ -1694,6 +1774,8 @@ function createWasm() {
     assert(wasmTable, "table not found in wasm exports");
 
     addOnInit(Module['asm']['__wasm_call_ctors']);
+
+    instrumentWasmTableWithAbort();
 
     removeRunDependency('wasm-instantiate');
   }
@@ -1860,6 +1942,13 @@ var ASM_CONSTS = {
     }
   Module["_emscripten_memcpy_big"] = _emscripten_memcpy_big;
 
+  function _exit(status) {
+      // void _exit(int status);
+      // http://pubs.opengroup.org/onlinepubs/000095399/functions/exit.html
+      exit(status);
+    }
+  Module["_exit"] = _exit;
+
   function flush_NO_FILESYSTEM() {
       // flush anything remaining in the buffers during shutdown
       if (typeof _fflush !== 'undefined') _fflush(0);
@@ -1943,6 +2032,7 @@ function intArrayToString(array) {
 
 var asmLibraryArg = {
   "emscripten_memcpy_big": _emscripten_memcpy_big,
+  "exit": _exit,
   "fd_write": _fd_write,
   "setTempRet0": _setTempRet0
 };
@@ -1955,6 +2045,9 @@ var _func = Module["_func"] = createExportWrapper("func");
 
 /** @type {function(...*):?} */
 var _func2 = Module["_func2"] = createExportWrapper("func2");
+
+/** @type {function(...*):?} */
+var _segfault = Module["_segfault"] = createExportWrapper("segfault");
 
 /** @type {function(...*):?} */
 var _fflush = Module["_fflush"] = createExportWrapper("fflush");
@@ -2302,41 +2395,9 @@ function run(args) {
 }
 Module['run'] = run;
 
-function checkUnflushedContent() {
-  // Compiler settings do not allow exiting the runtime, so flushing
-  // the streams is not possible. but in ASSERTIONS mode we check
-  // if there was something to flush, and if so tell the user they
-  // should request that the runtime be exitable.
-  // Normally we would not even include flush() at all, but in ASSERTIONS
-  // builds we do so just for this check, and here we see if there is any
-  // content to flush, that is, we check if there would have been
-  // something a non-ASSERTIONS build would have not seen.
-  // How we flush the streams depends on whether we are in SYSCALLS_REQUIRE_FILESYSTEM=0
-  // mode (which has its own special function for this; otherwise, all
-  // the code is inside libc)
-  var oldOut = out;
-  var oldErr = err;
-  var has = false;
-  out = err = function(x) {
-    has = true;
-  }
-  try { // it doesn't matter if it fails
-    var flush = flush_NO_FILESYSTEM;
-    if (flush) flush();
-  } catch(e) {}
-  out = oldOut;
-  err = oldErr;
-  if (has) {
-    warnOnce('stdio streams had content in them that was not flushed. you should set EXIT_RUNTIME to 1 (see the FAQ), or make sure to emit a newline when you printf etc.');
-    warnOnce('(this may also be due to not including full filesystem support - try building with -s FORCE_FILESYSTEM=1)');
-  }
-}
-
 /** @param {boolean|number=} implicit */
 function exit(status, implicit) {
   EXITSTATUS = status;
-
-  checkUnflushedContent();
 
   // if this is just main exit-ing implicitly, and the status is 0, then we
   // don't need to do anything here and can just leave. if the status is
@@ -2349,7 +2410,7 @@ function exit(status, implicit) {
   if (keepRuntimeAlive()) {
     // if exit() was called, we may warn the user if the runtime isn't actually being shut down
     if (!implicit) {
-      var msg = 'program exited (with status: ' + status + '), but EXIT_RUNTIME is not set, so halting execution but not exiting the runtime or preventing further async execution (build with EXIT_RUNTIME=1, if you want a true shutdown)';
+      var msg = 'program exited (with status: ' + status + '), but keepRuntimeAlive() is set (counter=' + runtimeKeepaliveCounter + ') due to an async operation, so halting execution but not exiting the runtime or preventing further async execution (you can use emscripten_force_exit, if you want to force a true shutdown)';
       readyPromiseReject(msg);
       err(msg);
     }
