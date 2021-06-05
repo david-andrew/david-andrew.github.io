@@ -9,8 +9,12 @@ const Loaded = ({ wasm }: { wasm: any }) => (
         onClick={() => {
             // console.log('would call wasm here')
             // console.log(wasm)
-            const func = wasm.cwrap('func', ['int', 'int'], 'int')
+            const func = wasm.cwrap('func', 'int', ['int', 'int'])
             console.log(func(1, 6))
+            const func2 = wasm.cwrap('func2', 'void', ['string', 'string'])
+            const str1 = 'apple'
+            const str2 = 'banana'
+            console.log(func2(str1, str2))
         }}
     >
         Click me

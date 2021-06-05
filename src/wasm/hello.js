@@ -36,6 +36,12 @@ Module['ready'] = new Promise(function(resolve, reject) {
       }
     
 
+      if (!Object.getOwnPropertyDescriptor(Module['ready'], '_func2')) {
+        Object.defineProperty(Module['ready'], '_func2', { configurable: true, get: function() { abort('You are getting _func2 on the Promise object, instead of the instance. Use .then() to get called back with the instance, see the MODULARIZE docs in src/settings.js') } });
+        Object.defineProperty(Module['ready'], '_func2', { configurable: true, set: function() { abort('You are setting _func2 on the Promise object, instead of the instance. Use .then() to get called back with the instance, see the MODULARIZE docs in src/settings.js') } });
+      }
+    
+
       if (!Object.getOwnPropertyDescriptor(Module['ready'], '_emscripten_stack_get_end')) {
         Object.defineProperty(Module['ready'], '_emscripten_stack_get_end', { configurable: true, get: function() { abort('You are getting _emscripten_stack_get_end on the Promise object, instead of the instance. Use .then() to get called back with the instance, see the MODULARIZE docs in src/settings.js') } });
         Object.defineProperty(Module['ready'], '_emscripten_stack_get_end', { configurable: true, set: function() { abort('You are setting _emscripten_stack_get_end on the Promise object, instead of the instance. Use .then() to get called back with the instance, see the MODULARIZE docs in src/settings.js') } });
@@ -1946,6 +1952,9 @@ var ___wasm_call_ctors = Module["___wasm_call_ctors"] = createExportWrapper("__w
 
 /** @type {function(...*):?} */
 var _func = Module["_func"] = createExportWrapper("func");
+
+/** @type {function(...*):?} */
+var _func2 = Module["_func2"] = createExportWrapper("func2");
 
 /** @type {function(...*):?} */
 var _fflush = Module["_fflush"] = createExportWrapper("fflush");
