@@ -13,23 +13,23 @@
 #include "srnglr.h"
 #include "dewy_parser_wrapper.h"
 
-//run the parser wrapper with example inputs
-//TODO->remove this when everythings working
-int main()
-{
-    char *grammar_source = "#E = '(' #ws * #E #ws * ')';\n"
-                           "#E = #E #ws *[+\\-] #ws * #E;\n"
-                           "#E = #E #ws *[*/] #ws * #E;\n"
-                           "#E = #E #ws * '^' #ws * #E;\n"
-                           "#E = #N | #I;\n"
-                           "#N = [0-9]+;\n"
-                           "#I = [A-Za-z_][A-Za-z0-9!@%%&_?]*;\n"
-                           "#ws = [\n\x20];\n"
-                           "#start = (#ws* #E)+;";
-    char *input_source = "1+2*3";
-    dewy_parser(grammar_source, input_source);
-    return 0;
-}
+// //run the parser wrapper with example inputs
+// //TODO->remove this when everythings working
+// int main()
+// {
+//     char *grammar_source = "#E = '(' #ws * #E #ws * ')';\n"
+//                            "#E = #E #ws *[+\\-] #ws * #E;\n"
+//                            "#E = #E #ws *[*/] #ws * #E;\n"
+//                            "#E = #E #ws * '^' #ws * #E;\n"
+//                            "#E = #N | #I;\n"
+//                            "#N = [0-9]+;\n"
+//                            "#I = [A-Za-z_][A-Za-z0-9!@%%&_?]*;\n"
+//                            "#ws = [\\n\\x20];\n"
+//                            "#start = (#ws* #E)+;";
+//     char *input_source = "1+2*3";
+//     dewy_parser(grammar_source, input_source);
+//     return 0;
+// }
 
 void dewy_parser(char *grammar_source, char *input_utf8)
 {

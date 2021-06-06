@@ -27,3 +27,4 @@ yarn-error.log*
 
 #dewy build temp directory
 /tmp
+/build_dewy
