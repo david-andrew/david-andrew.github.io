@@ -11,7 +11,7 @@ const Loaded = ({ wasm }: { wasm: any }) => (
             type wrapper_signature = (grammar_source: string, input_source: string) => void
             const dewy_parser = wasm.cwrap('dewy_parser', 'void', ['string', 'string']) as wrapper_signature
             const grammar_source = `#E = '(' #ws* #E #ws* ')';
-#E = #E #ws* [+\-] #ws* #E;
+#E = #E #ws* [+\\-] #ws* #E;
 #E = #E #ws* [*/] #ws* #E;
 #E = #E #ws* '^' #ws* #E;
 #E = #N | #I;
@@ -19,7 +19,7 @@ const Loaded = ({ wasm }: { wasm: any }) => (
 #I = [A-Za-z_] [A-Za-z0-9!@%&_?]*;
 #ws = [\\n\\x20];
 #start = (#ws* #E)+;`
-            const input_source = `1+2*3♥`
+            const input_source = `1+2*3`
             try {
                 dewy_parser(grammar_source, input_source)
             } catch {

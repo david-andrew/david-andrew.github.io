@@ -30,11 +30,11 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "build:wasm": "emcc -s EXPORT_ES6=1 -s MODULARIZE=1 -s EXPORT_ALL=1 -s EXPORTED_FUNCTIONS=\"['_func', '_func2', '_segfault']\" -s EXPORTED_RUNTIME_METHODS=\"['cwrap', 'ccall']\" -s ABORT_ON_WASM_EXCEPTIONS=1 -s EXIT_RUNTIME=1 -o src/wasm/hello.js src/wasm/hello.c",
-    "build:wasmxx": "em++ --bind -s EXPORT_ES6=1 -s MODULARIZE=1 -s EXPORT_ALL=1 -o src/wasm/hello.js src/wasm/hello.cpp",
-    "prebuild": "git submodule update --init --recursive",
+    "prebuild:dewy": "./build_dewy.sh",
+    "prebuild": "git submodule update --init --recursive --remote && npm run prebuild:dewy",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
+    "prestart": "npm run prebuild",
     "start": "HOST=0.0.0.0 craco start",
     "build": "craco build",
     "test": "craco test",
