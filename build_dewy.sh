@@ -16,7 +16,7 @@ cp ../src/wasm/dewy_parser_wrapper.* ./
 
 # compile the parser to webassembly using emcc
 #tbd if we need EXPORT_ALL...
-emcc -s EXPORT_ES6=1 -s MODULARIZE=1 -s EXPORT_ALL=1 -s EXPORTED_FUNCTIONS="['_dewy_parser']" -s EXPORTED_RUNTIME_METHODS="['cwrap', 'ccall']" -s ABORT_ON_WASM_EXCEPTIONS=1 -s EXIT_RUNTIME=1 \
+emcc -s EXPORT_ES6=1 -s MODULARIZE=1 -s EXPORT_ALL=1 -s EXPORTED_FUNCTIONS="['_dewy_parser']" -s EXPORTED_RUNTIME_METHODS="['cwrap', 'ccall']" -s ABORT_ON_WASM_EXCEPTIONS=1 -s EXIT_RUNTIME=1 -s ENVIRONMENT=web\
     -o dewy_parser_wrapper.js \
 	dewy_parser_wrapper.c utilities.c object.c tuple.c metatoken.c dictionary.c vector.c parray.c set.c ustring.c charset.c metaast.c metascanner.c metaparser.c metaitem.c fset.c slice.c gotokey.c reduction.c gss.c sppf.c srnglr.c \
     -lm -g
