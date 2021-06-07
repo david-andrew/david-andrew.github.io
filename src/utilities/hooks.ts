@@ -98,12 +98,10 @@ export const useDewyWasm = (grammar_source: string, input_source: string) => {
     //promise to the wasm interface module
     const wasmPromiseRef = useRef<Promise<any>>()
 
-    //func for calling the parser
-    // const [dewyParser, setDewyParser] = useState<(grammar_source: string, input_source: string) => void | undefined>()
-    // const dewyParserRef = useRef<(grammar_source: string, input_source: string) => void>()
-
     //handling of string output from the parser process
     const [parserOutput, addParserChunk, flushParserOutput, resetParserOutput] = useStringBuffer()
+
+    const [grammarError, setGrammarError] = useState<boolean>(false)
 
     //handle setting up the wasm module and the function for calling the parser
     useEffect(() => {
@@ -114,8 +112,14 @@ export const useDewyWasm = (grammar_source: string, input_source: string) => {
                 console.log('wasm runtime initialized')
                 const wasm: any = await wasmPromiseRef.current
                 const dewyParser = wasm.cwrap('dewy_parser', 'void', ['string', 'string'])
-                dewyParser(grammar_source, input_source)
-                flushParserOutput()
+                try {
+                    dewyParser(grammar_source, input_source)
+                } catch {
+                    console.error('grammar error')
+                    setGrammarError(true)
+                } finally {
+                    flushParserOutput()
+                }
             },
             //override the module's code for locating the wasm binary
             /* eslint-disable @typescript-eslint/no-var-requires */
@@ -123,12 +127,14 @@ export const useDewyWasm = (grammar_source: string, input_source: string) => {
             //override the print function to write to our custom buffer
             print: (text: string) => {
                 addParserChunk(text)
+                console.log(`pushing chunk: ${text}`)
             },
         })
 
         //clean up at the end of every render
         return () => {
             resetParserOutput()
+            setGrammarError(false)
         }
     }, [grammar_source, input_source])
 

@@ -29,7 +29,7 @@ void dewy_parser(char *grammar_source, char *input_utf8)
     initialize_metaparser();
     initialize_srnglr(input_utf8_size);
 
-    if (!run_compiler_compiler(grammar_source, false, false, false, true, true, true)) //, verbose, scanner, ast, parser, grammar, table))
+    if (!run_compiler_compiler(grammar_source, false, false, true, true, true, true)) //, verbose, scanner, ast, parser, grammar, table))
     {
         goto cleanup;
     }
