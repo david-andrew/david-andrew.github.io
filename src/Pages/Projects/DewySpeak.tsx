@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Icon, List, TextArea, TextAreaProps } from 'semantic-ui-react'
 import { PageContainer, PageHeading, DewyLiveParser } from '../../Components'
-import { useGithubTimestamp, useDewyWasm, Code, CodeBlock, ExternalLink, getScrollbarWidth } from '../../utilities'
+import { useGithubTimestamp, useDewyWasm, useDelayedText, Code, CodeBlock, ExternalLink, getScrollbarWidth } from '../../utilities'
 
 const unambiguousExpressionGrammar = `//addition/subtraction (left associative)
 #S = #S #w* '+' #w* #A | #S #w* '-' #w* #A | #A;
@@ -87,8 +87,10 @@ export const DewySpeak = (): JSX.Element => {
     const onGrammarChange = onTextAreaChange(setGrammarInput, setGrammarScroll, grammarRef)
     const onSourceChange = onTextAreaChange(setSourceInput, setSourceScroll, sourceRef)
 
-    //run the input through the dewy parser
-    const parserOutput = useDewyWasm(grammarInput, sourceInput)
+    //run the input through the dewy parser. Put a delay on the input boxes so that the wasm code isn't run too frequently
+    const grammar = useDelayedText(grammarInput) ?? ''
+    const source = useDelayedText(sourceInput) ?? ''
+    const parserOutput = useDewyWasm(grammar, source)
 
     //on window resize/zoom, update the input scrollbars
     useEffect(() => {

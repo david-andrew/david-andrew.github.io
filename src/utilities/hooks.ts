@@ -127,7 +127,7 @@ export const useDewyWasm = (grammar_source: string, input_source: string) => {
             //override the print function to write to our custom buffer
             print: (text: string) => {
                 addParserChunk(text)
-                console.log(`pushing chunk: ${text}`)
+                // console.log(`pushing chunk: ${text}`)
             },
         })
 
@@ -141,4 +141,25 @@ export const useDewyWasm = (grammar_source: string, input_source: string) => {
     //return the parser output as a single string
     //TODO->break up the output based on specific sections of the string e.g. \n>>>>>>>>>>TABLE>>>>>>>>>>\n etc.
     return parserOutput
+}
+
+//delay updating a string so that the inputs can feel responsive to typing in them, and then when the user stops typing the process is run
+export const useDelayedText = (text: string, delayMs: number = 500): string | undefined => {
+    //text to emit after delay interval
+    const [delayedText, setDelayedText] = useState<string | undefined>()
+
+    //reference to the handle of the set timeout (so we can cancel if the text changes during the delay)
+    const timeoutHandleRef = useRef<number>()
+
+    //cancel the current timeout if on was in progress
+    if (timeoutHandleRef.current !== undefined) {
+        window.clearTimeout(timeoutHandleRef.current)
+        timeoutHandleRef.current = undefined
+    }
+    timeoutHandleRef.current = window.setTimeout(() => {
+        setDelayedText(text)
+        timeoutHandleRef.current = undefined
+    }, delayMs)
+
+    return delayedText
 }
