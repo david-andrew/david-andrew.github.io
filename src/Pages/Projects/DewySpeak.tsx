@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Icon, List, TextArea, TextAreaProps } from 'semantic-ui-react'
 import { PageContainer, PageHeading, DewyLiveParser } from '../../Components'
-import { useGithubTimestamp, Code, CodeBlock, ExternalLink, getScrollbarWidth } from '../../utilities'
+import { useGithubTimestamp, useDewyWasm, Code, CodeBlock, ExternalLink, getScrollbarWidth } from '../../utilities'
 
 const unambiguousExpressionGrammar = `//addition/subtraction (left associative)
 #S = #S #w* '+' #w* #A | #S #w* '-' #w* #A | #A;
@@ -86,6 +86,9 @@ export const DewySpeak = (): JSX.Element => {
 
     const onGrammarChange = onTextAreaChange(setGrammarInput, setGrammarScroll, grammarRef)
     const onSourceChange = onTextAreaChange(setSourceInput, setSourceScroll, sourceRef)
+
+    //run the input through the dewy parser
+    const parserOutput = useDewyWasm(grammarInput, sourceInput)
 
     //on window resize/zoom, update the input scrollbars
     useEffect(() => {
@@ -210,7 +213,6 @@ export const DewySpeak = (): JSX.Element => {
 │   └── ϵ: #__6
 └── ϵ: #__1`}
                 />
-
                 <p>while parsing the same input with the ambiguous grammar returns the following parse forest:</p>
                 <CodeBlock
                     flatten
@@ -292,8 +294,9 @@ export const DewySpeak = (): JSX.Element => {
                 <h4>Source Input</h4>
                 <TextArea onChange={onSourceChange} style={{ width: '100%', height: sourceHeight }} spellCheck="false" defaultValue={'1+2*3'} />
                 <h4>Output</h4>
-                <CodeBlock flatten text={'<tree goes here>'} />
-                <DewyLiveParser />
+                <CodeBlock flatten text={parserOutput ?? 'running parser...'} />
+                {/* <DewyLiveParser /> */}
+                useDewyWasm
                 <h3>Build It Yourself</h3>
                 <p>
                     Since the language is far from complete, the most you can build right now is the SRNGLR parser. The git repo includes several example

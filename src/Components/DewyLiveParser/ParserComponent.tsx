@@ -22,6 +22,7 @@ const Loaded = ({ wasm }: { wasm: any }) => (
             const input_source = `1+2*3`
             try {
                 dewy_parser(grammar_source, input_source)
+                // dewy_parser(grammar_source, "(1+2)*3") //causes error...
             } catch {
                 console.log('call to parser threw an error')
             }

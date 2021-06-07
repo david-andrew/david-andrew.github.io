@@ -30,8 +30,8 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "prebuild:dewy": "./build_dewy.sh",
-    "prebuild": "git submodule update --init --recursive --remote && npm run prebuild:dewy",
+    "prebuild:dewy": "git submodule update --init --recursive --remote && ./build_dewy.sh",
+    "prebuild": "npm run prebuild:dewy",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "prestart": "npm run prebuild",
