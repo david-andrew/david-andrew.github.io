@@ -71,7 +71,7 @@ export const useStringBuffer = (): [string | undefined, (chunk: string) => void,
     const [output, setOutput] = useState<string | undefined>()
 
     //add a chunk to the buffer
-    const addChunk = (chunk: string) => {
+    const addChunk = (chunk: string): void => {
         if (bufferRef.current === undefined) {
             bufferRef.current = []
         }
@@ -79,13 +79,13 @@ export const useStringBuffer = (): [string | undefined, (chunk: string) => void,
     }
 
     //call when done reading input to turn on the output string
-    const flushBuffer = () => {
+    const flushBuffer = (): void => {
         //combine every chunk into a single big string
         setOutput(bufferRef.current?.join('\n'))
     }
 
     //reset everything to initial
-    const reset = () => {
+    const reset = (): void => {
         bufferRef.current = undefined
         setOutput(undefined)
     }
@@ -94,7 +94,7 @@ export const useStringBuffer = (): [string | undefined, (chunk: string) => void,
 }
 
 //hook for managing dewy parser web assembly
-export const useDewyWasm = (grammar_source: string, input_source: string) => {
+export const useDewyWasm = (grammar_source: string, input_source: string): string | undefined => {
     //promise to the wasm interface module
     const wasmPromiseRef = useRef<Promise<any>>()
 
@@ -132,7 +132,7 @@ export const useDewyWasm = (grammar_source: string, input_source: string) => {
         })
 
         //clean up at the end of every render
-        return () => {
+        return (): void => {
             resetParserOutput()
             setGrammarError(false)
         }
@@ -144,7 +144,7 @@ export const useDewyWasm = (grammar_source: string, input_source: string) => {
 }
 
 //delay updating a string so that the inputs can feel responsive to typing in them, and then when the user stops typing the process is run
-export const useDelayedText = (text: string, delayMs: number = 500): string | undefined => {
+export const useDelayedText = (text: string, delayMs: number = 200): string | undefined => {
     //text to emit after delay interval
     const [delayedText, setDelayedText] = useState<string | undefined>()
 
@@ -156,6 +156,8 @@ export const useDelayedText = (text: string, delayMs: number = 500): string | un
         window.clearTimeout(timeoutHandleRef.current)
         timeoutHandleRef.current = undefined
     }
+
+    //create a new timeout that sets the text at the end of the delay
     timeoutHandleRef.current = window.setTimeout(() => {
         setDelayedText(text)
         timeoutHandleRef.current = undefined

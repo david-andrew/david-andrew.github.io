@@ -29,11 +29,11 @@ void dewy_parser(char *grammar_source, char *input_utf8)
     initialize_metaparser();
     initialize_srnglr(input_utf8_size);
 
-    if (!run_compiler_compiler(grammar_source, false, false, true, true, true, true)) //, verbose, scanner, ast, parser, grammar, table))
+    if (!run_compiler_compiler(grammar_source, false, false, false, false, false, false))// false, false, true, true, true, true)) //, verbose, scanner, ast, parser, grammar, table))
     {
         goto cleanup;
     }
-    if (!run_compiler(input_source, true, true)) //, compile, forest))
+    if (!run_compiler(input_source, true, true))// true, true)) //, compile, forest))
     {
         goto cleanup;
     }
@@ -177,10 +177,6 @@ bool run_compiler(uint32_t *source, bool compile, bool forest)
 
     if (compile)
     {
-        printf("INPUT SOURCE:\n```\n");
-        ustring_str(source);
-        printf("\n```\n\n");
-
         printf("PARSE RESULT:\n%s\n\n", result ? "success" : "failure");
         print_compiler();
         printf("\n\n");

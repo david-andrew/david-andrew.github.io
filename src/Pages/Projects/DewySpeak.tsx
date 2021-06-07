@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Icon, List, TextArea, TextAreaProps } from 'semantic-ui-react'
-import { PageContainer, PageHeading, DewyLiveParser } from '../../Components'
+import { PageContainer, PageHeading /*DewyLiveParser*/ } from '../../Components'
 import { useGithubTimestamp, useDewyWasm, useDelayedText, Code, CodeBlock, ExternalLink, getScrollbarWidth } from '../../utilities'
 
 const unambiguousExpressionGrammar = `//addition/subtraction (left associative)
@@ -21,7 +21,7 @@ const unambiguousExpressionGrammar = `//addition/subtraction (left associative)
 //whitespace
 #w = [\\x20\\n];
 
-#start = (#w* #S)+ #w*;`
+#start = #w* #S (#w+ #S)* #w*;`
 
 const ambiguousExpressionGrammar = `#E = '(' #w* #E #w* ')';    //parenthesis
 #E = #E #w* [+\\-] #w* #E;   //addition/subtraction
@@ -33,7 +33,7 @@ const ambiguousExpressionGrammar = `#E = '(' #w* #E #w* ')';    //parenthesis
 
 #w = [\\n\\x20];              // whitespace
 
-#start = (#w* #E)+ #w*;`
+#start = #w* #E (#w+ #E)* #w*;`
 
 //handle updating the saved state for the body of text inputs
 const onTextAreaChange = (
@@ -297,8 +297,6 @@ export const DewySpeak = (): JSX.Element => {
                 <TextArea onChange={onSourceChange} style={{ width: '100%', height: sourceHeight }} spellCheck="false" defaultValue={'1+2*3'} />
                 <h4>Output</h4>
                 <CodeBlock flatten text={parserOutput ?? 'running parser...'} />
-                {/* <DewyLiveParser /> */}
-                useDewyWasm
                 <h3>Build It Yourself</h3>
                 <p>
                     Since the language is far from complete, the most you can build right now is the SRNGLR parser. The git repo includes several example
