@@ -45,18 +45,22 @@ cleanup:
 /**
  * Print a delimiter so that the website can split out each section
  */
-void print_delimiter(char *key, bool start)
-{
-    char *arrows = start ? ">>>>>>>>>>>>" : "<<<<<<<<<<<<";
-    printf("%s%s%s", arrows, key, arrows);
-}
+// void print_delimiter(char *key, bool start)
+// {
+//     char *arrows = start ? ">>>>>>>>>>>>" : "<<<<<<<<<<<<";
+//     printf("%s%s%s", arrows, key, arrows);
+// }
 
-#define delimit(key, inner)           \
-    {                                 \
-        print_delimiter(#key, true);  \
-        inner;                        \
-        print_delimiter(#key, false); \
-    }
+// #define delimit(key, inner)           \
+//     {                                 \
+//         print_delimiter(#key, true);  \
+//         inner;                        \
+//         print_delimiter(#key, false); \
+//     }
+void print_delimiter() //char *key)
+{
+    printf("<<<<<<<<<<<<");
+}
 
 /**
  * Run all steps in the compiler, and print out the intermediate results if the 
@@ -65,7 +69,7 @@ void print_delimiter(char *key, bool start)
  */
 bool run_compiler_compiler(char *source, bool verbose) //, bool scanner, bool ast, bool parser, bool grammar, bool table)
 {
-    print_delimiter("START_OF_INPUT", false);
+    // print_delimiter("START_OF_INPUT", false);
 
     vect *tokens = new_vect();
     obj *t = NULL;
@@ -77,7 +81,8 @@ bool run_compiler_compiler(char *source, bool verbose) //, bool scanner, bool as
     }
     //if (scanner) //print scanning result
     {
-        delimit(METASCANNER, print_scanner(tokens, true)); //, verbose));
+        // print_delimiter();
+        print_scanner(tokens, true); //, verbose));
     }
     if (*source != 0) //check for errors scanning
     {
@@ -92,7 +97,7 @@ bool run_compiler_compiler(char *source, bool verbose) //, bool scanner, bool as
     {
         // printf("METAAST OUTPUT:\n");
     }
-    print_delimiter("METAAST", true);
+    print_delimiter(); //"METAAST", true);
     while (metatoken_get_next_real_token(tokens, 0) >= 0)
     {
         if (!metaparser_is_valid_rule(tokens))
@@ -151,13 +156,14 @@ bool run_compiler_compiler(char *source, bool verbose) //, bool scanner, bool as
     // if (ast)
     {
         // printf("\n\n");
-        print_delimiter("METAAST", false);
+        // print_delimiter("METAAST", false);
     }
 
     // if (parser)
     {
         // printf("METAPARSER OUTPUT:\n");
-        delimit(METAPARSER, print_parser(verbose));
+        print_delimiter();
+        print_parser(verbose);
         // printf("\n\n");
     }
 
@@ -166,7 +172,8 @@ bool run_compiler_compiler(char *source, bool verbose) //, bool scanner, bool as
     // if (grammar)
     {
         // printf("GRAMMAR OUTPUT:\n");
-        delimit(GRAMMAR, print_grammar());
+        print_delimiter();
+        print_grammar();
         // printf("\n\n");
     }
 
@@ -174,7 +181,8 @@ bool run_compiler_compiler(char *source, bool verbose) //, bool scanner, bool as
     // if (table)
     {
         // printf("SRNGLR TABLE:\n");
-        delimit(TABLE, print_table());
+        print_delimiter();
+        print_table();
         // printf("\n\n");
     }
 
@@ -190,10 +198,13 @@ bool run_compiler(uint32_t *source, bool compile, bool forest)
 
     if (compile)
     {
-        delimit(RESULT, printf(result ? "success" : "failure"));
+        print_delimiter();
+        printf(result ? "success" : "failure");
         // printf("PARSE RESULT:\n%s\n\n", result ? "success" : "failure");
-        delimit(FOREST, print_compiler());
-        print_delimiter("END_OF_INPUT", true);
+        print_delimiter();
+        print_compiler();
+        // print_delimiter("END_OF_INPUT", true);
+        print_delimiter();
         printf("\n");
     }
 
@@ -209,14 +220,15 @@ void print_scanner(vect *tokens, bool verbose)
     {
         metatoken *t = vect_get(tokens, i)->data;
         verbose ? metatoken_repr(t) : metatoken_str(t);
-        if (verbose && i < vect_size(tokens) - 1)
-        {
-            printf(" ");
-        } //space after each verbose token
-        if (t->type == comment && t->content[1] == '/')
-        {
-            printf("\n");
-        } //print a newline after singleline comments. TODO->maybe have single line comments include the newline?
+        printf("\n");
+        // if (verbose && i < vect_size(tokens) - 1)
+        // {
+        //     printf(" ");
+        // } //space after each verbose token
+        // if (t->type == comment && t->content[1] == '/')
+        // {
+        //     printf("\n");
+        // } //print a newline after singleline comments. TODO->maybe have single line comments include the newline?
     }
 }
 

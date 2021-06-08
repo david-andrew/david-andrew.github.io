@@ -102,31 +102,30 @@ export interface ParserOutput {
     table?: string
     result?: string
     forest?: string
+    grammarError?: string
+    // parseFailed: boolean
 }
 const splitParserOutput = (raw?: string): ParserOutput | undefined => {
     if (raw === undefined) {
         return undefined
     }
-    const startArrows = '>>>>>>>>>>>>'
     const endArrows = '<<<<<<<<<<<<'
-    const getStartDelimiter = (key: string): string => `${startArrows}${key}${startArrows}`
-    const getEndDelimiter = (key: string): string => `${endArrows}${key}${endArrows}`
+    const [metascanner, metaast, metaparser, grammar, table, result, forest] = raw.split(`${endArrows}`) as (string | undefined)[]
+    const [grammarFirsts, grammarItems] = grammar?.split('itemsets:\n') ?? [undefined, undefined]
 
-    const getSlice = (rawSection: string | undefined, key: string): string =>
-        rawSection !== undefined ? rawSection.slice(`${key}${startArrows}`.length, -`${endArrows}${key}`.length).trimEnd() : ''
-
-    const [_, rawMetascanner, rawMetaast, rawMetaparser, rawGrammar, rawTable, rawResult, rawTree] = raw.split(`${endArrows}${startArrows}`)
-    const [grammarFirsts, grammarItems] = getSlice(rawGrammar, 'GRAMMAR').split('itemsets:\n')
+    const grammarErrorIndex = raw.indexOf('ERROR: ')
+    const grammarError = grammarErrorIndex >= 0 ? raw.slice(grammarErrorIndex) : undefined
 
     return {
-        metascanner: getSlice(rawMetascanner, 'METASCANNER'),
-        metaast: getSlice(rawMetaast, 'METAAST'),
-        metaparser: getSlice(rawMetaparser, 'METAPARSER'),
-        grammarFirsts: grammarFirsts.slice('first sets:\n'.length),
-        grammarItems,
-        table: getSlice(rawTable, 'TABLE'),
-        result: getSlice(rawResult, 'RESULT'),
-        forest: getSlice(rawTree, 'FOREST'),
+        metascanner: metascanner?.trimEnd(),
+        metaast: metaast?.trimEnd(),
+        metaparser: metaparser?.trimEnd(),
+        grammarFirsts: grammarFirsts?.slice('first sets:\n'.length).trimEnd(),
+        grammarItems: grammarItems?.trimEnd(),
+        table: table?.trimEnd(),
+        result: result?.trimEnd(),
+        forest: forest?.trimEnd(),
+        grammarError,
     }
 }
 

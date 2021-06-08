@@ -37,6 +37,10 @@
     white-space: pre;
 }
 
+.PageContainer textarea.failure {
+    outline: solid red 1px;
+}
+
 .PageContainer textarea::selection {
     color: #1a1d21;
     background-color: #cde2ff;
@@ -44,4 +48,8 @@
 
 .PageContainer textarea:focus {
     outline: solid white 2px;
+}
+
+.PageContainer textarea.failure:focus {
+    outline: solid red 2px;
 }

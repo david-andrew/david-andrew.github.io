@@ -100,10 +100,6 @@ export const DewySpeak = (): JSX.Element => {
         }
         return 'forest'
     }
-    //update the scrollbar for the menu (after we know it will have been rendered)
-    // useEffect(() => {
-    //     updateTextAreaScroll(setMenuScroll, menuRef)
-    // }, [showParserDemo])
 
     //state for live parser demo inputs
     const grammarRef = useRef<HTMLTextAreaElement>()
@@ -123,6 +119,10 @@ export const DewySpeak = (): JSX.Element => {
     const grammar = useDelayedText(grammarInput) ?? ''
     const source = useDelayedText(sourceInput) ?? ''
     const parserOutput = useDewyWasm(grammar, source)
+
+    //determine if there was a parser/grammar error. Only show errors after the user starts the demo
+    const parseError = showParserDemo && parserOutput?.result === 'failure'
+    const grammarError = showParserDemo && parserOutput?.grammarError !== undefined
 
     //on window resize/zoom, update the input scrollbars
     useEffect(() => {
@@ -158,7 +158,13 @@ export const DewySpeak = (): JSX.Element => {
                     <Grid.Row>
                         <Grid.Column width={showParserDemo ? 6 : 8}>
                             <h4>Source Input</h4>
-                            <TextArea onChange={onSourceChange} style={{ width: '100%', height: sourceHeight }} spellCheck="false" defaultValue={'1+2*3'} />
+                            <TextArea
+                                className={parseError ? 'failure' : undefined}
+                                onChange={onSourceChange}
+                                style={{ width: '100%', height: sourceHeight }}
+                                spellCheck="false"
+                                defaultValue={'1+2*3'}
+                            />
                         </Grid.Column>
                         {showParserDemo && (
                             <Grid.Column width={2}>
@@ -178,6 +184,7 @@ export const DewySpeak = (): JSX.Element => {
                         <Grid.Column width={8}>
                             <h4>Grammar Specification</h4>
                             <TextArea
+                                className={grammarError ? 'failure' : undefined}
                                 onChange={onGrammarChange}
                                 style={{ width: '100%', height: grammarHeight }}
                                 spellCheck="false"
@@ -202,12 +209,15 @@ export const DewySpeak = (): JSX.Element => {
                                 <Menu.Item {...getParserDemoMenuProps('First Sets')} />
                             </Menu>
                         </div>
-                        <CodeBlock flatten text={parserOutput?.[getParserDemoSelectionKey(parserDemoSelection)] ?? 'running parser...'} />
+                        <CodeBlock
+                            flatten
+                            text={
+                                parserOutput?.[getParserDemoSelectionKey(parserDemoSelection)] ??
+                                (parserOutput?.grammarError !== undefined ? `GRAMMAR ${parserOutput.grammarError}` : 'running parser...')
+                            }
+                        />
                     </>
                 ) : (
-                    // ) : (
-                    //     <CodeBlock flatten text="running parser..." />
-                    // )
                     <Button onClick={() => setShowParserDemo(true)}>Try Me</Button>
                 )}
                 <h3>About</h3>
