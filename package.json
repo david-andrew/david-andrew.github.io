@@ -2,7 +2,7 @@
   "name": "website",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://david-andrew.github.io/website/",
+  "homepage": "https://david-andrew.github.io/",
   "dependencies": {
     "@atlaskit/code": "^14.0.1",
     "@open-wc/webpack-import-meta-loader": "^0.4.7",
