@@ -38,7 +38,7 @@
 }
 
 .PageContainer textarea.failure {
-    outline: solid red 1px;
+    outline: solid #e03c31 1px;
 }
 
 .PageContainer textarea::selection {
@@ -51,5 +51,5 @@
 }
 
 .PageContainer textarea.failure:focus {
-    outline: solid red 2px;
+    outline: solid #e03c31 2px;
 }

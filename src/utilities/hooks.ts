@@ -114,7 +114,7 @@ const splitParserOutput = (raw?: string): ParserOutput | undefined => {
     const [grammarFirsts, grammarItems] = grammar?.split('itemsets:\n') ?? [undefined, undefined]
 
     const grammarErrorIndex = raw.indexOf('ERROR: ')
-    const grammarError = grammarErrorIndex >= 0 ? raw.slice(grammarErrorIndex) : undefined
+    const grammarError = grammarErrorIndex >= 0 ? raw.slice(grammarErrorIndex + 'ERROR: '.length) : undefined
 
     return {
         metascanner: metascanner?.trimEnd(),

@@ -213,7 +213,7 @@ export const DewySpeak = (): JSX.Element => {
                             flatten
                             text={
                                 parserOutput?.[getParserDemoSelectionKey(parserDemoSelection)] ??
-                                (parserOutput?.grammarError !== undefined ? `GRAMMAR ${parserOutput.grammarError}` : 'running parser...')
+                                (parserOutput?.grammarError !== undefined ? `GRAMMAR ERROR: ${parserOutput.grammarError}` : 'running parser...')
                             }
                         />
                     </>
