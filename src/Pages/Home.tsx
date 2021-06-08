@@ -10,6 +10,8 @@ export const Home = (): JSX.Element => {
         <div
             id="HomePage"
             style={{
+                userSelect: 'none',
+                pointerEvents: 'none',
                 width: '100%',
                 height: '100%',
                 display: 'flex',
