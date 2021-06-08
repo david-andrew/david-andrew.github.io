@@ -32,8 +32,8 @@ export const Contact = (): JSX.Element => {
                                     <List.Item>
                                         <span>
                                             <Icon name="linkedin" size="big" />
-                                            <ExternalLink href="https://www.linkedin.com/in/david-andrew-engineer/" style={{ whiteSpace: 'nowrap' }}>
-                                                linkedin.com/in/david-andrew-engineer
+                                            <ExternalLink href="https://www.linkedin.com/in/dewy/" style={{ whiteSpace: 'nowrap' }}>
+                                                https://www.linkedin.com/in/dewy
                                             </ExternalLink>
                                         </span>
                                     </List.Item>

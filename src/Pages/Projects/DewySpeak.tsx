@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Icon, List, TextArea, TextAreaProps } from 'semantic-ui-react'
+import { Button, Divider, Grid, Icon, List, TextArea, TextAreaProps } from 'semantic-ui-react'
 import { PageContainer, PageHeading /*DewyLiveParser*/ } from '../../Components'
 import { useGithubTimestamp, useDewyWasm, useDelayedText, Code, CodeBlock, ExternalLink, getScrollbarWidth } from '../../utilities'
 
@@ -73,6 +73,8 @@ const emToPx = 12
 export const DewySpeak = (): JSX.Element => {
     const subtitle = useGithubTimestamp('dewy')
 
+    const [showParserDemo, setShowParserDemo] = useState<boolean>(false)
+
     //state for live parser demo inputs
     const grammarRef = useRef<HTMLTextAreaElement>()
     const [grammarInput, setGrammarInput] = useState<string>(ambiguousExpressionGrammar)
@@ -122,6 +124,47 @@ export const DewySpeak = (): JSX.Element => {
         <>
             <PageContainer>
                 <PageHeading title="Dewy Programming Language" subtitle={subtitle} />
+                <Grid columns={3}>
+                    <Grid.Row>
+                        <Grid.Column width={showParserDemo ? 6 : 8}>
+                            <h4>Source Input</h4>
+                            <TextArea onChange={onSourceChange} style={{ width: '100%', height: sourceHeight }} spellCheck="false" defaultValue={'1+2*3'} />
+                        </Grid.Column>
+                        {showParserDemo && (
+                            <Grid.Column width={2}>
+                                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                    <div style={{ pointerEvents: 'none', userSelect: 'none' }}>
+                                        <h4 style={{ color: 'black' }}>fake text</h4>
+
+                                        <div style={{ whiteSpace: 'nowrap', alignItems: 'center' }}>
+                                            <span style={{ fontSize: 20 }}>&lt; </span>
+                                            <span style={{ outline: 'solid 1px white', padding: '0.25em' }}>edit me</span>
+                                            <span style={{ fontSize: 20 }}> &gt;</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Grid.Column>
+                        )}
+                        <Grid.Column width={8}>
+                            <h4>Grammar Specification</h4>
+                            <TextArea
+                                onChange={onGrammarChange}
+                                style={{ width: '100%', height: grammarHeight }}
+                                spellCheck="false"
+                                defaultValue={ambiguousExpressionGrammar}
+                            />
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
+                {showParserDemo ? (
+                    <>
+                        <h4>Output</h4>
+                        <CodeBlock flatten text={parserOutput ?? 'running parser...'} />
+                    </>
+                ) : (
+                    <Button onClick={() => setShowParserDemo(true)}>Try Me</Button>
+                )}
+                <h3>About</h3>
                 <p>
                     Dewy is a programming language I have been personally developing since 2016. The main goal is to build a language that has the exact feature
                     set that I&apos;ve always wished existed. Dewy is a general purpose language with a focus on scientific and engineering applications. At a
@@ -284,19 +327,6 @@ export const DewySpeak = (): JSX.Element => {
                     extreme levels of portability in the compiler&mdash;most systems could build and run the Dewy compiler, as a C99 compiler would be the only
                     dependency.
                 </p>
-                <h3>Live Demo</h3>
-                <p>Try a live version of the parser, compiled with web assembly</p>
-                <h4>Grammar Specification</h4>
-                <TextArea
-                    onChange={onGrammarChange}
-                    style={{ width: '100%', height: grammarHeight }}
-                    spellCheck="false"
-                    defaultValue={ambiguousExpressionGrammar}
-                />
-                <h4>Source Input</h4>
-                <TextArea onChange={onSourceChange} style={{ width: '100%', height: sourceHeight }} spellCheck="false" defaultValue={'1+2*3'} />
-                <h4>Output</h4>
-                <CodeBlock flatten text={parserOutput ?? 'running parser...'} />
                 <h3>Build It Yourself</h3>
                 <p>
                     Since the language is far from complete, the most you can build right now is the SRNGLR parser. The git repo includes several example

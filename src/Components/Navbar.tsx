@@ -14,6 +14,8 @@ const NavbarButton = ({ content, onClick, active }: NavbarButtonProps): JSX.Elem
     return (
         <div
             style={{
+                userSelect: 'none',
+                cursor: 'pointer',
                 textAlign: 'center',
                 fontFamily: 'quadon',
                 fontSize: '2vmin',

@@ -9,6 +9,11 @@
     font-weight: normal;
 }
 
+.PageContainer button {
+    font-family: 'gentona';
+    font-weight: normal;
+}
+
 .PageContainer code {
     color: #dce5f5;
     background-color: #283447;

@@ -38,7 +38,7 @@ export const projects: ProjectContent[] = [
         imgSrc: logo,
         externalLink: 'https://github.com/david-andrew/website',
         summary: `This website, written in react/typescript`,
-        tags: ['React', 'TypeScript', 'Semantic UI', 'CSS', 'HTML'],
+        tags: ['React', 'TypeScript', 'WebAssembly', 'Semantic UI', 'CSS', 'HTML'],
     },
     {
         title: 'so voice!',

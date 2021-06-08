@@ -78,6 +78,8 @@ export const ProjectItem = ({ title, github, lastUpdated, imgSrc, internalLink, 
         <Item
             {...linkProps}
             style={{
+                cursor: 'pointer',
+                userSelect: 'none',
                 color: 'white',
                 padding: '1em',
                 border: '0.08em solid #000000',
