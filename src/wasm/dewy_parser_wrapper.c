@@ -19,21 +19,16 @@ void dewy_parser(char *grammar_source, char *input_utf8)
     size_t input_utf8_size = utf8_length(input_utf8);
     uint32_t *input_source = ustring_charstar_substr(input_utf8, 0, input_utf8_size - 1);
 
-    //DEBUG just print out the grammar and input
-    // printf("grammar:\n%s\n\nsource:\n", grammar_source);
-    // ustring_str(input_source);
-    // printf("\n");
-
     //set up structures for the sequence of scanning/parsing
     initialize_metascanner();
     initialize_metaparser();
     initialize_srnglr(input_utf8_size);
 
-    if (!run_compiler_compiler(grammar_source, false, false, false, false, false, false))// false, false, true, true, true, true)) //, verbose, scanner, ast, parser, grammar, table))
+    if (!run_compiler_compiler(grammar_source, false)) //, false, false, false, false, false))// false, false, true, true, true, true)) //, verbose, scanner, ast, parser, grammar, table))
     {
         goto cleanup;
     }
-    if (!run_compiler(input_source, true, true))// true, true)) //, compile, forest))
+    if (!run_compiler(input_source, true, true)) // true, true)) //, compile, forest))
     {
         goto cleanup;
     }
@@ -48,12 +43,30 @@ cleanup:
 }
 
 /**
+ * Print a delimiter so that the website can split out each section
+ */
+void print_delimiter(char *key, bool start)
+{
+    char *arrows = start ? ">>>>>>>>>>>>" : "<<<<<<<<<<<<";
+    printf("%s%s%s", arrows, key, arrows);
+}
+
+#define delimit(key, inner)           \
+    {                                 \
+        print_delimiter(#key, true);  \
+        inner;                        \
+        print_delimiter(#key, false); \
+    }
+
+/**
  * Run all steps in the compiler, and print out the intermediate results if the 
  * corresponding bool is true. If verbose is true, print out more structure info.
  * returns whether or not compiler_compiler step completed successfully
  */
-bool run_compiler_compiler(char *source, bool verbose, bool scanner, bool ast, bool parser, bool grammar, bool table)
+bool run_compiler_compiler(char *source, bool verbose) //, bool scanner, bool ast, bool parser, bool grammar, bool table)
 {
+    print_delimiter("START_OF_INPUT", false);
+
     vect *tokens = new_vect();
     obj *t = NULL;
 
@@ -62,11 +75,9 @@ bool run_compiler_compiler(char *source, bool verbose, bool scanner, bool ast, b
     {
         vect_push(tokens, t);
     }
-    if (scanner) //print scanning result
+    //if (scanner) //print scanning result
     {
-        printf("METASCANNER OUTPUT:\n");
-        print_scanner(tokens, verbose);
-        printf("\n\n");
+        delimit(METASCANNER, print_scanner(tokens, true)); //, verbose));
     }
     if (*source != 0) //check for errors scanning
     {
@@ -77,10 +88,11 @@ bool run_compiler_compiler(char *source, bool verbose, bool scanner, bool ast, b
     }
 
     //AST & PARSER STEP: build ASTs from tokens, and then convert to CFG sentences
-    if (ast)
+    // if (ast)
     {
-        printf("METAAST OUTPUT:\n");
+        // printf("METAAST OUTPUT:\n");
     }
+    print_delimiter("METAAST", true);
     while (metatoken_get_next_real_token(tokens, 0) >= 0)
     {
         if (!metaparser_is_valid_rule(tokens))
@@ -92,7 +104,7 @@ bool run_compiler_compiler(char *source, bool verbose, bool scanner, bool ast, b
         uint64_t head_idx = metaparser_add_symbol(head);
         vect *body_tokens = metaparser_get_rule_body(tokens);
         metaast *body_ast = metaast_parse_expr(body_tokens);
-        if (ast)
+        // if (ast)
         {
             print_ast(head_idx, body_ast, verbose);
         }
@@ -105,7 +117,7 @@ bool run_compiler_compiler(char *source, bool verbose, bool scanner, bool ast, b
             while ((metaast_fold_constant(&body_ast)) && ++reductions)
                 ;
 
-            if (ast && reductions > 0)
+            if (/*ast &&*/ reductions > 0)
             {
                 printf("Reduced AST: ");
                 print_ast(head_idx, body_ast, verbose);
@@ -136,33 +148,34 @@ bool run_compiler_compiler(char *source, bool verbose, bool scanner, bool ast, b
     complete_metaparser();
     vect_free(tokens);
 
-    if (ast)
+    // if (ast)
     {
-        printf("\n\n");
+        // printf("\n\n");
+        print_delimiter("METAAST", false);
     }
 
-    if (parser)
+    // if (parser)
     {
-        printf("METAPARSER OUTPUT:\n");
-        print_parser(verbose);
-        printf("\n\n");
+        // printf("METAPARSER OUTPUT:\n");
+        delimit(METAPARSER, print_parser(verbose));
+        // printf("\n\n");
     }
 
     //GRAMMAR ITEMSET STEP: generate the itemsets for the grammar
     srnglr_generate_grammar_itemsets();
-    if (grammar)
+    // if (grammar)
     {
-        printf("GRAMMAR OUTPUT:\n");
-        print_grammar();
-        printf("\n\n");
+        // printf("GRAMMAR OUTPUT:\n");
+        delimit(GRAMMAR, print_grammar());
+        // printf("\n\n");
     }
 
     //SRNGLR TABLE: print out the generated srnglr table for the grammar
-    if (table)
+    // if (table)
     {
-        printf("SRNGLR TABLE:\n");
-        print_table();
-        printf("\n\n");
+        // printf("SRNGLR TABLE:\n");
+        delimit(TABLE, print_table());
+        // printf("\n\n");
     }
 
     return true;
@@ -177,9 +190,11 @@ bool run_compiler(uint32_t *source, bool compile, bool forest)
 
     if (compile)
     {
-        printf("PARSE RESULT:\n%s\n\n", result ? "success" : "failure");
-        print_compiler();
-        printf("\n\n");
+        delimit(RESULT, printf(result ? "success" : "failure"));
+        // printf("PARSE RESULT:\n%s\n\n", result ? "success" : "failure");
+        delimit(FOREST, print_compiler());
+        print_delimiter("END_OF_INPUT", true);
+        printf("\n");
     }
 
     return result;

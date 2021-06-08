@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Button, Divider, Grid, Icon, List, TextArea, TextAreaProps } from 'semantic-ui-react'
+import { Button, Divider, Grid, Icon, List, Menu, TextArea, TextAreaProps } from 'semantic-ui-react'
 import { PageContainer, PageHeading /*DewyLiveParser*/ } from '../../Components'
-import { useGithubTimestamp, useDewyWasm, useDelayedText, Code, CodeBlock, ExternalLink, getScrollbarWidth } from '../../utilities'
+import { useGithubTimestamp, useDewyWasm, useDelayedText, Code, CodeBlock, ExternalLink, getScrollbarWidth, ParserOutput } from '../../utilities'
 
 const unambiguousExpressionGrammar = `//addition/subtraction (left associative)
 #S = #S #w* '+' #w* #A | #S #w* '-' #w* #A | #A;
@@ -73,7 +73,37 @@ const emToPx = 12
 export const DewySpeak = (): JSX.Element => {
     const subtitle = useGithubTimestamp('dewy')
 
+    //show the output from the parser demo
     const [showParserDemo, setShowParserDemo] = useState<boolean>(false)
+
+    //menu for the different things to show in output
+    const [parserDemoSelection, setParserDemoSelection] = useState<string>('Parse Forest')
+    const getParserDemoMenuProps = (name: string): { name: string; active: boolean; onClick: () => void } => {
+        return { name, active: parserDemoSelection === name, onClick: () => setParserDemoSelection(name) }
+    }
+    const getParserDemoSelectionKey = (name: string): keyof ParserOutput => {
+        switch (name) {
+            case 'Parse Forest':
+                return 'forest'
+            case 'RNGLR Table':
+                return 'table'
+            case 'Item Sets':
+                return 'grammarItems'
+            case 'Meta Scanner':
+                return 'metascanner'
+            case 'Meta AST':
+                return 'metaast'
+            case 'CFG':
+                return 'metaparser'
+            case 'First Sets':
+                return 'grammarFirsts'
+        }
+        return 'forest'
+    }
+    //update the scrollbar for the menu (after we know it will have been rendered)
+    // useEffect(() => {
+    //     updateTextAreaScroll(setMenuScroll, menuRef)
+    // }, [showParserDemo])
 
     //state for live parser demo inputs
     const grammarRef = useRef<HTMLTextAreaElement>()
@@ -157,11 +187,27 @@ export const DewySpeak = (): JSX.Element => {
                     </Grid.Row>
                 </Grid>
                 {showParserDemo ? (
+                    // parserOutput !== undefined ? (
                     <>
                         <h4>Output</h4>
-                        <CodeBlock flatten text={parserOutput ?? 'running parser...'} />
+
+                        <div style={{ overflowX: 'auto', overflowY: 'hidden', backgroundColor: '#283447' }}>
+                            <Menu inverted style={{ marginBottom: '0', backgroundColor: '#283447' }}>
+                                <Menu.Item {...getParserDemoMenuProps('Parse Forest')} />
+                                <Menu.Item {...getParserDemoMenuProps('RNGLR Table')} />
+                                <Menu.Item {...getParserDemoMenuProps('Item Sets')} />
+                                <Menu.Item {...getParserDemoMenuProps('Meta Scanner')} />
+                                <Menu.Item {...getParserDemoMenuProps('Meta AST')} />
+                                <Menu.Item {...getParserDemoMenuProps('CFG')} />
+                                <Menu.Item {...getParserDemoMenuProps('First Sets')} />
+                            </Menu>
+                        </div>
+                        <CodeBlock flatten text={parserOutput?.[getParserDemoSelectionKey(parserDemoSelection)] ?? 'running parser...'} />
                     </>
                 ) : (
+                    // ) : (
+                    //     <CodeBlock flatten text="running parser..." />
+                    // )
                     <Button onClick={() => setShowParserDemo(true)}>Try Me</Button>
                 )}
                 <h3>About</h3>

@@ -93,8 +93,50 @@ export const useStringBuffer = (): [string | undefined, (chunk: string) => void,
     return [output, addChunk, flushBuffer, reset]
 }
 
+export interface ParserOutput {
+    metascanner?: string
+    metaast?: string
+    metaparser?: string
+    grammarFirsts?: string
+    grammarItems?: string
+    table?: string
+    result?: string
+    forest?: string
+}
+const splitParserOutput = (raw?: string): ParserOutput | undefined => {
+    if (raw === undefined) {
+        return undefined
+    }
+    const startArrows = '>>>>>>>>>>>>'
+    const endArrows = '<<<<<<<<<<<<'
+    const getStartDelimiter = (key: string): string => `${startArrows}${key}${startArrows}`
+    const getEndDelimiter = (key: string): string => `${endArrows}${key}${endArrows}`
+
+    const getSlice = (rawSection: string | undefined, key: string): string =>
+        rawSection !== undefined ? rawSection.slice(`${key}${startArrows}`.length, -`${endArrows}${key}`.length) : ''
+
+    // const keys = ['metascanner', 'metaast', 'metaparser', 'grammarFirsts', 'grammarItems', 'table', 'result']
+
+    // console.log()
+
+    const [_, rawMetascanner, rawMetaast, rawMetaparser, rawGrammar, rawTable, rawResult, rawTree] = raw.split(`${endArrows}${startArrows}`)
+    // console.log(rawMetascanner, rawMetaast, rawMetaparser, rawGrammar, rawTable, rawResult)
+    const [grammarFirsts, grammarItems] = getSlice(rawGrammar, 'GRAMMAR').split('itemsets:\n')
+
+    return {
+        metascanner: getSlice(rawMetascanner, 'METASCANNER'),
+        metaast: getSlice(rawMetaast, 'METAAST'),
+        metaparser: getSlice(rawMetaparser, 'METAPARSER'),
+        grammarFirsts: grammarFirsts.slice('first sets:\n'.length),
+        grammarItems,
+        table: getSlice(rawTable, 'TABLE'),
+        result: getSlice(rawResult, 'RESULT'),
+        forest: getSlice(rawTree, 'FOREST'),
+    }
+}
+
 //hook for managing dewy parser web assembly
-export const useDewyWasm = (grammar_source: string, input_source: string): string | undefined => {
+export const useDewyWasm = (grammar_source: string, input_source: string): ParserOutput | undefined => {
     //promise to the wasm interface module
     const wasmPromiseRef = useRef<Promise<any>>()
 
@@ -139,8 +181,7 @@ export const useDewyWasm = (grammar_source: string, input_source: string): strin
     }, [grammar_source, input_source])
 
     //return the parser output as a single string
-    //TODO->break up the output based on specific sections of the string e.g. \n>>>>>>>>>>TABLE>>>>>>>>>>\n etc.
-    return parserOutput
+    return splitParserOutput(parserOutput)
 }
 
 //delay updating a string so that the inputs can feel responsive to typing in them, and then when the user stops typing the process is run
