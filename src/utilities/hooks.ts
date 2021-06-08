@@ -113,14 +113,9 @@ const splitParserOutput = (raw?: string): ParserOutput | undefined => {
     const getEndDelimiter = (key: string): string => `${endArrows}${key}${endArrows}`
 
     const getSlice = (rawSection: string | undefined, key: string): string =>
-        rawSection !== undefined ? rawSection.slice(`${key}${startArrows}`.length, -`${endArrows}${key}`.length) : ''
-
-    // const keys = ['metascanner', 'metaast', 'metaparser', 'grammarFirsts', 'grammarItems', 'table', 'result']
-
-    // console.log()
+        rawSection !== undefined ? rawSection.slice(`${key}${startArrows}`.length, -`${endArrows}${key}`.length).trimEnd() : ''
 
     const [_, rawMetascanner, rawMetaast, rawMetaparser, rawGrammar, rawTable, rawResult, rawTree] = raw.split(`${endArrows}${startArrows}`)
-    // console.log(rawMetascanner, rawMetaast, rawMetaparser, rawGrammar, rawTable, rawResult)
     const [grammarFirsts, grammarItems] = getSlice(rawGrammar, 'GRAMMAR').split('itemsets:\n')
 
     return {
