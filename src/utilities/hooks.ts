@@ -114,7 +114,8 @@ const splitParserOutput = (raw?: string): ParserOutput | undefined => {
     const [grammarFirsts, grammarItems] = grammar?.split('itemsets:\n') ?? [undefined, undefined]
 
     const grammarErrorIndex = raw.indexOf('ERROR: ')
-    const grammarError = grammarErrorIndex >= 0 ? raw.slice(grammarErrorIndex + 'ERROR: '.length) : undefined
+    const grammarError = grammarErrorIndex >= 0 ? raw.slice(grammarErrorIndex) : undefined
+    const parseError = (result?.indexOf('failure') ?? -1) >= 0
 
     return {
         metascanner: metascanner?.trimEnd(),
@@ -124,20 +125,20 @@ const splitParserOutput = (raw?: string): ParserOutput | undefined => {
         grammarItems: grammarItems?.trimEnd(),
         table: table?.trimEnd(),
         result: result?.trimEnd(),
-        forest: forest?.trimEnd(),
+        forest: parseError ? 'Parse failed' : forest?.trimEnd(),
         grammarError,
     }
 }
 
 //hook for managing dewy parser web assembly
+//normally you would be able to load the wasm once, and then call the cwrapped function over and over
+//but that caused the parser to crash, so the hacky fix is to just reload the whole wasm module every time
 export const useDewyWasm = (grammar_source: string, input_source: string): ParserOutput | undefined => {
     //promise to the wasm interface module
     const wasmPromiseRef = useRef<Promise<any>>()
 
     //handling of string output from the parser process
     const [parserOutput, addParserChunk, flushParserOutput, resetParserOutput] = useStringBuffer()
-
-    const [grammarError, setGrammarError] = useState<boolean>(false)
 
     //handle setting up the wasm module and the function for calling the parser
     useEffect(() => {
@@ -151,8 +152,6 @@ export const useDewyWasm = (grammar_source: string, input_source: string): Parse
                 try {
                     dewyParser(grammar_source, input_source)
                 } catch {
-                    console.error('grammar error')
-                    setGrammarError(true)
                 } finally {
                     flushParserOutput()
                 }
@@ -170,7 +169,6 @@ export const useDewyWasm = (grammar_source: string, input_source: string): Parse
         //clean up at the end of every render
         return (): void => {
             resetParserOutput()
-            setGrammarError(false)
         }
     }, [grammar_source, input_source])
 
