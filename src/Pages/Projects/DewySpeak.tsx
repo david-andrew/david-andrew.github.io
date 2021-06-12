@@ -82,11 +82,11 @@ const unambiguousExpressionGrammarIdx = 1
 const onTextAreaChange = (
     setContentState: React.Dispatch<React.SetStateAction<string>>,
     setScrollState: React.Dispatch<React.SetStateAction<boolean>>,
-    ref: React.MutableRefObject<HTMLTextAreaElement | undefined>
+    ref: React.MutableRefObject<null>
 ) => {
     return (event: React.ChangeEvent<HTMLTextAreaElement>, data: TextAreaProps): void => {
         //save the reference to the element
-        ref.current = event.target
+        // ref.current = event.target
 
         //set whether the scrollbar is visible
         updateTextAreaScroll(setScrollState, ref)
@@ -98,12 +98,8 @@ const onTextAreaChange = (
 }
 
 //determine/update whether a TextInput is displaying a scrollbar
-const updateTextAreaScroll = (
-    setScrollState: React.Dispatch<React.SetStateAction<boolean>>,
-    ref: React.MutableRefObject<HTMLTextAreaElement | undefined>
-): void => {
-    console.log('checking for scrollbars', ref.current?.clientWidth, ref.current?.scrollWidth)
-    setScrollState((ref.current?.clientWidth ?? 0) < (ref.current?.scrollWidth ?? 0))
+const updateTextAreaScroll = (setScrollState: React.Dispatch<React.SetStateAction<boolean>>, ref: React.MutableRefObject<any>): void => {
+    setScrollState((ref.current?.ref.current?.clientWidth ?? 0) < (ref.current?.ref.current?.scrollWidth ?? 0))
 }
 
 //count the number of lines in a string
@@ -148,12 +144,13 @@ export const DewySpeak = (): JSX.Element => {
     }
 
     //state for live parser demo inputs
-    const grammarRef = useRef<HTMLTextAreaElement>()
+    // React.LegacyRef<TextArea>
+    const grammarRef = useRef(null)
     const [grammarInput, setGrammarInput] = useState<string>(exampleGrammars[ambiguousExpressionGrammarIdx].grammar)
     const [grammarHeight, setGrammarHeight] = useState<string>('25em')
     const [grammarScroll, setGrammarScroll] = useState<boolean>(false)
 
-    const sourceRef = useRef<HTMLTextAreaElement>()
+    const sourceRef = useRef(null)
     const [sourceInput, setSourceInput] = useState<string>('1+2*3')
     const [sourceHeight, setSourceHeight] = useState<string>('3em')
     const [sourceScroll, setSourceScroll] = useState<boolean>(false)
@@ -162,13 +159,9 @@ export const DewySpeak = (): JSX.Element => {
     const onSourceChange = onTextAreaChange(setSourceInput, setSourceScroll, sourceRef)
 
     //When the user selects a demo preset, recompute if the scroll bars need to be shown.
-    //I literally couldn't figure out how to make this check happen after the input boxes finish rendering, other than with this timeout
     useEffect(() => {
-        setTimeout(() => {
-            console.log('checking for scrollbars?')
-            updateTextAreaScroll(setGrammarScroll, grammarRef)
-            updateTextAreaScroll(setSourceScroll, sourceRef)
-        }, 20)
+        updateTextAreaScroll(setGrammarScroll, grammarRef)
+        updateTextAreaScroll(setSourceScroll, sourceRef)
     }, [grammarInput, sourceInput])
 
     //run the input through the dewy parser. Put a delay on the input boxes so that the wasm code isn't run too frequently
@@ -219,8 +212,8 @@ export const DewySpeak = (): JSX.Element => {
                                 onChange={onSourceChange}
                                 style={{ width: '100%', height: sourceHeight }}
                                 spellCheck="false"
-                                // defaultValue={exampleGrammars[ambiguousExpressionGrammarIdx].source}
                                 value={sourceInput}
+                                ref={sourceRef}
                             />
                         </Grid.Column>
                         {showParserDemo && (
@@ -245,8 +238,8 @@ export const DewySpeak = (): JSX.Element => {
                                 onChange={onGrammarChange}
                                 style={{ width: '100%', height: grammarHeight }}
                                 spellCheck="false"
-                                // defaultValue={exampleGrammars[ambiguousExpressionGrammarIdx].grammar}
                                 value={grammarInput}
+                                ref={grammarRef}
                             />
                         </Grid.Column>
                     </Grid.Row>
