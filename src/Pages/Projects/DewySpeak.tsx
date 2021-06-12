@@ -1,9 +1,34 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Button, Divider, Grid, Icon, List, Menu, TextArea, TextAreaProps } from 'semantic-ui-react'
+import { Button, Accordion, Grid, Icon, List, Menu, TextArea, TextAreaProps } from 'semantic-ui-react'
 import { PageContainer, PageHeading /*DewyLiveParser*/ } from '../../Components'
 import { useGithubTimestamp, useDewyWasm, useDelayedText, Code, CodeBlock, ExternalLink, getScrollbarWidth, ParserOutput } from '../../utilities'
 
-const unambiguousExpressionGrammar = `//addition/subtraction (left associative)
+interface ExampleGrammar {
+    label: string
+    grammar: string
+    source: string
+}
+
+//example grammars the user can prepopulate the demo with
+const exampleGrammars: ExampleGrammar[] = [
+    {
+        label: 'Math Expressions (Ambiguous)',
+        grammar: `#E = '(' #w* #E #w* ')';    //parenthesis
+#E = #E #w* [+\\-] #w* #E;   //addition/subtraction
+#E = #E #w* [*/] #w* #E;    //multiplication/division
+#E = #E #w* '^' #w* #E;     //exponentiation
+#E = #N | #I;               //terms (numbers/identifiers)
+#N = [0-9]+;
+#I = [A-Za-z_] [A-Za-z0-9!@%&_?]*;
+
+#w = [\\n\\x20];              // whitespace
+
+#start = #w* #E (#w+ #E)* #w*;`,
+        source: '1+2*3',
+    },
+    {
+        label: 'Math Expressions (Unambiguous)',
+        grammar: `//addition/subtraction (left associative)
 #S = #S #w* '+' #w* #A | #S #w* '-' #w* #A | #A;
 
 //multiplication/division (left associative)
@@ -21,19 +46,37 @@ const unambiguousExpressionGrammar = `//addition/subtraction (left associative)
 //whitespace
 #w = [\\x20\\n];
 
-#start = #w* #S (#w+ #S)* #w*;`
+#start = #w* #S (#w+ #S)* #w*;`,
+        source: '1+2*3',
+    },
+    {
+        label: 'Semantic Versions',
+        grammar: `//Semantic Versioning 2.0.0 CFG. https://semver.org/spec/v2.0.0.html
+#semver = #core ('-' #pre_release)? ('+' #build)?;
 
-const ambiguousExpressionGrammar = `#E = '(' #w* #E #w* ')';    //parenthesis
-#E = #E #w* [+\\-] #w* #E;   //addition/subtraction
-#E = #E #w* [*/] #w* #E;    //multiplication/division
-#E = #E #w* '^' #w* #E;     //exponentiation
-#E = #N | #I;               //terms (numbers/identifiers)
-#N = [0-9]+;
-#I = [A-Za-z_] [A-Za-z0-9!@%&_?]*;
+#core = #major '.' #minor '.' #patch;
+#major = #num;
+#minor = #num;
+#patch = #num;
 
-#w = [\\n\\x20];              // whitespace
+#pre_release = #pre_release_id ('.' #pre_release)?;
+#pre_release_id = #id | #num;
 
-#start = #w* #E (#w+ #E)* #w*;`
+#build = #build_id ('.' #build)?;
+#build_id = #id | [0-9]+;
+
+#id = [0-9A-Za-z\\-]* [A-Za-z\\-] [0-9A-Za-z\\-]*;     //must contain at least 1 non-digit
+#num = '0' | [1-9] [0-9]*;                          //may only start with 0 if no following digits
+
+//allow multiple semvars separated by newlines to be parsed
+#start = #semver ('\\n' #semver)*;`,
+        source: '18.4.5-beta+exp.sha.5114f85',
+    },
+]
+
+//used for discussing specific grammars later
+const ambiguousExpressionGrammarIdx = 0
+const unambiguousExpressionGrammarIdx = 1
 
 //handle updating the saved state for the body of text inputs
 const onTextAreaChange = (
@@ -59,6 +102,7 @@ const updateTextAreaScroll = (
     setScrollState: React.Dispatch<React.SetStateAction<boolean>>,
     ref: React.MutableRefObject<HTMLTextAreaElement | undefined>
 ): void => {
+    console.log('checking for scrollbars', ref.current?.clientWidth, ref.current?.scrollWidth)
     setScrollState((ref.current?.clientWidth ?? 0) < (ref.current?.scrollWidth ?? 0))
 }
 
@@ -75,6 +119,8 @@ export const DewySpeak = (): JSX.Element => {
 
     //show the output from the parser demo
     const [showParserDemo, setShowParserDemo] = useState<boolean>(false)
+    const [outputHidden, setOutputHidden] = useState<boolean>(false) //user collapsable option
+    const [showPresets, setShowPresets] = useState<boolean>(false) //preset example grammars
 
     //menu for the different things to show in output
     const [parserDemoSelection, setParserDemoSelection] = useState<string>('Parse Forest')
@@ -103,7 +149,7 @@ export const DewySpeak = (): JSX.Element => {
 
     //state for live parser demo inputs
     const grammarRef = useRef<HTMLTextAreaElement>()
-    const [grammarInput, setGrammarInput] = useState<string>(ambiguousExpressionGrammar)
+    const [grammarInput, setGrammarInput] = useState<string>(exampleGrammars[ambiguousExpressionGrammarIdx].grammar)
     const [grammarHeight, setGrammarHeight] = useState<string>('25em')
     const [grammarScroll, setGrammarScroll] = useState<boolean>(false)
 
@@ -114,6 +160,16 @@ export const DewySpeak = (): JSX.Element => {
 
     const onGrammarChange = onTextAreaChange(setGrammarInput, setGrammarScroll, grammarRef)
     const onSourceChange = onTextAreaChange(setSourceInput, setSourceScroll, sourceRef)
+
+    //When the user selects a demo preset, recompute if the scroll bars need to be shown.
+    //I literally couldn't figure out how to make this check happen after the input boxes finish rendering, other than with this timeout
+    useEffect(() => {
+        setTimeout(() => {
+            console.log('checking for scrollbars?')
+            updateTextAreaScroll(setGrammarScroll, grammarRef)
+            updateTextAreaScroll(setSourceScroll, sourceRef)
+        }, 20)
+    }, [grammarInput, sourceInput])
 
     //run the input through the dewy parser. Put a delay on the input boxes so that the wasm code isn't run too frequently
     const grammar = useDelayedText(grammarInput) ?? ''
@@ -163,7 +219,8 @@ export const DewySpeak = (): JSX.Element => {
                                 onChange={onSourceChange}
                                 style={{ width: '100%', height: sourceHeight }}
                                 spellCheck="false"
-                                defaultValue={'1+2*3'}
+                                // defaultValue={exampleGrammars[ambiguousExpressionGrammarIdx].source}
+                                value={sourceInput}
                             />
                         </Grid.Column>
                         {showParserDemo && (
@@ -188,34 +245,59 @@ export const DewySpeak = (): JSX.Element => {
                                 onChange={onGrammarChange}
                                 style={{ width: '100%', height: grammarHeight }}
                                 spellCheck="false"
-                                defaultValue={ambiguousExpressionGrammar}
+                                // defaultValue={exampleGrammars[ambiguousExpressionGrammarIdx].grammar}
+                                value={grammarInput}
                             />
                         </Grid.Column>
                     </Grid.Row>
                 </Grid>
                 {showParserDemo ? (
-                    // parserOutput !== undefined ? (
                     <>
-                        <h4>Output</h4>
-
-                        <div style={{ overflowX: 'auto', overflowY: 'hidden', backgroundColor: '#283447' }}>
-                            <Menu inverted style={{ marginBottom: '0', backgroundColor: '#283447' }}>
-                                <Menu.Item {...getParserDemoMenuProps('Parse Forest')} />
-                                <Menu.Item {...getParserDemoMenuProps('RNGLR Table')} />
-                                <Menu.Item {...getParserDemoMenuProps('Item Sets')} />
-                                <Menu.Item {...getParserDemoMenuProps('Meta Scanner')} />
-                                <Menu.Item {...getParserDemoMenuProps('Meta AST')} />
-                                <Menu.Item {...getParserDemoMenuProps('CFG')} />
-                                <Menu.Item {...getParserDemoMenuProps('First Sets')} />
-                            </Menu>
-                        </div>
-                        <CodeBlock
-                            flatten
-                            text={
-                                parserOutput?.[getParserDemoSelectionKey(parserDemoSelection)] ??
-                                (parserOutput?.grammarError !== undefined ? `${parserOutput.grammarError}` : 'running parser...')
-                            }
-                        />
+                        <Accordion inverted>
+                            <Accordion.Title active={showPresets} onClick={() => setShowPresets((p) => !p)}>
+                                <Icon name="dropdown" />
+                                <span style={{ color: 'white', fontFamily: 'quadon', fontSize: '1.071em' }}>Presets</span>
+                            </Accordion.Title>
+                            <Accordion.Content active={showPresets}>
+                                {exampleGrammars.map(({ grammar, source, label }: ExampleGrammar, i) => {
+                                    return (
+                                        <Button
+                                            key={label}
+                                            onClick={() => {
+                                                setGrammarInput(grammar)
+                                                setSourceInput(source)
+                                            }}
+                                        >
+                                            {label}
+                                        </Button>
+                                    )
+                                })}
+                            </Accordion.Content>
+                            <Accordion.Title active={!outputHidden} onClick={() => setOutputHidden((v) => !v)}>
+                                <Icon name="dropdown" />
+                                <span style={{ color: 'white', fontFamily: 'quadon', fontSize: '1.071em' }}>Output{outputHidden ? ' (hidden)' : ''}</span>
+                            </Accordion.Title>
+                            <Accordion.Content active={!outputHidden}>
+                                <div style={{ overflowX: 'auto', overflowY: 'hidden', backgroundColor: '#283447' }}>
+                                    <Menu inverted style={{ marginBottom: '0', backgroundColor: '#283447' }}>
+                                        <Menu.Item {...getParserDemoMenuProps('Parse Forest')} />
+                                        <Menu.Item {...getParserDemoMenuProps('RNGLR Table')} />
+                                        <Menu.Item {...getParserDemoMenuProps('Item Sets')} />
+                                        <Menu.Item {...getParserDemoMenuProps('Meta Scanner')} />
+                                        <Menu.Item {...getParserDemoMenuProps('Meta AST')} />
+                                        <Menu.Item {...getParserDemoMenuProps('CFG')} />
+                                        <Menu.Item {...getParserDemoMenuProps('First Sets')} />
+                                    </Menu>
+                                </div>
+                                <CodeBlock
+                                    flatten
+                                    text={
+                                        parserOutput?.[getParserDemoSelectionKey(parserDemoSelection)] ??
+                                        (parserOutput?.grammarError !== undefined ? `${parserOutput.grammarError}` : 'running parser...')
+                                    }
+                                />
+                            </Accordion.Content>
+                        </Accordion>
                     </>
                 ) : (
                     <Button onClick={() => setShowParserDemo(true)}>Try Me</Button>
@@ -253,13 +335,13 @@ export const DewySpeak = (): JSX.Element => {
                     often times, the natural way to express a language will be ambiguous, and require careful work to disambiguate. For the math expression{' '}
                     <Code>1 + 2 * 3</Code>, or any other math expression, the unambiguous version of the grammar might look like this:
                 </p>
-                <CodeBlock flatten text={unambiguousExpressionGrammar} />
+                <CodeBlock flatten text={exampleGrammars[unambiguousExpressionGrammarIdx].grammar} />
                 <p>
                     Precedence is handled by restricting which expressions can be subexpressions, using different grammar symbols. Associativity is also handled
                     in a similar fashion, namely the left or right hand side is restricted to specific subexpression types that generate the correct
                     associativity. Ultimately though, because SRNGLR can handle ambiguities, the grammar can be simplified to something like this:
                 </p>
-                <CodeBlock flatten text={ambiguousExpressionGrammar} />
+                <CodeBlock flatten text={exampleGrammars[ambiguousExpressionGrammarIdx].grammar} />
                 <p>
                     Note that for the ambiguous grammar, precedence and associativity still need to be handled at some point in the process. SRNGLR just
                     provides the flexibility to handle them later in the parsing process, when it is much more convenient.
