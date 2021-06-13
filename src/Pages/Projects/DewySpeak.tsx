@@ -72,6 +72,104 @@ const exampleGrammars: ExampleGrammar[] = [
 #start = #semver ('\\n' #semver)*;`,
         source: '18.4.5-beta+exp.sha.5114f85',
     },
+    {
+        label: 'C FizzBuzz',
+        grammar: `//example subset C grammar. Perhaps not exactly correct, mainly out of lazyness
+#s = [\\x20\\x9];                 //space or tab (i.e. no newlines)
+#ws = [\\x20\\x9\\n\\xD];           //whitespace characters
+#w = #ws | #comment;            //any text ignored by compiler
+#comment = #line_comment | #block_comment;
+#line_comment = '/' '/' (ξ - '\\n')* '\\n';
+
+//block comments have a bit of a wonky definition here b/c the reject filter from the SRNGLR parser is not complete
+//eventually you'd be able to declare it like so: #block_comment = '/*' (ξ* - ξ* '*/') '*/';
+#block_comment = '/*' ((ξ - '*') | ('*' (ξ - '/')))* '*/';
+
+
+#id = [a-zA-Z_] [a-zA-Z0-9_]*;  //identifiers
+#int = [0-9]+;
+#bool = 'true' | 'false';
+#str = '"' #str_inner '"';
+#str_inner = ((ξ - [\\\\"]) | #esc)*;   //any character (except for \`"\` and \`\\\`), or an escape character
+#esc = '\\\\' ξ;
+
+//types are just identifiers with optional \`*\`s after them. Too lazy to handle spaces between \`#id\` and \`*\`
+#type = #id '*'*;
+
+#typed_id = #type #w+ #id ('[' (#int)? ']')?;    //e.g. \`int main\`, \`char* strings[]\`, etc.
+
+#fn_decl = #fn_head #w* #block;
+#fn_head = #typed_id #w* '(' #w* (#typed_id #w* (',' #w* #typed_id #w*)*)? ')';
+#block = '{' (#w* #stmnt)* #w* '}';
+#fn_call = #id #w* '(' #w* (#expr #w* (',' #w* #expr #w*)*)? ')';
+
+#struct = '{' #w* (#expr #w* (',' #w* #expr #w*)*)? '}';
+
+#sizeof = 'sizeof' #w* '(' #w* #type #w* ')';
+
+#bin_op = '+' | '-' | '*' | '/' | '%' | '&&' | '||' | '^' | '|' | '&' | '<' | '>' | '<=' '>=' | '!=' | '==';
+#bin_expr = #expr #w* #bin_op #w* #expr;
+
+#prefix_op = '!' | '&' | '*'; 
+#prefix_expr = #prefix_op #w* #expr;
+#postfix_op = '++' | '--';
+#postfix_expr = #expr #w* #postfix_op;
+
+#access_expr = #id #w* '[' #w* #expr #w* ']';
+
+#expr = #fn_call | #id | #str | #int | #bool | #struct | #sizeof | #bin_expr | #prefix_expr | #postfix_expr | #access_expr;
+#expr = '(' #w* #expr #w* ')';
+
+#stmnt = #expr_stmnt | #assign_stmnt | #for_stmnt | #if_stmnt | #return_stmnt;
+
+#expr_stmnt = #expr #w* ';';
+#assign_expr = (#typed_id | #id) #w* '=' #w* #expr;
+#assign_stmnt = #assign_expr #w* ';';
+#for_stmnt = 'for' #w* '(' #w* (#assign_expr #w*)? ';' #w* (#expr #w*)? ';' #w* (#expr #w*)? ')' #w* (#block | #stmnt);
+#if_stmnt = 'if' #w* '(' #w* #expr #w* ')' #w* (#block | #stmnt);
+#return_stmnt = 'return' #w* (#expr)? ';'; 
+
+#include = '#include' #s* #include_path '\\n';
+#include_path = '"' #path '"' | '<' #path '>';
+#path = ('/' | [a-zA-Z0-9_]+ | '.')*;
+
+
+#program = (#w* (#include | #fn_decl))* #w*;
+#start = #program;`,
+        source: `//clean C fizzbuzz implementation
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <assert.h>
+
+
+int main()
+{
+    int taps[] = {3, 5/*, 7, 11*/};
+    char* strings[] = {"Fizz", "Buzz"/*, "Bazz", "Bar"*/};
+    assert(sizeof(taps) / sizeof(int) == sizeof(strings) / sizeof(char*));
+    
+
+    for (int i = 0; i < 100; i++)
+    {
+        bool printed_words = false;
+        for (int j = 0; j < sizeof(taps) / sizeof(int); j++)
+        {
+            if (i % taps[j] == 0)
+            {
+                printf("%s", strings[j]);
+                printed_words = true;
+            }
+        }
+        if (!printed_words)
+        {
+            printf("%d", i);
+        }
+        printf("\\n");
+    }
+    return 0;
+}`,
+    },
 ]
 
 //used for discussing specific grammars later
