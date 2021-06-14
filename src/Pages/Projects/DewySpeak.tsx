@@ -12,6 +12,48 @@ interface ExampleGrammar {
 //example grammars the user can prepopulate the demo with
 const exampleGrammars: ExampleGrammar[] = [
     {
+        label: "Even # of A's",
+        grammar: "#S = 'AA'*;",
+        source: 'AAAAAAAA',
+    },
+    {
+        label: 'Binary Palindromes',
+        grammar: "#S = ('0' #S '0' | '0' | '1' #S '1' | '1')?;",
+        source: '000100111001000',
+    },
+    {
+        label: 'Lowercase Palindromes',
+        grammar: `//ascii palindromes
+#S = 'a' #S 'a' | 'a';
+#S = 'b' #S 'b' | 'b';
+#S = 'c' #S 'c' | 'c';
+#S = 'd' #S 'd' | 'd';
+#S = 'e' #S 'e' | 'e';
+#S = 'f' #S 'f' | 'f';
+#S = 'g' #S 'g' | 'g';
+#S = 'h' #S 'h' | 'h';
+#S = 'i' #S 'i' | 'i';
+#S = 'j' #S 'j' | 'j';
+#S = 'k' #S 'k' | 'k';
+#S = 'l' #S 'l' | 'l';
+#S = 'm' #S 'm' | 'm';
+#S = 'n' #S 'n' | 'n';
+#S = 'o' #S 'o' | 'o';
+#S = 'p' #S 'p' | 'p';
+#S = 'q' #S 'q' | 'q';
+#S = 'r' #S 'r' | 'r';
+#S = 's' #S 's' | 's';
+#S = 't' #S 't' | 't';
+#S = 'u' #S 'u' | 'u';
+#S = 'v' #S 'v' | 'v';
+#S = 'w' #S 'w' | 'w';
+#S = 'x' #S 'x' | 'x';
+#S = 'y' #S 'y' | 'y';
+#S = 'z' #S 'z' | 'z';
+#S = ϵ;`,
+        source: 'racecar',
+    },
+    {
         label: 'Math Expressions (Ambiguous)',
         grammar: `#E = '(' #w* #E #w* ')';    //parenthesis
 #E = #E #w* [+\\-] #w* #E;   //addition/subtraction
@@ -75,8 +117,8 @@ const exampleGrammars: ExampleGrammar[] = [
     {
         label: 'C FizzBuzz',
         grammar: `//example subset C grammar. Perhaps not exactly correct, mainly out of lazyness
-#s = [\\x20\\x9];                 //space or tab (i.e. no newlines)
-#ws = [\\x20\\x9\\n\\xD];           //whitespace characters
+#s = [\\x20\\t];                  //space or tab (i.e. no newlines)
+#ws = [\\x20\\t\\n\\r];             //whitespace characters
 #w = #ws | #comment;            //any text ignored by compiler
 #comment = #line_comment | #block_comment;
 #line_comment = '/' '/' (ξ - '\\n')* '\\n';
@@ -173,8 +215,8 @@ int main()
 ]
 
 //used for discussing specific grammars later
-const ambiguousExpressionGrammarIdx = 0
-const unambiguousExpressionGrammarIdx = 1
+const ambiguousExpressionGrammar = exampleGrammars[3]
+const unambiguousExpressionGrammar = exampleGrammars[4]
 
 //handle updating the saved state for the body of text inputs
 const onTextAreaChange = (
@@ -244,7 +286,7 @@ export const DewySpeak = (): JSX.Element => {
     //state for live parser demo inputs
     // React.LegacyRef<TextArea>
     const grammarRef = useRef(null)
-    const [grammarInput, setGrammarInput] = useState<string>(exampleGrammars[ambiguousExpressionGrammarIdx].grammar)
+    const [grammarInput, setGrammarInput] = useState<string>(ambiguousExpressionGrammar.grammar)
     const [grammarHeight, setGrammarHeight] = useState<string>('25em')
     const [grammarScroll, setGrammarScroll] = useState<boolean>(false)
 
@@ -426,13 +468,13 @@ export const DewySpeak = (): JSX.Element => {
                     often times, the natural way to express a language will be ambiguous, and require careful work to disambiguate. For the math expression{' '}
                     <Code>1 + 2 * 3</Code>, or any other math expression, the unambiguous version of the grammar might look like this:
                 </p>
-                <CodeBlock flatten text={exampleGrammars[unambiguousExpressionGrammarIdx].grammar} />
+                <CodeBlock flatten text={unambiguousExpressionGrammar.grammar} />
                 <p>
                     Precedence is handled by restricting which expressions can be subexpressions, using different grammar symbols. Associativity is also handled
                     in a similar fashion, namely the left or right hand side is restricted to specific subexpression types that generate the correct
                     associativity. Ultimately though, because SRNGLR can handle ambiguities, the grammar can be simplified to something like this:
                 </p>
-                <CodeBlock flatten text={exampleGrammars[ambiguousExpressionGrammarIdx].grammar} />
+                <CodeBlock flatten text={ambiguousExpressionGrammar.grammar} />
                 <p>
                     Note that for the ambiguous grammar, precedence and associativity still need to be handled at some point in the process. SRNGLR just
                     provides the flexibility to handle them later in the parsing process, when it is much more convenient.
