@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Button, Accordion, Grid, Icon, List, Menu, TextArea, TextAreaProps } from 'semantic-ui-react'
 import { PageContainer, PageHeading /*DewyLiveParser*/ } from '../../Components'
-import { useGithubTimestamp, useDewyWasm, useDelayedText, Code, CodeBlock, ExternalLink, getScrollbarWidth, ParserOutput } from '../../utilities'
+import { useGithubTimestamp, useDewyWasm, useDelayed, Code, CodeBlock, ExternalLink, getScrollbarWidth, ParserOutput } from '../../utilities'
 
 interface ExampleGrammar {
     label: string
@@ -305,8 +305,9 @@ export const DewySpeak = (): JSX.Element => {
     }, [grammarInput, sourceInput])
 
     //run the input through the dewy parser. Put a delay on the input boxes so that the wasm code isn't run too frequently
-    const grammar = useDelayedText(grammarInput) ?? ''
-    const source = useDelayedText(sourceInput) ?? ''
+    // const grammar = useDelayed(grammarInput) ?? ''
+    // const source = useDelayed(sourceInput) ?? ''
+    const [grammar, source] = useDelayed([grammarInput, sourceInput])
     const parserOutput = useDewyWasm(grammar, source)
 
     //determine if there was a parser/grammar error. Only show errors after the user starts the demo
