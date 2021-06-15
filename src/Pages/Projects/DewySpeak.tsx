@@ -116,7 +116,7 @@ const exampleGrammars: ExampleGrammar[] = [
     },
     {
         label: 'C FizzBuzz',
-        grammar: `//example subset C grammar. Perhaps not exactly correct, mainly out of lazyness
+        grammar: `//example subset C grammar. Perhaps not exactly correct, but good enough for demo purposes
 #s = [\\x20\\t];                  //space or tab (i.e. no newlines)
 #ws = [\\x20\\t\\n\\r];             //whitespace characters
 #w = #ws | #comment;            //any text ignored by compiler
@@ -305,8 +305,6 @@ export const DewySpeak = (): JSX.Element => {
     }, [grammarInput, sourceInput])
 
     //run the input through the dewy parser. Put a delay on the input boxes so that the wasm code isn't run too frequently
-    // const grammar = useDelayed(grammarInput) ?? ''
-    // const source = useDelayed(sourceInput) ?? ''
     const [grammar, source] = useDelayed([grammarInput, sourceInput])
     const parserOutput = useDewyWasm(grammar, source)
 
@@ -396,6 +394,7 @@ export const DewySpeak = (): JSX.Element => {
                                 {exampleGrammars.map(({ grammar, source, label }: ExampleGrammar, i) => {
                                     return (
                                         <Button
+                                            style={{ margin: '0.1em 0.1em 0.1em 0.1em' }}
                                             key={label}
                                             onClick={() => {
                                                 setGrammarInput(grammar)
@@ -442,6 +441,47 @@ export const DewySpeak = (): JSX.Element => {
                     set that I&apos;ve always wished existed. Dewy is a general purpose language with a focus on scientific and engineering applications. At a
                     high level, Dewy is sort of like an amalgamation of the best aspects of Matlab, Python, TypeScript, and Rust, but with its own unique flare.
                 </p>
+                <p>An example of the common FizzBuzz program implemented in Dewy might look like this:</p>
+                <CodeBlock
+                    flatten
+                    text={`taps = [3 -> 'Fizz' 5 -> 'Buzz' /{7 -> 'Bazz' 11 -> 'Bar'}/]
+loop i in [0:100)
+{
+    printed_words = false
+    loop [tap string] in taps 
+    {
+        if i % tap =? 0 
+        { 
+            print(tap)
+            printed_words = true
+        }
+    }
+    if not? printed_words print(i)
+    printl()
+}`}
+                />
+                <p>Or a more functional style implementation might look like this:</p>
+                <CodeBlock
+                    flatten
+                    text={`taps = [3 -> 'Fizz' 5 -> 'Buzz' /{7 -> 'Bazz' 11 -> 'Bar'}/]
+range = [0:100)
+
+//taps.keys returns [3, 5], then indexing at [, :] adds an extra singleton dimension to the start
+word_bools = range .% taps.keys[, :] .=? 0
+words_grid = [
+    loop [word bools] in [taps.value word_bools[:]]
+        bools.map(b => if b word else '')
+]
+raw_lines = [
+    loop words in word_grid
+        words.join('')
+]
+lines = raw_lines.map(
+    (line, i) => if l.length =? 0 '{i}' else line
+)
+lines.join('\\n') |> printl
+`}
+                />
                 <p>
                     So far in development, I have developed the syntax for the language (and meta-language), and have built a prototype{' '}
                     <ExternalLink href="https://raw.githubusercontent.com/david-andrew/dewy/master/resources/Right_Nulled_GLR_Parsers.pdf">RNGLR</ExternalLink>{' '}
@@ -449,9 +489,9 @@ export const DewySpeak = (): JSX.Element => {
                     <ExternalLink href="https://raw.githubusercontent.com/david-andrew/dewy/master/resources/Faster_Scannerless_Parsing.pdf">
                         SRNGLR
                     </ExternalLink>{' '}
-                    parser from scratch in C. The next steps are to add some missing features to the parser, write out the language Context Free Grammar (CFG)
-                    in the meta-language, implement the parser back ends (LLVM and C) for generating code from the parse tree, and then build out the standard
-                    library.
+                    parser from scratch in C (which you can try above). The next steps are to add some missing features to the parser, write out the language
+                    Context Free Grammar (CFG) in the meta-language, implement the parser back ends (LLVM and C) for generating code from the parse tree, and
+                    then build out the standard library.
                 </p>
                 <h3>Parsing</h3>
                 <p>
@@ -608,7 +648,7 @@ export const DewySpeak = (): JSX.Element => {
                     language="bash"
                     text={`$ git clone git@github.com:david-andrew/dewy.git
 $ cd dewy/src/compiler
-$ make dewy #alternatively \`make debug\`
+$ make dewy
 $ ./dewy path/to/grammar/file path/to/source/file`}
                 />
                 <p>
