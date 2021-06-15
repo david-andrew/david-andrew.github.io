@@ -249,6 +249,7 @@ const countLines = (txt: string): number => {
 
 //size of 1 em in pixels for CodeBlocks / TextAreas
 const emToPx = 12
+const lineHeight = 1.15
 
 export const DewySpeak = (): JSX.Element => {
     const subtitle = useGithubTimestamp('dewy')
@@ -324,7 +325,7 @@ export const DewySpeak = (): JSX.Element => {
     useEffect(() => {
         //determine how much extra height based on if horizontal scrollbar visible
         const extra = (grammarScroll ? getScrollbarWidth() : 0) + 4
-        const height = countLines(grammarInput) * emToPx + extra
+        const height = countLines(grammarInput) * emToPx * lineHeight + extra
 
         //set the input height
         setGrammarHeight(`${height}px`)
@@ -332,7 +333,7 @@ export const DewySpeak = (): JSX.Element => {
     useEffect(() => {
         //determine how much extra height based on if horizontal scrollbar visible
         const extra = (sourceScroll ? getScrollbarWidth() : 0) + 4
-        const height = countLines(sourceInput) * emToPx + extra
+        const height = countLines(sourceInput) * emToPx * lineHeight + extra
 
         //set the input height
         setSourceHeight(`${height}px`)

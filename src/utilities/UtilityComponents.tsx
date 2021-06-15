@@ -33,7 +33,11 @@ export const InternalLink = ({ to, children }: { to: string; children: React.Rea
 //inline code
 export const Code = ({ children }: { children: React.ReactNode }): JSX.Element => {
     //dark mode theme handled by css
-    return <AtlasCode>{children}</AtlasCode>
+    return (
+        <span className="codeline">
+            <AtlasCode>{children}</AtlasCode>
+        </span>
+    )
 }
 
 //full code block
@@ -49,7 +53,7 @@ export const CodeBlock = ({
     flatten?: boolean
 }): JSX.Element => {
     return (
-        <div className={flatten ? 'flatten' : undefined}>
+        <div className={`codeblock${flatten ? ' flatten' : ''}`}>
             <AtlaskitThemeProvider mode="dark">
                 <AtlasCodeBlock language={language} text={text} showLineNumbers={showLineNumbers} />
             </AtlaskitThemeProvider>

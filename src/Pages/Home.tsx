@@ -4,6 +4,7 @@ import '../fonts/quadon/quadon.css'
 import '../fonts/arnhem/arnhem.css'
 import '../fonts/gentona/gentona.css'
 // import '../fonts/titling-gothic/titling-gothic.css'
+import '../fonts/dejavu/dejavu.css'
 
 export const Home = (): JSX.Element => {
     return (

@@ -19,20 +19,27 @@
     background-color: #283447;
 }
 
+/*make code use a consistent font across browsers*/
+.PageContainer .codeline code,
+.PageContainer .codeblock code {
+    font-family: 'DejaVu Sans Mono' !important;
+}
+
 /*allows adjustment of codeblock line heights*/
 .PageContainer .flatten code {
-    line-height: 1em !important;
+    font-size: 12px !important;
+    line-height: 1.15em !important;
 }
 
 .PageContainer textarea {
-    font-family: 'SFMono-Medium', 'SF Mono', 'Segoe UI Mono', 'Roboto Mono', 'Ubuntu Mono', Menlo, Consolas, Courier, monospace;
+    font-family: 'DejaVu Sans Mono';
     font-size: 12px;
+    line-height: 1.15em;
     color: #dce5f5;
     background-color: #283447;
     resize: none;
     border: none;
     outline: solid #dce5f5 1px;
-    line-height: 1em;
     overflow-y: hidden;
     white-space: pre;
 }
