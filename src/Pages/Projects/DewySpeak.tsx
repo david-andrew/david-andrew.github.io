@@ -472,20 +472,35 @@ loop i in [0:100)
                     text={`taps = [3 -> 'Fizz' 5 -> 'Buzz' /{7 -> 'Bazz' 11 -> 'Bar'}/]
 range = [0:100)
 
-//taps.keys returns [3, 5], then indexing at [, :] adds an extra singleton dimension to the start
-word_bools = range .% taps.keys[, :] .=? 0
-words_grid = [
-    loop [word bools] in [taps.value word_bools[:]]
-        bools.map(b => if b word else '')
-]
-raw_lines = [
-    loop words in word_grid
-        words.join('')
-]
-lines = raw_lines.map(
-    (line, i) => if l.length =? 0 '{i}' else line
+//indexing at [, :] and [:,] adds singleton dimensions
+word_bools = range[, :] .% taps.keys[:,] .=? 0
+
+// \` means transpose, which behaves like python's zip()
+words_grid = [taps.values word_bools]\`.map(
+    [word bools] => bools.map(b => if b word else '')
 )
+
+raw_lines = word_grid\`.map(line_words => line_words.join(''))
+
+lines = [raw_lines range]\`.map(
+    (raw_line, i) => if raw_line.length =? 0 '{i}' else raw_line
+)
+
 lines.join('\\n') |> printl
+`}
+                />
+                <p>For clarity, the variables at each step look like so:</p>
+                <CodeBlock
+                    flatten
+                    text={`word_bools = [[true false false true false false true false ...]
+              [true false false false false true false false ...]]
+
+word_grid = [['Fizz' '' '' 'Fizz' '' '' 'Fizz' '' '' 'Fizz' '' '' ...]
+             ['Buzz' '' '' '' '' 'Buzz' '' '' '' '' 'Buzz' '' '' ...]]
+
+raw_lines = ['FizzBuzz' '' '' 'Fizz' '' 'Buzz' 'Fizz' '' '' 'Fizz' 'Buzz' '' ...]
+
+lines = ['FizzBuzz' '1' '2' 'Fizz' '4' 'Buzz' 'Fizz' '7' '8' 'Fizz' 'Buzz' '11' ...]
 `}
                 />
                 <p>
