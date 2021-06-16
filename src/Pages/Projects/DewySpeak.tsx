@@ -54,6 +54,11 @@ const exampleGrammars: ExampleGrammar[] = [
         source: 'racecar',
     },
     {
+        label: 'Case Insensitive',
+        grammar: `#S = {coding isn't very hard. αβγδξπσω};`,
+        source: "CoDiNg IsN't VeRy HaRd. ΑβΓδΞπΣω",
+    },
+    {
         label: 'Math Expressions (Ambiguous)',
         grammar: `#E = '(' #w* #E #w* ')';    //parenthesis
 #E = #E #w* [+\\-] #w* #E;   //addition/subtraction
@@ -215,8 +220,8 @@ int main()
 ]
 
 //used for discussing specific grammars later
-const ambiguousExpressionGrammar = exampleGrammars[3]
-const unambiguousExpressionGrammar = exampleGrammars[4]
+const ambiguousExpressionGrammar = exampleGrammars[4]
+const unambiguousExpressionGrammar = exampleGrammars[5]
 
 //handle updating the saved state for the body of text inputs
 const onTextAreaChange = (
