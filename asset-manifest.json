@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "/static/css/main.52c5d61f.chunk.css",
-    "main.js": "/static/js/main.c8d9cfc1.chunk.js",
-    "main.js.map": "/static/js/main.c8d9cfc1.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.fd243cff.js",
-    "runtime-main.js.map": "/static/js/runtime-main.fd243cff.js.map",
+    "main.js": "/static/js/main.e330a595.chunk.js",
+    "main.js.map": "/static/js/main.e330a595.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.a876cddf.js",
+    "runtime-main.js.map": "/static/js/runtime-main.a876cddf.js.map",
     "static/css/2.9fe82d56.chunk.css": "/static/css/2.9fe82d56.chunk.css",
-    "static/js/2.aae687dc.chunk.js": "/static/js/2.aae687dc.chunk.js",
-    "static/js/2.aae687dc.chunk.js.map": "/static/js/2.aae687dc.chunk.js.map",
-    "static/js/3.e0eb03df.chunk.js": "/static/js/3.e0eb03df.chunk.js",
-    "static/js/3.e0eb03df.chunk.js.map": "/static/js/3.e0eb03df.chunk.js.map",
-    "static/js/4.d35dca9e.chunk.js": "/static/js/4.d35dca9e.chunk.js",
-    "static/js/4.d35dca9e.chunk.js.map": "/static/js/4.d35dca9e.chunk.js.map",
+    "static/js/2.43300ccf.chunk.js": "/static/js/2.43300ccf.chunk.js",
+    "static/js/2.43300ccf.chunk.js.map": "/static/js/2.43300ccf.chunk.js.map",
+    "static/js/3.e0743e3e.chunk.js": "/static/js/3.e0743e3e.chunk.js",
+    "static/js/3.e0743e3e.chunk.js.map": "/static/js/3.e0743e3e.chunk.js.map",
+    "static/js/4.0dd38d7a.chunk.js": "/static/js/4.0dd38d7a.chunk.js",
+    "static/js/4.0dd38d7a.chunk.js.map": "/static/js/4.0dd38d7a.chunk.js.map",
     "dewy_parser_wrapper.wasm": "/dewy_parser_wrapper.444d1b32.wasm",
     "index.html": "/index.html",
     "static/css/2.9fe82d56.chunk.css.map": "/static/css/2.9fe82d56.chunk.css.map",
     "static/css/main.52c5d61f.chunk.css.map": "/static/css/main.52c5d61f.chunk.css.map",
-    "static/js/2.aae687dc.chunk.js.LICENSE.txt": "/static/js/2.aae687dc.chunk.js.LICENSE.txt",
-    "static/js/3.e0eb03df.chunk.js.LICENSE.txt": "/static/js/3.e0eb03df.chunk.js.LICENSE.txt",
+    "static/js/2.43300ccf.chunk.js.LICENSE.txt": "/static/js/2.43300ccf.chunk.js.LICENSE.txt",
+    "static/js/3.e0743e3e.chunk.js.LICENSE.txt": "/static/js/3.e0743e3e.chunk.js.LICENSE.txt",
     "static/media/18880172_10154639298117314_116214712170500306_o.jpg": "/static/media/18880172_10154639298117314_116214712170500306_o.e90c0b1e.jpg",
     "static/media/2014-10-29.jpg": "/static/media/2014-10-29.b577527d.jpg",
     "static/media/20160530_064258.jpg": "/static/media/20160530_064258.a3b111e5.jpg",
@@ -134,6 +134,7 @@
     "static/media/dewy_dandelion.bfc731f1.jpg": "/static/media/dewy_dandelion.bfc731f1.jpg",
     "static/media/foxing_animatronic.d72a0cf8.png": "/static/media/foxing_animatronic.d72a0cf8.png",
     "static/media/gears.8307ce3d.png": "/static/media/gears.8307ce3d.png",
+    "static/media/green-background-blur.55415922.jpg": "/static/media/green-background-blur.55415922.jpg",
     "static/media/hashtag.ab2f0eb1.png": "/static/media/hashtag.ab2f0eb1.png",
     "static/media/idt_starburst.591b2323.png": "/static/media/idt_starburst.591b2323.png",
     "static/media/intro.jpg": "/static/media/intro.dfdfb7bd.jpg",
@@ -155,10 +156,10 @@
     "static/media/when_david_heard_lpc_aaa.3076a598.mp3": "/static/media/when_david_heard_lpc_aaa.3076a598.mp3"
   },
   "entrypoints": [
-    "static/js/runtime-main.fd243cff.js",
+    "static/js/runtime-main.a876cddf.js",
     "static/css/2.9fe82d56.chunk.css",
-    "static/js/2.aae687dc.chunk.js",
+    "static/js/2.43300ccf.chunk.js",
     "static/css/main.52c5d61f.chunk.css",
-    "static/js/main.c8d9cfc1.chunk.js"
+    "static/js/main.e330a595.chunk.js"
   ]
 }
