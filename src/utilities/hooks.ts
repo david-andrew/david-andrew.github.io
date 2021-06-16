@@ -204,31 +204,28 @@ export const useDelayed = <T>(items: T[], delayMs: number = 200): T[] => {
 
 //hook for loading all the clover images to the cache so that they load quickly when you click that page
 export const useLoadClovers = () => {
-    const r = require.context('../images/clovers')
-    const cloverSrcs: string[] = r.keys().map((path: string) => r(path).default) as string[]
-
     //preload all the images. when an image is loaded, allow the collage to show it
     useEffect(() => {
+        const r = require.context('../images/clovers')
+        const cloverSrcs: string[] = r.keys().map((path: string) => r(path).default) as string[]
+        console.log('clover sources: ', cloverSrcs)
         ;(async () => {
-            cloverSrcs.forEach((src, i) => {
-                const img = new Image()
-                img.src = src
-                // img.onload = () => console.log('loaded clover ', src)
-                // img.onerror = () => console.error('failed to load clover ', src)
-                // setLoadedPaths((p) => {
-                //     return { ...p, [src]: LoadingStates.loading }
-                // })
-                // img.onload = () => {
-                //     setLoadedPaths((p) => {
-                //         return { ...p, [src]: LoadingStates.loaded }
-                //     })
-                // }
-                // img.onerror = () => {
-                //     setLoadedPaths((p) => {
-                //         return { ...p, [src]: LoadingStates.error }
-                //     })
-                // }
-            })
+            //load each image sequentially
+            for (const src of cloverSrcs) {
+                const promise = new Promise<void>((resolve, reject) => {
+                    const img = new Image()
+                    img.src = src
+                    img.onload = () => {
+                        console.log('loaded image', src)
+                        resolve()
+                    }
+                    img.onerror = () => {
+                        console.log('failed to load image', src)
+                        resolve() //reject()
+                    }
+                })
+                await promise
+            }
         })()
     }, [])
 }
