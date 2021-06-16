@@ -661,10 +661,7 @@ lines = ['FizzBuzz' '1' '2' 'Fizz' '4' 'Buzz' 'Fizz' '7' '8' 'Fizz' 'Buzz' '11' 
                     dependency.
                 </p>
                 <h3>Build It Yourself</h3>
-                <p>
-                    Since the language is far from complete, the most you can build right now is the SRNGLR parser. The git repo includes several example
-                    grammar and source code pairs that can be run by the current parser.
-                </p>
+                <p>Since the language is far from complete, the most you can build right now is the SRNGLR parser.</p>
                 <CodeBlock
                     language="bash"
                     text={`$ git clone git@github.com:david-andrew/dewy.git
@@ -673,8 +670,8 @@ $ make dewy
 $ ./dewy path/to/grammar/file path/to/source/file`}
                 />
                 <p>
-                    The project includes several test grammar/source file pairs in the tests/ directory. e.g. the simple expression grammar from above could be
-                    run like so:
+                    The project includes several test grammar/source file pairs in the <Code>tests/</Code> directory. e.g. the simple expression grammars from
+                    above could be run like so:
                 </p>
                 <CodeBlock
                     language="bash"
