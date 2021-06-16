@@ -27,6 +27,7 @@ import {
     SkipSpoilers,
     WSE18,
 } from './Pages'
+import { useLoadClovers } from './utilities'
 
 const App = (): JSX.Element => {
     //list of all project pages
@@ -59,6 +60,9 @@ const App = (): JSX.Element => {
         { page: SkipSpoilers, path: '/projects/uskipspoilers' },
         { page: WSE18, path: '/projects/wse18' },
     ]
+
+    //preload clover images so that they load quickly when you go to that page
+    useLoadClovers()
 
     return (
         <div

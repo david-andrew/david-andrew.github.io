@@ -1,5 +1,5 @@
 export { ClearFixAfter, ExternalLink, InternalLink, Code, CodeBlock } from './UtilityComponents'
-export { useQuery, useGithubTimestamp, useStringBuffer, useDewyWasm, useDelayed } from './hooks'
+export { useQuery, useGithubTimestamp, useStringBuffer, useDewyWasm, useDelayed, useLoadClovers } from './hooks'
 export type { ParserOutput } from './hooks'
 export { toMonthYearString, toMonthDayYearString } from './dates'
 export { sleep, getScrollbarWidth } from './utilities'
