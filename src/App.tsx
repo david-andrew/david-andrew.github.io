@@ -29,38 +29,15 @@ import {
 } from './Pages'
 import { useLoadClovers } from './utilities'
 
-const App = (): JSX.Element => {
-    //list of all project pages
-    interface PageProps {
-        page: () => JSX.Element
-        path: string
-    }
-    const projectPages: PageProps[] = [
-        { page: BlobOpera, path: '/projects/blob_opera' },
-        { page: BoatSimulator, path: '/projects/boat_simulator' },
-        { page: BuellerBoard, path: '/projects/bueller_board' },
-        { page: Composer, path: '/projects/composer' },
-        { page: Compositions, path: '/projects/compositions' },
-        { page: DewySpeak, path: '/projects/dewy' },
-        { page: DrawRobot, path: '/projects/drawbot' },
-        { page: SoVoice, path: '/projects/so_voice' },
-        { page: EnsemblePeabody, path: '/projects/ensemble_peabody' },
-        { page: EscortMission, path: '/projects/escort_mission' },
-        { page: FoxingAnimatronic, path: '/projects/foxing_animatronic' },
-        { page: LordsOfSola, path: '/projects/lords_of_sola' },
-        { page: Mechatronics, path: '/projects/mechatronics' },
-        { page: Mehve, path: '/projects/mehve' },
-        { page: MusicalDL, path: '/projects/musical_dl' },
-        { page: PongBot, path: '/projects/pongbot' },
-        { page: PRS19, path: '/projects/prs19' },
-        { page: RebelScum, path: '/projects/rebel_scum' },
-        { page: Rewind, path: '/projects/rewind' },
-        { page: RoboJay, path: '/projects/robojay' },
-        { page: SpaceportAmericaCup, path: '/projects/spaceport_america_cup' },
-        { page: SkipSpoilers, path: '/projects/uskipspoilers' },
-        { page: WSE18, path: '/projects/wse18' },
-    ]
+const ProjectPage = (Page: () => JSX.Element, name: string): JSX.Element => {
+    return (
+        <Route exact path={`/projects/${name}`}>
+            <Page />
+        </Route>
+    )
+}
 
+const App = (): JSX.Element => {
     //preload clover images so that they load quickly when you go to that page
     useLoadClovers()
 
@@ -90,11 +67,32 @@ const App = (): JSX.Element => {
                         <Route exact path="/projects">
                             <Projects />
                         </Route>
-                        {projectPages.map(({ page, path }: PageProps, i: number) => (
-                            <Route exact path={path} key={i}>
-                                {page()}
-                            </Route>
-                        ))}
+
+                        {/* Project specific pages */}
+                        {ProjectPage(BlobOpera, 'blob_opera')}
+                        {ProjectPage(BoatSimulator, 'boat_simulator')}
+                        {ProjectPage(BuellerBoard, 'bueller_board')}
+                        {ProjectPage(Composer, 'composer')}
+                        {ProjectPage(Compositions, 'compositions')}
+                        {ProjectPage(DewySpeak, 'dewy')}
+                        {ProjectPage(DrawRobot, 'drawbot')}
+                        {ProjectPage(SoVoice, 'so_voice')}
+                        {ProjectPage(EnsemblePeabody, 'ensemble_peabody')}
+                        {ProjectPage(EscortMission, 'escort_mission')}
+                        {ProjectPage(FoxingAnimatronic, 'foxing_animatronic')}
+                        {ProjectPage(LordsOfSola, 'lords_of_sola')}
+                        {ProjectPage(Mechatronics, 'mechatronics')}
+                        {ProjectPage(Mehve, 'mehve')}
+                        {ProjectPage(MusicalDL, 'musical_dl')}
+                        {ProjectPage(PongBot, 'pongbot')}
+                        {ProjectPage(PRS19, 'prs19')}
+                        {ProjectPage(RebelScum, 'rebel_scum')}
+                        {ProjectPage(Rewind, 'rewind')}
+                        {ProjectPage(RoboJay, 'robojay')}
+                        {ProjectPage(SpaceportAmericaCup, 'spaceport_america_cup')}
+                        {ProjectPage(SkipSpoilers, 'uskipspoilers')}
+                        {ProjectPage(WSE18, 'wse18')}
+
                         <Route exact path="/about">
                             <About />
                         </Route>
