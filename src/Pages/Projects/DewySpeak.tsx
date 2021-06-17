@@ -267,7 +267,7 @@ export const DewySpeak = (): JSX.Element => {
     //menu for the different things to show in output
     const [parserDemoSelection, setParserDemoSelection] = useState<string>('Parse Forest')
     const getParserDemoMenuProps = (name: string): { name: string; active: boolean; onClick: () => void } => {
-        return { name, active: parserDemoSelection === name, onClick: () => setParserDemoSelection(name) }
+        return { name, active: parserDemoSelection === name, onClick: (): void => setParserDemoSelection(name) }
     }
     const getParserDemoSelectionKey = (name: string): keyof ParserOutput => {
         switch (name) {
@@ -392,17 +392,17 @@ export const DewySpeak = (): JSX.Element => {
                 {showParserDemo ? (
                     <>
                         <Accordion inverted>
-                            <Accordion.Title active={showPresets} onClick={() => setShowPresets((p) => !p)}>
+                            <Accordion.Title active={showPresets} onClick={(): void => setShowPresets((p) => !p)}>
                                 <Icon name="dropdown" />
-                                <span style={{ color: 'white', fontFamily: 'quadon', fontSize: '1.071em' }}>Presets</span>
+                                <span style={{ color: 'white', fontFamily: 'quadon', fontSize: '1.071em' }}>Samples</span>
                             </Accordion.Title>
                             <Accordion.Content active={showPresets}>
-                                {exampleGrammars.map(({ grammar, source, label }: ExampleGrammar, i) => {
+                                {exampleGrammars.map(({ grammar, source, label }: ExampleGrammar) => {
                                     return (
                                         <Button
                                             style={{ margin: '0.1em 0.1em 0.1em 0.1em' }}
                                             key={label}
-                                            onClick={() => {
+                                            onClick={(): void => {
                                                 setGrammarInput(grammar)
                                                 setSourceInput(source)
                                             }}
@@ -412,7 +412,7 @@ export const DewySpeak = (): JSX.Element => {
                                     )
                                 })}
                             </Accordion.Content>
-                            <Accordion.Title active={!outputHidden} onClick={() => setOutputHidden((v) => !v)}>
+                            <Accordion.Title active={!outputHidden} onClick={(): void => setOutputHidden((v) => !v)}>
                                 <Icon name="dropdown" />
                                 <span style={{ color: 'white', fontFamily: 'quadon', fontSize: '1.071em' }}>Output{outputHidden ? ' (hidden)' : ''}</span>
                             </Accordion.Title>
@@ -439,7 +439,7 @@ export const DewySpeak = (): JSX.Element => {
                         </Accordion>
                     </>
                 ) : (
-                    <Button onClick={() => setShowParserDemo(true)}>Try Me</Button>
+                    <Button onClick={(): void => setShowParserDemo(true)}>Try Me</Button>
                 )}
                 <h3>About</h3>
                 <p>
