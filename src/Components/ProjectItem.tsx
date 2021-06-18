@@ -10,7 +10,7 @@ export const getGithubTimestamp = async (repoName: string, callback: (timestamp:
     try {
         //API call to github for the repo update timestamp
         const response = await axios.get(`https://api.github.com/repos/david-andrew/${repoName}`)
-        const updatedAt = new Date(response.data['updated_at'])
+        const updatedAt = new Date(response.data['pushed_at'])
         callback(updatedAt)
     } catch {
         callback(undefined)
