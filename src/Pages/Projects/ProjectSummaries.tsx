@@ -202,6 +202,7 @@ export const projects: ProjectContent[] = [
     {
         title: 'Bueller Board',
         imgSrc: logo,
+        lastUpdated: 'September 13, 2015',
         internalLink: '/projects/bueller_board',
         summary: "Fall 2016 HopHacks submission: Midi keyboard that used user provided audio samples, a.k.a. the 'goat keyboard'",
         tags: ['midi', 'music'],
