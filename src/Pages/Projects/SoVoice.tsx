@@ -1,53 +1,12 @@
 import React from 'react'
 import { PageContainer, PageHeading } from '../../Components'
-import { ExternalLink, InternalLink } from '../../utilities'
-import { Table } from 'semantic-ui-react'
-import ReactAudioPlayer from 'react-audio-player'
+import { ExternalLink, InternalLink, AudioExamplePair } from '../../utilities'
 import atma16000 from '../../audio/so_voice/atma16000.wav'
 import atma16000resynth from '../../audio/so_voice/atma16000resynth.wav'
 import pando_260800_4_y from '../../audio/so_voice/pando_260800_4_y.wav'
 import pando_260800_4_y_hat from '../../audio/so_voice/pando_260800_4_y_hat.wav'
 import when_david_heard_lpc from '../../audio/so_voice/when_david_heard_lpc.mp3'
 import when_david_heard_lpc_aaa from '../../audio/so_voice/when_david_heard_lpc_aaa.mp3'
-
-interface AudioCell {
-    label: string
-    src: string
-}
-interface AudioPair {
-    audio1: AudioCell
-    audio2: AudioCell
-}
-
-//TODO->make this take in a list of pairs
-const AudioExamplePair = ({ title, pairs }: { title: string; pairs: AudioPair[] }): JSX.Element => {
-    return (
-        <Table inverted>
-            <Table.Header>
-                <Table.Row>
-                    <Table.HeaderCell>
-                        <h3>{title}</h3>
-                    </Table.HeaderCell>
-                    <Table.HeaderCell />
-                </Table.Row>
-            </Table.Header>
-            <Table.Body>
-                {pairs.map(({ audio1, audio2 }: AudioPair) => (
-                    <Table.Row key={`${audio1.label}${audio1.src}${audio2.label}${audio2.src}`}>
-                        <Table.Cell>
-                            <h4>{audio1.label}</h4>
-                            <ReactAudioPlayer src={audio1.src} style={{ width: '100%' }} controls />
-                        </Table.Cell>
-                        <Table.Cell>
-                            <h4>{audio2.label}</h4>
-                            <ReactAudioPlayer src={audio2.src} style={{ width: '100%' }} controls />
-                        </Table.Cell>
-                    </Table.Row>
-                ))}
-            </Table.Body>
-        </Table>
-    )
-}
 
 export const SoVoice = (): JSX.Element => {
     return (

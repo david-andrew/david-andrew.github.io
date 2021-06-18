@@ -1,7 +1,7 @@
 import React from 'react'
 import { PageContainer } from '../Components'
 import { List, Divider } from 'semantic-ui-react'
-import { InternalLink } from '../utilities'
+import { InternalLink, LogoIcon } from '../utilities'
 import shield_logo from '../images/icons/university.shield.small.white.png'
 import jhuapl_shield from '../images/icons/jhuapl_shield.png'
 import idt_starburst from '../images/icons/idt_starburst.png'
@@ -11,18 +11,6 @@ import blocks from '../images/icons/blocks.png'
 import branch from '../images/icons/branch.png'
 import circuit from '../images/icons/circuit.png'
 import gears from '../images/icons/gears.png'
-
-//Generate a react icon component for the given image
-const LogoIcon = (src: string, width: string = '30em'): JSX.Element => {
-    return <img style={{ float: 'left' }} className="icon" width={width} src={src} />
-}
-
-const BR = (): JSX.Element => (
-    <>
-        <br />
-        <br />
-    </>
-)
 
 export const About = (): JSX.Element => {
     const JHUShieldIcon = (): JSX.Element => LogoIcon(shield_logo)
@@ -148,14 +136,16 @@ export const About = (): JSX.Element => {
                 techniques. At IDT, I focused on both machine learning, and front end development. Of note, I designed a novel machine learning architecture for
                 efficiently allocating compute resources to minimize the execution time of High Level Architecture (HLA) federated simulations. I also
                 implemented a custom time series anomaly detection ensemble model in Julia, and developed the React UI for visualizing the results.
-                <BR />
+            </p>
+            <p>
                 During my master&apos;s coursework I implemented a variety of ML algorithms from scratch, including MLP, SVM, Expectation Maximization, PCA,
                 autoencoding, and autocorrelation/cross-correlation. Additionally, I&apos;ve worked with CNNs, VGG, ResNet, U-net, Viola Jones, and a variety of
                 other architectures. For a <InternalLink to="/projects/musical_dl">capstone project</InternalLink> I developed a novel architecture that
                 leveraged the WaveNet vocoder model paired with a custom convolutional transformer network to create a realistic choral voice synthesizer. Prior
                 to that, at an internship with the Johns Hopkins Applied Physics Lab (JHUAPL), I worked on machine learning capabilities for controlling a
                 robotic limb by analyzing electromyogram (EMG) signals in an individual&apos;s upper arm.
-                <BR />
+            </p>
+            <p>
                 For my undergraduate coursework, I mainly focused on mechanical design, and pure software development. Additionally, I participated in the JHU
                 Robotics Club, where I worked on several interesting robotics projects, including a{' '}
                 <InternalLink to="/projects/drawbot">picture drawing robot arm</InternalLink>, a{' '}
@@ -167,7 +157,8 @@ export const About = (): JSX.Element => {
                 <InternalLink to="/projects/ensemble_peabody">Ensemble (Hacking Harmony)</InternalLink>,{' '}
                 <InternalLink to="/projects/boat_simulator">Boat Simulator</InternalLink>, and{' '}
                 <InternalLink to="/projects/bueller_board">Bueller Board</InternalLink>.
-                <BR />
+            </p>
+            <p>
                 In my spare time, I&apos;ve worked on a number of interesting side projects, including a{' '}
                 <InternalLink to="/projects/dewy">custom programming language</InternalLink>, a{' '}
                 <InternalLink to="/projects/so_voice">deep learning music synthesizer</InternalLink>,{' '}

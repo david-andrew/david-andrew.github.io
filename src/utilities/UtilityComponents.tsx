@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { CodeBlock as AtlasCodeBlock, Code as AtlasCode, SupportedLanguages } from '@atlaskit/code'
 import { AtlaskitThemeProvider } from '@atlaskit/theme/components'
+import { Table } from 'semantic-ui-react'
+import ReactAudioPlayer from 'react-audio-player'
 
 //place this after any element that needs to be clearfixed
 export const ClearFixAfter = (): JSX.Element => {
@@ -59,5 +61,47 @@ export const CodeBlock = ({
             </AtlaskitThemeProvider>
             <br />
         </div>
+    )
+}
+
+//Generate a react icon component for the given image
+export const LogoIcon = (src: string, width: string = '30em'): JSX.Element => {
+    return <img style={{ float: 'left' }} className="icon" width={width} src={src} />
+}
+
+interface AudioCell {
+    label: string
+    src: string
+}
+interface AudioPair {
+    audio1: AudioCell
+    audio2: AudioCell
+}
+export const AudioExamplePair = ({ title, pairs }: { title: string; pairs: AudioPair[] }): JSX.Element => {
+    return (
+        <Table inverted>
+            <Table.Header>
+                <Table.Row>
+                    <Table.HeaderCell>
+                        <h3>{title}</h3>
+                    </Table.HeaderCell>
+                    <Table.HeaderCell />
+                </Table.Row>
+            </Table.Header>
+            <Table.Body>
+                {pairs.map(({ audio1, audio2 }: AudioPair) => (
+                    <Table.Row key={`${audio1.label}${audio1.src}${audio2.label}${audio2.src}`}>
+                        <Table.Cell>
+                            <h4>{audio1.label}</h4>
+                            <ReactAudioPlayer src={audio1.src} style={{ width: '100%' }} controls />
+                        </Table.Cell>
+                        <Table.Cell>
+                            <h4>{audio2.label}</h4>
+                            <ReactAudioPlayer src={audio2.src} style={{ width: '100%' }} controls />
+                        </Table.Cell>
+                    </Table.Row>
+                ))}
+            </Table.Body>
+        </Table>
     )
 }
