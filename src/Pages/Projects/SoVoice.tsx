@@ -25,8 +25,8 @@ export const SoVoice = (): JSX.Element => {
                     learning pipeline. The synthesizer then pipes that representation through a series of deep learning models which ultimately output an audio
                     file that is the synthesized performance of the input. Eventually I&apos;d also like to add in a machine learning pipeline for reading sheet
                     music from images (e.g. PDFs).
-                    <br />
-                    <br />
+                </p>
+                <p>
                     In terms of the actual machine learning pipeline, I have been developing custom architectures ever since I started working on the project in
                     early 2019. Initially I centered my design around the WaveNet, which Google uses to great effect for their Text-to-Speech service, however
                     several compounding factors cause WaveNets to be unsuitable for choral voice synthesis, e.g. difficulty parallelizing, low output sample

@@ -1,11 +1,14 @@
 import React from 'react'
-import { PageContainer } from '../../Components'
+import { PageContainer, PageHeading } from '../../Components'
+import { useGithubTimestamp } from '../../utilities'
 
 export const EnsemblePeabody = (): JSX.Element => {
+    const timestamp = useGithubTimestamp('Ensemble')
+
     return (
         <>
             <PageContainer>
-                <h1>Ensemble (Hacking Harmony)</h1>
+                <PageHeading title="Ensemble" subtitle={timestamp} />
             </PageContainer>
         </>
     )
