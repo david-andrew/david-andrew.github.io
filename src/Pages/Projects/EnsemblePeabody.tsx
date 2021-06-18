@@ -36,7 +36,10 @@ export const EnsemblePeabody = (): JSX.Element => {
                     is performed in Matlab as it had better tools for quickly writing an autotuner, including pitch detection, pitch shifting, and very robust
                     tools for working with audio data in general.
                 </p>
-                <p>The output of this whole process sounds about how you&apos;d expect autotuned text-to-speech to sound.</p>
+                <p>
+                    The output of this whole process sounds about how you&apos;d expect autotuned text-to-speech to sound&mdash;though I have heard it described
+                    as sounding like a choir of demon chipmunks.
+                </p>
                 <AudioExamplePair
                     title="Examples"
                     pairs={[
