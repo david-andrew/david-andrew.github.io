@@ -44,16 +44,16 @@ export const EnsemblePeabody = (): JSX.Element => {
                     title="Examples"
                     pairs={[
                         {
-                            audio1: { label: 'Hark the Herald Angels Sing', src: hark_the_herald },
-                            audio2: { label: 'Christmas Time is Here', src: christmas_time },
+                            audio1: { label: 'Hark the Herald Angels Sing - Felix Mendelssohn', src: hark_the_herald },
+                            audio2: { label: 'Christmas Time is Here - arr. David Samson', src: christmas_time },
                         },
                         {
-                            audio1: { label: 'Brother John', src: brother_john },
-                            audio2: { label: 'When David Heard (intro)', src: when_david_heard },
+                            audio1: { label: 'Brother John - Folk Song', src: brother_john },
+                            audio2: { label: 'When David Heard - Eric Whitacre (intro only)', src: when_david_heard },
                         },
                         {
-                            audio1: { label: 'Sanctus (London) (intro)', src: sanctus },
-                            audio2: { label: 'Upon the Hearth - Matthew Samson original composition', src: upon_the_hearth },
+                            audio1: { label: 'Sanctus (London) - Ola Gjeilo (intro only)', src: sanctus },
+                            audio2: { label: 'Upon the Hearth - Matthew Samson', src: upon_the_hearth },
                         },
                     ]}
                 />
