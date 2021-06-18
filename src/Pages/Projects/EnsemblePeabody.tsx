@@ -62,7 +62,6 @@ export const EnsemblePeabody = (): JSX.Element => {
                     surprised by how difficult such a simple sounding problem always turns out to be&mdash;in this case though, I think the out-of-tune-ness of
                     it is quite in line with the quality of the rest of the result.
                 </p>
-                <p>For reference, heres what </p>
                 <h3>Links</h3>
                 <List>
                     <List.Item>
