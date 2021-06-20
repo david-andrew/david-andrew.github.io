@@ -9,6 +9,18 @@
     font-weight: normal;
 }
 
+.PageContainer h1 {
+    font-size: 36px;
+}
+
+.PageContainer h3 {
+    font-size: 28px;
+}
+
+.PageContainer h4 {
+    font-size: 20px;
+}
+
 .PageContainer button {
     font-family: 'gentona';
     font-weight: normal;
@@ -27,13 +39,13 @@
 
 /*allows adjustment of codeblock line heights*/
 .PageContainer .flatten code {
-    font-size: 12px !important;
+    font-size: 14px !important;
     line-height: 1.15em !important;
 }
 
 .PageContainer textarea {
     font-family: 'DejaVu Sans Mono';
-    font-size: 12px;
+    font-size: 14px;
     line-height: 1.15em;
     color: #dce5f5;
     background-color: #283447;

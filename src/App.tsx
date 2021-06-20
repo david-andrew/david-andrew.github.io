@@ -28,6 +28,7 @@ import {
     WSE18,
 } from './Pages'
 import { useLoadClovers } from './utilities'
+import './App.css'
 
 const ProjectPage = (Page: () => JSX.Element, name: string): JSX.Element => {
     return (

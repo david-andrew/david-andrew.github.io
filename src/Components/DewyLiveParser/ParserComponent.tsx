@@ -38,7 +38,7 @@ const countLines = (txt: string): number => {
 }
 
 //size of 1 em in pixels for CodeBlocks / TextAreas
-const emToPx = 12
+const emToPx = 14
 const lineHeight = 1.15
 
 interface Props {
@@ -155,7 +155,7 @@ export const DewyLiveParser = ({ exampleGrammars, initialSample }: Props): JSX.E
 
                                     <div style={{ whiteSpace: 'nowrap', alignItems: 'center' }}>
                                         <span style={{ fontSize: 20 }}>&lt; </span>
-                                        <span style={{ outline: 'solid 1px white', padding: '0.25em' }}>edit me</span>
+                                        <span style={{ outline: 'solid 1px white', padding: '0.25em', fontSize: 14 }}>edit me</span>
                                         <span style={{ fontSize: 20 }}> &gt;</span>
                                     </div>
                                 </div>
