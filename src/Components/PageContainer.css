@@ -13,8 +13,12 @@
     font-size: 36px;
 }
 
-.PageContainer h3 {
+.PageContainer h2 {
     font-size: 28px;
+}
+
+.PageContainer h3 {
+    font-size: 25px;
 }
 
 .PageContainer h4 {
