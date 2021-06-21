@@ -33,7 +33,6 @@ export const Mechatronics = (): JSX.Element => {
                     chassis, while they focused on programming the robot. To solve the maze, the robot may use any algorithm, as well as use the colored square
                     hints placed throughout the maze.
                 </p>
-                <h4>Pictures &amp; Video</h4>
                 <Grid columns={2}>
                     <Grid.Column>
                         <Grid.Row>
@@ -79,7 +78,7 @@ export const Mechatronics = (): JSX.Element => {
                     robots. Ultimately due to time constraints, the actual hockey tournament was cancelled, but my team&apos;s robots turned out quite well,
                     especially the striker.
                 </p>
-                <h4>Goalie Robot</h4>
+                <h4>Goalie</h4>
                 <Collage imageSrcs={jhockey_goalie_imageSrcs} />
                 <br />
                 <p>
@@ -87,7 +86,7 @@ export const Mechatronics = (): JSX.Element => {
                     extra reach. It uses the same tread drive as the striker, but in a triangular pattern, mainly to accommodate having a large gear in the
                     single-stage reduction from the motors (and definitely not because it made it look more like WALL-E).
                 </p>
-                <h4>Striker Robot</h4>
+                <h4>Striker</h4>
                 <Collage imageSrcs={jhockey_striker_imageSrcs} />
                 <br />
                 <p>
@@ -98,7 +97,6 @@ export const Mechatronics = (): JSX.Element => {
                     spiral is rotated just a few more degrees to release the pusher plate. To shoot again, the spiral just needs to continue rotating in the
                     same direction.
                 </p>
-                <h3>Videos</h3>
                 <Grid columns={2}>
                     <Grid.Column>
                         <Grid.Row>
