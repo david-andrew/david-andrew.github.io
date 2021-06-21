@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/static/css/main.b36ea4a1.chunk.css",
+    "main.css": "/static/css/main.75305752.chunk.css",
     "main.js": "/static/js/main.041c82a3.chunk.js",
     "main.js.map": "/static/js/main.041c82a3.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.703967a3.js",
@@ -15,7 +15,7 @@
     "dewy_parser_wrapper.wasm": "/dewy_parser_wrapper.444d1b32.wasm",
     "index.html": "/index.html",
     "static/css/2.9fe82d56.chunk.css.map": "/static/css/2.9fe82d56.chunk.css.map",
-    "static/css/main.b36ea4a1.chunk.css.map": "/static/css/main.b36ea4a1.chunk.css.map",
+    "static/css/main.75305752.chunk.css.map": "/static/css/main.75305752.chunk.css.map",
     "static/js/2.b3d4102f.chunk.js.LICENSE.txt": "/static/js/2.b3d4102f.chunk.js.LICENSE.txt",
     "static/js/3.f4144e61.chunk.js.LICENSE.txt": "/static/js/3.f4144e61.chunk.js.LICENSE.txt",
     "static/media/18880172_10154639298117314_116214712170500306_o.jpg": "/static/media/18880172_10154639298117314_116214712170500306_o.e90c0b1e.jpg",
@@ -184,7 +184,7 @@
     "static/js/runtime-main.703967a3.js",
     "static/css/2.9fe82d56.chunk.css",
     "static/js/2.b3d4102f.chunk.js",
-    "static/css/main.b36ea4a1.chunk.css",
+    "static/css/main.75305752.chunk.css",
     "static/js/main.041c82a3.chunk.js"
   ]
 }
