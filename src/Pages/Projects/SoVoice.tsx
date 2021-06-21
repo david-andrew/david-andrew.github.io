@@ -35,7 +35,11 @@ export const SoVoice = (): JSX.Element => {
                     techniques. I&apos;m also very interested in experimenting with transformers, which I think have good prospects to work well in the
                     pipelines I&apos;ve been building.
                 </p>
-                <h3>Current Examples</h3>
+                <h3>Current Example</h3>
+                <p>
+                    This demonstrates the final step in the pipeline which generates audio given output from all the previous steps. To test it in isolation, I
+                    have it attempt to recreate real audio clips, which gives an idea of how well it will perform in the full pipeline.
+                </p>
                 <AudioExamplePair
                     title="Audio Resynthesis"
                     pairs={[
@@ -45,8 +49,21 @@ export const SoVoice = (): JSX.Element => {
                         },
                     ]}
                 />
+                <h3>Previous Experiments</h3>
+                <p>
+                    These demonstrate a few previous approaches I tried for audio generation. For the Auto-Encoder GAN experiment, I attempted to build a mostly
+                    vanilla{' '}
+                    <ExternalLink href="https://towardsdatascience.com/auto-encoder-what-is-it-and-what-is-it-used-for-part-1-3e5c6f017726">
+                        autoencoder
+                    </ExternalLink>{' '}
+                    and train with adversarial loss, commonly used in{' '}
+                    <ExternalLink href="https://machinelearningmastery.com/what-are-generative-adversarial-networks-gans/">
+                        Generative Adversarial Networks
+                    </ExternalLink>
+                    .
+                </p>
                 <AudioExamplePair
-                    title="Auto-Encoder GAN Experiment"
+                    title="Autoencoder GAN Experiment"
                     pairs={[
                         {
                             audio1: { label: 'Real audio (16000 Hz)', src: pando_260800_4_y },
@@ -54,6 +71,13 @@ export const SoVoice = (): JSX.Element => {
                         },
                     ]}
                 />
+                <p>
+                    For the LPC synthesis experiment, I recorded samples of each commonly sung phoneme by a professional singer, and then used the{' '}
+                    <ExternalLink href="https://ccrma.stanford.edu/~hskim08/lpc/">Linear Predictive Coding</ExternalLink> technique to splice them together at
+                    the correct pitches, generating a whole song. I had a lot of trouble generating noise-based phonemes (e.g. &apos;s&apos;, &apos;f&apos;,
+                    &apos;t&apos;, &apos;ch&apos;, etc.) which is the popping and clicking sounds in the full lyrics example. The second example locks the
+                    phoneme to &apos;a&apos; for the whole song, to give an example without the clicks and pops.
+                </p>
                 <AudioExamplePair
                     title="LPC Synthesis Experiment"
                     pairs={[
