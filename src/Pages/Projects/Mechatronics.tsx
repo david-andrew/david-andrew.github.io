@@ -33,6 +33,12 @@ export const Mechatronics = (): JSX.Element => {
                     chassis, while they focused on programming the robot. To solve the maze, the robot may use any algorithm, as well as use the colored square
                     hints placed throughout the maze.
                 </p>
+                <p>
+                    An interesting feature of the chassis design is that it was design to fit together using nothing but friction joints. This means that each
+                    joint is slightly larger than where it is supposed to fit, and the interference between both sides holds the parts together&mdash;no glue
+                    was needed, and the only fasteners were to hold components to the body. Normally, laser cut acrylic isn&apos;t cut with such tight
+                    tolerances, but with a little bit of experimentation, I was able to get it to work quite nicely.
+                </p>
                 <Grid columns={2}>
                     <Grid.Column>
                         <Grid.Row>
