@@ -186,7 +186,7 @@ export const projects: ProjectContent[] = [
         lastUpdated: 'January 17, 2018',
     },
     {
-        title: '2018 Spaceport America Cup',
+        title: 'Spaceport America Cup 2018',
         imgSrc: logo,
         summary: 'Level 3 High Power Rocket build by the Astrojays (JHU rocketry team) for the Spaceport America Cup',
         internalLink: '/projects/spaceport_america_cup',

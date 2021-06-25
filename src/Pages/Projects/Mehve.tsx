@@ -1,11 +1,12 @@
 import React from 'react'
-import { PageContainer } from '../../Components'
+import { PageContainer, PageHeading } from '../../Components'
 
 export const Mehve = (): JSX.Element => {
     return (
         <>
             <PageContainer>
-                <h1>Mehve</h1>
+                <PageHeading title="Mehve" subtitle="" />
+                <h3>Coming Soon</h3>
             </PageContainer>
         </>
     )

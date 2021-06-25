@@ -1,11 +1,12 @@
 import React from 'react'
-import { PageContainer } from '../../Components'
+import { PageContainer, PageHeading } from '../../Components'
 
 export const SpaceportAmericaCup = (): JSX.Element => {
     return (
         <>
             <PageContainer>
-                <h1>Spaceport America Cup</h1>
+                <PageHeading title="Spaceport America Cup 2018" subtitle="" />
+                <h3>Coming Soon</h3>
             </PageContainer>
         </>
     )

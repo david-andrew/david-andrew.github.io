@@ -1,11 +1,12 @@
 import React from 'react'
-import { PageContainer } from '../../Components'
+import { PageContainer, PageHeading } from '../../Components'
 
 export const Rewind = (): JSX.Element => {
     return (
         <>
             <PageContainer>
-                <h1>Rewind</h1>
+                <PageHeading title="Rewind" subtitle="" />
+                <h3>Coming Soon</h3>
             </PageContainer>
         </>
     )

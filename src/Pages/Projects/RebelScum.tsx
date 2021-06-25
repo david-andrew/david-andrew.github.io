@@ -1,11 +1,12 @@
 import React from 'react'
-import { PageContainer } from '../../Components'
+import { PageContainer, PageHeading } from '../../Components'
 
 export const RebelScum = (): JSX.Element => {
     return (
         <>
             <PageContainer>
-                <h1>Rebel Scum High Power Rocket</h1>
+                <PageHeading title="Rebel Scum High Power Rocket" subtitle="" />
+                <h3>Coming Soon</h3>
             </PageContainer>
         </>
     )
