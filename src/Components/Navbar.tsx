@@ -62,6 +62,7 @@ export const Navbar = (): JSX.Element => {
                 <NavbarButton content="Home" onClick={getOnClick('/home')} active={path === '/home' || path === '/'} />
                 <NavbarButton content="Projects" onClick={getOnClick('/projects')} active={path.startsWith('/projects')} />
                 <NavbarButton content="About" onClick={getOnClick('/about')} active={path === '/about'} />
+                <NavbarButton content="Consulting" onClick={getOnClick('/consulting')} active={path === '/consulting'} />
                 <NavbarButton content="Clovers" onClick={getOnClick('/clovers')} active={path === '/clovers'} />
                 <NavbarButton content="Contact" onClick={getOnClick('/contact')} active={path === '/contact'} />
             </div>
@@ -83,7 +84,7 @@ export const DummyNavBar = (): JSX.Element => {
                 }}
             >
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    {[1, 2, 3, 4, 5].map((_, i) => {
+                    {[1, 2, 3, 4, 5, 6].map((_, i) => {
                         return (
                             <div
                                 key={i}
