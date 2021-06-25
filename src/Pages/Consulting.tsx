@@ -1,5 +1,5 @@
 import React from 'react'
-import { PageContainer, PageHeading } from '../Components'
+import { PageContainer /*PageHeading*/ } from '../Components'
 
 export const Consulting = (): JSX.Element => {
     return (
