@@ -1,5 +1,5 @@
 import React from 'react'
-import { Collage, EfficientCollage, PageContainer } from '../Components'
+import { Collage, PageContainer } from '../Components'
 
 //clover images should be precached from visiting the site, so this shouldn't be too slow
 export const Clovers = (): JSX.Element => {
@@ -8,7 +8,7 @@ export const Clovers = (): JSX.Element => {
 
     return (
         <PageContainer>
-            <EfficientCollage imageSrcs={imageSrcs} previewSrcs={imageSrcs} />
+            <Collage imageSrcs={imageSrcs} previewSrcs={imageSrcs} />
         </PageContainer>
     )
 }

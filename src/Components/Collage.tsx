@@ -1,5 +1,4 @@
-import React, { useState, MouseEvent, MouseEventHandler } from 'react'
-import { ReactPhotoCollage } from 'react-photo-collage'
+import React, { useState, MouseEventHandler } from 'react'
 import Carousel, { Modal, ModalGateway, ViewType } from 'react-images'
 import './Collage.css'
 
@@ -18,21 +17,7 @@ const getLayout = (numPhotos: number, rowSizes: number[] = [3, 4, 5]): number[] 
     return layout
 }
 
-export const Collage = ({ imageSrcs, rowSizes }: { imageSrcs: string[]; rowSizes?: number[] }): JSX.Element => {
-    const layout = getLayout(imageSrcs.length, rowSizes)
-    const heights = layout.map(() => '250px')
-    const photos = imageSrcs.map((src: string) => {
-        return { source: src }
-    })
-
-    return (
-        <div className="CollageWrapperDiv">
-            <ReactPhotoCollage width="100%" height={heights} layout={layout} photos={photos} showNumOfRemainingPhotos />
-        </div>
-    )
-}
-
-const EfficientCollageImg = ({
+const CollageImg = ({
     src,
     widthPercent = '100%',
     idx,
@@ -43,15 +28,14 @@ const EfficientCollageImg = ({
     idx: number
     openModal: (idx: number) => void
 }): JSX.Element => {
-    const onClick: MouseEventHandler<HTMLImageElement> = (event: MouseEvent<HTMLImageElement, globalThis.MouseEvent>) => {
-        console.log('clicked image', idx)
+    const onClick: MouseEventHandler<HTMLImageElement> = () => {
         openModal(idx)
     }
 
     return <img src={src} style={{ width: widthPercent, margin: '1px', objectFit: 'cover', cursor: 'pointer', userSelect: 'none' }} onClick={onClick} />
 }
 
-const EfficientCollageRow = ({ children, rowHeight = '250px' }: { children: React.ReactNode; rowHeight?: string }): JSX.Element => {
+const CollageRow = ({ children, rowHeight = '250px' }: { children: React.ReactNode; rowHeight?: string }): JSX.Element => {
     return <div style={{ display: 'flex', flexDirection: 'row', width: '100%', height: rowHeight }}>{children}</div>
 }
 
@@ -60,7 +44,7 @@ interface ImageData {
     idx: number
 }
 
-export const EfficientCollagePage = ({
+export const CollagePage = ({
     previewSrcs,
     rowSizes,
     rowHeight,
@@ -87,27 +71,30 @@ export const EfficientCollagePage = ({
     return (
         <div>
             {rows.map((row: ImageData[], i) => (
-                <EfficientCollageRow key={i} rowHeight={rowHeight}>
+                <CollageRow key={i} rowHeight={rowHeight}>
                     {row.map(({ src, idx }: ImageData) => (
-                        <EfficientCollageImg key={idx} idx={idx} src={src} widthPercent={`${100 / row.length}%`} openModal={openModal} />
+                        <CollageImg key={idx} idx={idx} src={src} widthPercent={`${100 / row.length}%`} openModal={openModal} />
                     ))}
-                </EfficientCollageRow>
+                </CollageRow>
             ))}
         </div>
     )
 }
 
-export const EfficientCollage = ({
+export const Collage = ({
     imageSrcs,
     previewSrcs,
     rowSizes,
     rowHeight,
 }: {
     imageSrcs: string[]
-    previewSrcs: string[]
+    previewSrcs?: string[]
     rowSizes?: number[]
     rowHeight?: string
 }): JSX.Element => {
+    //use the images themselves if no previews provided (less efficient)
+    previewSrcs = previewSrcs ?? imageSrcs
+
     const [viewerIsOpen, setViewerIsOpen] = useState<boolean>(false)
     const [currentImage, setCurrentImage] = useState<number>(0)
 
@@ -130,7 +117,7 @@ export const EfficientCollage = ({
 
     return (
         <>
-            <EfficientCollagePage previewSrcs={previewSrcs} rowSizes={rowSizes} rowHeight={rowHeight} openModal={openModal} />
+            <CollagePage previewSrcs={previewSrcs} rowSizes={rowSizes} rowHeight={rowHeight} openModal={openModal} />
             <ModalGateway>
                 {viewerIsOpen && (
                     <Modal onClose={closeModal}>
