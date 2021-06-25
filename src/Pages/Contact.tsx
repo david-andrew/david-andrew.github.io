@@ -31,11 +31,13 @@ const ContactItems = ({ small = false }: { small?: boolean }): JSX.Element => {
 const ContactContainer = ({
     id = 'ContactPage',
     zIndex = 0,
+    small = false,
     children,
     horizontalRef,
 }: {
     id?: string
     zIndex?: number
+    small?: boolean
     children: ReactNode
     horizontalRef?: MutableRefObject<null>
 }): JSX.Element => {
@@ -55,7 +57,7 @@ const ContactContainer = ({
                 zIndex: zIndex,
             }}
         >
-            <div style={{ width: '100%', height: '40%', display: 'flex', justifyContent: 'center' }}>
+            <div style={{ width: '100%', height: small ? '20%' : '40%', display: 'flex', justifyContent: 'center' }}>
                 <Container>
                     <div
                         style={{
@@ -90,7 +92,7 @@ export const Contact = (): JSX.Element => {
                 <ContactItems />
             </ContactContainer>
             {refXOverflowing && (
-                <ContactContainer>
+                <ContactContainer small>
                     <ContactItems small />
                 </ContactContainer>
             )}
