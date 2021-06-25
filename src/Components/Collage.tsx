@@ -119,11 +119,11 @@ export const Collage = ({
         <>
             <CollagePage previewSrcs={previewSrcs} rowSizes={rowSizes} rowHeight={rowHeight} openModal={openModal} />
             <ModalGateway>
-                {viewerIsOpen && (
-                    <Modal onClose={closeModal}>
+                {viewerIsOpen ? (
+                    <Modal onClose={closeModal} closeOnEsc allowFullscreen={false}>
                         <Carousel views={photos} currentIndex={currentImage} />
                     </Modal>
-                )}
+                ) : null}
             </ModalGateway>
         </>
     )
