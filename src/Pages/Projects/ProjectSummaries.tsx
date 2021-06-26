@@ -58,7 +58,7 @@ export const projects: ProjectContent[] = [
         tags: ['Python', 'PyTorch', 'AI/ML', 'choral', 'music', 'synthesis'],
     },
     {
-        title: 'Hacking Harmony',
+        title: 'Hacking Harmony: The Demon Chipmunk Choir',
         imgSrc: logo,
         github: 'Ensemble',
         internalLink: '/projects/ensemble_peabody',

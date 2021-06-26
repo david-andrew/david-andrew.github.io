@@ -15,7 +15,7 @@ export const EnsemblePeabody = (): JSX.Element => {
     return (
         <>
             <PageContainer>
-                <PageHeading title="Hacking Harmony (A.K.A. The Demon Chipmunk Choir)" subtitle={timestamp} />
+                <PageHeading title="Hacking Harmony: The Demon Chipmunk Choir" subtitle={timestamp} />
                 <p>
                     At the inaugural Peabody hackathon, Hacking Harmony, I built my first attempt at choral music synthesis. The concept was simple: autotune
                     google text-to-speech. Using Python, I built a music parsing engine which would read in a (well formed) MusicXML file, and then perform the
