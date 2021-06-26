@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Icon, Item } from 'semantic-ui-react'
 import { useHistory } from 'react-router-dom'
 import { ProjectContent } from '../Pages'
-import { toMonthDayYearString } from '../utilities'
+import { toMonthYearString } from '../utilities'
 import axios from 'axios'
 
 //asynchronously fetch the most recent update timestamp for the github project
@@ -41,7 +41,7 @@ export const ProjectItem = ({ title, github, lastUpdated, imgSrc, internalLink, 
         if (github !== undefined) {
             getGithubTimestamp(github, (timestamp: Date | undefined) => {
                 if (timestamp !== undefined) {
-                    setUpdate(`Last Updated: ${toMonthDayYearString(timestamp)}`)
+                    setUpdate(`Last Updated: ${toMonthYearString(timestamp)}`)
                 } else {
                     setUpdate('Last Updated: <Failed to fetch timestamp>')
                 }

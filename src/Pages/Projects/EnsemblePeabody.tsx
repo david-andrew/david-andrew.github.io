@@ -15,7 +15,7 @@ export const EnsemblePeabody = (): JSX.Element => {
     return (
         <>
             <PageContainer>
-                <PageHeading title="Ensemble" subtitle={timestamp} />
+                <PageHeading title="Hacking Harmony (A.K.A. The Demon Chipmunk Choir)" subtitle={timestamp} />
                 <p>
                     At the inaugural Peabody hackathon, Hacking Harmony, I built my first attempt at choral music synthesis. The concept was simple: autotune
                     google text-to-speech. Using Python, I built a music parsing engine which would read in a (well formed) MusicXML file, and then perform the
@@ -37,8 +37,8 @@ export const EnsemblePeabody = (): JSX.Element => {
                     tools for working with audio data in general.
                 </p>
                 <p>
-                    The output of this whole process sounds about how you&apos;d expect autotuned text-to-speech to sound&mdash;though I have heard it described
-                    as sounding like a choir of demon chipmunks.
+                    The output of this whole process sounds about how you&apos;d expect autotuned text-to-speech to sound&mdash;my favorite reaction was that it
+                    sounded like a choir of demon chipmunks.
                 </p>
                 <AudioExamplePair
                     title="Examples"
