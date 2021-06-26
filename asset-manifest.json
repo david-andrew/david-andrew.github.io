@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/static/css/main.75305752.chunk.css",
-    "main.js": "/static/js/main.f1b34b42.chunk.js",
-    "main.js.map": "/static/js/main.f1b34b42.chunk.js.map",
+    "main.js": "/static/js/main.090ce4f6.chunk.js",
+    "main.js.map": "/static/js/main.090ce4f6.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.2096c6eb.js",
     "runtime-main.js.map": "/static/js/runtime-main.2096c6eb.js.map",
     "static/css/2.9fe82d56.chunk.css": "/static/css/2.9fe82d56.chunk.css",
-    "static/js/2.d4d75c52.chunk.js": "/static/js/2.d4d75c52.chunk.js",
-    "static/js/2.d4d75c52.chunk.js.map": "/static/js/2.d4d75c52.chunk.js.map",
+    "static/js/2.8a761689.chunk.js": "/static/js/2.8a761689.chunk.js",
+    "static/js/2.8a761689.chunk.js.map": "/static/js/2.8a761689.chunk.js.map",
     "static/js/3.ab0f0856.chunk.js": "/static/js/3.ab0f0856.chunk.js",
     "static/js/3.ab0f0856.chunk.js.map": "/static/js/3.ab0f0856.chunk.js.map",
     "static/js/4.97b835e8.chunk.js": "/static/js/4.97b835e8.chunk.js",
@@ -16,7 +16,7 @@
     "index.html": "/index.html",
     "static/css/2.9fe82d56.chunk.css.map": "/static/css/2.9fe82d56.chunk.css.map",
     "static/css/main.75305752.chunk.css.map": "/static/css/main.75305752.chunk.css.map",
-    "static/js/2.d4d75c52.chunk.js.LICENSE.txt": "/static/js/2.d4d75c52.chunk.js.LICENSE.txt",
+    "static/js/2.8a761689.chunk.js.LICENSE.txt": "/static/js/2.8a761689.chunk.js.LICENSE.txt",
     "static/js/3.ab0f0856.chunk.js.LICENSE.txt": "/static/js/3.ab0f0856.chunk.js.LICENSE.txt",
     "static/media/00.png": "/static/media/00.c3a22b03.png",
     "static/media/01.png": "/static/media/01.203aed20.png",
@@ -226,13 +226,14 @@
     "static/media/when_david_heard.469b114a.mp3": "/static/media/when_david_heard.469b114a.mp3",
     "static/media/when_david_heard_lpc.031dab92.mp3": "/static/media/when_david_heard_lpc.031dab92.mp3",
     "static/media/when_david_heard_lpc_aaa.3076a598.mp3": "/static/media/when_david_heard_lpc_aaa.3076a598.mp3",
+    "static/media/wse18.22a97e3b.png": "/static/media/wse18.22a97e3b.png",
     "static/media/zzz_20190215_063443.jpg": "/static/media/zzz_20190215_063443.6877d7bd.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.2096c6eb.js",
     "static/css/2.9fe82d56.chunk.css",
-    "static/js/2.d4d75c52.chunk.js",
+    "static/js/2.8a761689.chunk.js",
     "static/css/main.75305752.chunk.css",
-    "static/js/main.f1b34b42.chunk.js"
+    "static/js/main.090ce4f6.chunk.js"
   ]
 }
