@@ -10,9 +10,19 @@ export const ClearFixAfter = (): JSX.Element => {
     return <div style={{ clear: 'both', display: 'table' }}></div>
 }
 
-export const ExternalLink = ({ href, children, style }: { href: string; children?: React.ReactNode; style?: React.CSSProperties }): JSX.Element => {
+export const ExternalLink = ({
+    href,
+    children,
+    style,
+    download,
+}: {
+    href: string
+    children?: React.ReactNode
+    style?: React.CSSProperties
+    download?: boolean
+}): JSX.Element => {
     return (
-        <a href={href} target="_blank" rel="noreferrer noopener" style={style}>
+        <a href={href} target="_blank" rel="noreferrer noopener" style={style} download>
             {children}
         </a>
     )

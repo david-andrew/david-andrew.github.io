@@ -5,7 +5,8 @@ export const Consulting = (): JSX.Element => {
     return (
         <>
             <PageContainer>
-                <h1>Coming Soon</h1>
+                <h1>AI Consulting</h1>
+                <p>Coming Soon</p>
             </PageContainer>
         </>
     )
