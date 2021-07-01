@@ -28,8 +28,9 @@ export const FoxingAnimatronic = (): JSX.Element => {
                     <br />I opted for laser cut acrylic with a stiff plastic spine and thin steel cables to control the mechanism. The final design for the body
                     is shown below.
                 </p>
-                <img src={cad_design} style={{ width: '100%' }} />
-                <ClearFixAfter />
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <img src={cad_design} style={{ width: '100%' }} />
+                </div>
                 <br />
                 <p>
                     To control it, I fabricated dual joysticks out of steel and aluminum T-slot extrusions, as well as a pair of bicycle brake mechanism. One
@@ -40,9 +41,8 @@ export const FoxingAnimatronic = (): JSX.Element => {
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <img src={joystick_demo} style={{ width: '50%' }} />
                 </div>
+                <br />
                 <p>
-                    <br />
-                    <br />
                     The biggest difficulty I encountered with the project was the slender proportions they wanted. With such a thin frame, the cables needed to
                     be as thin as possible to fit through the small holes in each disk on the body, which meant they were more fragile than thicker cabling--I
                     calculated that there was almost no margin of safety for the breaking strength of the control cables. Ultimately, it took a lot of careful
@@ -50,7 +50,6 @@ export const FoxingAnimatronic = (): JSX.Element => {
                 </p>
                 <h3>Pictures</h3>
                 <Collage imageSrcs={imageSrcs} />
-
                 <h3>Final Music Video (Warning: Blood/Unsettling Medical Imagery)</h3>
                 <YouTube videoId="AopbOIH37gs" opts={{ width: '100%' }} />
             </PageContainer>

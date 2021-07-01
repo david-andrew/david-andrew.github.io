@@ -86,7 +86,6 @@ export const Mechatronics = (): JSX.Element => {
                 </p>
                 <h4>Goalie</h4>
                 <Collage imageSrcs={jhockey_goalie_imageSrcs} />
-                <br />
                 <p>
                     The goalie is relatively simple. Its main strategy is to simply drive back and forth in front of the goal, and extend an inner panel for
                     extra reach. It uses the same tread drive as the striker, but in a triangular pattern, mainly to accommodate having a large gear in the
@@ -94,7 +93,6 @@ export const Mechatronics = (): JSX.Element => {
                 </p>
                 <h4>Striker</h4>
                 <Collage imageSrcs={jhockey_striker_imageSrcs} />
-                <br />
                 <p>
                     The striker was built with considerations for several mistakes that cropped up while building the goalie robot. While more complicated than
                     the goalie&apos;s drive train, the striker used a five-stage gear reduction. This allowed it to fit entirely inside the body, while also

@@ -125,6 +125,7 @@ export const Collage = ({
                     </Modal>
                 ) : null}
             </ModalGateway>
+            <br />
         </>
     )
 }
