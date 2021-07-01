@@ -10,6 +10,7 @@ import rebel_scum from '../../images/projects/rebel_scum.jpg'
 import music_staff from '../../images/projects/music_staff.png'
 import ye_arlington_musicke_lab_logo from '../../images/projects/YeArlingtonMusickeLabLogo.png'
 import wse18 from '../../images/projects/wse18.png'
+import mona_lisa_contour from '../../images/drawbot/mona_lisa_contour.jpg'
 
 //by making this a compiled ts file, we guarantee all pieces of content are present when building
 
@@ -123,7 +124,7 @@ export const projects: ProjectContent[] = [
     },
     {
         title: 'UR5 Draw Robot',
-        imgSrc: logo,
+        imgSrc: mona_lisa_contour,
         lastUpdated: 'December 2017',
         internalLink: '/projects/drawbot',
         summary: `UR5 robot arm project`,
