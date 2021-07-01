@@ -1,6 +1,6 @@
 import React from 'react'
 import { PageContainer, PageHeading } from '../../Components'
-import { ExternalLink, InternalLink, useGithubTimestamp, LogoIcon, AudioExamplePair } from '../../utilities'
+import { ExternalLink, InternalLink, LogoIcon, AudioExamplePair } from '../../utilities'
 import { List, Icon } from 'semantic-ui-react'
 import architecture from '../../images/musical_dl/architecture.png'
 import danny_boy_untuned from '../../audio/musical_dl/danny_boy_untuned.mp3'

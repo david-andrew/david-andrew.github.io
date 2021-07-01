@@ -2,7 +2,6 @@ import React from 'react'
 import { Icon } from 'semantic-ui-react'
 import { PageContainer, PageHeading } from '../../Components'
 import { ExternalLink } from '../../utilities'
-import { useGithubTimestamp } from '../../utilities'
 
 export const SkipSpoilers = (): JSX.Element => {
     return (

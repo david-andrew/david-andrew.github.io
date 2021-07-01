@@ -1,7 +1,7 @@
 import React from 'react'
 import { Icon, List } from 'semantic-ui-react'
 import { PageContainer, PageHeading, DewyLiveParser, ExampleGrammar } from '../../Components'
-import { useGithubTimestamp, Code, CodeBlock, ExternalLink } from '../../utilities'
+import { Code, CodeBlock, ExternalLink } from '../../utilities'
 
 //example grammars the user can prepopulate the demo with
 const exampleGrammars: ExampleGrammar[] = [
@@ -218,8 +218,6 @@ const ambiguousExpressionGrammar = exampleGrammars[4]
 const unambiguousExpressionGrammar = exampleGrammars[5]
 
 export const DewySpeak = (): JSX.Element => {
-    // const subtitle = useGithubTimestamp('dewy')
-
     return (
         <>
             <PageContainer>

@@ -1,6 +1,5 @@
 import React from 'react'
 import { Container } from 'semantic-ui-react'
-import { ProjectContent } from '../Pages'
 import { useGithubTimestamp, useProjectData } from '../utilities'
 import { DummyNavBar } from './Navbar'
 import { useLocation } from 'react-router-dom'

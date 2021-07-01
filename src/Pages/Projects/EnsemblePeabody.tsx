@@ -1,6 +1,6 @@
 import React from 'react'
 import { PageContainer, PageHeading } from '../../Components'
-import { ExternalLink, useGithubTimestamp, AudioExamplePair } from '../../utilities'
+import { ExternalLink, AudioExamplePair } from '../../utilities'
 import { List, Icon } from 'semantic-ui-react'
 import brother_john from '../../audio/ensemble/brother_john.mp3'
 import christmas_time from '../../audio/ensemble/christmas_time.mp3'

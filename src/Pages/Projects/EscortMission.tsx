@@ -2,7 +2,7 @@ import React from 'react'
 import YouTube from 'react-youtube'
 import { Icon, List } from 'semantic-ui-react'
 import { Collage, PageContainer, PageHeading } from '../../Components'
-import { ExternalLink, InternalLink /*useGithubTimestamp*/ } from '../../utilities'
+import { ExternalLink, InternalLink } from '../../utilities'
 
 export const EscortMission = (): JSX.Element => {
     //image objects for photo collage

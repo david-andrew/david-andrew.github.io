@@ -1,6 +1,6 @@
 import React from 'react'
 import { PageContainer, PageHeading } from '../../Components'
-import { useGithubTimestamp, InternalLink, ExternalLink } from '../../utilities'
+import { InternalLink, ExternalLink } from '../../utilities'
 import YouTube from 'react-youtube'
 import { Grid, List, Icon } from 'semantic-ui-react'
 import { Collage } from '../../Components'
