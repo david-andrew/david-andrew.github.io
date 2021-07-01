@@ -122,8 +122,9 @@ export const projects: ProjectContent[] = [
         tags: ['Raspberry Pi', 'Python', 'C++', 'Qt', 'interlock', 'fingerprint', 'biometric'],
     },
     {
-        title: 'Draw Robot',
+        title: 'UR5 Draw Robot',
         imgSrc: logo,
+        lastUpdated: 'December 2017',
         internalLink: '/projects/drawbot',
         summary: `UR5 robot arm project`,
         tags: ['Matlab', 'UR5 robot', 'ROS'],

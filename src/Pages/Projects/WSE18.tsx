@@ -117,7 +117,7 @@ export const WSE18 = (): JSX.Element => {
                     <List.Item>
                         <span>
                             <Icon name="file alternate" size="big" />
-                            <ExternalLink href="/wse18_docs/final_report.pdf" download>
+                            <ExternalLink href="/docs/wse18/final_report.pdf" download>
                                 Final Report
                             </ExternalLink>
                         </span>
@@ -125,7 +125,7 @@ export const WSE18 = (): JSX.Element => {
                     <List.Item>
                         <span>
                             <Icon name="table" size="big" />
-                            <ExternalLink href="/wse18_docs/poster.pdf" download>
+                            <ExternalLink href="/docs/wse18/poster.pdf" download>
                                 Design Day Poster
                             </ExternalLink>
                         </span>
@@ -133,7 +133,7 @@ export const WSE18 = (): JSX.Element => {
                     <List.Item>
                         <span>
                             <Icon name="object group" size="big" />
-                            <ExternalLink href="/wse18_docs/final_presentation.pdf">Design Day Presentation</ExternalLink>
+                            <ExternalLink href="/docs/wse18/final_presentation.pdf">Design Day Presentation</ExternalLink>
                         </span>
                     </List.Item>
                 </List>
