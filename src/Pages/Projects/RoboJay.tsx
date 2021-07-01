@@ -5,7 +5,7 @@ export const RoboJay = (): JSX.Element => {
     return (
         <>
             <PageContainer>
-                <PageHeading title="RoboJay" subtitle="" />
+                <PageHeading />
                 <h3>Coming Soon</h3>
             </PageContainer>
         </>

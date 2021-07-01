@@ -16,13 +16,12 @@ import demons3 from '../../audio/musical_dl/demons3.mp3'
 import JHUHubmark from '../../images/musical_dl/hubmark-full.png'
 
 export const MusicalDL = (): JSX.Element => {
-    const timestamp = useGithubTimestamp('MusicalDL')
     const JHUHubmarkIcon = (): JSX.Element => LogoIcon(JHUHubmark, '35em')
 
     return (
         <>
             <PageContainer>
-                <PageHeading title="Musical Deep Learning" subtitle={timestamp} />
+                <PageHeading />
                 <p>
                     For the capstone project of Machine Learning: Deep Learning (EN.601.682), we were tasked to form teams and apply deep learning to a topic of
                     our choosing. My team of 3 attempted to create a deep learning based choral music synthesizer. Since singing voice synthesizers were (and

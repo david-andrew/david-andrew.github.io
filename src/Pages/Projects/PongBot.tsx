@@ -5,7 +5,7 @@ export const PongBot = (): JSX.Element => {
     return (
         <>
             <PageContainer>
-                <PageHeading title="pOngBot" subtitle="" />
+                <PageHeading />
                 <h3>Coming Soon</h3>
             </PageContainer>
         </>

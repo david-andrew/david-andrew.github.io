@@ -5,7 +5,7 @@ export const Rewind = (): JSX.Element => {
     return (
         <>
             <PageContainer>
-                <PageHeading title="Rewind" subtitle="" />
+                <PageHeading />
                 <h3>Coming Soon</h3>
             </PageContainer>
         </>

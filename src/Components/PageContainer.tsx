@@ -1,6 +1,9 @@
 import React from 'react'
 import { Container } from 'semantic-ui-react'
+import { ProjectContent } from '../Pages'
+import { useGithubTimestamp, useProjectData } from '../utilities'
 import { DummyNavBar } from './Navbar'
+import { useLocation } from 'react-router-dom'
 import './PageContainer.css'
 
 interface Props {
@@ -20,11 +23,19 @@ export const PageContainer = ({ children }: Props): JSX.Element => {
     )
 }
 
-export const PageHeading = ({ title, subtitle }: { title: string; subtitle: string }): JSX.Element => {
+export const PageHeading = ({ title, subtitle }: { title?: string; subtitle?: string }): JSX.Element => {
+    //fetch project data
+    const location = useLocation()
+    const project = useProjectData(location.pathname)
+
+    //get the timestamp, either from github, or from the lastUpdated field
+    const githubTimestamp = useGithubTimestamp(project.github)
+    const timestamp = project.github !== undefined ? githubTimestamp : project.lastUpdated ?? ''
+
     return (
         <>
-            <h1 style={{ marginBottom: 0 }}>{title}</h1>
-            <p>{subtitle}</p>
+            <h1 style={{ marginBottom: 0 }}>{title ?? project.title}</h1>
+            <p>{subtitle ?? timestamp}</p>
         </>
     )
 }

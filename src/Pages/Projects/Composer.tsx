@@ -6,7 +6,7 @@ export const Composer = (): JSX.Element => {
     return (
         <>
             <PageContainer>
-                <PageHeading title="Composer" subtitle="January 2021" />
+                <PageHeading />
                 <p>
                     Composer is a web-based music entry application I am developing with my brother. Composer is still very early in the design process, but the
                     goal is to create the most seamless experience for getting music onto the page. Initially, Composer will be a front end for{' '}

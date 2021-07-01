@@ -18,7 +18,7 @@ export const WSE18 = (): JSX.Element => {
     return (
         <>
             <PageContainer>
-                <PageHeading title="WSE18: Machine Shop Biometric Interlock" subtitle="" />
+                <PageHeading />
                 <p>
                     At the end of the Mechanical Engineering program at JHU, students participate in Senior Design, a final, year-long capstone project where
                     they apply all of the tools and skills they&apos;ve learned to real world problems, sponsored by real companies. My team of three developed

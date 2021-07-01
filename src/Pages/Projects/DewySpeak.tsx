@@ -218,12 +218,12 @@ const ambiguousExpressionGrammar = exampleGrammars[4]
 const unambiguousExpressionGrammar = exampleGrammars[5]
 
 export const DewySpeak = (): JSX.Element => {
-    const subtitle = useGithubTimestamp('dewy')
+    // const subtitle = useGithubTimestamp('dewy')
 
     return (
         <>
             <PageContainer>
-                <PageHeading title="Dewy Programming Language" subtitle={subtitle} />
+                <PageHeading />
                 <DewyLiveParser exampleGrammars={exampleGrammars} initialSample={exampleGrammars[4]} />
                 <h3>About</h3>
                 <p>

@@ -12,7 +12,7 @@ export const SoVoice = (): JSX.Element => {
     return (
         <>
             <PageContainer>
-                <PageHeading title="so voice!" subtitle="January 2021" />
+                <PageHeading />
                 <p>
                     so voice! is the spiritual successor to my <InternalLink to="/projects/musical_dl">Deep Learning Capstone Project</InternalLink>. The goal
                     is to develop a choir synthesizer that leverages deep learning to produce audio indistinguishable from real recordings.

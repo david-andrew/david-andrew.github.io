@@ -183,7 +183,7 @@ export const projects: ProjectContent[] = [
         tags: ['Godot', 'GDScript', '3D game'],
     },
     {
-        title: 'Rebel Scum Rocket',
+        title: 'Rebel Scum High Power Rocket',
         imgSrc: rebel_scum,
         internalLink: '/projects/rebel_scum',
         summary: 'Level 1 & 2 High Powered Rocket built with the Johns Hopkins Rocketry Club',
@@ -219,3 +219,8 @@ export const projects: ProjectContent[] = [
     //     summary: 'Underwater Remote Operated Vehicle...',
     // },
 ]
+
+//map so that projects can be accessed via their route
+export const projectRouteMap: { [route: string]: ProjectContent } = Object.fromEntries(
+    projects.filter((p) => p.internalLink !== undefined).map((p) => [p.internalLink, p])
+)

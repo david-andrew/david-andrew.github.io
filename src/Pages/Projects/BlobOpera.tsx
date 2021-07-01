@@ -8,7 +8,7 @@ export const BlobOpera = (): JSX.Element => {
     return (
         <>
             <PageContainer>
-                <PageHeading title="Blob Opera Performance" subtitle="February 2021" />
+                <PageHeading />
                 <p>
                     While working on my <InternalLink to="/projects/so_voice">choral music synthesis engine</InternalLink>, so voice!, Google Arts &amp; Culture
                     Experiments released a fun little project called{' '}

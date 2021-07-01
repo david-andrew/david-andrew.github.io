@@ -1,8 +1,9 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { useLocation, useHistory } from 'react-router'
 import { getGithubTimestamp } from '../Components'
 import { toMonthDayYearString, toMonthYearString } from './'
 import DewyParserWrapper from '../wasm/dewy_parser_wrapper'
+import { projectRouteMap, ProjectContent } from '../Pages/Projects/ProjectSummaries'
 
 interface useQueryReturn {
     params: { [key: string]: string }
@@ -38,14 +39,18 @@ export const useQuery = (): useQueryReturn => {
 }
 
 //Hook for getting a timestamp string for a given git repo
-export const useGithubTimestamp = (repoName: string, includeDay: boolean = false): string => {
+export const useGithubTimestamp = (repoName: string | undefined, includeDay: boolean = false): string => {
     //fetch the timestamp and store into the timestamp state
     //undefined indicates not yet returned, null indicates failed to fetch
     const [timestamp, setTimestamp] = useState<Date | undefined | null>()
     useEffect(() => {
-        getGithubTimestamp(repoName, (repoTimestamp?: Date) => {
-            setTimestamp(repoTimestamp ?? null)
-        })
+        if (repoName !== undefined) {
+            getGithubTimestamp(repoName, (repoTimestamp?: Date) => {
+                setTimestamp(repoTimestamp ?? null)
+            })
+        } else {
+            setTimestamp(null)
+        }
         return (): void => setTimestamp(undefined)
     }, [repoName])
 
@@ -228,4 +233,10 @@ export const useLoadClovers = (): void => {
             }
         })()
     }, [])
+}
+
+//return a project item for a given route
+export const useProjectData = (url: string): ProjectContent => {
+    const project = useMemo(() => projectRouteMap[url], [url])
+    return project
 }

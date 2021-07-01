@@ -12,11 +12,10 @@ export const PRS19 = (): JSX.Element => {
     const r = require.context('../../images/prs19/album')
     const imageSrcs = r.keys().map((path: string) => r(path).default) as string[]
 
-    const timestamp = useGithubTimestamp('PRS_robot')
     return (
         <>
             <PageContainer>
-                <PageHeading title="PRS19: Fret Press Robot" subtitle={timestamp} />
+                <PageHeading />
                 <p>
                     In the last semester of my Master&apos;s degree, I took part in the Mechanical Engineering Master&apos;s Design Project (EN.530.614).
                     Essentially <InternalLink to="/projects/wse18">Mechanical Engineering Senior Design</InternalLink> with expanded scope and difficulty, the

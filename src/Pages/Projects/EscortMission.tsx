@@ -5,9 +5,6 @@ import { Collage, PageContainer, PageHeading } from '../../Components'
 import { ExternalLink, InternalLink /*useGithubTimestamp*/ } from '../../utilities'
 
 export const EscortMission = (): JSX.Element => {
-    //want to refer to the date of the hackathon instead of when I pushed old changes I found
-    // const subtitle = useGithubTimestamp('escort_mission_2020')
-
     //image objects for photo collage
     const r = require.context('../../images/escort_mission')
     const imageSrcs = r.keys().map((path: string) => r(path).default) as string[]
@@ -15,7 +12,7 @@ export const EscortMission = (): JSX.Element => {
     return (
         <>
             <PageContainer>
-                <PageHeading title="Escort Mission 2020" subtitle="July 2020" />
+                <PageHeading />
                 <p>
                     Escort Mission was my and my brother&apos;s submission for the{' '}
                     <ExternalLink href="https://itch.io/jam/gmtk-2020">GMTK Game Jam 2020</ExternalLink>. The theme of the jam was &quot;Out of Control&quot;,

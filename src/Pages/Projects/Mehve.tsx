@@ -5,7 +5,7 @@ export const Mehve = (): JSX.Element => {
     return (
         <>
             <PageContainer>
-                <PageHeading title="Mehve" subtitle="" />
+                <PageHeading />
                 <h3>Coming Soon</h3>
             </PageContainer>
         </>

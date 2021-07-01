@@ -12,7 +12,7 @@ export const DrawRobot = (): JSX.Element => {
     return (
         <>
             <PageContainer>
-                <PageHeading title="UR5 Draw Robot" subtitle="December 2017" />
+                <PageHeading />
                 <p>
                     As a part of the Robotics Master&apos;s degree, students are required to take Robot Kinematics, Dynamics, and Control (EN.530.646), a
                     rigorous overview of the math used in robotics. Honestly, I would describe it as the hardest math course I ever took, but by the end, we had

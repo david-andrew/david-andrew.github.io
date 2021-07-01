@@ -5,7 +5,7 @@ export const SpaceportAmericaCup = (): JSX.Element => {
     return (
         <>
             <PageContainer>
-                <PageHeading title="Spaceport America Cup 2018" subtitle="" />
+                <PageHeading />
                 <h3>Coming Soon</h3>
             </PageContainer>
         </>

@@ -5,18 +5,15 @@ import { ExternalLink } from '../../utilities'
 import { useGithubTimestamp } from '../../utilities'
 
 export const SkipSpoilers = (): JSX.Element => {
-    //get the timestamp subtitle
-    const subtitle = useGithubTimestamp('uSkipSpoilers')
-
     return (
         <>
             <PageContainer>
-                <PageHeading title="uSkipSpoilers" subtitle={subtitle} />
+                <PageHeading />
                 <p>
                     uSkipSpoilers is a small chrome extension I made mostly as a joke for my brother who is extremely spoiler averse. Beyond that, my goal was
                     to gain experience developing browser extensions which would help me to build more in the future.
-                    <br />
-                    <br />
+                </p>
+                <p>
                     uSkipSpoilers allows you to tag sections of a YouTube video as &quot;Spoilers&quot; and then during video playback, it will hide those
                     portions of the video. Spoiler boundaries are saved to the video URL which can then be easily shared with someone else who has the
                     extension. So for example, say I want to send a youtube video to my brother about a something, but I notice it contains spoilers for a movie

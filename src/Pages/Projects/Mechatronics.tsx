@@ -21,7 +21,7 @@ export const Mechatronics = (): JSX.Element => {
     return (
         <>
             <PageContainer>
-                <PageHeading title="Mechatronics" subtitle="May 2019" />
+                <PageHeading />
                 <p>
                     During my final graduate semester at JHU, I participated in Mechatronics (EN.530.421) where I built several small scale robots from scratch.
                 </p>
