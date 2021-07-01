@@ -135,7 +135,7 @@ export const projects: ProjectContent[] = [
         imgSrc: logo,
         lastUpdated: 'June 2020',
         internalLink: '/projects/pongbot',
-        summary: 'Autonomous robot for shooting ping pong balls into cups',
+        summary: 'Autonomous beer pong playing robot',
         tags: ['Arduino', 'C++', 'computer vision', 'Viola-Jones', 'mechanical design'],
     },
     {
