@@ -66,6 +66,7 @@ export const ProjectItem = ({ title, github, lastUpdated, imgSrc, internalLink, 
     const onClick = (): void => {
         if (internalLink !== undefined) {
             history.push(internalLink)
+            window.scrollTo(0, 0)
         } else if (externalLink === undefined) {
             history.push('/wip')
         }
