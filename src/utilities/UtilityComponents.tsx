@@ -22,7 +22,7 @@ export const ExternalLink = ({
     download?: boolean
 }): JSX.Element => {
     return (
-        <a href={href} target="_blank" rel="noreferrer noopener" style={style} download>
+        <a href={href} target="_blank" rel="noreferrer noopener" style={style} download={download}>
             {children}
         </a>
     )
