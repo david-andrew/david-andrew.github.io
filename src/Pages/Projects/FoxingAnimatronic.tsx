@@ -1,6 +1,6 @@
 import React from 'react'
 import { Collage, PageContainer, PageHeading } from '../../Components'
-import { ClearFixAfter, ExternalLink } from '../../utilities'
+import { ExternalLink } from '../../utilities'
 import YouTube from 'react-youtube'
 import cad_design from '../../images/foxing_animatronic/cad_design.png'
 import joystick_demo from '../../images/foxing_animatronic/joystick_demo.gif'
@@ -24,9 +24,10 @@ export const FoxingAnimatronic = (): JSX.Element => {
                     They wanted the same style of mechanism, but wanted it to be more slender, reminiscent of a plant or flower. The band had also hired
                     sculpter <ExternalLink href="https://www.instagram.com/jakecorricksculpture">Jake Corrick</ExternalLink> to model the exterior of the prop,
                     so my task was mainly to develop the internal structure and control mechanisms, and ensure that it matched the vision Foxing was going for.
-                    <br />
-                    <br />I opted for laser cut acrylic with a stiff plastic spine and thin steel cables to control the mechanism. The final design for the body
-                    is shown below.
+                </p>
+                <p>
+                    I opted for laser cut acrylic with a stiff plastic spine and thin steel cables to control the mechanism. The final design for the body is
+                    shown below.
                 </p>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <img src={cad_design} style={{ width: '100%' }} />

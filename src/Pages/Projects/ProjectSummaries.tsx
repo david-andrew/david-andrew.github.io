@@ -141,6 +141,7 @@ export const projects: ProjectContent[] = [
     {
         title: 'RoboJay',
         imgSrc: logo,
+        lastUpdated: 'May 2018',
         summary: 'A balancing robot designed to give campus tours to incoming JHU freshmen',
         internalLink: '/projects/robojay',
     },
