@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { CodeBlock as AtlasCodeBlock, Code as AtlasCode, SupportedLanguages } from '@atlaskit/code'
 import { AtlaskitThemeProvider } from '@atlaskit/theme/components'
-import { Table } from 'semantic-ui-react'
+import { Table, Grid } from 'semantic-ui-react'
 import ReactAudioPlayer from 'react-audio-player'
 
 //place this after any element that needs to be clearfixed
@@ -89,7 +89,7 @@ interface AudioPair {
 }
 export const AudioExamplePair = ({ title, pairs }: { title: string; pairs: AudioPair[] }): JSX.Element => {
     return (
-        <Table inverted>
+        <Table inverted columns={1} compact>
             <Table.Header>
                 <Table.Row>
                     <Table.HeaderCell>
@@ -100,14 +100,26 @@ export const AudioExamplePair = ({ title, pairs }: { title: string; pairs: Audio
             </Table.Header>
             <Table.Body>
                 {pairs.map(({ audio1, audio2 }: AudioPair) => (
-                    <Table.Row key={`${audio1.label}${audio1.src}${audio2.label}${audio2.src}`}>
-                        <Table.Cell>
-                            <h4>{audio1.label}</h4>
-                            <ReactAudioPlayer src={audio1.src} style={{ width: '100%' }} controls />
-                        </Table.Cell>
-                        <Table.Cell>
-                            <h4>{audio2.label}</h4>
-                            <ReactAudioPlayer src={audio2.src} style={{ width: '100%' }} controls />
+                    <Table.Row key={`${audio1.label}${audio1.src}${audio2.label}${audio2.src}`} style={{ width: '100%' }}>
+                        <Table.Cell colspan="100%">
+                            <Grid columns={2}>
+                                <Grid.Row style={{ paddingBottom: '0.25em' }}>
+                                    <Grid.Column>
+                                        <h4>{audio1.label}</h4>
+                                    </Grid.Column>
+                                    <Grid.Column>
+                                        <h4>{audio2.label}</h4>
+                                    </Grid.Column>
+                                </Grid.Row>
+                                <Grid.Row style={{ paddingTop: '0.25em' }}>
+                                    <Grid.Column>
+                                        <ReactAudioPlayer src={audio1.src} style={{ width: '100%' }} controls />
+                                    </Grid.Column>
+                                    <Grid.Column>
+                                        <ReactAudioPlayer src={audio2.src} style={{ width: '100%' }} controls />
+                                    </Grid.Column>
+                                </Grid.Row>
+                            </Grid>
                         </Table.Cell>
                     </Table.Row>
                 ))}
