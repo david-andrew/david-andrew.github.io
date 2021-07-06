@@ -59,7 +59,7 @@ export const projects: ProjectContent[] = [
         tags: ['Python', 'PyTorch', 'AI/ML', 'choral', 'music', 'synthesis'],
     },
     {
-        title: 'Hacking Harmony: The Demon Chipmunk Choir',
+        title: 'Hacking Harmony or The Demon Chipmunk Choir',
         imgSrc: logo,
         github: 'Ensemble',
         internalLink: '/projects/ensemble_peabody',
@@ -169,7 +169,7 @@ export const projects: ProjectContent[] = [
         tags: ['Unity', 'C#', '3D game'],
     },
     {
-        title: 'Lords of Sola',
+        title: 'Lords of Sola (Working Title)',
         imgSrc: logo,
         internalLink: '/projects/lords_of_sola',
         summary: 'Concept for a Real-Time-Strategy crossed with First-Person-Shooter',
@@ -177,7 +177,7 @@ export const projects: ProjectContent[] = [
         tags: ['Godot', 'GDScript', 'FPS x RTS', '3D game'],
     },
     {
-        title: 'Mehve',
+        title: 'Mehve (Working Title)',
         imgSrc: logo,
         internalLink: '/projects/mehve',
         summary: '3D adventure game inspire by "Nausicaa of the Valley of the Wind"',
