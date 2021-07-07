@@ -1,9 +1,13 @@
 import React from 'react'
-import { PageContainer, PageHeading } from '../../Components'
+import { PageContainer, PageHeading, Collage } from '../../Components'
 import { ExternalLink } from '../../utilities'
 import YouTube from 'react-youtube'
+import { List, Icon } from 'semantic-ui-react'
 
 export const Mehve = (): JSX.Element => {
+    const r = require.context('../../images/mehve')
+    const imageSrcs = r.keys().map((path: string) => r(path).default) as string[]
+
     return (
         <>
             <PageContainer>
@@ -17,7 +21,7 @@ export const Mehve = (): JSX.Element => {
                 <br />
                 <p>
                     A lot of the ideas discussed in the video are pretty close to what I imagine my game might have, but there are definitely some concepts I
-                    want to explore that he doesn&apos;t touch on. Also, probably almost certainly, my game is planned to take place in a wholly distinct
+                    want to explore that he doesn&apos;t focus on. Also, probably almost certainly, my game is planned to take place in a wholly distinct
                     universe, mainly to avoid any sort of IP infringement.
                 </p>
                 {/* <h3>Pitch</h3> */}
@@ -30,33 +34,72 @@ export const Mehve = (): JSX.Element => {
                     supporting a specific side, or you could ignore the conflict entirely and adventure off into other parts of the world. There will often be
                     many conflicting interests and perspectives, with no single correct solution.
                 </p>
-                <h3>Mechanics</h3>
-                <p>Initially, the main aspects I am focusing on are third-person mode, flying, and country simulation.</p>
-                <h3>Flying</h3>
-                <p></p>
-                <h3>Country Simulation</h3>
-                <p>the bulk of the content filling the world will derive from this</p>
-                <h3>Third Person</h3>
-                <p>think botw</p>
-                <h3>Misc. Mechanics</h3>
-                <p>Gardening</p>
+                <h3>Systems/Mechanics</h3>
+                <h4>Third-person</h4>
                 <p>
-                    <ul>
-                        <li>Flying</li>
-                        <li>third-person</li>
-                        <li>Simulated country interaction + conflict</li>
-                        <li>Personal garden (less for crafting, and more just for enjoyment. think fishing minigames in zelda)</li>
-                    </ul>
+                    Much of the player&apos;s interaction with the game will be through a third-person character. I imagine this to be reminiscent of the open
+                    world from Zelda: Breath of the Wild, where there are many interesting locations to explore around the map, and the player is free to
+                    traverse and climb any part of it. Additionally, the player will be able to interact with NPCs which will draw from, and feed back into the
+                    country simulation mechanics, allowing your actions towards other characters in the game to affect the progression of local and world
+                    events.
                 </p>
-                <h3>Gliding Demo</h3>
                 <p>
-                    Since flying will be an integral part of the game, the first thing I set out to build was a flight simulator for any of the in game
-                    aircraft. I wanted flying in the game to feel both enjoyable, but also grounded in reality, so I opted for a realistic flight model over a
-                    more arcade approach. Craft are subjected to a slightly idealized version of the fluids equations governing flight, and then a simple flight
-                    controller algorithm helps with stabilization. I&apos;m super happy with how it turned out so far, and have definitely spent longer than
-                    I&apos;d like to admit just soaring around the simple test level I built&mdash;definitely a good sign for one of the core game mechanics.
+                    Another interesting piece for the third-person character is that I&apos;m planning to set up an AI based physical character controller. This
+                    means, instead of having a set of pre-canned animations that the character uses, the character&apos;s joints will be affect by physics, and
+                    the AI will command specific muscles to move such that the character does the desired action. A good example of this approach is explained
+                    in this <ExternalLink href="https://www.youtube.com/c/K%C3%A1rolyZsolnai">Two Minute Papers</ExternalLink> video:
                 </p>
-                <p>Todo: insert video/demo</p>
+                <YouTube videoId="o_DhNqHazKY" opts={{ width: '100%' }} />
+                <h4>Flying</h4>
+                <p>
+                    To travel quickly across large sections of the map, the player will have access to a variety of flying vehicles, starting with a glider
+                    similar to Nausicaa. Since flying will be an integral part of the game, it&apos;s the first component I set out to build. I wanted flying in
+                    the game to feel both enjoyable, but also grounded in reality, so I opted for a realistic flight model over a more arcade approach. Craft
+                    are subjected to a slightly idealized version of the real fluids equations governing flight, and then a simple flight controller algorithm
+                    assists with stabilization.
+                </p>
+                <Collage imageSrcs={imageSrcs} />
+                <p>
+                    I&apos;m super happy with how it turned out so far, and have definitely spent longer than I&apos;d like to admit just soaring around the
+                    simple test level I built&mdash;definitely a good sign for one of the core game mechanics.
+                </p>
+                <h4>Country/World Simulation</h4>
+                <p>
+                    To make the world feel more alive, and the player&apos;s actions more meaningful, I&apos;m planning to develop a world/country simulator for
+                    managing NPCs in the game. The idea is that there will be many countries and communities of people spread out around the world, and they
+                    will all have various needs and desires that they are trying to meet, including securing food and shelter, colonialism and political
+                    exploits, etc. In trying to accomplish their goals, countries can cooperate, or they may also come into conflict with each other. The player
+                    is then able to interact with characters under this system, and the results of the interaction then feed back into the simulation to produce
+                    some outcome.
+                </p>
+                <h4>Gardening</h4>
+                <p>
+                    The last mechanic I&apos;m envisioning is a sandbox garden that the player can tend to. I love the concept of a player adventuring out into
+                    the world, and bringing back different species of plants and flowers, which they then have the option to develop in their own garden, much
+                    like Nausicaa. From a mechanical point of view, I imagine this might be something simple like{' '}
+                    <ExternalLink href="https://en.wikipedia.org/wiki/L-system">L-systems</ExternalLink> where different varieties of plants are procedurally
+                    generated, and seeded throughout the world for the player to find and collect.
+                </p>
+                <h3>Future Work</h3>
+                <p>
+                    For now, work on Mehve is on permanent hold due to lack of time. When I have more bandwidth for working on it, I&apos;ll start building out
+                    more of the systems described above.
+                </p>
+                <h3>Try It</h3>
+                <List>
+                    <List.Item>
+                        <span>
+                            <Icon name="linux" size="big" />
+                            <ExternalLink href="/docs/mehve/MehveGliderDemoLinux.zip">Glider Demo (Linux)</ExternalLink>
+                        </span>
+                    </List.Item>
+                    <List.Item>
+                        <span>
+                            <Icon name="windows" size="big" />
+                            <ExternalLink href="/docs/mehve/MehveGliderDemoWindows.zip">Glider Demo (Windows)</ExternalLink>
+                        </span>
+                    </List.Item>
+                </List>
             </PageContainer>
         </>
     )
