@@ -86,6 +86,7 @@ export const Mehve = (): JSX.Element => {
                     more of the systems described above.
                 </p>
                 <h3>Try It</h3>
+                <p>Controls: WASD to steer, arrows keys to move the camera.</p>
                 <List>
                     <List.Item>
                         <span>
