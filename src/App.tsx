@@ -14,7 +14,7 @@ import {
     EnsemblePeabody,
     EscortMission,
     FoxingAnimatronic,
-    LordsOfSola,
+    ZiggyV,
     Mechatronics,
     Mehve,
     MusicalDL,
@@ -81,7 +81,7 @@ const App = (): JSX.Element => {
                         {ProjectPage(EnsemblePeabody, 'ensemble_peabody')}
                         {ProjectPage(EscortMission, 'escort_mission')}
                         {ProjectPage(FoxingAnimatronic, 'foxing_animatronic')}
-                        {ProjectPage(LordsOfSola, 'lords_of_sola')}
+                        {ProjectPage(ZiggyV, 'ziggy_v')}
                         {ProjectPage(Mechatronics, 'mechatronics')}
                         {ProjectPage(Mehve, 'mehve')}
                         {ProjectPage(MusicalDL, 'musical_dl')}

@@ -169,9 +169,9 @@ export const projects: ProjectContent[] = [
         tags: ['Unity', 'C#', '3D game'],
     },
     {
-        title: 'Lords of Sola (Working Title)',
+        title: 'Ziggy V (Working Title)',
         imgSrc: logo,
-        internalLink: '/projects/lords_of_sola',
+        internalLink: '/projects/ziggy_v',
         summary: 'Concept for a Real-Time-Strategy crossed with First-Person-Shooter',
         lastUpdated: 'January 2021', //TODO->repo is private
         tags: ['Godot', 'GDScript', 'FPS x RTS', '3D game'],

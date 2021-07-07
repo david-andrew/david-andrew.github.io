@@ -24,7 +24,6 @@ export const Mehve = (): JSX.Element => {
                     want to explore that he doesn&apos;t focus on. Also, probably almost certainly, my game is planned to take place in a wholly distinct
                     universe, mainly to avoid any sort of IP infringement.
                 </p>
-                {/* <h3>Pitch</h3> */}
                 <p>
                     At a high level, my game will be an open world third-person exploration sandbox. I&apos;m especially interested in making the world dynamic
                     and giving the player agency to effect changes in the world. For instance countries around the map will all have simulated interactions both
