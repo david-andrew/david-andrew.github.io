@@ -1,7 +1,12 @@
 import React from 'react'
-import { PageContainer, PageHeading } from '../../Components'
+import { PageContainer, PageHeading, Collage } from '../../Components'
+import { ExternalLink } from '../../utilities'
+import { List, Icon } from 'semantic-ui-react'
 
 export const ZiggyV = (): JSX.Element => {
+    const r = require.context('../../images/rewind')
+    const imageSrcs = r.keys().map((path: string) => r(path).default) as string[]
+
     return (
         <>
             <PageContainer>
@@ -26,10 +31,32 @@ export const ZiggyV = (): JSX.Element => {
                     gives a really interesting style to them, and makes them almost feel like tracer rounds as they fly across the map. While implementing the
                     bullet physics, I happened to set them to bounce off of surfaces, which introduced the very fun concept of bouncing bullets.
                 </p>
+                <Collage imageSrcs={imageSrcs} />
                 <p>
                     With just these few mechanics on a test level, the demo is still quite fun to mess around with (especially bouncing bullets off of various
                     surfaces). But for now the project is on hold until we both have more time to devote to it.
                 </p>
+                <h3>Try It</h3>
+                <List>
+                    <List.Item>
+                        <span>
+                            <Icon name="linux" size="big" />
+                            <ExternalLink href="/docs/ziggy_v/ziggy_v_linux.zip">Ziggy V (Linux)</ExternalLink>
+                        </span>
+                    </List.Item>
+                    <List.Item>
+                        <span>
+                            <Icon name="windows" size="big" />
+                            <ExternalLink href="/docs/ziggy_v/ziggy_v_windows.zip">Ziggy V (Windows)</ExternalLink>
+                        </span>
+                    </List.Item>
+                    <List.Item>
+                        <span>
+                            <Icon name="apple" size="big" />
+                            <ExternalLink href="/docs/ziggy_v/ziggy_v_mac.zip">Ziggy V (Mac)</ExternalLink>
+                        </span>
+                    </List.Item>
+                </List>
             </PageContainer>
         </>
     )
