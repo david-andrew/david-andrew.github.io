@@ -2,12 +2,11 @@ import React from 'react'
 import YouTube from 'react-youtube'
 import { Icon, List } from 'semantic-ui-react'
 import { Collage, PageContainer, PageHeading } from '../../Components'
-import { ExternalLink, InternalLink } from '../../utilities'
+import { ExternalLink, getImageSources, InternalLink } from '../../utilities'
 
 export const EscortMission = (): JSX.Element => {
     //image objects for photo collage
-    const r = require.context('../../images/escort_mission')
-    const imageSrcs = r.keys().map((path: string) => r(path).default) as string[]
+    const imageSrcs = getImageSources(require.context('../../images/escort_mission'))
 
     return (
         <>
@@ -18,14 +17,14 @@ export const EscortMission = (): JSX.Element => {
                     <ExternalLink href="https://itch.io/jam/gmtk-2020">GMTK Game Jam 2020</ExternalLink>. The theme of the jam was &quot;Out of Control&quot;,
                     as fun play on the out of control feeling present in the thick of the worldwide pandemic. The entire game was created from scratch during
                     the 48 hour-long game jam.
-                    <br />
-                    <br />
+                </p>
+                <p>
                     For our game, we wanted it to feel like the player was managing too many things leading to that feeling of out of control. After much
                     brainstorming, we landed on the concept of sheep herding, where you control sheep dogs, and have to guide non-cooperative sheep away from
                     danger, and towards the goal. And to make it feel extra <em>out of control</em>, we gave the player simultaneous control of 4 dogs. As the
                     player progresses, obstacles become more difficult to manuever around, and adversarial wolves show up and attempt to eat the sheep.
-                    <br />
-                    <br />
+                </p>
+                <p>
                     Early on, I decided that we would make the game in the Godot game engine&mdash;I was turned off of Unity3D from{' '}
                     <InternalLink to="/projects/boat_simulator">past</InternalLink> <InternalLink to="/projects/rewind">experiences</InternalLink> with it, and
                     had been hearing only good things about the new Godot engine. For the game jam, my brother handled all art related aspects (sprites,

@@ -1,6 +1,6 @@
 import React from 'react'
 import { PageContainer, PageHeading } from '../../Components'
-import { InternalLink, ExternalLink } from '../../utilities'
+import { InternalLink, ExternalLink, getImageSources } from '../../utilities'
 import YouTube from 'react-youtube'
 import { Grid, List, Icon } from 'semantic-ui-react'
 import { Collage } from '../../Components'
@@ -9,8 +9,7 @@ import laser from '../../images/prs19/laser.gif'
 import press from '../../images/prs19/press.gif'
 
 export const PRS19 = (): JSX.Element => {
-    const r = require.context('../../images/prs19/album')
-    const imageSrcs = r.keys().map((path: string) => r(path).default) as string[]
+    const imageSrcs = getImageSources(require.context('../../images/prs19/album'))
 
     return (
         <>

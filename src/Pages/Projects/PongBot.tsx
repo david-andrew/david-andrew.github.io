@@ -2,13 +2,11 @@ import React from 'react'
 import { PageContainer, PageHeading, Collage } from '../../Components'
 import { Grid } from 'semantic-ui-react'
 import YouTube from 'react-youtube'
+import { getImageSources } from '../../utilities'
 
 export const PongBot = (): JSX.Element => {
-    const gimbal_r = require.context('../../images/pongbot/gimbal')
-    const gimbal_imageSrcs = gimbal_r.keys().map((path: string) => gimbal_r(path).default) as string[]
-
-    const cv_r = require.context('../../images/pongbot/cv_data')
-    const cv_imageSrcs = cv_r.keys().map((path: string) => cv_r(path).default) as string[]
+    const gimbal_imageSrcs = getImageSources(require.context('../../images/pongbot/gimbal'))
+    const cv_imageSrcs = getImageSources(require.context('../../images/pongbot/cv_data'))
 
     return (
         <>

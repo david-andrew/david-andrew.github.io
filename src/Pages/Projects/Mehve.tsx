@@ -1,12 +1,11 @@
 import React from 'react'
 import { PageContainer, PageHeading, Collage } from '../../Components'
-import { ExternalLink } from '../../utilities'
+import { ExternalLink, getImageSources } from '../../utilities'
 import YouTube from 'react-youtube'
 import { List, Icon } from 'semantic-ui-react'
 
 export const Mehve = (): JSX.Element => {
-    const r = require.context('../../images/mehve')
-    const imageSrcs = r.keys().map((path: string) => r(path).default) as string[]
+    const imageSrcs = getImageSources(require.context('../../images/mehve'))
 
     return (
         <>

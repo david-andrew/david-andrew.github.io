@@ -23,3 +23,8 @@ export const getScrollbarWidth = (): number => {
 
     return scrollbarWidth
 }
+
+//used for importing image sources from a directory
+export const getImageSources = (r: __WebpackModuleApi.RequireContext): string[] => {
+    return r.keys().map((path: string) => r(path).default) as string[]
+}

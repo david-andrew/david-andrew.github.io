@@ -2,4 +2,4 @@ export { ClearFixAfter, ExternalLink, InternalLink, Code, CodeBlock, LogoIcon, A
 export { useQuery, useGithubTimestamp, useStringBuffer, useDewyWasm, useDelayed, useLoadClovers, useProjectData } from './hooks'
 export type { ParserOutput } from './hooks'
 export { toMonthYearString, toMonthDayYearString } from './dates'
-export { sleep, getScrollbarWidth } from './utilities'
+export { sleep, getScrollbarWidth, getImageSources } from './utilities'

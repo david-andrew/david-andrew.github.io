@@ -1,12 +1,11 @@
 import React from 'react'
 import { PageContainer, PageHeading, Collage } from '../../Components'
-import { ExternalLink } from '../../utilities'
+import { ExternalLink, getImageSources } from '../../utilities'
 import YouTube from 'react-youtube'
 import block_diagram_inverted from '../../images/robojay/block_diagram_inverted.png'
 
 export const RoboJay = (): JSX.Element => {
-    const r = require.context('../../images/robojay/prior_work')
-    const imageSrcs = r.keys().map((path: string) => r(path).default) as string[]
+    const imageSrcs = getImageSources(require.context('../../images/robojay/prior_work'))
 
     return (
         <>

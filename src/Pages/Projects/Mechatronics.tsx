@@ -1,22 +1,16 @@
 import React from 'react'
 import { PageContainer, PageHeading, Collage } from '../../Components'
-import { ExternalLink } from '../../utilities'
+import { ExternalLink, getImageSources } from '../../utilities'
 import YouTube from 'react-youtube'
 import { Grid } from 'semantic-ui-react'
 import striker_shooting from '../../images/mechatronics/jhockey/striker_shooting.gif'
 import goalie_moving from '../../images/mechatronics/jhockey/goalie_moving.gif'
 
 export const Mechatronics = (): JSX.Element => {
-    const mazeSolver_r = require.context('../../images/mechatronics/maze_solver')
-    const mazeSolver_imageSrcs = mazeSolver_r.keys().map((path: string) => mazeSolver_r(path).default) as string[]
-
-    const balancer_r = require.context('../../images/mechatronics/balancer')
-    const balancer_imageSrcs = balancer_r.keys().map((path: string) => balancer_r(path).default) as string[]
-
-    const jhockey_goalie_r = require.context('../../images/mechatronics/jhockey/goalie')
-    const jhockey_goalie_imageSrcs = jhockey_goalie_r.keys().map((path: string) => jhockey_goalie_r(path).default) as string[]
-    const jhockey_striker_r = require.context('../../images/mechatronics/jhockey/striker')
-    const jhockey_striker_imageSrcs = jhockey_striker_r.keys().map((path: string) => jhockey_striker_r(path).default) as string[]
+    const mazeSolver_imageSrcs = getImageSources(require.context('../../images/mechatronics/maze_solver'))
+    const balancer_imageSrcs = getImageSources(require.context('../../images/mechatronics/balancer'))
+    const jhockey_goalie_imageSrcs = getImageSources(require.context('../../images/mechatronics/jhockey/goalie'))
+    const jhockey_striker_imageSrcs = getImageSources(require.context('../../images/mechatronics/jhockey/striker'))
 
     return (
         <>

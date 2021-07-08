@@ -1,13 +1,12 @@
 import React from 'react'
 import { PageContainer, PageHeading, Collage } from '../../Components'
-import { ExternalLink } from '../../utilities'
+import { ExternalLink, getImageSources } from '../../utilities'
 import YouTube from 'react-youtube'
 import { Icon, List } from 'semantic-ui-react'
 import mona_lisa_contour from '../../images/drawbot/mona_lisa_contour.jpg'
 
 export const DrawRobot = (): JSX.Element => {
-    const r = require.context('../../images/drawbot/end_effector')
-    const imageSrcs = r.keys().map((path: string) => r(path).default) as string[]
+    const imageSrcs = getImageSources(require.context('../../images/drawbot/end_effector'))
 
     return (
         <>

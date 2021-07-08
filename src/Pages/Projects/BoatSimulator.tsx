@@ -1,12 +1,11 @@
 import React from 'react'
 import { Icon, List } from 'semantic-ui-react'
 import { Collage, PageContainer, PageHeading } from '../../Components'
-import { ExternalLink } from '../../utilities'
+import { ExternalLink, getImageSources } from '../../utilities'
 
 export const BoatSimulator = (): JSX.Element => {
     //image objects for photo collage
-    const r = require.context('../../images/boat_simulator')
-    const imageSrcs = r.keys().map((path: string) => r(path).default) as string[]
+    const imageSrcs = getImageSources(require.context('../../images/boat_simulator'))
 
     return (
         <>

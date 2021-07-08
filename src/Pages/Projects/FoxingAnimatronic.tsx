@@ -1,14 +1,13 @@
 import React from 'react'
 import { Collage, PageContainer, PageHeading } from '../../Components'
-import { ExternalLink } from '../../utilities'
+import { ExternalLink, getImageSources } from '../../utilities'
 import YouTube from 'react-youtube'
 import cad_design from '../../images/foxing_animatronic/cad_design.png'
 import joystick_demo from '../../images/foxing_animatronic/joystick_demo.gif'
 
 export const FoxingAnimatronic = (): JSX.Element => {
     //image objects for photo collage
-    const r = require.context('../../images/foxing_animatronic/album')
-    const imageSrcs = r.keys().map((path: string) => r(path).default) as string[]
+    const imageSrcs = getImageSources(require.context('../../images/foxing_animatronic/album'))
 
     return (
         <>
