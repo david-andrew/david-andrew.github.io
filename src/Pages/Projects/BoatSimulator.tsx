@@ -17,8 +17,8 @@ export const BoatSimulator = (): JSX.Element => {
                     physics of sailing, especially the fact that sailing with the wind is one of the slower directions you can sail. Ultimately, building a
                     completely accurate simulation was a bit beyond my Unity skills, but, with some suggestions from family, I did end up with a fun little
                     meditative experience.
-                    <br />
-                    <br />
+                </p>
+                <p>
                     The player controls a small boat sailing along an endless ocean under a starry sky. John Tavener&apos;s Song for Athene provides an ethereal
                     soundscape for the dreamlike scene. The entire game lasts for about 7 minutes, with the boat picking up speed towards the climax of the
                     song, and ultimately taking off for the great beyond.

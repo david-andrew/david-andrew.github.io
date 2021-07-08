@@ -28,11 +28,45 @@ export const Rewind = (): JSX.Element => {
                     since.
                 </p>
                 <h3>Video</h3>
-                <p>live stream</p>
-
+                <p>
+                    This is a live stream playthrough my brother put together for the game. Some parts of the stream are a bit choppy, but overall, it&apos;s a
+                    good demo for the game.
+                </p>
+                <YouTube videoId="KlFp6GHRjoU" opts={{ width: '100%' }} />
                 <h3>Try It</h3>
-                <p>Controls: </p>
-                <List></List>
+                <p>
+                    Controls: WASD to move, arrow keys to shoot. The Windows version historically has been the most stable, and works great with{' '}
+                    <ExternalLink href="https://www.winehq.org/">Wine</ExternalLink>
+                </p>
+                <List>
+                    <List.Item>
+                        <span>
+                            <Icon name="linux" size="big" />
+                            <ExternalLink href="/docs/rewind/Rewind_Linux.zip">Rewind (Linux)</ExternalLink>
+                        </span>
+                    </List.Item>
+                    <List.Item>
+                        <span>
+                            <Icon name="windows" size="big" />
+                            <ExternalLink href="/docs/rewind/Rewind_Windows.zip">Rewind (Windows)</ExternalLink>
+                        </span>
+                    </List.Item>
+                    <List.Item>
+                        <span>
+                            <Icon name="apple" size="big" />
+                            <ExternalLink href="/docs/rewind/Rewind_Mac.zip">Rewind (Mac)</ExternalLink>
+                        </span>
+                    </List.Item>
+                </List>
+                <h3>Links</h3>
+                <List>
+                    <List.Item>
+                        <span>
+                            <Icon name="object group" size="big" />
+                            <ExternalLink href="/docs/rewind/gooberz-gold.pdf">Final Presentation</ExternalLink>
+                        </span>
+                    </List.Item>
+                </List>
             </PageContainer>
         </>
     )
