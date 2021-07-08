@@ -117,6 +117,7 @@ export const Mechatronics = (): JSX.Element => {
                 </Grid>
                 <br />
                 <YouTube videoId="rFFHyE5L5rE" opts={{ width: '100%' }} />
+                <br />
                 <p>Demonstration of the striker robot driving (via remote control) while powered by a bench power supply</p>
             </PageContainer>
         </>
