@@ -69,7 +69,7 @@ export const AstroJays = (): JSX.Element => {
                 </div>
                 <br />
                 <p>
-                    Upon inspecting the wreckage, I did not that the parachute mechanism had activated, so it likely would have been a successful flight had
+                    Upon inspecting the wreckage, I did note that the parachute mechanism had activated, so it likely would have been a successful flight had
                     separation occurred. I suspect the lack of separation was due to the increased mass of the new components, which provided too much inertial
                     resistance for the separation charge to overcome.
                 </p>
