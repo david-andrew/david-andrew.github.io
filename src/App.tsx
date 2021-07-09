@@ -20,7 +20,7 @@ import {
     MusicalDL,
     PongBot,
     PRS19,
-    RebelScum,
+    AstroJays,
     Rewind,
     RoboJay,
     SpaceportAmericaCup,
@@ -87,7 +87,7 @@ const App = (): JSX.Element => {
                         {ProjectPage(MusicalDL, 'musical_dl')}
                         {ProjectPage(PongBot, 'pongbot')}
                         {ProjectPage(PRS19, 'prs19')}
-                        {ProjectPage(RebelScum, 'rebel_scum')}
+                        {ProjectPage(AstroJays, 'rocketry')}
                         {ProjectPage(Rewind, 'rewind')}
                         {ProjectPage(RoboJay, 'robojay')}
                         {ProjectPage(SpaceportAmericaCup, 'spaceport_america_cup')}

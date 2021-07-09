@@ -185,18 +185,12 @@ export const projects: ProjectContent[] = [
         tags: ['Godot', 'GDScript', '3D game'],
     },
     {
-        title: 'Rebel Scum High Power Rocket',
+        title: 'High Power Rocketry',
         imgSrc: rebel_scum,
-        internalLink: '/projects/rebel_scum',
-        summary: 'Level 1 & 2 High Powered Rocket built with the Johns Hopkins Rocketry Club',
+        internalLink: '/projects/rocketry',
+        summary: 'Level 1 & 2 High Powered Rocket built with the Johns Hopkins Rocketry Club, and Spaceport America Cup 2018',
         tags: ['High Power Rocketry', 'Arduino', 'C++', 'mechanical design', 'Tripoli'],
         lastUpdated: 'January 2018',
-    },
-    {
-        title: 'Spaceport America Cup 2018',
-        imgSrc: logo,
-        summary: 'Level 3 High Power Rocket build by the Astrojays (JHU rocketry team) for the Spaceport America Cup',
-        internalLink: '/projects/spaceport_america_cup',
     },
     {
         title: 'uSkipSpoilers',
