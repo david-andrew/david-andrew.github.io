@@ -44,9 +44,9 @@ export const FoxingAnimatronic = (): JSX.Element => {
                 <br />
                 <p>
                     The biggest difficulty I encountered with the project was the slender proportions they wanted. With such a thin frame, the cables needed to
-                    be as thin as possible to fit through the small holes in each disk on the body, which meant they were more fragile than thicker cabling--I
-                    calculated that there was almost no margin of safety for the breaking strength of the control cables. Ultimately, it took a lot of careful
-                    and delicate work to ensure the whole mechanism would work as intended without breaking.
+                    be as thin as possible to fit through the small holes in each disk on the body, which meant they were more fragile than thicker
+                    cabling&mdash;I calculated that there was almost no margin of safety for the breaking strength of the control cables. Ultimately, it took a
+                    lot of careful and delicate work to ensure the whole mechanism would work as intended without breaking.
                 </p>
                 <h3>Pictures</h3>
                 <Collage imageSrcs={imageSrcs} />

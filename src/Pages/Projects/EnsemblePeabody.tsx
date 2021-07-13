@@ -31,7 +31,7 @@ export const EnsemblePeabody = (): JSX.Element => {
                         <li>send a recipe to Matlab containing each word, along with pitches and durations for constructing the song</li>
                     </ol>
                     At this point, Matlab takes over and splices all of the words together according to the recipe, while also autotuning each word. This part
-                    is performed in Matlab as it had better tools for quickly writing an autotuner, including pitch detection, pitch shifting, and very robust
+                    was performed in Matlab as it had better tools for quickly writing an autotuner, including pitch detection, pitch shifting, and very robust
                     tools for working with audio data in general.
                 </p>
                 <p>

@@ -11,7 +11,7 @@ export const Compositions = (): JSX.Element => {
                 <PageHeading />
                 <p>
                     These are two pieces I composed for my high school choir, and was able to get good recordings of. I also have several other unrecorded
-                    pieces, which I&apos;m hoping to add here once <InternalLink to="/projects/so_voice">SoVoice</InternalLink> is able to produce good enough
+                    pieces, which I&apos;m hoping to add here once <InternalLink to="/projects/so_voice">so voice!</InternalLink> is able to produce good enough
                     recordings.
                 </p>
                 <h3>Deep Field</h3>

@@ -34,7 +34,7 @@ export const MusicalDL = (): JSX.Element => {
                     Assistant. The{' '}
                     <ExternalLink href="https://deepmind.com/blog/article/wavenet-generative-model-raw-audio">DeepMind blog post about WaveNets</ExternalLink>{' '}
                     does a really great job illustrating how they work, but at a high level, WaveNets are a type of convolutional network which seeks to
-                    directly model the distribution of real audio. WaveNets generates audio one sample at a time, and make use of a special type of so-called
+                    directly model the distribution of real audio. WaveNets generate audio one sample at a time, and make use of a special type of so-called
                     dilated convolution which allows the architecture to simultaneously handle both small scale and large scale details present in audio data.
                 </p>
                 <p>
