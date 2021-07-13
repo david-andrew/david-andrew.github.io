@@ -49,6 +49,12 @@ export const SoVoice = (): JSX.Element => {
                         },
                     ]}
                 />
+                <p>
+                    Additionally, using the music parsing engine, I put together a <InternalLink to="/projects/blob_opera">silly spinoff project</InternalLink>{' '}
+                    leveraging Google Arts &amp; Culture&apos;s{' '}
+                    <ExternalLink href="https://artsandculture.google.com/experiment/blob-opera/AAHWrq360NcGbw">Blob Opera</ExternalLink> as a stand in for
+                    choir synthesis.
+                </p>
                 <h3>Previous Experiments</h3>
                 <p>
                     These demonstrate a few previous approaches I tried for audio generation. For the Auto-Encoder GAN experiment, I attempted to build a mostly
