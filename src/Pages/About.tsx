@@ -45,7 +45,7 @@ export const About = (): JSX.Element => {
                     <List.Icon as={BlocksIcon} verticalAlign="middle" />
                     <List.Content>
                         <List.Header>Frameworks</List.Header>
-                        <List.Description>PyTorch, React, Robot Operating System, OpenCV, Qt</List.Description>
+                        <List.Description>PyTorch (with GPU/CUDA), React, Robot Operating System, OpenCV, Qt</List.Description>
                     </List.Content>
                 </List.Item>
                 <List.Item>
