@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/static/css/main.75305752.chunk.css",
-    "main.js": "/static/js/main.f7948f9b.chunk.js",
-    "main.js.map": "/static/js/main.f7948f9b.chunk.js.map",
+    "main.js": "/static/js/main.8cc407f5.chunk.js",
+    "main.js.map": "/static/js/main.8cc407f5.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.87d1d7c8.js",
     "runtime-main.js.map": "/static/js/runtime-main.87d1d7c8.js.map",
     "static/css/2.9fe82d56.chunk.css": "/static/css/2.9fe82d56.chunk.css",
@@ -225,6 +225,10 @@
     "static/media/danny_boy_tuned.3e9f6de8.mp3": "/static/media/danny_boy_tuned.3e9f6de8.mp3",
     "static/media/danny_boy_untuned.0c62a5ff.mp3": "/static/media/danny_boy_untuned.0c62a5ff.mp3",
     "static/media/data1.png": "/static/media/data1.9323e6cf.png",
+    "static/media/david1.9fece7cd.wav": "/static/media/david1.9fece7cd.wav",
+    "static/media/david1_hat.c76b40b0.wav": "/static/media/david1_hat.c76b40b0.wav",
+    "static/media/david2.d4ee9fbc.wav": "/static/media/david2.d4ee9fbc.wav",
+    "static/media/david2_hat.07e75d28.wav": "/static/media/david2_hat.07e75d28.wav",
     "static/media/demons1.2a2c11fe.mp3": "/static/media/demons1.2a2c11fe.mp3",
     "static/media/demons2.b137d513.mp3": "/static/media/demons2.b137d513.mp3",
     "static/media/demons3.e695e6b7.mp3": "/static/media/demons3.e695e6b7.mp3",
@@ -263,6 +267,8 @@
     "static/media/may_you_depart_untuned.c187f06a.mp3": "/static/media/may_you_depart_untuned.c187f06a.mp3",
     "static/media/mona_lisa_contour.be1fc138.jpg": "/static/media/mona_lisa_contour.be1fc138.jpg",
     "static/media/music_staff.4170c4bd.png": "/static/media/music_staff.4170c4bd.png",
+    "static/media/nox.70dea102.wav": "/static/media/nox.70dea102.wav",
+    "static/media/nox_hat.4c37b197.wav": "/static/media/nox_hat.4c37b197.wav",
     "static/media/pando_260800_4_y.bf444009.wav": "/static/media/pando_260800_4_y.bf444009.wav",
     "static/media/pando_260800_4_y_hat.fd97ba46.wav": "/static/media/pando_260800_4_y_hat.fd97ba46.wav",
     "static/media/press.98467e7b.gif": "/static/media/press.98467e7b.gif",
@@ -300,6 +306,6 @@
     "static/css/2.9fe82d56.chunk.css",
     "static/js/2.dc404d36.chunk.js",
     "static/css/main.75305752.chunk.css",
-    "static/js/main.f7948f9b.chunk.js"
+    "static/js/main.8cc407f5.chunk.js"
   ]
 }
