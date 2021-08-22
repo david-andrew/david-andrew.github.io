@@ -3,6 +3,12 @@ import { PageContainer, PageHeading } from '../../Components'
 import { ExternalLink, InternalLink, AudioExamplePair } from '../../utilities'
 import atma16000 from '../../audio/so_voice/atma16000.wav'
 import atma16000resynth from '../../audio/so_voice/atma16000resynth.wav'
+import david1 from '../../audio/so_voice/david1.wav'
+import david1_hat from '../../audio/so_voice/david1_hat.wav'
+import david2 from '../../audio/so_voice/david2.wav'
+import david2_hat from '../../audio/so_voice/david2_hat.wav'
+import nox from '../../audio/so_voice/nox.wav'
+import nox_hat from '../../audio/so_voice/nox_hat.wav'
 import pando_260800_4_y from '../../audio/so_voice/pando_260800_4_y.wav'
 import pando_260800_4_y_hat from '../../audio/so_voice/pando_260800_4_y_hat.wav'
 import when_david_heard_lpc from '../../audio/so_voice/when_david_heard_lpc.mp3'
@@ -41,12 +47,24 @@ export const SoVoice = (): JSX.Element => {
                     have it attempt to recreate real audio clips, which gives an idea of how well it will perform in the full pipeline.
                 </p>
                 <AudioExamplePair
-                    title="Audio Resynthesis"
+                    title="Audio Resynthesis (16000 Hz)"
                     pairs={[
                         {
-                            audio1: { label: 'Real audio (16000 Hz)', src: atma16000 },
-                            audio2: { label: 'Resynthesized version', src: atma16000resynth },
+                            audio1: { label: 'Mother and Child (Real)', src: atma16000 },
+                            audio2: { label: 'Mother and Child (Resynthesis)', src: atma16000resynth },
                         },
+                        {
+                            audio1: { label: 'When David Heard (1) (Real)', src: david1},
+                            audio2: { label: 'When David Heard (1) (Resynthesis)', src: david1_hat}
+                        },
+                        {
+                            audio1: { label: 'When David Heard (2) (Real)', src: david2},
+                            audio2: { label: 'When David Heard (2) (Resynthesis)', src: david2_hat}
+                        },
+                        {
+                            audio1: { label: 'Nox Aurumque (Real)', src: nox},
+                            audio2: { label: 'Nox Aurumque (Resynthesis)', src: nox_hat}
+                        }
                     ]}
                 />
                 <p>
