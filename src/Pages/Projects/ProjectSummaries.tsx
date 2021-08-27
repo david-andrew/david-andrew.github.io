@@ -11,6 +11,7 @@ import music_staff from '../../images/projects/music_staff.png'
 import ye_arlington_musicke_lab_logo from '../../images/projects/YeArlingtonMusickeLabLogo.png'
 import wse18 from '../../images/projects/wse18.png'
 import mona_lisa_contour from '../../images/drawbot/mona_lisa_contour.jpg'
+import timelapse from '../../images/projects/timelapse.jpg'
 
 //by making this a compiled ts file, we guarantee all pieces of content are present when building
 
@@ -49,6 +50,14 @@ export const projects: ProjectContent[] = [
         internalLink: '/projects/so_voice',
         summary: 'Choral music synthesis with deep learning (Continuation of Musical DL)',
         tags: ['Python', 'Pytorch', 'AI/ML', 'choral', 'music', 'synthesis'],
+    },
+    {
+        title: 'Cloud Timelapse',
+        imgSrc: timelapse,
+        github: 'timelapse',
+        internalLink: '/projects/timelapse',
+        summary: 'A simple python project for taking timelapses of clouds from a webcam',
+        tags: ['Python', 'OpenCV', 'Raspberry Pi', 'timelapse', 'clouds'],
     },
     {
         title: 'Musical DL Voice Synthesizer',

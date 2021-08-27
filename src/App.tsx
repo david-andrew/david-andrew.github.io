@@ -3,6 +3,7 @@ import { Navbar } from './Components/Navbar'
 import { About, Contact, Home, Consulting, Clovers, NotFound, NotImplemented, Projects } from './Pages'
 import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 import {
+    AstroJays,
     BlobOpera,
     BoatSimulator,
     BuellerBoard,
@@ -10,22 +11,22 @@ import {
     Compositions,
     DewySpeak,
     DrawRobot,
-    SoVoice,
     EnsemblePeabody,
     EscortMission,
     FoxingAnimatronic,
-    ZiggyV,
     Mechatronics,
     Mehve,
     MusicalDL,
     PongBot,
     PRS19,
-    AstroJays,
     Rewind,
     RoboJay,
-    SpaceportAmericaCup,
     SkipSpoilers,
+    SoVoice,
+    SpaceportAmericaCup,
     WSE18,
+    Timelapse,
+    ZiggyV,
 } from './Pages'
 import { useLoadClovers } from './utilities'
 import './App.css'
@@ -92,6 +93,7 @@ const App = (): JSX.Element => {
                         {ProjectPage(RoboJay, 'robojay')}
                         {ProjectPage(SpaceportAmericaCup, 'spaceport_america_cup')}
                         {ProjectPage(SkipSpoilers, 'uskipspoilers')}
+                        {ProjectPage(Timelapse, 'timelapse')}
                         {ProjectPage(WSE18, 'wse18')}
 
                         <Route exact path="/about">
