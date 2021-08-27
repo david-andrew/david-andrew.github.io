@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/static/css/main.75305752.chunk.css",
-    "main.js": "/static/js/main.8cc407f5.chunk.js",
-    "main.js.map": "/static/js/main.8cc407f5.chunk.js.map",
+    "main.js": "/static/js/main.9f09d5c1.chunk.js",
+    "main.js.map": "/static/js/main.9f09d5c1.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.87d1d7c8.js",
     "runtime-main.js.map": "/static/js/runtime-main.87d1d7c8.js.map",
     "static/css/2.9fe82d56.chunk.css": "/static/css/2.9fe82d56.chunk.css",
-    "static/js/2.dc404d36.chunk.js": "/static/js/2.dc404d36.chunk.js",
-    "static/js/2.dc404d36.chunk.js.map": "/static/js/2.dc404d36.chunk.js.map",
+    "static/js/2.c8ae7c81.chunk.js": "/static/js/2.c8ae7c81.chunk.js",
+    "static/js/2.c8ae7c81.chunk.js.map": "/static/js/2.c8ae7c81.chunk.js.map",
     "static/js/3.318afe16.chunk.js": "/static/js/3.318afe16.chunk.js",
     "static/js/3.318afe16.chunk.js.map": "/static/js/3.318afe16.chunk.js.map",
     "static/js/4.6bdc0ac1.chunk.js": "/static/js/4.6bdc0ac1.chunk.js",
@@ -16,7 +16,7 @@
     "index.html": "/index.html",
     "static/css/2.9fe82d56.chunk.css.map": "/static/css/2.9fe82d56.chunk.css.map",
     "static/css/main.75305752.chunk.css.map": "/static/css/main.75305752.chunk.css.map",
-    "static/js/2.dc404d36.chunk.js.LICENSE.txt": "/static/js/2.dc404d36.chunk.js.LICENSE.txt",
+    "static/js/2.c8ae7c81.chunk.js.LICENSE.txt": "/static/js/2.c8ae7c81.chunk.js.LICENSE.txt",
     "static/js/3.318afe16.chunk.js.LICENSE.txt": "/static/js/3.318afe16.chunk.js.LICENSE.txt",
     "static/media/00.png": "/static/media/00.c3a22b03.png",
     "static/media/01.png": "/static/media/01.203aed20.png",
@@ -291,6 +291,7 @@
     "static/media/sanctus.153289e5.mp3": "/static/media/sanctus.153289e5.mp3",
     "static/media/segment_tool.png": "/static/media/segment_tool.38ad6e18.png",
     "static/media/striker_shooting.2bfb57e8.gif": "/static/media/striker_shooting.2bfb57e8.gif",
+    "static/media/timelapse.941c86c7.jpg": "/static/media/timelapse.941c86c7.jpg",
     "static/media/upon_the_hearth.4c0deeda.mp3": "/static/media/upon_the_hearth.4c0deeda.mp3",
     "static/media/viola_jones_1.png": "/static/media/viola_jones_1.d9d402a0.png",
     "static/media/viola_jones_2.png": "/static/media/viola_jones_2.db9fbeb5.png",
@@ -304,8 +305,8 @@
   "entrypoints": [
     "static/js/runtime-main.87d1d7c8.js",
     "static/css/2.9fe82d56.chunk.css",
-    "static/js/2.dc404d36.chunk.js",
+    "static/js/2.c8ae7c81.chunk.js",
     "static/css/main.75305752.chunk.css",
-    "static/js/main.8cc407f5.chunk.js"
+    "static/js/main.9f09d5c1.chunk.js"
   ]
 }
