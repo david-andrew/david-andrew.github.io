@@ -3,7 +3,7 @@ import { PageContainer, PageHeading } from '../../Components'
 import { ExternalLink, InternalLink } from '../../utilities'
 import { Icon, List } from 'semantic-ui-react'
 import YouTube from 'react-youtube'
-// import { Divider } from 'semantic-ui-react'
+import { Divider } from 'semantic-ui-react'
 
 export const Timelapse = (): JSX.Element => {
     return (
@@ -18,10 +18,17 @@ export const Timelapse = (): JSX.Element => {
                 <p>
                     To make a timelapse, I have a Raspberry Pi connected to a fixed webcam looking out the window. The Pi is running a simple python script I
                     wrote that takes the sequence of images in the timelapse, and saves them to a prespecified location&mdash;a very large hard drive in my
-                    case. I then have a second python script which stitches the images together into a video for playback.
+                    case. For recording images, I generally use an{' '}
+                    <ExternalLink href="https://en.wikipedia.org/wiki/Moving_average#Exponential_moving_average">
+                        exponentially weighted moving average
+                    </ExternalLink>{' '}
+                    over all previous images, which helps smooth out noise in the output image. I then have a second python script which stitches the images
+                    together into a video for playback.
                 </p>
                 <h3>Videos</h3>
                 <YouTube videoId="KeTi_bErBwM" opts={{ width: '100%', height: '500px' }} />
+                <Divider />
+                <YouTube videoId="51689ykLVWU" opts={{ width: '100%', height: '500px' }} />
                 <h3>Links</h3>
                 <List>
                     <List.Item>
