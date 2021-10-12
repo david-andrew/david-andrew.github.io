@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { DummyNavBar, ProjectItem } from '../Components'
-import { Container, Dropdown, Item, Loader, Pagination, PaginationProps } from 'semantic-ui-react'
+import { Container, Dimmer, Dropdown, Item, Loader, Pagination, PaginationProps } from 'semantic-ui-react'
 import { projects, ProjectContent } from './Projects/ProjectSummaries'
 import { ClearFixAfter, useQuery, stableSorted } from '../utilities'
 
@@ -84,7 +84,7 @@ export const Projects = ({ projectDates }: Props): JSX.Element => {
     }
 
     //handle sorting type of the projects
-    const sortOrderItems = ['Recommended', 'Alphabetical (A-Z)', 'Alphabetical (Z-A)', 'Date (New-Old)', 'Date (Old-New)'] as const
+    const sortOrderItems = ['Recommended', 'Date (New-Old)', 'Date (Old-New)', 'Alphabetical (A-Z)', 'Alphabetical (Z-A)'] as const
     type SortOrder = typeof sortOrderItems[number]
     const [selectedSortOrder, setSelectedSortOrder] = useState<SortOrder>('Recommended')
     type DatedProject = [ProjectContent, Date | undefined]
@@ -96,10 +96,10 @@ export const Projects = ({ projectDates }: Props): JSX.Element => {
     }
     const compareFunctions: { [key in SortOrder]: ([a, at]: DatedProject, [b, bt]: DatedProject) => number } = {
         Recommended: () => 0, //use the order provided by the list itself
-        'Alphabetical (A-Z)': ([a], [b]) => a.title.localeCompare(b.title),
-        'Alphabetical (Z-A)': ([a], [b]) => b.title.localeCompare(a.title),
         'Date (New-Old)': ([, at], [, bt]) => sortDates(at, bt, -1),
         'Date (Old-New)': ([, at], [, bt]) => sortDates(at, bt),
+        'Alphabetical (A-Z)': ([a], [b]) => a.title.localeCompare(b.title),
+        'Alphabetical (Z-A)': ([a], [b]) => b.title.localeCompare(a.title),
     }
     const datedProjects = projects.map((project: ProjectContent, i: number): DatedProject => [project, projectDates?.[i] ?? undefined])
     const sortedProjects = stableSorted(datedProjects, compareFunctions[selectedSortOrder]).map(([project]) => project)
@@ -137,7 +137,7 @@ export const Projects = ({ projectDates }: Props): JSX.Element => {
                         </Item.Group>
                     </div>
                 ) : (
-                    <Loader />
+                    <Loader inverted active />
                 )}
             </Container>
             <ProjectPagination {...{ activePage, setActivePage }} />
