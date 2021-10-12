@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { DummyNavBar, ProjectItem } from '../Components'
-import { Container, Dimmer, Dropdown, Item, Loader, Pagination, PaginationProps } from 'semantic-ui-react'
+import { Container, Dropdown, Item, Loader, Pagination, PaginationProps } from 'semantic-ui-react'
 import { projects, ProjectContent } from './Projects/ProjectSummaries'
 import { ClearFixAfter, useQuery, stableSorted } from '../utilities'
 
