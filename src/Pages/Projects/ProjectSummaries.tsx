@@ -165,8 +165,9 @@ export const projects: ProjectContent[] = [
     {
         title: 'Rewind',
         imgSrc: rewind_title,
+        lastUpdated: 'May 2018',
         internalLink: '/projects/rewind',
-        summary: '2019 Video Game Desgn (EN.601.355) capstone project',
+        summary: '2018 Video Game Desgn (EN.601.355) capstone project',
         tags: ['Unity', 'C#', '2D game'],
     },
     {
@@ -214,7 +215,7 @@ export const projects: ProjectContent[] = [
         imgSrc: logo,
         lastUpdated: 'September 2015',
         internalLink: '/projects/bueller_board',
-        summary: "Fall 2016 HopHacks submission: Midi keyboard that used user provided audio samples, a.k.a. the 'goat keyboard'",
+        summary: "Fall 2015 HopHacks submission: Midi keyboard that used user provided audio samples, a.k.a. the 'goat keyboard'",
         tags: ['midi', 'music'],
     },
     // { //don't include until can find good photos/videos

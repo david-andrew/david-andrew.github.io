@@ -28,7 +28,7 @@ import {
     Timelapse,
     ZiggyV,
 } from './Pages'
-import { useLoadClovers } from './utilities'
+import { useLoadClovers, useProjectDates } from './utilities'
 import './App.css'
 
 const ProjectPage = (Page: () => JSX.Element, name: string): JSX.Element => {
@@ -42,6 +42,7 @@ const ProjectPage = (Page: () => JSX.Element, name: string): JSX.Element => {
 const App = (): JSX.Element => {
     //preload clover images so that they load quickly when you go to that page
     useLoadClovers()
+    const projectDates = useProjectDates()
 
     return (
         <div
@@ -67,7 +68,7 @@ const App = (): JSX.Element => {
                             <Home />
                         </Route>
                         <Route exact path="/projects">
-                            <Projects />
+                            <Projects projectDates={projectDates} />
                         </Route>
 
                         {/* Project specific pages */}

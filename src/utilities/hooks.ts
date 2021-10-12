@@ -3,7 +3,7 @@ import { useLocation, useHistory } from 'react-router'
 import { getGithubTimestamp } from '../Components'
 import { toMonthDayYearString, toMonthYearString } from './'
 import DewyParserWrapper from '../wasm/dewy_parser_wrapper'
-import { projectRouteMap, ProjectContent } from '../Pages/Projects/ProjectSummaries'
+import { projectRouteMap, ProjectContent, projects } from '../Pages/Projects/ProjectSummaries'
 
 interface useQueryReturn {
     params: { [key: string]: string }
@@ -239,4 +239,27 @@ export const useLoadClovers = (): void => {
 export const useProjectData = (url: string): ProjectContent => {
     const project = useMemo(() => projectRouteMap[url], [url])
     return project
+}
+
+//returns a list of dates, one for each project, handling promises from github timestamp retrieval
+export const useProjectDates = (): (Date | undefined)[] | undefined => {
+    //get the dates for sorting projects. since some dates come from github,
+    const [projectDates, setProjectDates] = useState<(Date | undefined)[] | undefined>()
+    useEffect(() => {
+        ;(async (): Promise<void> => {
+            const projectDatePromises = projects.map(async (project: ProjectContent) => {
+                let timestamp = undefined
+                if (project.github !== undefined) {
+                    await getGithubTimestamp(project.github, (t: Date | undefined) => {
+                        timestamp = t
+                    })
+                } else if (project.lastUpdated !== undefined) {
+                    timestamp = new Date(Date.parse('01 ' + project.lastUpdated))
+                }
+                return timestamp
+            })
+            setProjectDates(await Promise.all(projectDatePromises))
+        })()
+    }, [projects])
+    return projectDates
 }

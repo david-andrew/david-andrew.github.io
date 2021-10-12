@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { DummyNavBar, ProjectItem } from '../Components'
-import { Container, Item, Pagination, PaginationProps } from 'semantic-ui-react'
+import { Container, Dropdown, Item, Loader, Pagination, PaginationProps } from 'semantic-ui-react'
 import { projects, ProjectContent } from './Projects/ProjectSummaries'
-import { ClearFixAfter, useQuery } from '../utilities'
+import { ClearFixAfter, useQuery, stableSorted } from '../utilities'
 
 //Number of elements on a page
 const pageSize: number = 10
@@ -70,8 +70,12 @@ const DummyProjectPagination = (): JSX.Element => {
     )
 }
 
+interface Props {
+    projectDates: (Date | undefined)[] | undefined
+}
+
 //projects page
-export const Projects = (): JSX.Element => {
+export const Projects = ({ projectDates }: Props): JSX.Element => {
     //get/set page number with url params
     const { params, setParam } = useQuery()
     const activePage = params.page ?? '1'
@@ -79,25 +83,62 @@ export const Projects = (): JSX.Element => {
         setParam('page', (page ?? '1').toString())
     }
 
+    //handle sorting type of the projects
+    const sortOrderItems = ['Recommended', 'Alphabetical (A-Z)', 'Alphabetical (Z-A)', 'Date (New-Old)', 'Date (Old-New)'] as const
+    type SortOrder = typeof sortOrderItems[number]
+    const [selectedSortOrder, setSelectedSortOrder] = useState<SortOrder>('Recommended')
+    type DatedProject = [ProjectContent, Date | undefined]
+    const sortDates = (at?: Date, bt?: Date, reversed = 1): number => {
+        if (at === undefined && bt === undefined) return 0
+        else if (at === undefined) return 1
+        else if (bt === undefined) return -1
+        else return reversed * (at.valueOf() - bt.valueOf())
+    }
+    const compareFunctions: { [key in SortOrder]: ([a, at]: DatedProject, [b, bt]: DatedProject) => number } = {
+        Recommended: () => 0, //use the order provided by the list itself
+        'Alphabetical (A-Z)': ([a], [b]) => a.title.localeCompare(b.title),
+        'Alphabetical (Z-A)': ([a], [b]) => b.title.localeCompare(a.title),
+        'Date (New-Old)': ([, at], [, bt]) => sortDates(at, bt, -1),
+        'Date (Old-New)': ([, at], [, bt]) => sortDates(at, bt),
+    }
+    const datedProjects = projects.map((project: ProjectContent, i: number): DatedProject => [project, projectDates?.[i] ?? undefined])
+    const sortedProjects = stableSorted(datedProjects, compareFunctions[selectedSortOrder]).map(([project]) => project)
+
+    //move back to first page when changing sort order
+    useEffect(() => {
+        setActivePage(1)
+    }, [selectedSortOrder])
+
     //scroll to the top of the page if activePage changes
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [activePage])
 
     //slice the list of projects based on current page. no-op if not paginating
-    const pageProjects = getPageSlice(projects, activePage)
+    const pageProjects = getPageSlice(sortedProjects, activePage)
 
     return (
         <div style={{ backgroundColor: 'black' }}>
             <DummyNavBar />
             <Container style={{ marginBottom: '1em' }}>
-                <div style={{ fontSize: '100%', fontFamily: 'gentona', backgroundColor: 'black', marginTop: '1em' }}>
-                    <Item.Group style={{ color: 'white' }}>
-                        {pageProjects.map((project: ProjectContent, i: number) => (
-                            <ProjectItem {...project} key={i} />
+                <Dropdown text={`Sort By: ${selectedSortOrder}`} selectedLabel={selectedSortOrder}>
+                    <Dropdown.Menu>
+                        {sortOrderItems.map((label: SortOrder) => (
+                            <Dropdown.Item text={label} key={label} onClick={(): void => setSelectedSortOrder(label)} />
                         ))}
-                    </Item.Group>
-                </div>
+                    </Dropdown.Menu>
+                </Dropdown>
+                {projectDates !== undefined || (selectedSortOrder !== 'Date (New-Old)' && selectedSortOrder !== 'Date (Old-New)') ? (
+                    <div style={{ fontSize: '100%', fontFamily: 'gentona', backgroundColor: 'black', marginTop: '1em' }}>
+                        <Item.Group style={{ color: 'white' }}>
+                            {pageProjects.map((project: ProjectContent, i: number) => (
+                                <ProjectItem {...project} key={i} />
+                            ))}
+                        </Item.Group>
+                    </div>
+                ) : (
+                    <Loader />
+                )}
             </Container>
             <ProjectPagination {...{ activePage, setActivePage }} />
             <DummyProjectPagination />
