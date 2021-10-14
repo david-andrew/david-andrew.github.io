@@ -4,7 +4,6 @@ import { getGithubTimestamp } from '../Components'
 import { toMonthDayYearString, toMonthYearString } from './'
 import DewyParserWrapper from '../wasm/dewy_parser_wrapper'
 import { projectRouteMap, ProjectContent, projects } from '../Pages/Projects/ProjectSummaries'
-import ReactGA from 'react-ga'
 
 interface useQueryReturn {
     params: { [key: string]: string }
@@ -263,14 +262,4 @@ export const useProjectDates = (): (Date | undefined)[] | undefined => {
         })()
     }, [projects])
     return projectDates
-}
-
-export const usePageViews = (): void => {
-    const location = useLocation()
-    const { pathname, search } = location
-
-    //report a pageview any time the location changes
-    useEffect(() => {
-        ReactGA.pageview(pathname + search)
-    }, [location])
 }

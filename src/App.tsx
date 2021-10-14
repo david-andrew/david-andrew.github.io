@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar } from './Components/Navbar'
+import { Navbar, PageViewTracker } from './Components'
 import { About, Contact, Home, Consulting, Clovers, NotFound, NotImplemented, Projects } from './Pages'
 import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 import {
@@ -28,7 +28,7 @@ import {
     Timelapse,
     ZiggyV,
 } from './Pages'
-import { useLoadClovers, useProjectDates, usePageViews } from './utilities'
+import { useLoadClovers, useProjectDates } from './utilities'
 import './App.css'
 
 import ReactGA from 'react-ga'
@@ -48,7 +48,11 @@ const App = (): JSX.Element => {
     const projectDates = useProjectDates()
 
     //report page views to google analytics
-    usePageViews()
+    // usePageViews()
+    // const location = useLocation()
+    // useEffect(() => {
+    //     console.log('location', location)
+    // }, [location])
 
     return (
         <div
@@ -65,6 +69,7 @@ const App = (): JSX.Element => {
             }}
         >
             <Router>
+                <PageViewTracker />
                 <div id="PageNav" style={{ position: 'fixed', width: '100wv', backgroundColor: 'red', zIndex: 100 }}>
                     <Navbar />
                 </div>
