@@ -8,6 +8,7 @@ export const PageViewTracker = (): JSX.Element => {
 
     //report a pageview any time the location changes
     useEffect(() => {
+        console.log('logging page view', location)
         ReactGA.pageview(pathname + search)
     }, [location])
     return <></>
