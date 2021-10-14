@@ -4,6 +4,7 @@ import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import 'semantic-ui-less/semantic.less'
+import ReactGA from 'react-ga'
 
 ReactDOM.render(
     <React.StrictMode>
@@ -16,3 +17,10 @@ ReactDOM.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals()
+
+// google analytics
+ReactGA.initialize('UA-210009030-1', {
+    gaOptions: {
+        siteSpeedSampleRate: 100, //send 100% of page views
+    },
+})

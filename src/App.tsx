@@ -31,9 +31,6 @@ import {
 import { useLoadClovers, useProjectDates } from './utilities'
 import './App.css'
 
-import ReactGA from 'react-ga'
-ReactGA.initialize('UA-210009030-1')
-
 const ProjectPage = (Page: () => JSX.Element, name: string): JSX.Element => {
     return (
         <Route exact path={`/projects/${name}`}>
@@ -46,13 +43,6 @@ const App = (): JSX.Element => {
     //preload clover images so that they load quickly when you go to that page
     useLoadClovers()
     const projectDates = useProjectDates()
-
-    //report page views to google analytics
-    // usePageViews()
-    // const location = useLocation()
-    // useEffect(() => {
-    //     console.log('location', location)
-    // }, [location])
 
     return (
         <div
