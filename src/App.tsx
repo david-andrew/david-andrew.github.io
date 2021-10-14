@@ -28,8 +28,11 @@ import {
     Timelapse,
     ZiggyV,
 } from './Pages'
-import { useLoadClovers, useProjectDates } from './utilities'
+import { useLoadClovers, useProjectDates, usePageViews } from './utilities'
 import './App.css'
+
+import ReactGA from 'react-ga'
+ReactGA.initialize('UA-210009030-1')
 
 const ProjectPage = (Page: () => JSX.Element, name: string): JSX.Element => {
     return (
@@ -43,6 +46,9 @@ const App = (): JSX.Element => {
     //preload clover images so that they load quickly when you go to that page
     useLoadClovers()
     const projectDates = useProjectDates()
+
+    //report page views to google analytics
+    usePageViews()
 
     return (
         <div
