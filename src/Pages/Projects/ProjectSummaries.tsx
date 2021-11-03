@@ -12,6 +12,7 @@ import ye_arlington_musicke_lab_logo from '../../images/projects/YeArlingtonMusi
 import wse18 from '../../images/projects/wse18.png'
 import mona_lisa_contour from '../../images/drawbot/mona_lisa_contour.jpg'
 import timelapse from '../../images/projects/timelapse.jpg'
+import terminal_ray_tracer from '../../images/projects/terminal_ray_tracer.png'
 
 //by making this a compiled ts file, we guarantee all pieces of content are present when building
 
@@ -50,6 +51,13 @@ export const projects: ProjectContent[] = [
         internalLink: '/projects/so_voice',
         summary: 'Choral music synthesis with deep learning (Continuation of Musical DL)',
         tags: ['Python', 'Pytorch', 'AI/ML', 'choral', 'music', 'synthesis'],
+    },
+    {
+        title: 'Terminal Ray Tracer',
+        imgSrc: terminal_ray_tracer,
+        github: 'TerminalRayTracer',
+        internalLink: '/projects/terminal_ray_tracer',
+        summary: 'A dependency-free ray tracer written in C that runs directly in a linux terminal',
     },
     {
         title: 'Cloud Timelapse',

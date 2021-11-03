@@ -24,8 +24,9 @@ import {
     SkipSpoilers,
     SoVoice,
     SpaceportAmericaCup,
-    WSE18,
+    TerminalRayTracer,
     Timelapse,
+    WSE18,
     ZiggyV,
 } from './Pages'
 import { useLoadClovers, useProjectDates } from './utilities'
@@ -95,6 +96,7 @@ const App = (): JSX.Element => {
                         {ProjectPage(RoboJay, 'robojay')}
                         {ProjectPage(SpaceportAmericaCup, 'spaceport_america_cup')}
                         {ProjectPage(SkipSpoilers, 'uskipspoilers')}
+                        {ProjectPage(TerminalRayTracer, 'terminal_ray_tracer')}
                         {ProjectPage(Timelapse, 'timelapse')}
                         {ProjectPage(WSE18, 'wse18')}
 
