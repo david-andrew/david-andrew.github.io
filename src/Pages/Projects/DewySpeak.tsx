@@ -265,8 +265,8 @@ int main()
 
 //multiline version
 //#start = '\\n'? ((#physical_number | #unit) '\\n'?)*;`,
-        source: `9.81 m/s`
-    }
+        source: `9.81 m/s`,
+    },
 ]
 
 //used for discussing specific grammars later
@@ -342,25 +342,29 @@ lines = ['FizzBuzz' '1' '2' 'Fizz' '4' 'Buzz' 'Fizz' '7' '8' 'Fizz' 'Buzz' '11' 
 `}
                 />
                 <p>
-                    So far in development, I have developed the syntax for the language (and meta-language), and have built a prototype{' '}
+                    So far in development, I have developed the syntax for the language (and meta-language), and have built several prototype parsers from
+                    scratch in C&mdash;namely an{' '}
                     <ExternalLink href="https://raw.githubusercontent.com/david-andrew/dewy/master/resources/Right_Nulled_GLR_Parsers.pdf">RNGLR</ExternalLink>{' '}
                     \{' '}
                     <ExternalLink href="https://raw.githubusercontent.com/david-andrew/dewy/master/resources/Faster_Scannerless_Parsing.pdf">
                         SRNGLR
                     </ExternalLink>{' '}
-                    parser from scratch in C (which you can try above). The next steps are to add some missing features to the parser, write out the language
-                    Context Free Grammar (CFG) in the meta-language, implement the parser back ends (LLVM and C) for generating code from the parse tree, and
-                    then build out the standard library.
+                    parser (which powers the demo above), and more recently I built a{' '}
+                    <ExternalLink href="https://doi.org/10.1016/j.scico.2019.01.008">Clustered Nonterminal Parser (CNP)</ExternalLink>, which is currently
+                    available through the project github. Currently, I am learning LLVM, in order to build a compiler back-end to connect with the
+                    aforementioned parser front-end. Further steps will involve adding some missing features to the parser, writing out the full language
+                    Context Free Grammar (CFG) in the meta-language, building out the standard library, and then compiling the language in itself.
                 </p>
                 <h3>Parsing</h3>
                 <p>
                     All programming languages start with a compiler, which itself is made of several parts, namely: lexing, parsing, semantic analysis, and code
-                    generation. Dewy makes use of a SRNGLR parser which allows the lexing and parsing phases be combined into a single step.
+                    generation. Dewy makes use of a CNP which allows the lexing and parsing phases be combined into a single step, as well as allowing for an
+                    extremely simple parser implementation.
                 </p>
                 <p>
                     To parse a mathematical expression like <Code>1 + 2 * 3</Code> we first have to define the grammar for how raw text gets converted to a
                     parse tree. For this, I&apos;ve developed the Dewy Meta Language which allows for the specification of any Context Free Grammar (CFG), as
-                    well as some context sensitive grammars which can be parsed by SRNGLR. Additionally, the meta-language / parser are optimized to allow for
+                    well as some context sensitive grammars which can be parsed by a CNP. Additionally, the meta-language / parser are optimized to allow for
                     arbitrary unicode characters as part of the language alphabet, whereas parsers are often limited a much smaller alphabet, e.g. ASCII.
                 </p>
                 <p>
@@ -372,12 +376,12 @@ lines = ['FizzBuzz' '1' '2' 'Fizz' '4' 'Buzz' 'Fizz' '7' '8' 'Fizz' 'Buzz' '11' 
                 <p>
                     Precedence is handled by restricting which expressions can be subexpressions, using different grammar symbols. Associativity is also handled
                     in a similar fashion, namely the left or right hand side is restricted to specific subexpression types that generate the correct
-                    associativity. Ultimately though, because SRNGLR can handle ambiguities, the grammar can be simplified to something like this:
+                    associativity. Ultimately though, because CNPs can handle ambiguities, the grammar can be simplified to something like this:
                 </p>
                 <CodeBlock flatten text={ambiguousExpressionGrammar.grammar} />
                 <p>
-                    Note that for the ambiguous grammar, precedence and associativity still need to be handled at some point in the process. SRNGLR just
-                    provides the flexibility to handle them later in the parsing process, when it is much more convenient.
+                    Note that for the ambiguous grammar, precedence and associativity still need to be handled at some point in the process. CNPs just provide
+                    the flexibility to handle them later in the parsing process, when it is much more convenient.
                 </p>
                 <p>
                     Running the first grammar on <Code>1 + 2 * 3</Code> we get the following parse tree
@@ -486,20 +490,20 @@ lines = ['FizzBuzz' '1' '2' 'Fizz' '4' 'Buzz' 'Fizz' '7' '8' 'Fizz' 'Buzz' '11' 
                 <h3>Semantic Analysis &amp; Code Generation</h3>
                 <p>
                     The next steps involve implementing the semantic analysis, and code generation pieces of the compiler. With a suitable CFG specification for
-                    the language, the SRNGLR parser will output parse trees for given input source text. The parse trees need to be analyzed to ensure that they
-                    follow the languages semantics, e.g. variables may only be referenced when in scope, function calls have the same number of arguments as
-                    their definitions, type safety checks, etc.
+                    the language, the CNP will output parse trees for given input source text. The parse trees need to be analyzed to ensure that they follow
+                    the languages semantics, e.g. variables may only be referenced when in scope, function calls have the same number of arguments as their
+                    definitions, type safety checks, etc.
                 </p>
                 <p>
                     After semantic analysis, the last step of the compiler is code generation. For dewy, I plan to leverage the{' '}
                     <ExternalLink href="https://llvm.org/">LLVM compiler toolchain</ExternalLink>, meaning I convert the parse tree into{' '}
                     <ExternalLink href="https://en.wikipedia.org/wiki/LLVM#Intermediate_representation">LLVM IR</ExternalLink> (read LLVM assembly), which is
-                    then optimized and compiled down to a binary executable. I&apos;m also planning to have an optional C code generator, which would allow for
-                    extreme levels of portability in the compiler&mdash;most systems could build and run the Dewy compiler, as a C99 compiler would be the only
-                    dependency.
+                    then optimized and compiled down to a binary executable. I&apos;m also considering having an optional C code generator, which would allow
+                    for extreme levels of portability in the compiler&mdash;most systems could build and run the Dewy compiler, as a C99 compiler would be the
+                    only dependency.
                 </p>
                 <h3>Build It Yourself</h3>
-                <p>Since the language is far from complete, the most you can build right now is the SRNGLR parser.</p>
+                <p>Since the language is far from complete, the most you can build right now is the Clustered Nonterminal Parser.</p>
                 <CodeBlock
                     language="bash"
                     text={`$ git clone git@github.com:david-andrew/dewy.git
@@ -516,6 +520,8 @@ $ ./dewy path/to/grammar/file path/to/source/file`}
                     text={`$ ./dewy ../../tests/grammar8.dewy ../../tests/source8.dewy #ambiguous version
 $ ./dewy ../../tests/grammar3.dewy ../../tests/source8.dewy #unambiguous version`}
                 />
+                <p>In the future, I&apos;ll have plenty of updates for integrating the CNP front-end with the LLVM back end.</p>
+
                 <h3>Links</h3>
                 <List>
                     <List.Item>
