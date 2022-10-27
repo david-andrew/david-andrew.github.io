@@ -1,11 +1,11 @@
 {
   "files": {
     "main.css": "/static/css/main.75305752.chunk.css",
-    "main.js": "/static/js/main.f9a71b9a.chunk.js",
-    "main.js.map": "/static/js/main.f9a71b9a.chunk.js.map",
+    "main.js": "/static/js/main.3d4a5dc5.chunk.js",
+    "main.js.map": "/static/js/main.3d4a5dc5.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.b534d1b3.js",
     "runtime-main.js.map": "/static/js/runtime-main.b534d1b3.js.map",
-    "static/css/2.9fe82d56.chunk.css": "/static/css/2.9fe82d56.chunk.css",
+    "static/css/2.a52b1ba9.chunk.css": "/static/css/2.a52b1ba9.chunk.css",
     "static/js/2.3adab49d.chunk.js": "/static/js/2.3adab49d.chunk.js",
     "static/js/2.3adab49d.chunk.js.map": "/static/js/2.3adab49d.chunk.js.map",
     "static/js/3.99820d61.chunk.js": "/static/js/3.99820d61.chunk.js",
@@ -14,7 +14,7 @@
     "static/js/4.12bd6441.chunk.js.map": "/static/js/4.12bd6441.chunk.js.map",
     "dewy_parser_wrapper.wasm": "/dewy_parser_wrapper.444d1b32.wasm",
     "index.html": "/index.html",
-    "static/css/2.9fe82d56.chunk.css.map": "/static/css/2.9fe82d56.chunk.css.map",
+    "static/css/2.a52b1ba9.chunk.css.map": "/static/css/2.a52b1ba9.chunk.css.map",
     "static/css/main.75305752.chunk.css.map": "/static/css/main.75305752.chunk.css.map",
     "static/js/2.3adab49d.chunk.js.LICENSE.txt": "/static/js/2.3adab49d.chunk.js.LICENSE.txt",
     "static/js/3.99820d61.chunk.js.LICENSE.txt": "/static/js/3.99820d61.chunk.js.LICENSE.txt",
@@ -251,6 +251,7 @@
     "static/media/hashtag.ab2f0eb1.png": "/static/media/hashtag.ab2f0eb1.png",
     "static/media/idt_starburst.591b2323.png": "/static/media/idt_starburst.591b2323.png",
     "static/media/intro.jpg": "/static/media/intro.dfdfb7bd.jpg",
+    "static/media/jataware_logo.e73f7ffb.png": "/static/media/jataware_logo.e73f7ffb.png",
     "static/media/jhuapl_shield.135957d4.png": "/static/media/jhuapl_shield.135957d4.png",
     "static/media/ji64VDwQ.jpeg": "/static/media/ji64VDwQ.37fa1e93.jpeg",
     "static/media/joystick_demo.c87bb25f.gif": "/static/media/joystick_demo.c87bb25f.gif",
@@ -311,9 +312,9 @@
   },
   "entrypoints": [
     "static/js/runtime-main.b534d1b3.js",
-    "static/css/2.9fe82d56.chunk.css",
+    "static/css/2.a52b1ba9.chunk.css",
     "static/js/2.3adab49d.chunk.js",
     "static/css/main.75305752.chunk.css",
-    "static/js/main.f9a71b9a.chunk.js"
+    "static/js/main.3d4a5dc5.chunk.js"
   ]
 }
