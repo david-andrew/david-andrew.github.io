@@ -1,10 +1,11 @@
 import React from 'react'
 import { PageContainer } from '../Components'
 import { List, Divider } from 'semantic-ui-react'
-import { InternalLink, LogoIcon } from '../utilities'
+import { ExternalLink, InternalLink, LogoIcon } from '../utilities'
 import shield_logo from '../images/icons/university.shield.small.white.png'
 import jhuapl_shield from '../images/icons/jhuapl_shield.png'
 import idt_starburst from '../images/icons/idt_starburst.png'
+import jataware_logo from '../images/icons/jataware_logo.png'
 import hashtag from '../images/icons/hashtag.png'
 import code from '../images/icons/code.png'
 import blocks from '../images/icons/blocks.png'
@@ -16,6 +17,7 @@ export const About = (): JSX.Element => {
     const JHUShieldIcon = (): JSX.Element => LogoIcon(shield_logo)
     const APLShieldIcon = (): JSX.Element => LogoIcon(jhuapl_shield)
     const IDTStarburstIcon = (): JSX.Element => LogoIcon(idt_starburst)
+    const JatawareIcon = (): JSX.Element => LogoIcon(jataware_logo)
     const HashtagIcon = (): JSX.Element => LogoIcon(hashtag)
     const CodeIcon = (): JSX.Element => LogoIcon(code)
     const BlocksIcon = (): JSX.Element => LogoIcon(blocks)
@@ -38,14 +40,14 @@ export const About = (): JSX.Element => {
                     <List.Icon as={CodeIcon} verticalAlign="middle" />
                     <List.Content>
                         <List.Header>Programming (Moderate)</List.Header>
-                        <List.Description>Rust, Julia, WebAssembly, C++, Java, Go, 6502 ASM, FORTRAN 77, Ti-BASIC</List.Description>
+                        <List.Description>Rust, Julia, CUDA C, C++, Java, Go, 6502 ASM, FORTRAN 77, Ti-BASIC</List.Description>
                     </List.Content>
                 </List.Item>
                 <List.Item>
                     <List.Icon as={BlocksIcon} verticalAlign="middle" />
                     <List.Content>
                         <List.Header>Frameworks</List.Header>
-                        <List.Description>PyTorch (with GPU/CUDA), React, Robot Operating System, OpenCV, Qt</List.Description>
+                        <List.Description>PyTorch (with GPU), React, WebAssembly, Robot Operating System, OpenCV, Qt</List.Description>
                     </List.Content>
                 </List.Item>
                 <List.Item>
@@ -98,7 +100,7 @@ export const About = (): JSX.Element => {
                 <List.Item>
                     <List.Icon as={APLShieldIcon} verticalAlign="middle" size="large" />
                     <List.Content>
-                        <List.Header>SPUR Intern</List.Header>
+                        <List.Header>Intern</List.Header>
                         <List.Description>June 2016 - Aug. 2016</List.Description>
                     </List.Content>
                 </List.Item>
@@ -124,7 +126,17 @@ export const About = (): JSX.Element => {
                     <List.Icon as={IDTStarburstIcon} verticalAlign="middle" size="large" />
                     <List.Content>
                         <List.Header>Systems Engineer II (Data Science)</List.Header>
-                        <List.Description>Oct. 2020 - Present</List.Description>
+                        <List.Description>Oct. 2020 - Feb. 2022</List.Description>
+                    </List.Content>
+                </List.Item>
+            </List>
+            <h3>Jataware</h3>
+            <List inverted relaxed>
+                <List.Item>
+                    <List.Icon as={JatawareIcon} verticalAlign="middle" size="large" />
+                    <List.Content>
+                        <List.Header>Data Scientist</List.Header>
+                        <List.Description>Feb. 2022 - Present</List.Description>
                     </List.Content>
                 </List.Item>
             </List>
@@ -132,8 +144,16 @@ export const About = (): JSX.Element => {
 
             <h1>General</h1>
             <p>
-                I have over 3 years of professional software engineering experience, as well as experience working with many state-of-the-art machine learning
-                techniques. At IDT, I focused on both machine learning, and front end development. Of note, I designed a novel machine learning architecture for
+                I have over 4 years of professional software engineering experience, as well as experience working with many state-of-the-art machine learning
+                techniques. At Jataware, I worked on a variety of research and technical projects, with focuses on machine learning and data science applications. 
+                I researched approaches to extend existing SOTA diplomacy AI models to leverage communication during gameplay for collaboration and betrayal.
+                I also researched and implemented approaches to <ExternalLink href="https://arxiv.org/abs/1703.05082">Selective Harvesting</ExternalLink>{' '}
+                i.e. efficient search + filtering over enormous graph networks. Additionally, I implemented a highly optimized graph-neural-network convolution 
+                algorithm in CUDA, and also developed several computer vision approaches to identify and locate sections on a map image for the USGS georeference 
+                challenge.                
+            </p>
+            <p>
+                At IDT, I focused on both machine learning, and front end development. Of note, I designed a novel machine learning architecture for
                 efficiently allocating compute resources to minimize the execution time of High Level Architecture (HLA) federated simulations. I also
                 implemented a custom time series anomaly detection ensemble model in Julia, and developed the React UI for visualizing the results.
             </p>

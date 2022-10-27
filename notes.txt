@@ -1,0 +1,11 @@
+## Running local instance of app
+1. $ sudo apt install npm
+2. $ npm install
+3. $ npm start
+    - if error occurs about ENOSPC: System limit for number of file watchers reached:
+        - $ sudo gedit /etc/sysctl.conf
+        - add line: `fs.inotify.max_user_watches=524288`
+        - $ sudo sysctl -p
+
+## Building + pushing to gh-pages
+1. $ npm run build
