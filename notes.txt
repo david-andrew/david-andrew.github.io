@@ -8,7 +8,7 @@
         - $ sudo sysctl -p
 
 ## Building + pushing to gh-pages
-1. $ npm run build
+1. $ npm run deploy
 
 
 ## Using prettier
