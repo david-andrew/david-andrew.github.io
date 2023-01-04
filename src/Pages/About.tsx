@@ -153,8 +153,9 @@ export const About = (): JSX.Element => {
                 search over text corpus, as well as identifying causal relations between topics. I also researched and implemented approaches to{' '}
                 <ExternalLink href="https://arxiv.org/abs/1703.05082">Selective Harvesting</ExternalLink> i.e. efficient search + filtering over enormous graph
                 networks. Additionally, I implemented a highly optimized graph-neural-network convolution algorithm in CUDA, and also developed several computer
-                vision approaches to identify and locate sections on a map image for the USGS georeference challenge. Plus lots of other interesting machine
-                learning applications and research here and there.
+                vision approaches to align paper maps with digital coordinates for the{' '}
+                <ExternalLink href="https://criticalminerals.darpa.mil/The-Competition">USGS georeference challenge</ExternalLink>. Plus lots of other
+                interesting machine learning applications and research here and there.
             </p>
             <p>
                 At IDT, I focused on both machine learning, and front end development. Of note, I designed a novel machine learning architecture for efficiently
