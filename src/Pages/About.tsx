@@ -47,7 +47,7 @@ export const About = (): JSX.Element => {
                     <List.Icon as={BlocksIcon} verticalAlign="middle" />
                     <List.Content>
                         <List.Header>Frameworks</List.Header>
-                        <List.Description>PyTorch (with GPU), React, WebAssembly, Robot Operating System, OpenCV, Qt</List.Description>
+                        <List.Description>PyTorch (with GPU), Yew, React, WebAssembly, Robot Operating System, OpenCV, Qt</List.Description>
                     </List.Content>
                 </List.Item>
                 <List.Item>
@@ -107,7 +107,7 @@ export const About = (): JSX.Element => {
                 <List.Item>
                     <List.Icon as={APLShieldIcon} verticalAlign="middle" size="large" />
                     <List.Content>
-                        <List.Header>Temp-on-Call Staff</List.Header>
+                        <List.Header>Software Engineer (part-time)</List.Header>
                         <List.Description>Sept. 2016 - July 2017</List.Description>
                     </List.Content>
                 </List.Item>
@@ -144,18 +144,22 @@ export const About = (): JSX.Element => {
 
             <h1>General</h1>
             <p>
-                I have over 4 years of professional software engineering experience, as well as experience working with many state-of-the-art machine learning
-                techniques. At Jataware, I worked on a variety of research and technical projects, with focuses on machine learning and data science applications. 
-                I researched approaches to extend existing SOTA diplomacy AI models to leverage communication during gameplay for collaboration and betrayal.
-                I also researched and implemented approaches to <ExternalLink href="https://arxiv.org/abs/1703.05082">Selective Harvesting</ExternalLink>{' '}
-                i.e. efficient search + filtering over enormous graph networks. Additionally, I implemented a highly optimized graph-neural-network convolution 
-                algorithm in CUDA, and also developed several computer vision approaches to identify and locate sections on a map image for the USGS georeference 
-                challenge.                
+                I have 5 years of professional software engineering experience, as well as experience working with many state-of-the-art machine learning
+                techniques.
             </p>
             <p>
-                At IDT, I focused on both machine learning, and front end development. Of note, I designed a novel machine learning architecture for
-                efficiently allocating compute resources to minimize the execution time of High Level Architecture (HLA) federated simulations. I also
-                implemented a custom time series anomaly detection ensemble model in Julia, and developed the React UI for visualizing the results.
+                At Jataware, I worked on a variety of research and technical projects, with focuses on machine learning and data science applications. For
+                example, I developed a <ExternalLink href="https://github.com/jataware/semantic-search">custom library</ExternalLink> for performing semantic
+                search over text corpus, as well as identifying causal relations between topics. I also researched and implemented approaches to{' '}
+                <ExternalLink href="https://arxiv.org/abs/1703.05082">Selective Harvesting</ExternalLink> i.e. efficient search + filtering over enormous graph
+                networks. Additionally, I implemented a highly optimized graph-neural-network convolution algorithm in CUDA, and also developed several computer
+                vision approaches to identify and locate sections on a map image for the USGS georeference challenge. Plus lots of other interesting machine
+                learning applications and research here and there.
+            </p>
+            <p>
+                At IDT, I focused on both machine learning, and front end development. Of note, I designed a novel machine learning architecture for efficiently
+                allocating compute resources to minimize the execution time of High Level Architecture (HLA) federated simulations. I also implemented a custom
+                time series anomaly detection ensemble model in Julia, and developed the React UI for visualizing the results.
             </p>
             <p>
                 During my master&apos;s coursework I implemented a variety of ML algorithms from scratch, including MLP, SVM, Expectation Maximization, PCA,

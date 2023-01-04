@@ -62,7 +62,7 @@ export const Navbar = (): JSX.Element => {
                 <NavbarButton content="Home" onClick={getOnClick('/home')} active={path === '/home' || path === '/'} />
                 <NavbarButton content="Projects" onClick={getOnClick('/projects')} active={path.startsWith('/projects')} />
                 <NavbarButton content="About" onClick={getOnClick('/about')} active={path === '/about'} />
-                <NavbarButton content="Consulting" onClick={getOnClick('/consulting')} active={path === '/consulting'} />
+                {/* <NavbarButton content="Consulting" onClick={getOnClick('/consulting')} active={path === '/consulting'} /> */}
                 <NavbarButton content="Clovers" onClick={getOnClick('/clovers')} active={path === '/clovers'} />
                 <NavbarButton content="Contact" onClick={getOnClick('/contact')} active={path === '/contact'} />
             </div>

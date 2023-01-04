@@ -9,3 +9,8 @@
 
 ## Building + pushing to gh-pages
 1. $ npm run build
+
+
+## Using prettier
+1. install the vscode prettier extension
+2. in vscode settings, search for "editor: format on save" and enable it
