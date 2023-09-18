@@ -19,19 +19,24 @@ interface NavbarButtonProps {
     content: string;
     href: string;
     active: boolean;
+    onClick?: () => void;
 }
 
-const NavbarButton = ({ content, href, active }: NavbarButtonProps) => {
-    const [hover, setHover] = useState<boolean>(false);
+const NavbarButton = ({ content, href, active, onClick }: NavbarButtonProps) => {
 
     return (
         <Link href={href}>
-            <div
-                className={`relative cursor-pointer text-center font-quadon text-2xl m-2 text-white border-transparent hover:border-white ${active ? 'bg-blue-700' : ''}`}
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
+            <div className={`relative cursor-pointer text-center font-quadon
+                m-2 text-white border-solid border-transparent hover:border-white border-2
+                lg:text-4xl 
+                md:text-2xl md:border-4
+                ${active ? "bg-blue-700" : ""}`}
             >
-                <div className="py-3 px-4">{content}</div>
+                <div className={`
+                    py-3 px-4 
+                    md:py-3 md:px-4 
+                    lg:py-6 lg:px-10`
+                } onClick={onClick}>{content}</div>
             </div>
         </Link>
     );
@@ -46,12 +51,12 @@ const Navbar = (): JSX.Element => {
 
     return (
         <div className="w-screen bg-black">
-            <div className="flex justify-between items-center px-4 py-2">
+            <div className="flex flex-row md:justify-center justify-left px-4 py-2">
                 
                 {/* For Small Screens: Hamburger Menu */}
                 <div className="md:hidden">
                     <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                        <span className="text-white">☰</span>
+                        <span className="text-white text-2xl align-middle">☰</span>
                     </button>
                 </div>
 
@@ -67,44 +72,13 @@ const Navbar = (): JSX.Element => {
             {isMenuOpen && (
                 <div className="md:hidden">
                     {navItems.map(item => (
-                        <NavbarButton  key={item.href} content={item.content} href={item.href} active={item.href === pathname} />
+                        <NavbarButton key={item.href} content={item.content} href={item.href} active={item.href === pathname} onClick={() => setIsMenuOpen(false)} />
                     ))}
                 </div>
             )}
 
         </div>
     );
-
-    // return (
-    //     <div className="bg-blue-500 p-4">
-    //     {/* Desktop Nav */}
-    //     <div className="hidden md:flex justify-between items-center">
-    //         <div>Your Logo Here</div>
-    //         <div className="space-x-4">
-    //         <a href="#" className="text-white">Home</a>
-    //         <a href="#" className="text-white">About</a>
-    //         <a href="#" className="text-white">Contact</a>
-    //         {/* ... other links */}
-    //         </div>
-    //     </div>
-
-    //     {/* Mobile Nav */}
-    //     <div className="md:hidden flex justify-between items-center">
-    //         <div>Your Logo Here</div>
-    //         <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
-    //         <span className="text-white">☰</span>
-    //         </button>
-    //     </div>
-    //     {isMenuOpen && (
-    //         <div className="md:hidden">
-    //         <a href="#" className="block text-white p-2">Home</a>
-    //         <a href="#" className="block text-white p-2">About</a>
-    //         <a href="#" className="block text-white p-2">Contact</a>
-    //         {/* ... other links */}
-    //         </div>
-    //     )}
-    //     </div>
-    // );
 }
 
 export default Navbar;

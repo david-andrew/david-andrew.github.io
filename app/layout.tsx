@@ -20,7 +20,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="w-screen h-screen flex flex-col">
           <Navbar />
-          <div className="flex-grow">
+          <div className="flex-grow overflow-hidden">
             {children}
           </div>
         </div>
@@ -28,13 +28,3 @@ export default function RootLayout({
     </html>
   )
 }
-
-
-// // make a navbar component
-// const Navbar = () => {
-//     return (
-//         <div>
-//             <h1>My Navbar</h1>
-//         </div>
-//     )
-// }
