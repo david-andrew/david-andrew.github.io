@@ -54,7 +54,7 @@ const Navbar = (): JSX.Element => {
         <div className="w-screen bg-black">
             <div className="flex flex-row md:justify-center justify-left px-4 py-2">
                 
-                {/* For Small Screens: Hamburger Menu */}
+                {/* For Small Screens: Hamburger Menu Button */}
                 <div className="md:hidden">
                     <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
                         <span className="text-white text-4xl align-middle">☰</span>
