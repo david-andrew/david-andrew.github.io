@@ -25,7 +25,7 @@ interface NavbarButtonProps {
 const NavbarButton = ({ content, href, active, onClick }: NavbarButtonProps) => {
 
     return (
-        <Link href={href}>
+        <Link href={href} draggable={false} className="select-none">
             <div className={`relative cursor-pointer text-center font-quadon
                 m-2 text-white border-solid sm:border-white md:border-transparent hover:border-white border-2
                 text-xl
