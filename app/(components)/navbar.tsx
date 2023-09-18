@@ -27,15 +27,16 @@ const NavbarButton = ({ content, href, active, onClick }: NavbarButtonProps) => 
     return (
         <Link href={href}>
             <div className={`relative cursor-pointer text-center font-quadon
-                m-2 text-white border-solid border-transparent hover:border-white border-2
+                m-2 text-white border-solid sm:border-white md:border-transparent hover:border-white border-2
+                text-xl
+                md:text-2xl md:border-3
                 lg:text-4xl lg:border-4
-                md:text-2xl md:border-[3]
                 ${active ? "bg-accent" : ""}`}
             >
                 <div className={`
                     py-3 px-4 
                     md:py-3 md:px-4 
-                    lg:py-6 lg:px-10`
+                    lg:py-6 lg:px-9`
                 } onClick={onClick}>{content}</div>
             </div>
         </Link>
@@ -56,7 +57,7 @@ const Navbar = (): JSX.Element => {
                 {/* For Small Screens: Hamburger Menu */}
                 <div className="md:hidden">
                     <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                        <span className="text-white text-2xl align-middle">☰</span>
+                        <span className="text-white text-4xl align-middle">☰</span>
                     </button>
                 </div>
 
