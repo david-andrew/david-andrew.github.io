@@ -28,8 +28,8 @@ const NavbarButton = ({ content, href, active, onClick }: NavbarButtonProps) => 
         <Link href={href}>
             <div className={`relative cursor-pointer text-center font-quadon
                 m-2 text-white border-solid border-transparent hover:border-white border-2
-                lg:text-4xl 
-                md:text-2xl md:border-4
+                lg:text-4xl lg:border-4
+                md:text-2xl md:border-[3]
                 ${active ? "bg-accent" : ""}`}
             >
                 <div className={`
