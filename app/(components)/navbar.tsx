@@ -30,7 +30,7 @@ const NavbarButton = ({ content, href, active, onClick }: NavbarButtonProps) => 
                 m-2 text-white border-solid border-transparent hover:border-white border-2
                 lg:text-4xl 
                 md:text-2xl md:border-4
-                ${active ? "bg-blue-700" : ""}`}
+                ${active ? "bg-accent" : ""}`}
             >
                 <div className={`
                     py-3 px-4 
