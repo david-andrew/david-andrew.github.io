@@ -13,7 +13,7 @@ export default function Home() {
 
     <div className="flex flex-col pointer-events-none select-none justify-center fixed inset-0 w-full h-full -z-10 font-quadon text-center">
       <div style={{fontSize:'10vmin'}}>David-Andrew Samson</div>
-      <Image src={profile} alt='Image of David' className="mx-auto w-1/2" />
+      <Image src={profile} alt='Image of David' className="mx-auto" style={{ width: '50vmin'}} />
       <div style={{fontSize:'5vmin'}}>AI/ML - Music - Engineering</div>
     </div>
   )
