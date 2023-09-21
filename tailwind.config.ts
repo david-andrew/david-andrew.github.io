@@ -11,6 +11,13 @@ const config: Config = {
       backgroundColor: {
         'accent': 'var(--accent-color)',
       },
+      fontFamily: {
+        //TODO: bold/italic/etc variants
+        'quadon': ['Quadon'],
+        'arnhem': ['Arnhem'],
+        'gentona': ['Gentona'],
+        'dejavu': ['DejaVu'],
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
