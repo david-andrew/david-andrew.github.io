@@ -1,5 +1,5 @@
 "use client"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation'
 
@@ -19,10 +19,9 @@ interface NavbarButtonProps {
     content: string;
     href: string;
     active: boolean;
-    onClick?: () => void;
 }
 
-const NavbarButton = ({ content, href, active, onClick }: NavbarButtonProps) => {
+const NavbarButton = ({ content, href, active }: NavbarButtonProps) => {
 
     return (
         <Link href={href} draggable={false} className="select-none">
@@ -37,7 +36,7 @@ const NavbarButton = ({ content, href, active, onClick }: NavbarButtonProps) => 
                     py-3 px-4 
                     md:py-3 md:px-4 
                     lg:py-6 lg:px-9`
-                } onClick={onClick}>{content}</div>
+                }>{content}</div>
             </div>
         </Link>
     );
@@ -49,6 +48,11 @@ const NavbarButton = ({ content, href, active, onClick }: NavbarButtonProps) => 
 const Navbar = (): JSX.Element => {
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
     const pathname = usePathname();
+
+    //close the hamburger menu after the route changes
+    useEffect(() => {
+        setIsMenuOpen(false);
+    }, [pathname]);
 
     return (
         <div className="w-screen bg-black">
@@ -73,7 +77,7 @@ const Navbar = (): JSX.Element => {
             {isMenuOpen && (
                 <div className="md:hidden">
                     {navItems.map(item => (
-                        <NavbarButton key={item.href} content={item.content} href={item.href} active={item.href === pathname} onClick={() => setIsMenuOpen(false)} />
+                        <NavbarButton key={item.href} content={item.content} href={item.href} active={item.href === pathname} />
                     ))}
                 </div>
             )}
