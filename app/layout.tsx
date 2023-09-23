@@ -2,6 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Navbar } from './(components)/navbar'
+import { ColorPicker } from './(components)/color'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,6 +24,7 @@ export default function RootLayout({
           <div style={{height:'calc(100vh - var(--navbar-height))', overflow:'hidden'}}>
             {children}
           </div>
+          <ColorPicker />
         </div>
       </body>
     </html>
