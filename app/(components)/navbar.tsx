@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation'
 
@@ -43,47 +43,72 @@ const NavbarButton = ({ content, href, active }: NavbarButtonProps) => {
 }
 
 
+export const NavbarDummy = (): JSX.Element => <div style={{height: 'var(--navbar-height)'}}>&nbsp;</div>;
 
-
-const Navbar = (): JSX.Element => {
+export const Navbar = (): JSX.Element => {
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
     const pathname = usePathname();
-
+    
     //close the hamburger menu after the route changes
     useEffect(() => {
         setIsMenuOpen(false);
     }, [pathname]);
+    
+    // keep track of the height of the navbar
+    const navbarRef = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+        function handleResize() {
+            if (navbarRef.current) {
+                const height = navbarRef.current.offsetHeight;
+                document.documentElement.style.setProperty('--navbar-height', `${height}px`);
+            }
+        }
+        // set the initial height and update it on resize
+        handleResize();    
+        window.addEventListener('resize', handleResize);
+    
+        // Clean up the event listener when the component is unmounted
+        return () => { window.removeEventListener('resize', handleResize); };
+      }, []);
+    
+
 
     return (
-        <div className="w-screen bg-black">
-            <div className="flex flex-row md:justify-center justify-left px-4 py-2">
-                
-                {/* For Small Screens: Hamburger Menu Button */}
-                <div className="md:hidden">
-                    <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                        <span className="text-white text-4xl align-middle">☰</span>
-                    </button>
+        <>
+            {/* ---------------- Actual Navbar ---------------- */}
+            <div className="fixed w-screen bg-black" ref={navbarRef}>
+                <div className="flex flex-row md:justify-center justify-left px-4 py-2">
+                    
+                    {/* For Small Screens: Hamburger Menu Button */}
+                    <div className="md:hidden">
+                        <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                            <span className="text-white text-4xl align-middle">☰</span>
+                        </button>
+                    </div>
+
+                    {/* For Large Screens: Full Menu */}
+                    <div className="hidden md:flex">
+                        {navItems.map(item => (
+                            <NavbarButton key={item.href} content={item.content} href={item.href} active={item.href === pathname} />
+                        ))}
+                    </div>
                 </div>
 
-                {/* For Large Screens: Full Menu */}
-                <div className="hidden md:flex">
-                    {navItems.map(item => (
-                        <NavbarButton key={item.href} content={item.content} href={item.href} active={item.href === pathname} />
-                    ))}
-                </div>
+                {/* Dropdown menu for small screens */}
+                {isMenuOpen && (
+                    <div className="md:hidden bg-black w-full">
+                        {navItems.map(item => (
+                            <NavbarButton key={item.href} content={item.content} href={item.href} active={item.href === pathname} />
+                        ))}
+                    </div>
+                )}
             </div>
 
-            {/* Dropdown menu for small screens */}
-            {isMenuOpen && (
-                <div className="md:hidden">
-                    {navItems.map(item => (
-                        <NavbarButton key={item.href} content={item.content} href={item.href} active={item.href === pathname} />
-                    ))}
-                </div>
-            )}
+            {/* ---------------- Dummy Spacer ---------------- */}
+            <NavbarDummy />
 
-        </div>
+        </>
+
     );
 }
 
-export default Navbar;

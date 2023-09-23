@@ -9,6 +9,7 @@
 
 :root {
   --accent-color: #002d72;
+  --navbar-height: 100px; /* This will be overwritten right away */
 }
 
 body {
