@@ -7,7 +7,7 @@ import { getCookie, setCookie } from 'cookies-next'
 import { useHover } from 'usehooks-ts'
 
 
-const palette = ['#002d72', '#2d7200', '#720000', '#CF4520', '#e6b000', '#470A68', '#333333'];
+const palette = ['#002d72', '#2d7200', '#720000', '#cf4520', '#e6b000', '#470a68', '#333333'];
 
 const tooltip = "Select Accent Color. Color is saved in a cookie."
 
@@ -16,7 +16,7 @@ const PaletteColor = ({ color, onClick }: { color: string, onClick: () => void})
         <div
             className="
                 w-8 h-8 m-1
-                md:w-12 md:h-12 md:m-2 
+                lg:w-12 lg:h-12 lg:m-2 
                 rounded-sm cursor-pointer
             "
             title={tooltip}
@@ -37,7 +37,7 @@ export const ColorPicker = (): JSX.Element => {
     // check if the user had a cookie already set for the color
     useEffect(() => {
         const color = getCookie('color');
-        if (color) {
+        if (color && palette.includes(color.toLowerCase())) {
             document.documentElement.style.setProperty('--accent-color', color);
         }
     }, []);
@@ -87,7 +87,7 @@ export const ColorPicker = (): JSX.Element => {
                         <div className="
                             absolute -translate-x-full
                             p-1 -ml-2 border-2
-                            md:p-2 md:-ml-4 md:border-4
+                            lg:p-2 lg:-ml-4 lg:border-4
                             border-solid border-white 
                             bg-black -z-10 flex flex-row
                             "
