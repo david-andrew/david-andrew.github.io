@@ -26,8 +26,8 @@ const NavbarButton = ({ content, href, active }: NavbarButtonProps) => {
     return (
         <Link href={href} draggable={false} className="select-none">
             <div className={`relative cursor-pointer text-center font-quadon
-                m-2 text-white border-solid sm:border-white md:border-transparent hover:border-white border-2
-                text-xl
+                m-2 text-white border-solid sm:border-white md:border-transparent hover:border-white 
+                text-xl border-2
                 md:text-2xl md:border-3
                 lg:text-4xl lg:border-4
                 ${active ? "bg-accent" : ""}`}
