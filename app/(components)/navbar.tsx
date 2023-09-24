@@ -76,21 +76,23 @@ export const Navbar = (): JSX.Element => {
     return (
         <>
             {/* ---------------- Actual Navbar ---------------- */}
-            <div className="fixed w-screen bg-black" ref={navbarRef}>
-                <div className="flex flex-row md:justify-center justify-left px-4 py-2">
-                    
-                    {/* For Small Screens: Hamburger Menu Button */}
-                    <div className="md:hidden">
-                        <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                            <span className="text-white text-4xl align-middle">☰</span>
-                        </button>
-                    </div>
+            <div className="fixed w-screen bg-black" >
+                <div ref={navbarRef}>
+                    <div className="flex flex-row md:justify-center justify-left px-4 py-2">
+                        
+                        {/* For Small Screens: Hamburger Menu Button */}
+                        <div className="md:hidden">
+                            <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                                <span className="text-white text-4xl align-middle">☰</span>
+                            </button>
+                        </div>
 
-                    {/* For Large Screens: Full Menu */}
-                    <div className="hidden md:flex">
-                        {navItems.map(item => (
-                            <NavbarButton key={item.href} content={item.content} href={item.href} active={item.href === pathname} />
-                        ))}
+                        {/* For Large Screens: Full Menu */}
+                        <div className="hidden md:flex">
+                            {navItems.map(item => (
+                                <NavbarButton key={item.href} content={item.content} href={item.href} active={item.href === pathname} />
+                            ))}
+                        </div>
                     </div>
                 </div>
 
