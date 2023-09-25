@@ -46,10 +46,10 @@ export const ColorPicker = (): JSX.Element => {
     useEffect(() => setIsMenuOpen(false), [pathname]);
     
     return (
-        <div className="fixed bottom-0 right-0 w-full flex flex-row-reverse" style={{height:'var(--navbar-height)'}}>
+        <div className="fixed bottom-0 right-0 w-full flex flex-row-reverse pointer-events-none" style={{height:'var(--navbar-height)'}}>
             <div className="flex flex-row justify-center" style={{width:'var(--navbar-height)', height:'var(--navbar-height)'}}>
                 <div className="flex flex-col justify-center">
-                    <div ref={hoverRef} onClick={() => setIsMenuOpen(!isMenuOpen)} className="hidden md:block hover:cursor-pointer">
+                    <div ref={hoverRef} onClick={() => setIsMenuOpen(!isMenuOpen)} className="hidden md:block hover:cursor-pointer pointer-events-auto">
                         { (isHover ? (
                             <SolidSwatchIcon 
                                 title={tooltip}
@@ -76,6 +76,7 @@ export const ColorPicker = (): JSX.Element => {
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                         title={tooltip}
                         className="
+                            pointer-events-auto
                             lg:h-16 lg:w-16
                             md:h-12 md:w-12
                             sm:h-8 sm:w-8
