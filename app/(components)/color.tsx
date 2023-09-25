@@ -3,8 +3,9 @@ import { SwatchIcon as SolidSwatchIcon } from "@heroicons/react/24/solid";
 import { SwatchIcon as OutlineSwatchIcon  } from "@heroicons/react/24/outline";
 import { useRef, useState, useEffect } from "react";
 import { usePathname } from 'next/navigation'
-import { getCookie, setCookie } from 'cookies-next'
+import { getCookie, setCookie, deleteCookie } from 'cookies-next'
 import { useHover } from 'usehooks-ts'
+import { Checkbox } from "./ui";
 
 
 const palette = ['#002d72', '#2d7200', '#720000', '#cf4520', '#e6b000', '#470a68', '#333333'];
@@ -30,6 +31,7 @@ const PaletteColor = ({ color, onClick }: { color: string, onClick: () => void})
 export const ColorPicker = (): JSX.Element => {
     const hoverRef = useRef(null)
     const isHover = useHover(hoverRef)
+    const [savePalette, setSavePalette] = useState<boolean>(false);
     
     const pathname = usePathname();
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -39,6 +41,7 @@ export const ColorPicker = (): JSX.Element => {
         const color = getCookie('color');
         if (color && palette.includes(color.toLowerCase())) {
             document.documentElement.style.setProperty('--accent-color', color);
+            setSavePalette(true);
         }
     }, []);
 
@@ -90,16 +93,31 @@ export const ColorPicker = (): JSX.Element => {
                             p-1 -ml-2 border-2
                             lg:p-2 lg:-ml-4 lg:border-4
                             border-solid border-white 
-                            bg-black -z-10 flex flex-row
+                            bg-black -z-10 flex flex-col
                             pointer-events-auto
                             "
                         >
-                            {palette.map(color => (
-                                <PaletteColor color={color} key={color} onClick={() => {
-                                    document.documentElement.style.setProperty('--accent-color', color)
-                                    setCookie('color', color)
-                                }} />
-                            ))}
+                            <Checkbox 
+                                label="Save preference to cookie"
+                                isChecked={savePalette}
+                                onChange={() => {
+                                    setSavePalette(!savePalette);
+
+                                    // delete the cookie if the user unchecks the checkbox, or set the cookie
+                                    if (savePalette) deleteCookie('color', {sameSite: 'strict'});
+                                    else setCookie('color', document.documentElement.style.getPropertyValue('--accent-color'), {sameSite: 'strict'});
+                                }}
+                                className="mb-2"
+                            />
+
+                            <div className="flex flex-row">
+                                {palette.map(color => (
+                                    <PaletteColor color={color} key={color} onClick={() => {
+                                        document.documentElement.style.setProperty('--accent-color', color);
+                                        if (savePalette) setCookie('color', color, {sameSite: 'strict'});
+                                    }} />
+                                ))}
+                            </div>
                         </div>
                     )}
                 </div>
