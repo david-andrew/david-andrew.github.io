@@ -1,5 +1,20 @@
 "use client"
 import { useSearchParams } from "next/navigation"
+import { projects, ProjectContent } from "./summaries";
+import { NavbarDummy } from "../(components)/navbar";
+
+
+
+const Container = ({children}:{children:React.ReactNode}) => {
+    return (
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-[1048px]">
+        {children}
+      </div>
+    );
+  };
+
+
+
 
 export default function Test() {
     const maxPage = 10; //TODO: get this from the projects pages
@@ -13,9 +28,11 @@ export default function Test() {
     if (page > maxPage) page = maxPage;
     
     return (
-        <div>
-            <h1>Projects Page</h1>
-            <h2>Page: {page}</h2>
-        </div>
+        <Container>
+            {projects.map((project: ProjectContent) => (
+                <div className="text-7xl" key={project.title}>{project.title}</div>
+            ))}
+            <NavbarDummy />
+        </Container>
     )
 }
