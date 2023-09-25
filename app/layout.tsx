@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="w-screen h-screen">
           <Navbar />
-          <div style={{height:'calc(100vh - var(--navbar-height))', overflow:'hidden'}}>
+          <div style={{height:'calc(100vh - var(--navbar-height))'}}>
             {children}
           </div>
           <ColorPicker />
