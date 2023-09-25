@@ -91,6 +91,7 @@ export const ColorPicker = (): JSX.Element => {
                             lg:p-2 lg:-ml-4 lg:border-4
                             border-solid border-white 
                             bg-black -z-10 flex flex-row
+                            pointer-events-auto
                             "
                         >
                             {palette.map(color => (
