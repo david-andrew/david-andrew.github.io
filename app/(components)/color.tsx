@@ -78,6 +78,7 @@ export const ColorPicker = (): JSX.Element => {
                     <OutlineSwatchIcon
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                         title={tooltip}
+                        //TODO: fixed max-md:bottom-3 max-md:right-3
                         className="
                             pointer-events-auto
                             lg:h-16 lg:w-16
@@ -95,6 +96,7 @@ export const ColorPicker = (): JSX.Element => {
                             border-solid border-white 
                             bg-black -z-10 flex flex-col
                             pointer-events-auto
+                            max-md:bottom-2
                             "
                         >
                             <Checkbox 
@@ -107,7 +109,7 @@ export const ColorPicker = (): JSX.Element => {
                                     if (savePalette) deleteCookie('color', {sameSite: 'strict'});
                                     else setCookie('color', document.documentElement.style.getPropertyValue('--accent-color'), {sameSite: 'strict'});
                                 }}
-                                className="mb-2"
+                                className="m-1 lg:ml-2 font-gentona text-md sm:text-xl"
                             />
 
                             <div className="flex flex-row">
