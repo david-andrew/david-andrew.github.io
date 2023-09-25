@@ -21,7 +21,7 @@ import terminal_ray_tracer from '../(images)/projects/terminal_ray_tracer.png'
 
 export type ProjectContent = {
     title: string
-    imgSrc?: StaticImageData //image to display on summary card
+    imgSrc: StaticImageData //image to display on summary card
     summary: string //blurb for this card
     tags?: string[] //notable things related to this project
 } & (
