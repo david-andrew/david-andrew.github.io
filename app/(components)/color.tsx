@@ -17,7 +17,7 @@ const PaletteColor = ({ color, onClick }: { color: string, onClick: () => void})
             className="
                 w-8 h-8 m-1
                 lg:w-12 lg:h-12 lg:m-2 
-                rounded-sm cursor-pointer
+                rounded-sm cursor-pointer pointer-events-auto
             "
             title={tooltip}
             style={{backgroundColor:color}}
