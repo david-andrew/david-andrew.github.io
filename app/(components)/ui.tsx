@@ -45,3 +45,14 @@ export const Checkbox = ({ label, isChecked, onChange, className }: CheckboxProp
         </div>
     );
 }
+
+
+
+// TODO: move to components/utilities
+export const Container = ({children}:{children:React.ReactNode}) => {
+    return (
+        <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-[1048px]">
+          {children}
+        </div>
+    );
+};

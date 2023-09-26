@@ -4,16 +4,7 @@ import Image, { StaticImageData } from 'next/image'
 import { useRouter } from 'next/navigation';
 import { projects, ProjectContent } from "./summaries";
 import { NavbarDummy } from "../(components)/navbar";
-
-
-// TODO: move to components/utilities
-const Container = ({children}:{children:React.ReactNode}) => {
-    return (
-        <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-[1048px]">
-          {children}
-        </div>
-    );
-};
+import { Container } from "../(components)/ui";
 
 type CardProps = {
     imgSrc: StaticImageData;
