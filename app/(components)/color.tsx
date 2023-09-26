@@ -7,7 +7,6 @@ import { getCookie, setCookie, deleteCookie } from 'cookies-next'
 import { useHover } from 'usehooks-ts'
 import { Checkbox } from "./ui";
 
-
 const palette = ['#002d72', '#2d7200', '#720000', '#cf4520', '#e6b000', '#470a68', '#333333'];
 
 const tooltip = "Select Accent Color. Color is saved in a cookie."
@@ -36,12 +35,16 @@ export const ColorPicker = (): JSX.Element => {
     const pathname = usePathname();
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
-    // check if the user had a cookie already set for the color
+    // check if the user had a cookie already set for the color, else set the default color
+    // accent color starts at black on initial page load, and is then set here
     useEffect(() => {
         const color = getCookie('color');
         if (color && palette.includes(color.toLowerCase())) {
             document.documentElement.style.setProperty('--accent-color', color);
             setSavePalette(true);
+        } else {
+            document.documentElement.style.setProperty('--accent-color', palette[0]);
+            setSavePalette(false);
         }
     }, []);
 

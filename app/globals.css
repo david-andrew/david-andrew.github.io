@@ -8,8 +8,8 @@
 @import '(fonts)/dejavu/dejavu.css';
 
 :root {
-  --accent-color: #002d72;
-  --navbar-height: 100px; /* This will be overwritten right away */
+  --accent-color: #000000;  /* This will be overwritten right away */
+  --navbar-height: 100px;     /* This will be overwritten right away */
 }
 
 body {
