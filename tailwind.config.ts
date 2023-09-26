@@ -14,6 +14,9 @@ const config: Config = {
       textColor: {
         'accent': 'var(--accent-color)',
       },
+      fill: {
+        'accent': 'var(--accent-color)',
+      },
       fontFamily: {
         //TODO: bold/italic/etc variants
         'quadon': ['Quadon'],
