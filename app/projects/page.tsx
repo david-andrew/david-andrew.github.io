@@ -1,8 +1,6 @@
-"use client"
-// import { useSearchParams } from "next/navigation"
 import Image, { StaticImageData } from 'next/image'
-import { useRouter } from 'next/navigation';
-import { projects, ProjectContent } from "./summaries";
+import Link from 'next/link';
+import { getProjects, ProjectMeta } from "./projects";
 import { NavbarDummy } from "../(components)/navbar";
 import { Container } from "../(components)/ui";
 
@@ -41,41 +39,29 @@ const Card = ({ imgSrc, title, lastUpdated, description, tags, onClick }: CardPr
 
 
 
-export default function Test() {
-    // const maxPage = 10; //TODO: get this from the projects pages
-
-    // const params = useSearchParams();
-
-    // // get the current page number from the url (or default to 1)
-    // let page: number = parseInt(params.get("page") ?? '');
-    // if (isNaN(page)) page = 1;
-    // if (page < 1) page = 1;
-    // if (page > maxPage) page = maxPage;
-
-    const router = useRouter();
-    
+export const Projects = async (): Promise<JSX.Element> => {
+// export const Projects = (): JSX.Element => {
+    // const router = useRouter();
+    const projects = await getProjects();
     return (
         <Container>
             <div className="flex flex-col gap-2">
-                {projects.map((project: ProjectContent) => (
-                    <Card
-                        key={project.title}
-                        imgSrc={project.imgSrc}
-                        title={project.title}
-                        lastUpdated={project.lastUpdated ?? 'unknown'}
-                        description={project.summary}
-                        tags={project.tags ?? []}
-                        onClick={() => {
-                            if (project.internalLink) {
-                                router.push(project.internalLink);
-                            } else if (project.externalLink) {
-                                window.open(project.externalLink, '_blank');
-                            }
-                        }}
-                    />
+                {projects.map(({name:route, content:project}) => (
+                    <Link href={`/projects/${route}`}>
+                        <Card
+                            key={project.title}
+                            imgSrc={project.imgSrc}
+                            title={project.title}
+                            lastUpdated={project.lastUpdated ?? 'unknown'}
+                            description={project.summary}
+                            tags={project.tags ?? []}
+                        />
+                    </Link>
                     ))}
             </div>
             <NavbarDummy />
         </Container>
     )
 }
+
+export default Projects;

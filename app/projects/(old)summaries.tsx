@@ -19,7 +19,7 @@ import terminal_ray_tracer from '../(images)/projects/terminal_ray_tracer.png'
 
 //by making this a compiled ts file, we guarantee all pieces of content are present when building
 
-export type ProjectContent = {
+export type ProjectMeta = {
     title: string
     imgSrc: StaticImageData //image to display on summary card
     summary: string //blurb for this card
@@ -32,7 +32,7 @@ export type ProjectContent = {
     { internalLink: string, externalLink?: never } | { externalLink: string, internalLink?: never }
 );
 
-export const projects: ProjectContent[] = [
+export const projects: ProjectMeta[] = [
     {
         title: 'Dewy Programming Language',
         github: 'dewy',
@@ -240,6 +240,6 @@ export const projects: ProjectContent[] = [
 ]
 
 //map so that projects can be accessed via their location on the site
-export const projectRouteMap: { [route: string]: ProjectContent } = Object.fromEntries(
+export const projectRouteMap: { [route: string]: ProjectMeta } = Object.fromEntries(
     projects.filter((p) => p.internalLink !== undefined).map((p) => [p.internalLink!, p])
 )
