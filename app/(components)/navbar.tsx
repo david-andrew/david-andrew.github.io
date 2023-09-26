@@ -49,6 +49,14 @@ export const Navbar = (): JSX.Element => {
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
     const pathname = usePathname();
     
+    // function to determine which navbar button is active 
+    const isActiveButton = (buttonRoute:string) => {
+        if (buttonRoute === '/') return pathname === '/';    
+        if (buttonRoute === pathname) return true;    
+        if (pathname.startsWith(`${buttonRoute}/`)) return true;
+        return false;
+    }
+    
     //close the hamburger menu after the route changes
     useEffect(() => {
         setIsMenuOpen(false);
@@ -90,7 +98,7 @@ export const Navbar = (): JSX.Element => {
                         {/* For Large Screens: Full Menu */}
                         <div className="hidden md:flex">
                             {navItems.map(item => (
-                                <NavbarButton key={item.href} content={item.content} href={item.href} active={item.href === pathname} />
+                                <NavbarButton key={item.href} content={item.content} href={item.href} active={isActiveButton(item.href)} />
                             ))}
                         </div>
                     </div>
@@ -100,7 +108,7 @@ export const Navbar = (): JSX.Element => {
                 {isMenuOpen && (
                     <div className="md:hidden bg-black w-full">
                         {navItems.map(item => (
-                            <NavbarButton key={item.href} content={item.content} href={item.href} active={item.href === pathname} />
+                            <NavbarButton key={item.href} content={item.content} href={item.href} active={isActiveButton(item.href)} />
                         ))}
                     </div>
                 )}
