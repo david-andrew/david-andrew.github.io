@@ -1,4 +1,4 @@
-import { ProjectMeta } from "../(old)summaries";
+import { ProjectMeta } from "../projects";
 import terminal_ray_tracer from '../../(images)/projects/terminal_ray_tracer.png'
 
 
