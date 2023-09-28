@@ -1,8 +1,6 @@
 import Image, { StaticImageData } from 'next/image'
 import Link from 'next/link';
-import { getProjects, ProjectMeta } from "./projects";
-import { NavbarDummy } from "../(components)/navbar";
-import { Container } from "../(components)/ui";
+import { getProjects } from "./projects";
 
 type CardProps = {
     imgSrc: StaticImageData;
@@ -39,29 +37,47 @@ const Card = ({ imgSrc, title, lastUpdated, description, tags, onClick }: CardPr
 
 
 
-export const Projects = async (): Promise<JSX.Element> => {
-// export const Projects = (): JSX.Element => {
-    // const router = useRouter();
+export const Projects = async ({sort}:{sort:string}): Promise<JSX.Element> => {
     const projects = await getProjects();
     return (
-        <Container>
-            <div className="flex flex-col gap-2">
-                {projects.map(({name:route, content:project}) => (
-                    <Link href={`/projects/${route}`}>
-                        <Card
-                            key={project.title}
-                            imgSrc={project.imgSrc}
-                            title={project.title}
-                            lastUpdated={project.lastUpdated ?? 'unknown'}
-                            description={project.summary}
-                            tags={project.tags ?? []}
-                        />
-                    </Link>
-                    ))}
-            </div>
-            <NavbarDummy />
-        </Container>
+        <>
+            <h1 className="text-4xl font-quadon">{sort}</h1>
+            {projects.map(({name:route, content:project}) => (
+                <Link href={`/projects/${route}`} key={project.title}>
+                    <Card
+                        imgSrc={project.imgSrc}
+                        title={project.title}
+                        lastUpdated={project.lastUpdated ?? 'unknown'}
+                        description={project.summary}
+                        tags={project.tags ?? []}
+                    />
+                </Link>
+                ))}
+        </>
+
     )
 }
 
-export default Projects;
+
+
+
+
+
+
+
+const Page = ({searchParams}:{searchParams:{ [key: string]: string | string[] | undefined }}):JSX.Element => {
+    let text:string;
+    if (searchParams.sort) {
+        text = searchParams.sort as string;
+    } else {
+        text = 'All Projects';
+    }
+    return (
+        <Projects sort={text} />
+    )
+}
+
+export default Page;
+
+
+
