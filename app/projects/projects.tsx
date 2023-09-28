@@ -1,6 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 import { StaticImageData } from 'next/image';
+import { SortOption } from './sorttypes';
+
+
 
 export type ProjectMeta = {
     title: string
@@ -23,7 +26,7 @@ const isProjectContent = (obj: any): obj is ProjectMeta => {
         && (obj.internalLink !== undefined || obj.externalLink !== undefined);
 }
 
-export const getProjects = (): Promise<{ name: string, content: ProjectMeta }[]> => {
+export const getProjects = (sort:SortOption): Promise<{ name: string, content: ProjectMeta }[]> => {
     //find folders that contain a page.tsx file that exports a const value `meta` of type ProjectMetadata
     const root = 'app/projects';
     const folders = fs.readdirSync(root).filter(item => fs.statSync(path.join(root, item)).isDirectory());

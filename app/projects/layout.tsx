@@ -4,9 +4,8 @@ import { NavbarDummy } from "../(components)/navbar"
 import { Dropdown } from "../(components)/dropdown"
 import { usePathname, useRouter } from "next/navigation"
 import { useState } from "react"
+import { SortOption, sortOptionsList } from "./sorttypes"
 
-export const sortOptionsList = ['Recommended', 'Date (New-Old)', 'Date (Old-New)', 'Alphabetical (A-Z)', 'Alphabetical (Z-A)'] as const;
-export type SortOption = typeof sortOptionsList[number];
 const ProjectsLayout = ({children}:{ children:React.ReactNode }): JSX.Element => {
 
     const path = usePathname()
@@ -23,7 +22,7 @@ const ProjectsLayout = ({children}:{ children:React.ReactNode }): JSX.Element =>
                 options={sortOptionsList} 
                 onClick={(selectedOption) => {
                     setSelectedSortOption(selectedOption);
-                    router.push(`/projects?sort=${sortOptionsList.indexOf(selectedOption)}`)
+                    router.push(`/projects?sort=${selectedOption}`)
                 }}
             />}
             {children}

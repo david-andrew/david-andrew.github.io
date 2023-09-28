@@ -1,6 +1,7 @@
 import Image, { StaticImageData } from 'next/image'
 import Link from 'next/link';
 import { getProjects } from "./projects";
+import { SortOption, isSortOption } from './sorttypes';
 
 type CardProps = {
     imgSrc: StaticImageData;
@@ -37,11 +38,12 @@ const Card = ({ imgSrc, title, lastUpdated, description, tags, onClick }: CardPr
 
 
 
-export const Projects = async ({sort}:{sort:string}): Promise<JSX.Element> => {
-    const projects = await getProjects();
+const Projects = async ({searchParams}:{searchParams:{ [key: string]: string | string[] | undefined }}): Promise<JSX.Element> => {
+    let sort: SortOption = isSortOption(searchParams.sort) ? searchParams.sort : 'Recommended';
+    const projects = await getProjects(sort);
     return (
         <>
-            <h1 className="text-4xl font-quadon">{sort}</h1>
+            <h1 className="text-4xl font-quadon">Debug:{sort}</h1>
             {projects.map(({name:route, content:project}) => (
                 <Link href={`/projects/${route}`} key={project.title}>
                     <Card
@@ -52,32 +54,13 @@ export const Projects = async ({sort}:{sort:string}): Promise<JSX.Element> => {
                         tags={project.tags ?? []}
                     />
                 </Link>
-                ))}
+            ))}
         </>
 
     )
 }
 
-
-
-
-
-
-
-
-const Page = ({searchParams}:{searchParams:{ [key: string]: string | string[] | undefined }}):JSX.Element => {
-    let text:string;
-    if (searchParams.sort) {
-        text = searchParams.sort as string;
-    } else {
-        text = 'All Projects';
-    }
-    return (
-        <Projects sort={text} />
-    )
-}
-
-export default Page;
+export default Projects;
 
 
 
