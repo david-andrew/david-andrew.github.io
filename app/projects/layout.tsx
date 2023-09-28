@@ -16,6 +16,7 @@ const ProjectsLayout = ({children}:{ children:React.ReactNode }): JSX.Element =>
 
     return (
         <Container>
+            {/* Only show dropdown on /projects, but not children */}
             {path==='/projects' && <Dropdown
                 text="Sort By"
                 selected={selectedSortOption}

@@ -3,7 +3,34 @@ import path from 'path';
 import { StaticImageData } from 'next/image';
 import { SortOption } from './sorttypes';
 
-
+const recommendedOrder: string[] = [
+    'dewy',
+    'website',
+    'so_voice',
+    'terminal_ray_tracer',
+    'timelapse',
+    'musical_dl',
+    'ensemble_peabody',
+    'blob_opera',
+    'composer',
+    'compositions',
+    'foxing_animatronic',
+    'mechatronics',
+    'prs19',
+    'wse18',
+    'drawbot',
+    'pongbot',
+    'robojay',
+    'escort_mission',
+    'rewind',
+    'boat_simulator',
+    'ziggy_v',
+    'mehve',
+    'rocketry',
+    'uskipspoilers',
+    'bueller_board',
+];
+const recommendedOrderIndices = new Map(recommendedOrder.map((route, index) => [route, index]));
 
 export type ProjectMeta = {
     title: string
@@ -34,6 +61,27 @@ export const getProjects = (sort:SortOption): Promise<{ name: string, content: P
         const files = fs.readdirSync(`app/projects/${name}`);
         return files.includes('page.tsx');
     });
+
+    // sort projects by sort option
+    if (sort === 'Recommended') {
+        projects.sort((a, b) => {
+            const aIndex = recommendedOrderIndices.get(a);
+            const bIndex = recommendedOrderIndices.get(b);
+            if (aIndex === undefined && bIndex === undefined) return 0;
+            if (aIndex === undefined) return 1;
+            if (bIndex === undefined) return -1;
+            return aIndex - bIndex;
+        });
+    } else if (sort === 'Alphabetical (A-Z)') {
+        projects.sort((a, b) => a.localeCompare(b));
+    } else if (sort === 'Alphabetical (Z-A)') {
+        projects.sort((a, b) => b.localeCompare(a));
+    } else if (sort === 'Date (New-Old)') {
+        //TODO
+    } else if (sort === 'Date (Old-New)') {
+        //TODO
+    }
+
     const projectsPromises = projects.map(async (name) => {
         // Dynamically import the project's page.tsx
         const projectModule = await import(`./${name}/page`);
