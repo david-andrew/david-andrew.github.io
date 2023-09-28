@@ -6,16 +6,17 @@ interface DropdownProps<T extends string> {
     text: string;
     selected?: T;
     options: readonly T[];
-    onClick: (selectedOption: T) => void;
+    onClick?: (selectedOption: T) => void;
+    className?: string;
 }
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-export const Dropdown = <T extends string>({ text, selected, options, onClick }: DropdownProps<T>): JSX.Element => {
+export const Dropdown = <T extends string>({ text, selected, options, onClick, className  }: DropdownProps<T>): JSX.Element => {
     return (
-        <Menu as="div" className="relative inline-block text-left">
+        <Menu as="div" className={`relative inline-block text-left ${className}`}>
             <div>
                 <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                     {text}{selected && `: ${selected}`}
@@ -38,7 +39,7 @@ export const Dropdown = <T extends string>({ text, selected, options, onClick }:
                             <Menu.Item key={index}>
                                 {({ active }) => (
                                     <button
-                                        onClick={() => onClick(option)}
+                                        onClick={() => onClick && onClick(option)}
                                         className={classNames(
                                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                                             'block w-full px-4 py-2 text-left text-sm'

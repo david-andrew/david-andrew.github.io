@@ -84,7 +84,7 @@ export const Navbar = (): JSX.Element => {
     return (
         <>
             {/* ---------------- Actual Navbar ---------------- */}
-            <div className="fixed w-screen bg-black" >
+            <div className="fixed w-screen bg-black z-50" >
                 <div ref={navbarRef}>
                     <div className="flex flex-row md:justify-center justify-left px-4 py-2">
                         

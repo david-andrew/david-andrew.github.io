@@ -43,7 +43,6 @@ const Projects = async ({searchParams}:{searchParams:{ [key: string]: string | s
     const projects = await getProjects(sort);
     return (
         <>
-            <h1 className="text-4xl font-quadon">Debug:{sort}</h1>
             {projects.map(({name:route, content:project}) => (
                 <Link href={`/projects/${route}`} key={project.title}>
                     <Card
