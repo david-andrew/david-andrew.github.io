@@ -90,9 +90,9 @@ export const ProjectsList = ({projects}:{projects:FetchedProjectMeta[]}): JSX.El
             return aIndex - bIndex;
         });
     } else if (selectedSortOption === 'Alphabetical (A-Z)') {
-        projects.sort((a, b) => a.route.localeCompare(b.route));
+        projects.sort((a, b) => a.title.localeCompare(b.title));
     } else if (selectedSortOption === 'Alphabetical (Z-A)') {
-        projects.sort((a, b) => b.route.localeCompare(a.route));
+        projects.sort((a, b) => b.title.localeCompare(a.title));
     } else if (selectedSortOption === 'Date (New-Old)') {
         projects.sort((a, b) => {
             if (a.timestamp === undefined && b.timestamp === undefined) return 0;
