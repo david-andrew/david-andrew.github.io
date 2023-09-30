@@ -2,7 +2,7 @@
 import React, { useState } from "react"
 import Image, { StaticImageData } from 'next/image'
 import Link from 'next/link';
-import { RoutedProjectMeta } from "./types";
+import { FetchedProjectMeta } from "./types";
 import { SortOption, sortOptionsList } from "./types";
 import { Dropdown } from "../(components)/dropdown";
 
@@ -70,7 +70,7 @@ const Card = ({ imgSrc, title, lastUpdated, description, tags, onClick }: CardPr
 };
 
 
-export const ProjectsList = ({projects}:{projects:RoutedProjectMeta[]}): JSX.Element => {
+export const ProjectsList = ({projects}:{projects:FetchedProjectMeta[]}): JSX.Element => {
 
     const [selectedSortOption, setSelectedSortOption] = useState<SortOption>(sortOptionsList[0])
     

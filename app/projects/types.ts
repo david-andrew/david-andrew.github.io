@@ -13,10 +13,11 @@ export type ProjectMeta = {
     { internalLink: string, externalLink?: never } | { externalLink: string, internalLink?: never }
 );
 
-export type RoutedProjectMeta = ProjectMeta & { route: string };
+export type FetchedProjectMeta = ProjectMeta & { route: string, timestamp: Date };
 
 export const isProjectContent = (obj: any): obj is ProjectMeta => {
-    return obj.title !== undefined 
+    return obj !== undefined
+        && obj.title !== undefined 
         && obj.imgSrc !== undefined 
         && obj.summary !== undefined 
         && (obj.github !== undefined || obj.lastUpdated !== undefined) 

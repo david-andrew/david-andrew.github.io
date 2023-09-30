@@ -1,11 +1,14 @@
 import fs from 'fs';
 import path from 'path';
-import { RoutedProjectMeta, isProjectContent } from './types';
+import { FetchedProjectMeta, isProjectContent } from './types';
 import { ProjectsList } from './projects';
 
+//TODO: probably move to utilities
+// used to type-correctly filter (T|undefined)[] to T[]
+const isDefined = <T,>(value: T | undefined): value is T => value !== undefined;
 
 
-export const getProjects = async (): Promise<RoutedProjectMeta[]> => {
+export const getProjects = async (): Promise<FetchedProjectMeta[]> => {
     //find folders that contain a page.tsx file that exports a const value `meta` of type ProjectMetadata
     const root = 'app/projects';
     const folders = fs.readdirSync(root).filter(item => fs.statSync(path.join(root, item)).isDirectory());
@@ -14,15 +17,21 @@ export const getProjects = async (): Promise<RoutedProjectMeta[]> => {
         return files.includes('page.tsx');
     });
 
-    const projectsPromises = await Promise.all(projectPaths.map(async (name) => {
-        // Dynamically import the project's page.tsx
-        const projectModule = await import(`./${name}/page`);
-        if (projectModule.meta && isProjectContent(projectModule.meta)) {
-            return {...projectModule.meta, route:name} as RoutedProjectMeta;
-        }
-    }))
+    const projectPromises = projectPaths.map(
+        async (name): Promise<FetchedProjectMeta|undefined> => {
+            // Dynamically import the project's page.tsx
+            const projectModule = await import(`./${name}/page`);
+            const meta = projectModule.meta;
+            if (!isProjectContent(meta)) { return undefined }
 
-    return projectsPromises.filter(Boolean) as RoutedProjectMeta[];
+            //TODO: fetch the last updated time base on github api
+
+            return {...meta, route:name, timestamp:new Date()};
+        }
+    )
+    
+    const projects = (await Promise.all(projectPromises)).filter(isDefined);
+    return projects;
 }
 
 
