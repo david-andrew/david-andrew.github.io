@@ -12,21 +12,33 @@ export const getProjects = async (): Promise<FetchedProjectMeta[]> => {
     //find folders that contain a page.tsx file that exports a const value `meta` of type ProjectMetadata
     const root = 'app/projects';
     const folders = fs.readdirSync(root).filter(item => fs.statSync(path.join(root, item)).isDirectory());
-    const projectPaths = folders.filter((name) => {
-        const files = fs.readdirSync(`app/projects/${name}`);
+    const projectPaths = folders.filter((route) => {
+        const files = fs.readdirSync(`app/projects/${route}`);
         return files.includes('page.tsx');
     });
 
     const projectPromises = projectPaths.map(
-        async (name): Promise<FetchedProjectMeta|undefined> => {
+        async (route): Promise<FetchedProjectMeta|undefined> => {
             // Dynamically import the project's page.tsx
-            const projectModule = await import(`./${name}/page`);
+            const projectModule = await import(`./${route}/page`);
             const meta = projectModule.meta;
             if (!isProjectContent(meta)) { return undefined }
 
-            //TODO: fetch the last updated time base on github api
+            // fetch the last updated time base on github api
+            let timestamp: Date | string | undefined = await (async () => {
+                if (meta.github === undefined) return meta.lastUpdated
+                const res = await fetch(`https://api.github.com/repos/david-andrew/${meta.github}/commits`);
+                if (!res.ok) return
+                const commits = await res.json();
+                if (!Array.isArray(commits)) return
+                const latestCommit = commits[0];
+                if (!latestCommit) return
+                const timestamp = new Date(latestCommit.commit.author.date);
+                return timestamp;
+            }
+            )();
 
-            return {...meta, route:name, timestamp:new Date()};
+            return {...meta, route, timestamp};
         }
     )
     

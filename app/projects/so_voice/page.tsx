@@ -1,4 +1,4 @@
-import { ProjectMeta } from "../(old)summaries";
+import { ProjectMeta } from "../types";
 import ye_arlington_musicke_lab_logo from '../../(images)/projects/YeArlingtonMusickeLabLogo.png'
 
 

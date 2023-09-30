@@ -13,7 +13,7 @@ export type ProjectMeta = {
     { internalLink: string, externalLink?: never } | { externalLink: string, internalLink?: never }
 );
 
-export type FetchedProjectMeta = ProjectMeta & { route: string, timestamp: Date };
+export type FetchedProjectMeta = ProjectMeta & { route: string, timestamp: Date|string|undefined };
 
 export const isProjectContent = (obj: any): obj is ProjectMeta => {
     return obj !== undefined

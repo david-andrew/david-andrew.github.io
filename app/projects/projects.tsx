@@ -39,13 +39,22 @@ const recommendedOrderIndices = new Map(recommendedOrder.map((route, index) => [
 type CardProps = {
     imgSrc: StaticImageData;
     title: string;
-    lastUpdated: string;
+    timestamp: Date | string | undefined;
     description: string;
     tags: string[];
     onClick?: () => void;
 };
 
-const Card = ({ imgSrc, title, lastUpdated, description, tags, onClick }: CardProps) => {
+const Card = ({ imgSrc, title, timestamp, description, tags, onClick }: CardProps) => {
+    
+    // convert the timestamp to a string
+    const lastUpdated: string = (() => {
+        if (timestamp === undefined) return 'Unknown';
+        if (typeof timestamp === 'string') return timestamp;
+        return timestamp.toLocaleDateString('en-US', {year: 'numeric', month: 'long'});
+    })();
+
+
     return (
         <div 
             className="
@@ -104,12 +113,12 @@ export const ProjectsList = ({projects}:{projects:FetchedProjectMeta[]}): JSX.El
                 options={sortOptionsList} 
                 onClick={(selectedOption) => setSelectedSortOption(selectedOption)}
             />
-            {projects.map(({route, imgSrc, title, lastUpdated, summary, tags}) => (
+            {projects.map(({route, imgSrc, title, timestamp, summary, tags}) => (
                 <Link href={`/projects/${route}`} key={route}>
                     <Card
                         imgSrc={imgSrc}
                         title={title}
-                        lastUpdated={lastUpdated ?? 'unknown'}
+                        timestamp={timestamp}
                         description={summary}
                         tags={tags ?? []}
                     />
