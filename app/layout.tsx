@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Navbar } from './(components)/navbar'
 import { ColorPicker } from './(components)/color'
+import { ProjectsContextProvider } from './projects/context'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,7 +19,9 @@ const RootLayout = ({children}: {children: React.ReactNode}): JSX.Element => {
             <div className="w-screen h-screen">
             <Navbar />
             <div style={{height:'calc(100vh - var(--navbar-height))'}}>
-                {children}
+                <ProjectsContextProvider>
+                    {children}
+                </ProjectsContextProvider>
             </div>
             <ColorPicker />
             </div>

@@ -1,9 +1,8 @@
 "use client"
-import React, { useState } from "react"
 import Image, { StaticImageData } from 'next/image'
 import Link from 'next/link';
-import { FetchedProjectMeta } from "./types";
-import { SortOption, sortOptionsList } from "./types";
+import { FetchedProjectMeta, sortOptionsList } from "./types";
+import { useProjectsContext } from "./context";
 import { Dropdown } from "../(components)/dropdown";
 
 const recommendedOrder: string[] = [
@@ -77,10 +76,10 @@ const Card = ({ imgSrc, title, timestamp, description, tags, onClick }: CardProp
 
 export const ProjectsList = ({projects}:{projects:FetchedProjectMeta[]}): JSX.Element => {
 
-    const [selectedSortOption, setSelectedSortOption] = useState<SortOption>(sortOptionsList[0])
+    const { sortOption, setSortOption } = useProjectsContext();
     
     // sort projects by sort option
-    if (selectedSortOption === 'Recommended') {
+    if (sortOption === 'Recommended') {
         projects.sort((a, b) => {
             const aIndex = recommendedOrderIndices.get(a.route);
             const bIndex = recommendedOrderIndices.get(b.route);
@@ -89,18 +88,18 @@ export const ProjectsList = ({projects}:{projects:FetchedProjectMeta[]}): JSX.El
             if (bIndex === undefined) return -1;
             return aIndex - bIndex;
         });
-    } else if (selectedSortOption === 'Alphabetical (A-Z)') {
+    } else if (sortOption === 'Alphabetical (A-Z)') {
         projects.sort((a, b) => a.title.localeCompare(b.title));
-    } else if (selectedSortOption === 'Alphabetical (Z-A)') {
+    } else if (sortOption === 'Alphabetical (Z-A)') {
         projects.sort((a, b) => b.title.localeCompare(a.title));
-    } else if (selectedSortOption === 'Date (New-Old)') {
+    } else if (sortOption === 'Date (New-Old)') {
         projects.sort((a, b) => {
             if (a.timestamp === undefined && b.timestamp === undefined) return 0;
             if (a.timestamp === undefined) return 1;
             if (b.timestamp === undefined) return -1;
             return b.timestamp.getTime() - a.timestamp.getTime();
         });
-    } else if (selectedSortOption === 'Date (Old-New)') {
+    } else if (sortOption === 'Date (Old-New)') {
         projects.sort((a, b) => {
             if (a.timestamp === undefined && b.timestamp === undefined) return 0;
             if (a.timestamp === undefined) return 1;
@@ -114,9 +113,9 @@ export const ProjectsList = ({projects}:{projects:FetchedProjectMeta[]}): JSX.El
             <Dropdown
                 className="pb-4 font-gentona invert"
                 text="Sort By"
-                selected={selectedSortOption}
+                selected={sortOption}
                 options={sortOptionsList} 
-                onClick={(selectedOption) => setSelectedSortOption(selectedOption)}
+                onClick={(selectedOption) => setSortOption(selectedOption)}
             />
             {projects.map(({route, imgSrc, title, timestamp, summary, tags}) => (
                 //TODO: this could be an internal link or an external link
