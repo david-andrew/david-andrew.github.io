@@ -111,9 +111,8 @@ export const ProjectsList = ({projects}:{projects:FetchedProjectMeta[]}): JSX.El
     
     return (
         <>
-            {/* Only show dropdown on /projects, but not */}
             <Dropdown
-                className="pb-4"
+                className="pb-4 font-gentona invert"
                 text="Sort By"
                 selected={selectedSortOption}
                 options={sortOptionsList} 
