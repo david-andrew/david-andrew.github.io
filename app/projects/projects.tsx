@@ -2,7 +2,7 @@
 import React, { useState } from "react"
 import Image, { StaticImageData } from 'next/image'
 import Link from 'next/link';
-import { ProjectMeta } from "./types";
+import { RoutedProjectMeta } from "./types";
 import { SortOption, sortOptionsList } from "./types";
 import { Dropdown } from "../(components)/dropdown";
 
@@ -70,24 +70,24 @@ const Card = ({ imgSrc, title, lastUpdated, description, tags, onClick }: CardPr
 };
 
 
-export const ProjectsList = (props:{projects:{ name: string, content: ProjectMeta }[]}): JSX.Element => {
-    const {projects} = props;
+export const ProjectsList = ({projects}:{projects:RoutedProjectMeta[]}): JSX.Element => {
+
     const [selectedSortOption, setSelectedSortOption] = useState<SortOption>(sortOptionsList[0])
     
     // sort projects by sort option
     if (selectedSortOption === 'Recommended') {
         projects.sort((a, b) => {
-            const aIndex = recommendedOrderIndices.get(a.name);
-            const bIndex = recommendedOrderIndices.get(b.name);
+            const aIndex = recommendedOrderIndices.get(a.route);
+            const bIndex = recommendedOrderIndices.get(b.route);
             if (aIndex === undefined && bIndex === undefined) return 0;
             if (aIndex === undefined) return 1;
             if (bIndex === undefined) return -1;
             return aIndex - bIndex;
         });
     } else if (selectedSortOption === 'Alphabetical (A-Z)') {
-        projects.sort((a, b) => a.name.localeCompare(b.name));
+        projects.sort((a, b) => a.route.localeCompare(b.route));
     } else if (selectedSortOption === 'Alphabetical (Z-A)') {
-        projects.sort((a, b) => b.name.localeCompare(a.name));
+        projects.sort((a, b) => b.route.localeCompare(a.route));
     } else if (selectedSortOption === 'Date (New-Old)') {
         //TODO
     } else if (selectedSortOption === 'Date (Old-New)') {
@@ -104,14 +104,14 @@ export const ProjectsList = (props:{projects:{ name: string, content: ProjectMet
                 options={sortOptionsList} 
                 onClick={(selectedOption) => setSelectedSortOption(selectedOption)}
             />
-            {projects.map(({name:route, content:project}) => (
-                <Link href={`/projects/${route}`} key={project.title}>
+            {projects.map(({route, imgSrc, title, lastUpdated, summary, tags}) => (
+                <Link href={`/projects/${route}`} key={route}>
                     <Card
-                        imgSrc={project.imgSrc}
-                        title={project.title}
-                        lastUpdated={project.lastUpdated ?? 'unknown'}
-                        description={project.summary}
-                        tags={project.tags ?? []}
+                        imgSrc={imgSrc}
+                        title={title}
+                        lastUpdated={lastUpdated ?? 'unknown'}
+                        description={summary}
+                        tags={tags ?? []}
                     />
                 </Link>
             ))}
