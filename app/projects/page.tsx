@@ -25,8 +25,12 @@ export const getProjects = async (): Promise<FetchedProjectMeta[]> => {
             if (!isProjectContent(meta)) { return undefined }
 
             // fetch the last updated time base on github api
-            let timestamp: Date | string | undefined = await (async () => {
-                if (meta.github === undefined) return meta.lastUpdated
+            let timestamp: Date | undefined = await (async () => {
+                if (meta.github === undefined){
+                    const date = new Date(meta.lastUpdated);
+                    if (isNaN(date.getTime())) return;
+                    return date;
+                } 
                 const res = await fetch(`https://api.github.com/repos/david-andrew/${meta.github}/commits`);
                 if (!res.ok) return
                 const commits = await res.json();

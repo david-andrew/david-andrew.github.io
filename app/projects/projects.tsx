@@ -39,7 +39,7 @@ const recommendedOrderIndices = new Map(recommendedOrder.map((route, index) => [
 type CardProps = {
     imgSrc: StaticImageData;
     title: string;
-    timestamp: Date | string | undefined;
+    timestamp: Date | undefined;
     description: string;
     tags: string[];
     onClick?: () => void;
@@ -48,12 +48,8 @@ type CardProps = {
 const Card = ({ imgSrc, title, timestamp, description, tags, onClick }: CardProps) => {
     
     // convert the timestamp to a string
-    const lastUpdated: string = (() => {
-        if (timestamp === undefined) return 'Unknown';
-        if (typeof timestamp === 'string') return timestamp;
-        return timestamp.toLocaleDateString('en-US', {year: 'numeric', month: 'long'});
-    })();
-
+    const lastUpdated: string = timestamp === undefined ? 
+        'Unknown' : timestamp.toLocaleDateString('en-US', {year: 'numeric', month: 'long'});
 
     return (
         <div 
@@ -98,9 +94,19 @@ export const ProjectsList = ({projects}:{projects:FetchedProjectMeta[]}): JSX.El
     } else if (selectedSortOption === 'Alphabetical (Z-A)') {
         projects.sort((a, b) => b.route.localeCompare(a.route));
     } else if (selectedSortOption === 'Date (New-Old)') {
-        //TODO
+        projects.sort((a, b) => {
+            if (a.timestamp === undefined && b.timestamp === undefined) return 0;
+            if (a.timestamp === undefined) return 1;
+            if (b.timestamp === undefined) return -1;
+            return b.timestamp.getTime() - a.timestamp.getTime();
+        });
     } else if (selectedSortOption === 'Date (Old-New)') {
-        //TODO
+        projects.sort((a, b) => {
+            if (a.timestamp === undefined && b.timestamp === undefined) return 0;
+            if (a.timestamp === undefined) return 1;
+            if (b.timestamp === undefined) return -1;
+            return a.timestamp.getTime() - b.timestamp.getTime();
+        });
     }
     
     return (
@@ -114,6 +120,7 @@ export const ProjectsList = ({projects}:{projects:FetchedProjectMeta[]}): JSX.El
                 onClick={(selectedOption) => setSelectedSortOption(selectedOption)}
             />
             {projects.map(({route, imgSrc, title, timestamp, summary, tags}) => (
+                //TODO: this could be an internal link or an external link
                 <Link href={`/projects/${route}`} key={route}>
                     <Card
                         imgSrc={imgSrc}
