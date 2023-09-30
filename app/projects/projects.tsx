@@ -1,7 +1,10 @@
-import fs from 'fs';
-import path from 'path';
-import { StaticImageData } from 'next/image';
-import { SortOption } from './sorttypes';
+"use client"
+import React, { useState } from "react"
+import Image, { StaticImageData } from 'next/image'
+import Link from 'next/link';
+import { ProjectMeta } from "./types";
+import { SortOption, sortOptionsList } from "./types";
+import { Dropdown } from "../(components)/dropdown";
 
 const recommendedOrder: string[] = [
     'dewy',
@@ -32,63 +35,86 @@ const recommendedOrder: string[] = [
 ];
 const recommendedOrderIndices = new Map(recommendedOrder.map((route, index) => [route, index]));
 
-export type ProjectMeta = {
-    title: string
-    imgSrc: StaticImageData //image to display on summary card
-    summary: string //blurb for this card
-    tags?: string[] //notable things related to this project
-} & (
-    //either a github repo to pull timestamp from or a raw timestamp string
-    { github: string, lastUpdated?: never } | { lastUpdated: string, github?: never }
-) & (
-    //either an internal page link or an external link for this card
-    { internalLink: string, externalLink?: never } | { externalLink: string, internalLink?: never }
-);
 
-const isProjectContent = (obj: any): obj is ProjectMeta => {
-    return obj.title !== undefined 
-        && obj.imgSrc !== undefined 
-        && obj.summary !== undefined 
-        && (obj.github !== undefined || obj.lastUpdated !== undefined) 
-        && (obj.internalLink !== undefined || obj.externalLink !== undefined);
-}
+type CardProps = {
+    imgSrc: StaticImageData;
+    title: string;
+    lastUpdated: string;
+    description: string;
+    tags: string[];
+    onClick?: () => void;
+};
 
-export const getProjects = (sort:SortOption): Promise<{ name: string, content: ProjectMeta }[]> => {
-    //find folders that contain a page.tsx file that exports a const value `meta` of type ProjectMetadata
-    const root = 'app/projects';
-    const folders = fs.readdirSync(root).filter(item => fs.statSync(path.join(root, item)).isDirectory());
-    const projects = folders.filter((name) => {
-        const files = fs.readdirSync(`app/projects/${name}`);
-        return files.includes('page.tsx');
-    });
+const Card = ({ imgSrc, title, lastUpdated, description, tags, onClick }: CardProps) => {
+    return (
+        <div 
+            className="
+                flex flex-col md:flex-row items-center md:space-x-6 p-4 
+                border-solid border-black hover:border-white border-2
+                cursor-pointer select-none
+                "
+            onClick={onClick}
+        >
+            {/* Image */}
+            <Image src={imgSrc} alt={title} className="w-1/2 md:w-1/6 object-cover mb-4 md:mb-0" draggable={false}/>
+    
+            {/* Content */}
+            <div className="w-full md:w-3/4">
+            <h2 className="text-2xl font-quadon">{title}</h2>
+            <p className="text-lg text-gray-500 mb-1 font-gentona">Last Updated: {lastUpdated}</p>
+            <p className="text-lg mb-1 font-gentona">{description}</p>
+            <p className="text-md text-gray-400 font-gentona">Tags: {tags.join(', ')}</p>
+            </div>
+        </div>
+    );
+};
 
+
+export const ProjectsList = (props:{projects:{ name: string, content: ProjectMeta }[]}): JSX.Element => {
+    const {projects} = props;
+    const [selectedSortOption, setSelectedSortOption] = useState<SortOption>(sortOptionsList[0])
+    
     // sort projects by sort option
-    if (sort === 'Recommended') {
+    if (selectedSortOption === 'Recommended') {
         projects.sort((a, b) => {
-            const aIndex = recommendedOrderIndices.get(a);
-            const bIndex = recommendedOrderIndices.get(b);
+            const aIndex = recommendedOrderIndices.get(a.name);
+            const bIndex = recommendedOrderIndices.get(b.name);
             if (aIndex === undefined && bIndex === undefined) return 0;
             if (aIndex === undefined) return 1;
             if (bIndex === undefined) return -1;
             return aIndex - bIndex;
         });
-    } else if (sort === 'Alphabetical (A-Z)') {
-        projects.sort((a, b) => a.localeCompare(b));
-    } else if (sort === 'Alphabetical (Z-A)') {
-        projects.sort((a, b) => b.localeCompare(a));
-    } else if (sort === 'Date (New-Old)') {
+    } else if (selectedSortOption === 'Alphabetical (A-Z)') {
+        projects.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (selectedSortOption === 'Alphabetical (Z-A)') {
+        projects.sort((a, b) => b.name.localeCompare(a.name));
+    } else if (selectedSortOption === 'Date (New-Old)') {
         //TODO
-    } else if (sort === 'Date (Old-New)') {
+    } else if (selectedSortOption === 'Date (Old-New)') {
         //TODO
     }
-
-    const projectsPromises = projects.map(async (name) => {
-        // Dynamically import the project's page.tsx
-        const projectModule = await import(`./${name}/page`);
-        if (!projectModule.meta || !isProjectContent(projectModule.meta)) return null;
-        return { name, content: projectModule.meta };
-        
-    });
-
-    return Promise.all(projectsPromises).then(results => results.filter(Boolean) as { name: string, content: ProjectMeta }[]);
+    
+    return (
+        <>
+            {/* Only show dropdown on /projects, but not */}
+            <Dropdown
+                className="pb-4"
+                text="Sort By"
+                selected={selectedSortOption}
+                options={sortOptionsList} 
+                onClick={(selectedOption) => setSelectedSortOption(selectedOption)}
+            />
+            {projects.map(({name:route, content:project}) => (
+                <Link href={`/projects/${route}`} key={project.title}>
+                    <Card
+                        imgSrc={project.imgSrc}
+                        title={project.title}
+                        lastUpdated={project.lastUpdated ?? 'unknown'}
+                        description={project.summary}
+                        tags={project.tags ?? []}
+                    />
+                </Link>
+            ))}
+        </>
+    ); 
 }
