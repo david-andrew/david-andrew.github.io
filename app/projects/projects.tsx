@@ -58,6 +58,7 @@ const Card = ({ imgSrc, title, timestamp, description, tags, onClick }: CardProp
                 cursor-pointer select-none
                 "
             onClick={onClick}
+            draggable={false}
         >
             {/* Image */}
             <Image src={imgSrc} alt={title} className="w-1/2 md:w-1/6 object-cover mb-4 md:mb-0" draggable={false}/>
@@ -119,7 +120,7 @@ export const ProjectsList = ({projects}:{projects:FetchedProjectMeta[]}): JSX.El
             />
             {projects.map(({route, imgSrc, title, timestamp, summary, tags}) => (
                 //TODO: this could be an internal link or an external link
-                <Link href={`/projects/${route}`} key={route}>
+                <Link href={`/projects/${route}`} key={route} draggable={false}>
                     <Card
                         imgSrc={imgSrc}
                         title={title}
