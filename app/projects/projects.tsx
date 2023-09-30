@@ -112,7 +112,8 @@ export const ProjectsList = ({projects}:{projects:FetchedProjectMeta[]}): JSX.El
     return (
         <>
             <Dropdown
-                className="pb-4 font-gentona invert"
+                className="pb-4 font-gentona"
+                inverted
                 text="Sort By"
                 selected={sortOption}
                 options={sortOptionsList} 
