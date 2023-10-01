@@ -1,6 +1,7 @@
 "use client"
 import { FetchedProjectMeta } from "./types";
 import { usePathname } from "next/navigation";
+import { H1, P } from "../(components)/ui";
 
 export const Heading = ({projects}:{projects:FetchedProjectMeta[]}): JSX.Element => {
     const pathname = usePathname();
@@ -9,14 +10,13 @@ export const Heading = ({projects}:{projects:FetchedProjectMeta[]}): JSX.Element
 
     return (
         <>
-            <h1 className="pt-8 text-4xl font-quadon">{project.title}</h1>
-            <p>
+            <H1 className="mb-0">{project.title}</H1>
+            <P>
                 {project.timestamp === undefined ? 
                     'Unknown' : 
                     project.timestamp.toLocaleDateString('en-US', {year: 'numeric', month: 'long'})
                 }
-            </p>
-            <br/>
+            </P>
         </>
     );
 }
