@@ -5,12 +5,10 @@ export type ProjectMeta = {
     imgSrc: StaticImageData //image to display on summary card
     summary: string //blurb for this card
     tags?: string[] //notable things related to this project
+    externalLink?: string
 } & (
     //either a github repo to pull timestamp from or a raw timestamp string
     { github: string, lastUpdated?: never } | { lastUpdated: string, github?: never }
-) & (
-    //either an internal page link or an external link for this card
-    { internalLink: string, externalLink?: never } | { externalLink: string, internalLink?: never }
 );
 
 export type FetchedProjectMeta = ProjectMeta & { route: string, timestamp: Date|undefined };
@@ -20,8 +18,7 @@ export const isProjectContent = (obj: any): obj is ProjectMeta => {
         && obj.title !== undefined 
         && obj.imgSrc !== undefined 
         && obj.summary !== undefined 
-        && (obj.github !== undefined || obj.lastUpdated !== undefined) 
-        && (obj.internalLink !== undefined || obj.externalLink !== undefined);
+        && (obj.github !== undefined || obj.lastUpdated !== undefined);
 }
 
 

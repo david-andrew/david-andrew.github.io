@@ -8,19 +8,19 @@ import { ProjectsList } from './projects';
 const isDefined = <T,>(value: T | undefined): value is T => value !== undefined;
 
 
-export const getProjects = async (): Promise<FetchedProjectMeta[]> => {
+const getProjects = async (): Promise<FetchedProjectMeta[]> => {
     //find folders that contain a page.tsx file that exports a const value `meta` of type ProjectMetadata
     const root = 'app/projects';
     const folders = fs.readdirSync(root).filter(item => fs.statSync(path.join(root, item)).isDirectory());
     const projectPaths = folders.filter((route) => {
         const files = fs.readdirSync(`app/projects/${route}`);
-        return files.includes('page.tsx');
+        return files.includes('meta.ts');
     });
 
     const projectPromises = projectPaths.map(
         async (route): Promise<FetchedProjectMeta|undefined> => {
             // Dynamically import the project's page.tsx
-            const projectModule = await import(`./${route}/page`);
+            const projectModule = await import(`./${route}/meta`);
             const meta = projectModule.meta;
             if (!isProjectContent(meta)) { return undefined }
 
