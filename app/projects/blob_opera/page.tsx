@@ -1,4 +1,4 @@
-import { ProjectMeta } from "../projects";
+import { ProjectMeta } from "../types";
 import blob_opera_nox from '../../(images)/projects/blob_opera_nox.png'
 
 export const meta: ProjectMeta = {

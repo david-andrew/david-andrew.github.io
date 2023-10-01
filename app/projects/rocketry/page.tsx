@@ -1,5 +1,5 @@
 
-import { ProjectMeta } from "../projects";
+import { ProjectMeta } from "../types";
 import rebel_scum from '../../(images)/projects/rebel_scum.jpg'
 
 export const meta: ProjectMeta = {

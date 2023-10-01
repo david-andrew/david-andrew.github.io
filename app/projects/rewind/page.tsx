@@ -1,5 +1,5 @@
 
-import { ProjectMeta } from "../projects";
+import { ProjectMeta } from "../types";
 import rewind_title from '../../(images)/projects/rewind_title.png'
 
 export const meta: ProjectMeta = {

@@ -1,4 +1,4 @@
-import { ProjectMeta } from "../projects";
+import { ProjectMeta } from "../types";
 import dewy_dandelion from '../../(images)/projects/dewy_dandelion.jpg'
 
 export const meta: ProjectMeta = {
