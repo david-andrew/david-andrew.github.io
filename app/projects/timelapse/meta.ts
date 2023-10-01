@@ -1,5 +1,5 @@
 import { ProjectMeta } from "../types";
-import timelapse from '../../(images)/projects/timelapse.jpg';
+import timelapse from '@/app/(images)/projects/timelapse.jpg';
 
 export const meta: ProjectMeta = {
     title: 'Cloud Timelapse',

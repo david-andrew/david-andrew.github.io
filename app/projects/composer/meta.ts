@@ -1,5 +1,5 @@
 import { ProjectMeta } from "../types";
-import ye_arlington_musicke_lab_logo from '../../(images)/projects/YeArlingtonMusickeLabLogo.png'
+import ye_arlington_musicke_lab_logo from '@/app/(images)/projects/YeArlingtonMusickeLabLogo.png'
 
 export const meta: ProjectMeta = {
     title: 'Composer',

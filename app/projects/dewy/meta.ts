@@ -1,5 +1,5 @@
 import { ProjectMeta } from "../types";
-import dewy_dandelion from '../../(images)/projects/dewy_dandelion.jpg'
+import dewy_dandelion from '@/app/(images)/projects/dewy_dandelion.jpg'
 
 export const meta: ProjectMeta = {
     title: 'Dewy Programming Language',

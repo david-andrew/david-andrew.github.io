@@ -1,6 +1,6 @@
 
 import { ProjectMeta } from "../types";
-import prs2019_preview from '../../(images)/projects/prs2019_preview.png'
+import prs2019_preview from '@/app/(images)/projects/prs2019_preview.png'
 
 export const meta: ProjectMeta = {
     title: 'PRS19: Fret Press Robot',

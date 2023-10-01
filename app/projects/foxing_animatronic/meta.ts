@@ -1,6 +1,6 @@
 
 import { ProjectMeta } from "../types";
-import foxing_animatronic from '../../(images)/projects/foxing_animatronic.png'
+import foxing_animatronic from '@/app/(images)/projects/foxing_animatronic.png'
 
 export const meta: ProjectMeta = {
     title: 'Foxing Animatronic',

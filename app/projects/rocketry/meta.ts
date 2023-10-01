@@ -1,6 +1,6 @@
 
 import { ProjectMeta } from "../types";
-import rebel_scum from '../../(images)/projects/rebel_scum.jpg'
+import rebel_scum from '@/app/(images)/projects/rebel_scum.jpg'
 
 export const meta: ProjectMeta = {
     title: 'High Power Rocketry',

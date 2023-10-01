@@ -1,5 +1,5 @@
 import { ProjectMeta } from "../types";
-import blob_opera_nox from '../../(images)/projects/blob_opera_nox.png'
+import blob_opera_nox from '@/app/(images)/projects/blob_opera_nox.png'
 
 export const meta: ProjectMeta = {
     title: 'Blob Opera Performances',

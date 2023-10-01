@@ -1,5 +1,5 @@
 import { ProjectMeta } from "../types";
-import boat_simulator from '../../(images)/projects/boat_simulator.jpg'
+import boat_simulator from '@/app/(images)/projects/boat_simulator.jpg'
 
 export const meta: ProjectMeta = {
     title: 'Boat Simulator',

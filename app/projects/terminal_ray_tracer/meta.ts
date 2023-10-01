@@ -1,5 +1,5 @@
 import { ProjectMeta } from "../types";
-import terminal_ray_tracer from '../../(images)/projects/terminal_ray_tracer.png'
+import terminal_ray_tracer from '@/app/(images)/projects/terminal_ray_tracer.png'
 
 
 export const meta: ProjectMeta = {

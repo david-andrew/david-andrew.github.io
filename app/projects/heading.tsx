@@ -1,7 +1,7 @@
 "use client"
 import { FetchedProjectMeta } from "./types";
 import { usePathname } from "next/navigation";
-import { H1, P } from "../(components)/ui";
+import { H1, P } from "@/app/(components)/ui";
 
 export const Heading = ({projects}:{projects:FetchedProjectMeta[]}): JSX.Element => {
     const pathname = usePathname();

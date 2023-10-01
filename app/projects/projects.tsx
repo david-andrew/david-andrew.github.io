@@ -3,7 +3,7 @@ import Image, { StaticImageData } from 'next/image'
 import Link from 'next/link';
 import { FetchedProjectMeta, sortOptionsList } from "./types";
 import { useProjectsContext } from "./context";
-import { Dropdown } from "../(components)/dropdown";
+import { Dropdown } from "@/app/(components)/dropdown";
 
 const recommendedOrder: string[] = [
     'dewy',

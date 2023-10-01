@@ -1,5 +1,5 @@
-import { Container } from "../(components)/ui"
-import { NavbarDummy } from "../(components)/navbar"
+import { Container } from "@/app/(components)/ui"
+import { NavbarDummy } from "@/app/(components)/navbar"
 import { getProjects } from "./fetch"
 import { Heading } from './heading'
 

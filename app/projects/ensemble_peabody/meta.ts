@@ -1,5 +1,5 @@
 import { ProjectMeta } from "../types";
-import logo from '../../(images)/logo.png'
+import logo from '@/app/(images)/logo.png'
 
 export const meta: ProjectMeta = {
     title: 'Hacking Harmony or The Demon Chipmunk Choir',

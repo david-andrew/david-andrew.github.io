@@ -1,6 +1,6 @@
 
 import { ProjectMeta } from "../types";
-import escort_mission from '../../(images)/projects/escort_mission_lamb.png'
+import escort_mission from '@/app/(images)/projects/escort_mission_lamb.png'
 
 export const meta: ProjectMeta = {
     title: 'Escort Mission 2020',

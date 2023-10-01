@@ -1,6 +1,6 @@
 
 import { ProjectMeta } from "../types";
-import mona_lisa_contour from '../../(images)/drawbot/mona_lisa_contour.jpg'
+import mona_lisa_contour from '@/app/(images)/drawbot/mona_lisa_contour.jpg'
 
 export const meta: ProjectMeta = {
     title: 'UR5 Draw Robot',

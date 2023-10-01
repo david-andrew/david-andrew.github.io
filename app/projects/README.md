@@ -17,7 +17,7 @@ export default Page;
 ```ts
 // Path: app/projects/dewy/meta.ts
 import { ProjectMeta } from "../types";
-import dewy_dandelion from '../../(images)/projects/dewy_dandelion.jpg'
+import dewy_dandelion from '@/app/(images)/projects/dewy_dandelion.jpg'
 
 export const meta: ProjectMeta = {
     title: 'Dewy Programming Language',
