@@ -1,9 +1,16 @@
 import { Container } from "../(components)/ui"
 import { NavbarDummy } from "../(components)/navbar"
+import { getProjects } from "./fetch"
+import { Heading } from './heading'
 
-const ProjectsLayout = ({children}:{ children:React.ReactNode }): JSX.Element => {
+
+
+const ProjectsLayout = async ({children}:{ children:React.ReactNode }): Promise<JSX.Element> => {
+    const projects = await getProjects();
+
     return (
         <Container>
+            <Heading projects={projects} />
             {children}
             <NavbarDummy />
         </Container>

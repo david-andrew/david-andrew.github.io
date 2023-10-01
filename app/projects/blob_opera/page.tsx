@@ -2,25 +2,11 @@
 import YouTube from 'react-youtube'
 import Link from 'next/link'
 import { Divider } from '@/app/(components)/ui'
-import { meta } from './meta'
 
 
-import { ProjectMeta } from '../types'
-const PageHeading = ({meta}:{meta:ProjectMeta}): JSX.Element => {
-    return (
-        <>
-            <h1 className="pt-8 text-4xl font-quadon">{meta.title}</h1>
-            <p>&lt;TODO: get timestamp&gt;</p>
-            <br/>
-        </>
-    );
-}
 export const Page = (): JSX.Element => {
     return (
         <>
-            {/* TODO: pull title automatically somehow... */}
-            <PageHeading meta={meta} />
-
             <p>
                 While working on my <Link href="/projects/so_voice">choral music synthesis engine</Link>, so voice!, Google Arts &amp; Culture
                 Experiments released a fun little project called{' '}
