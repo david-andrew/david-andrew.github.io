@@ -31,6 +31,7 @@ export const meta: ProjectMeta = {
 
 
 Notes:
+- the title+timestamp is automatically placed at the top of the page, so it only needs to be specified in `meta.ts`
 - `page.tsx` is only allowed to have a single export, being the page JSX.Element, hence why meta is in a separate file
 - `ProjectMeta` type should help fill out the correct types for the project metadata 
 - `imgSrc` is used as the picture on the project card
