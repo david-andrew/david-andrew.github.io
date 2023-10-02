@@ -23,7 +23,7 @@ const Page = async (): Promise<JSX.Element> => {
                 song, and ultimately taking off for the great beyond.
             </P>
             <H3>Photos</H3>
-            <Collage images={images} rowSizes={[1, 2, 3]} />
+            <Collage images={images} rowSizes={[1,2,3]} />
             {/* <H3>Try It</H3>
             <List>
                 <List.Item>
