@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { FetchedProjectMeta, isProjectContent } from './types';
+import { StaticImageData } from 'next/image';
 
 //TODO: probably move to utilities
 // used to type-correctly filter (T|undefined)[] to T[]
@@ -47,4 +48,20 @@ export const getProjects = async (): Promise<FetchedProjectMeta[]> => {
     
     const projects = (await Promise.all(projectPromises)).filter(isDefined);
     return projects;
+}
+
+
+//Note: path is relative to app/(images)/
+export const getImages = async (route: string): Promise<StaticImageData[]> => {
+    const root = `app/(images)/${route}`;
+    const images = fs.readdirSync(root)
+        .filter(item => fs.statSync(path.join(root, item)).isFile())
+        .filter(item => item.endsWith('.jpg') || item.endsWith('.png'));
+    const imagePromises = images.map(
+        async (image): Promise<StaticImageData|undefined> => {
+            const imageModule = await import(`app/(images)/${route}/${image}`);
+            return imageModule.default as StaticImageData;
+        }
+    )
+    return (await Promise.all(imagePromises)).filter(isDefined);
 }
