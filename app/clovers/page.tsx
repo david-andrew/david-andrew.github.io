@@ -1,7 +1,14 @@
-export default function Test() {
+import { Collage } from "@/app/(components)/collage"
+import { Container } from "@/app/(components)/ui"
+import { getImages } from "@/app/projects/fetch"
+
+const Page = async (): Promise<JSX.Element> => {
+    const images = await getImages('clovers')
     return (
-        <div>
-            <h1>Clovers Page</h1>
-        </div>
+        <Container>
+            <Collage images={images} rowSizes={[3,4,5]} />
+        </Container>
     )
 }
+
+export default Page
