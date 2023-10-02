@@ -3,7 +3,7 @@ import YouTube from 'react-youtube'
 import { P, H1, H3, Divider, Link } from '@/app/(components)/ui'
 
 
-export const Page = (): JSX.Element => {
+const Page = (): JSX.Element => {
     return (
         <>
             <P>
