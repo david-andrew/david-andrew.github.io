@@ -10,31 +10,32 @@ type CollageProps = {
     images: StaticImageData[];
     rowSizes?: number[];
     // rowHeight?: string;
+    reflowable?: boolean;
 };
 
 
 
 
-export const Collage = ({ images, rowSizes = [3, 4, 5] }: CollageProps): JSX.Element => {
+export const Collage = ({ images, rowSizes = [3, 4, 5], reflowable = false }: CollageProps): JSX.Element => {
     return (
         <>
             <div className='hidden 2xl:block'>
                 <CollagePage images={images} rowSizes={rowSizes}/>
             </div>
             <div className='hidden xl:block 2xl:hidden'>
-                <CollagePage images={images} rowSizes={rowSizes.map((rowSize) => Math.max(1, rowSize - 1))}/>
+                <CollagePage images={images} rowSizes={reflowable ? rowSizes.map((rowSize) => Math.max(1, rowSize - 1)) : rowSizes}/>
             </div>
             <div className="hidden lg:block xl:hidden">
-                <CollagePage images={images} rowSizes={rowSizes.map((rowSize) => Math.max(1, rowSize - 2))}/>
+                <CollagePage images={images} rowSizes={reflowable ? rowSizes.map((rowSize) => Math.max(1, rowSize - 2)) : rowSizes}/>
             </div>
             <div className="hidden md:block lg:hidden">
-                <CollagePage images={images} rowSizes={rowSizes.map((rowSize) => Math.max(1, rowSize - 3))}/>
+                <CollagePage images={images} rowSizes={reflowable ? rowSizes.map((rowSize) => Math.max(1, rowSize - 3)) : rowSizes}/>
             </div>
             <div className="hidden sm:block md:hidden">
-                <CollagePage images={images} rowSizes={rowSizes.map((rowSize) => Math.max(1, rowSize - 4))}/>
+                <CollagePage images={images} rowSizes={reflowable ? rowSizes.map((rowSize) => Math.max(1, rowSize - 4)) : rowSizes}/>
             </div>
             <div className="sm:hidden">
-                <CollagePage images={images} rowSizes={rowSizes.map((_) => 1)}/>
+                <CollagePage images={images} rowSizes={reflowable ? rowSizes.map((_) => 1) : rowSizes}/>
             </div>
             {/* TODO: carousal modal */}
         </>

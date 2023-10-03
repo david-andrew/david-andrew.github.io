@@ -6,7 +6,7 @@ const Page = async (): Promise<JSX.Element> => {
     const images = await getImages('clovers')
     return (
         <Container>
-            <Collage images={images} rowSizes={[3,4,5]} />
+            <Collage images={images} rowSizes={[3,4,5]} reflowable />
         </Container>
     )
 }
