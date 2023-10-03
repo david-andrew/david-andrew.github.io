@@ -41,8 +41,8 @@ export const CollagePage = ({images, rowSizes}: CollageProps): JSX.Element => {
 
     return (
         <>
-            {rows.map((row) => (
-                <CollageRow>
+            {rows.map((row, i) => (
+                <CollageRow key={i}>
                     {row.map(({ image, idx }) => (
                         <CollageImg key={idx} idx={idx} image={image} widthPercent={`${100 / row.length}%`} />
                     ))}
