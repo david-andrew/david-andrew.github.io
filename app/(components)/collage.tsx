@@ -1,6 +1,7 @@
 "use client";
-import { useState, MouseEventHandler } from 'react'
+import { useState, useEffect, MouseEventHandler } from 'react'
 import Image, { StaticImageData } from 'next/image'
+import { get } from 'http';
 // import Carousel, { Modal, ModalGateway, ViewType } from 'react-images'
 
 
@@ -14,10 +15,27 @@ type CollageProps = {
 
 
 
-export const Collage = ({ images, rowSizes }: CollageProps): JSX.Element => {
+export const Collage = ({ images, rowSizes = [3, 4, 5] }: CollageProps): JSX.Element => {
     return (
         <>
-            <CollagePage images={images} rowSizes={rowSizes}/>
+            <div className='hidden 2xl:block'>
+                <CollagePage images={images} rowSizes={rowSizes}/>
+            </div>
+            <div className='hidden xl:block 2xl:hidden'>
+                <CollagePage images={images} rowSizes={rowSizes.map((rowSize) => Math.max(1, rowSize - 1))}/>
+            </div>
+            <div className="hidden lg:block xl:hidden">
+                <CollagePage images={images} rowSizes={rowSizes.map((rowSize) => Math.max(1, rowSize - 2))}/>
+            </div>
+            <div className="hidden md:block lg:hidden">
+                <CollagePage images={images} rowSizes={rowSizes.map((rowSize) => Math.max(1, rowSize - 3))}/>
+            </div>
+            <div className="hidden sm:block md:hidden">
+                <CollagePage images={images} rowSizes={rowSizes.map((rowSize) => Math.max(1, rowSize - 4))}/>
+            </div>
+            <div className="sm:hidden">
+                <CollagePage images={images} rowSizes={rowSizes.map((_) => 1)}/>
+            </div>
             {/* TODO: carousal modal */}
         </>
     )
@@ -25,22 +43,12 @@ export const Collage = ({ images, rowSizes }: CollageProps): JSX.Element => {
 
 
 
-export const CollagePage = ({images, rowSizes}: CollageProps): JSX.Element => {
-    const layout = getLayout(images.length, rowSizes)
+export const CollagePage = ({images, rowSizes }: {images:StaticImageData[], rowSizes:number[]}): JSX.Element => {
+    const rows = getLayout(images, rowSizes);
 
-    let count = 0
-    const rows: {image:StaticImageData, idx:number}[][] = []
-    layout.forEach((rowSize: number) => {
-        const row = images.slice(count, count + rowSize).map((image, i) => {
-            return { image, idx: count + i }
-        })
-
-        rows.push(row)
-        count += rowSize
-    })
 
     return (
-        <>
+        <>    
             {rows.map((row, i) => (
                 <CollageRow key={i}>
                     {row.map(({ image, idx }) => (
@@ -53,7 +61,7 @@ export const CollagePage = ({images, rowSizes}: CollageProps): JSX.Element => {
 }
 
 const CollageRow = ({ children}: { children: React.ReactNode }): JSX.Element => {
-    return <div className='flex flex-row w-full h-64'>{children}</div>
+    return <div className='flex flex-row w-full h-80 md:h-[24rem] lg:h-96 xl:h-80 2xl:h-64'>{children}</div>
 }
 
 const CollageImg = ({
@@ -81,10 +89,10 @@ const CollageImg = ({
 }
 
 
-const getLayout = (numPhotos: number, rowSizes: number[] = [3, 4, 5]): number[] => {
+const getLayout = (images: StaticImageData[], rowSizes: number[] = [3, 4, 5]): {image:StaticImageData, idx:number}[][] => {
     const layout: number[] = []
     {
-        let remaining = numPhotos
+        let remaining = images.length
         let i = 0
         while (remaining > 0) {
             const rowSize = rowSizes[i++ % rowSizes.length]
@@ -92,5 +100,19 @@ const getLayout = (numPhotos: number, rowSizes: number[] = [3, 4, 5]): number[] 
             remaining -= rowSize
         }
     }
-    return layout
+
+    // return layout
+
+    let count = 0
+    const rows: {image:StaticImageData, idx:number}[][] = []
+    layout.forEach((rowSize: number) => {
+        const row = images.slice(count, count + rowSize).map((image, i) => {
+            return { image, idx: count + i }
+        })
+
+        rows.push(row)
+        count += rowSize
+    })
+
+    return rows
 }
