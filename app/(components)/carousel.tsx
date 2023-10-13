@@ -1,54 +1,68 @@
-export const Carousel = (): JSX.Element => {
+"use client";
+import Image, { StaticImageData } from "next/image";
+import { useEffect } from "react";
+
+type CarouselProps = {
+    images: StaticImageData[];
+    i: number;
+    isOpen: boolean;
+    setIsOpen: (isOpen: boolean) => void;
+    setIdx: (newIdx: number) => void;
+    loop?: boolean;
+};
+
+export const Carousel = ({images, i, isOpen, setIsOpen, setIdx, loop=false}:CarouselProps): JSX.Element => {
+
+    //disable scrolling when the carousel is open
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+        return () => {
+            document.body.style.overflow = "unset";
+        }
+    }, [isOpen]);
+
+    //close the carousel when the user presses escape
+    useEffect(() => {
+        const handleEsc = (e:KeyboardEvent) => {
+            if (e.key === "Escape") setIsOpen(false);
+        }
+        document.addEventListener("keydown", handleEsc);
+        return () => {
+            document.removeEventListener("keydown", handleEsc);
+        }
+    }, [isOpen]);
+
+    // handling next and prev
+    const handleNext = () => {
+        if (i === images.length - 1) 
+            setIdx(loop ? 0 : i);
+        else 
+            setIdx(i + 1);
+    }
+    const handlePrev = () => {
+        if (i === 0) 
+            setIdx(loop ? images.length - 1 : i);
+        else 
+            setIdx(i - 1);
+    }
+
+    if (!isOpen) return <></>;
     return (
-        <div id="default-carousel" className="relative w-full" data-carousel="slide">
-            {/* <!-- Carousel wrapper --> */}
-            <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
-                {/* <!-- Item 1 --> */}
-                <div className="hidden duration-700 ease-in-out" data-carousel-item>
-                    <img src="/docs/images/carousel/carousel-1.svg" className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..."/>
-                </div>
-                {/* <!-- Item 2 --> */}
-                <div className="hidden duration-700 ease-in-out" data-carousel-item>
-                    <img src="/docs/images/carousel/carousel-2.svg" className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..."/>
-                </div>
-                {/* <!-- Item 3 --> */}
-                <div className="hidden duration-700 ease-in-out" data-carousel-item>
-                    <img src="/docs/images/carousel/carousel-3.svg" className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..."/>
-                </div>
-                {/* <!-- Item 4 --> */}
-                <div className="hidden duration-700 ease-in-out" data-carousel-item>
-                    <img src="/docs/images/carousel/carousel-4.svg" className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..."/>
-                </div>
-                {/* <!-- Item 5 --> */}
-                <div className="hidden duration-700 ease-in-out" data-carousel-item>
-                    <img src="/docs/images/carousel/carousel-5.svg" className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..."/>
-                </div>
-            </div>
-            {/* <!-- Slider indicators --> */}
-            <div className="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
-                <button type="button" className="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
-                <button type="button" className="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
-                <button type="button" className="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
-                <button type="button" className="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button>
-                <button type="button" className="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 5" data-carousel-slide-to="4"></button>
-            </div>
-            {/* <!-- Slider controls --> */}
-            <button type="button" className="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                    <svg className="w-4 h-4 text-white dark:text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
-                    </svg>
-                    <span className="sr-only">Previous</span>
-                </span>
-            </button>
-            <button type="button" className="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                    <svg className="w-4 h-4 text-white dark:text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-                    </svg>
-                    <span className="sr-only">Next</span>
-                </span>
-            </button>
+        <div className="fixed top-0 left-0 h-full w-full flex items-center justify-center z-[60] bg-black/80" onClick={() => setIsOpen(false)}>
+            {/* image */}
+            <Image className="object-contain" src={images[i]} alt="..." onClick={(e:React.MouseEvent) => e.stopPropagation()}/>
+            
+            {/* x button in top right */}
+            <div className="absolute top-5 right-5 p-2 text-5xl text-gray-300 hover:text-white cursor-pointer" onClick={() => setIsOpen(false)}>×</div>
+            
+            {/* Left arrow */}
+            <div className="absolute left-5 p-2 text-5xl text-gray-300 hover:text-white cursor-pointer" onClick={(e) => { e.stopPropagation(); handlePrev(); }}>←</div>
+            
+            {/* Right arrow */}
+            <div className="absolute right-5 p-2 text-5xl text-gray-300 hover:text-white cursor-pointer" onClick={(e) => { e.stopPropagation(); handleNext(); }}>→</div>
+
+
         </div>
-    );
+    )
 }
+

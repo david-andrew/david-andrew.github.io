@@ -1,15 +1,11 @@
 "use client";
-import { useState, useEffect, MouseEventHandler } from 'react'
+import { MouseEventHandler, Suspense, useState } from 'react'
 import Image, { StaticImageData } from 'next/image'
-import { get } from 'http';
-// import Carousel, { Modal, ModalGateway, ViewType } from 'react-images'
-
-
+import { Carousel } from './carousel';
 
 type CollageProps = {
     images: StaticImageData[];
     rowSizes?: number[];
-    // rowHeight?: string;
     reflowable?: boolean;
 };
 
@@ -17,34 +13,48 @@ type CollageProps = {
 
 
 export const Collage = ({ images, rowSizes = [3, 4, 5], reflowable = false }: CollageProps): JSX.Element => {
+    
+    //debug
+    // images = images.slice(0, 10);
+    
+    const [carouselOpen, setCarouselOpen] = useState(false);
+    const [carouselIdx, setCarouselIdx] = useState(0);
+    
+    const clickHandler = (idx:number) => {
+        setCarouselOpen(true);
+        setCarouselIdx(idx);
+    }
+
     return (
         <>
             <div className='hidden 2xl:block'>
-                <CollagePage images={images} rowSizes={rowSizes}/>
+                <CollagePage images={images} rowSizes={rowSizes} clickHandler={clickHandler}/>
             </div>
             <div className='hidden xl:block 2xl:hidden'>
-                <CollagePage images={images} rowSizes={reflowable ? rowSizes.map((rowSize) => Math.max(1, rowSize - 1)) : rowSizes}/>
+                <CollagePage images={images} rowSizes={reflowable ? rowSizes.map((rowSize) => Math.max(1, rowSize - 1)) : rowSizes} clickHandler={clickHandler}/>
             </div>
             <div className="hidden lg:block xl:hidden">
-                <CollagePage images={images} rowSizes={reflowable ? rowSizes.map((rowSize) => Math.max(1, rowSize - 2)) : rowSizes}/>
+                <CollagePage images={images} rowSizes={reflowable ? rowSizes.map((rowSize) => Math.max(1, rowSize - 2)) : rowSizes} clickHandler={clickHandler}/>
             </div>
             <div className="hidden md:block lg:hidden">
-                <CollagePage images={images} rowSizes={reflowable ? rowSizes.map((rowSize) => Math.max(1, rowSize - 3)) : rowSizes}/>
+                <CollagePage images={images} rowSizes={reflowable ? rowSizes.map((rowSize) => Math.max(1, rowSize - 3)) : rowSizes} clickHandler={clickHandler}/>
             </div>
             <div className="hidden sm:block md:hidden">
-                <CollagePage images={images} rowSizes={reflowable ? rowSizes.map((rowSize) => Math.max(1, rowSize - 4)) : rowSizes}/>
+                <CollagePage images={images} rowSizes={reflowable ? rowSizes.map((rowSize) => Math.max(1, rowSize - 4)) : rowSizes} clickHandler={clickHandler}/>
             </div>
             <div className="sm:hidden">
-                <CollagePage images={images} rowSizes={reflowable ? rowSizes.map((_) => 1) : rowSizes}/>
+                <CollagePage images={images} rowSizes={reflowable ? rowSizes.map((_) => 1) : rowSizes} clickHandler={clickHandler}/>
             </div>
-            {/* TODO: carousal modal */}
+
+            {/* Carousel when clicking on an image */}
+            {carouselOpen && <Carousel images={images} i={carouselIdx} setIdx={setCarouselIdx} isOpen={carouselOpen} setIsOpen={setCarouselOpen}/>}
         </>
     )
 }
 
 
 
-export const CollagePage = ({images, rowSizes }: {images:StaticImageData[], rowSizes:number[]}): JSX.Element => {
+export const CollagePage = ({images, rowSizes, clickHandler }: {images:StaticImageData[], rowSizes:number[], clickHandler:(idx:number)=>void}): JSX.Element => {
     const rows = getLayout(images, rowSizes);
 
 
@@ -53,7 +63,7 @@ export const CollagePage = ({images, rowSizes }: {images:StaticImageData[], rowS
             {rows.map((row, i) => (
                 <CollageRow key={i}>
                     {row.map(({ image, idx }) => (
-                        <CollageImg key={idx} idx={idx} image={image} widthPercent={`${100 / row.length}%`} />
+                        <CollageImg key={idx} idx={idx} image={image} widthPercent={`${100 / row.length}%`} openModal={clickHandler}/>
                     ))}
                 </CollageRow>
             ))}
