@@ -96,6 +96,7 @@ const CollageImg = ({
             src={image}
             onClick={onClick}
             alt='image'
+            draggable={false}
         />
 }
 
