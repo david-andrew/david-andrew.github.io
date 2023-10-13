@@ -14,9 +14,6 @@ type CollageProps = {
 
 export const Collage = ({ images, rowSizes = [3, 4, 5], reflowable = false }: CollageProps): JSX.Element => {
     
-    //debug
-    // images = images.slice(0, 10);
-    
     const [carouselOpen, setCarouselOpen] = useState(false);
     const [carouselIdx, setCarouselIdx] = useState(0);
     
