@@ -60,9 +60,10 @@ export const Carousel = ({images, i, isOpen, setIsOpen, setIdx, loop=false}:Caro
 
     if (!isOpen) return <></>;
     return (
-        <div {...handlers} className="fixed top-0 left-0 h-full w-full flex items-center justify-center z-[60] bg-black/80" onClick={() => setIsOpen(false)}>
+        <>
+        <div {...handlers} className="fixed inset-0 flex items-center justify-center z-[60] bg-black/80" onClick={() => setIsOpen(false)}>
             {/* image */}
-            <Image className="object-contain" src={images[i]} alt="..." onClick={(e:React.MouseEvent) => e.stopPropagation()} draggable={false}/>
+            <Image className="object-contain max-h-screen max-w-screen" src={images[i]} alt="..." onClick={(e:React.MouseEvent) => e.stopPropagation()} draggable={false}/>
             
             {/* x button in top right */}
             <div className="absolute top-5 right-5 p-2 text-5xl text-gray-300 hover:text-white cursor-pointer" onClick={() => setIsOpen(false)}>
@@ -88,6 +89,8 @@ export const Carousel = ({images, i, isOpen, setIsOpen, setIdx, loop=false}:Caro
                 {`${i + 1} / ${images.length}`}
             </div>
         </div>
+        </>
+
     )
 }
 
