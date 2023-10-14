@@ -1,7 +1,7 @@
 "use client";
 import Image, { StaticImageData } from "next/image";
 import { useEffect } from "react";
-import { ChevronLeftIcon, ChevronRightIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import { ChevronLeftIcon, ChevronRightIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useSwipeable } from 'react-swipeable';
 
 type CarouselProps = {
@@ -72,15 +72,33 @@ export const Carousel = ({images, i, isOpen, setIsOpen, setIdx, loop=false}:Caro
             
             {/* Left arrow */}
             {(loop || i !== 0) &&
-                <div className="absolute left-5 p-2 text-5xl text-gray-300 hover:text-white cursor-pointer" onClick={(e) => { e.stopPropagation(); handlePrev(); }}>
-                    <ChevronLeftIcon className="h-8 w-8"/>
+                <div className="absolute left-5 p-2">
+                    <div 
+                        onClick={(e) => { e.stopPropagation(); handlePrev(); }}
+                        className="
+                            rounded-3xl p-2 text-5xl cursor-pointer
+                            bg-gray-100/20 hover:bg-gray-100/30 
+                            text-white/80
+                        "
+                    >
+                        <ChevronLeftIcon className="h-8 w-8 stroke-[3px]"/>
+                    </div>
                 </div>
             }
             
             {/* Right arrow */}
             {(loop || i !== images.length - 1) &&
-                <div className="absolute right-5 p-2 text-5xl text-gray-300 hover:text-white cursor-pointer" onClick={(e) => { e.stopPropagation(); handleNext(); }}>
-                    <ChevronRightIcon className="h-8 w-8"/>
+                <div className="absolute right-5 p-2">
+                    <div 
+                        onClick={(e) => { e.stopPropagation(); handleNext(); }}
+                        className=" 
+                            rounded-3xl p-2 text-5xl cursor-pointer
+                            bg-gray-100/20 hover:bg-gray-100/30 
+                            text-white/80
+                        "
+                    >
+                        <ChevronRightIcon className="h-8 w-8 stroke-[3px]"/>
+                    </div>
                 </div>
             }
 
