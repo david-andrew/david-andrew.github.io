@@ -51,7 +51,7 @@ export const Checkbox = ({ label, isChecked, onChange, className }: CheckboxProp
 export const Container = ({children}:{children:React.ReactNode}) => {
     return (
         <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-[1048px]">
-          {children}
+            {children}
         </div>
     );
 };
@@ -67,27 +67,27 @@ export const Divider = () => {
 
 export function H1({children, className='', ...props}: {children:React.ReactNode, className?:string}) {
     return (
-      <h1 className={`text-4xl my-4 font-quadon ${className}`} {...props}>
-        {children}
-      </h1>
+        <h1 className={`text-4xl my-4 font-quadon ${className}`} {...props}>
+            {children}
+        </h1>
     );
-  }
+}
   
-  export function H2({children, className='', ...props}: {children:React.ReactNode, className?:string}) {
+export function H2({children, className='', ...props}: {children:React.ReactNode, className?:string}) {
     return (
-      <h2 className={`text-3xl my-3 font-quadon ${className}`} {...props}>
-        {children}
-      </h2>
+        <h2 className={`text-3xl my-3 font-quadon ${className}`} {...props}>
+            {children}
+        </h2>
     );
-  }
+}
   
-  export function H3({children, className='', ...props}: {children:React.ReactNode, className?:string}) {
+export function H3({children, className='', ...props}: {children:React.ReactNode, className?:string}) {
     return (
-      <h3 className={`text-2xl my-2 font-quadon ${className}`} {...props}>
-        {children}
-      </h3>
+        <h3 className={`text-2xl my-2 font-quadon ${className}`} {...props}>
+            {children}
+        </h3>
     );
-  }
+}
   
 
 import NextLink from "next/link";
@@ -95,18 +95,18 @@ import { ComponentProps } from 'react';
 type NextLinkProps = ComponentProps<typeof NextLink>;
 type Url = NextLinkProps['href'];
 
-  export function Link({href, children, className='', ...props}: {href:Url, children:React.ReactNode, className?:string}) {
+export function Link({href, children, className='', ...props}: {href:Url, children:React.ReactNode, className?:string}) {
     return (
-      <NextLink href={href} className={`text-blue-400 hover:text-blue-500 ${className}`} {...props}>
-        {children}
-      </NextLink>
+        <NextLink href={href} className={`text-blue-400 hover:text-blue-500 ${className}`} {...props}>
+            {children}
+        </NextLink>
     );
-  }
+}
   
-  export function P({children, className='', ...props}: {children:React.ReactNode, className?:string}) {
+export function P({children, className='', ...props}: {children:React.ReactNode, className?:string}) {
     return (
-      <p className={`mb-4 text-lg font-gentona ${className}`} {...props}>
-        {children}
-      </p>
+        <p className={`mb-4 text-lg font-gentona ${className}`} {...props}>
+            {children}
+        </p>
     );
-  }
+}
