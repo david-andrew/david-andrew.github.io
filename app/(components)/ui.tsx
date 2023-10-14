@@ -97,7 +97,7 @@ type Url = NextLinkProps['href'];
 
 export function Link({href, children, className='', ...props}: {href:Url, children:React.ReactNode, className?:string}) {
     return (
-        <NextLink href={href} className={`text-blue-400 hover:text-blue-500 ${className}`} {...props}>
+        <NextLink href={href} className={`text-blue-400 hover:text-blue-500 font-gentona text-lg ${className}`} {...props}>
             {children}
         </NextLink>
     );
