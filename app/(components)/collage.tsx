@@ -45,6 +45,7 @@ export const Collage = ({ images, rowSizes = [3, 4, 5], reflowable = false }: Co
 
             {/* Carousel when clicking on an image */}
             {carouselOpen && <Carousel images={images} i={carouselIdx} setIdx={setCarouselIdx} isOpen={carouselOpen} setIsOpen={setCarouselOpen}/>}
+            <br/>
         </>
     )
 }
