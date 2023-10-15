@@ -90,12 +90,13 @@ export function H3({children, className='', ...props}: {children:React.ReactNode
 }
   
 
+import Image, { StaticImageData } from "next/image";
 import NextLink from "next/link";
 import { ComponentProps } from 'react';
 type NextLinkProps = ComponentProps<typeof NextLink>;
 type Url = NextLinkProps['href'];
 
-export function Link({href, children, className='', ...props}: {href:Url, children:React.ReactNode, className?:string}) {
+export const Link = ({href, children, className='', ...props}: {href:Url, children:React.ReactNode, className?:string}) => {
     return (
         <NextLink href={href} className={`text-blue-400 hover:text-blue-500 font-gentona text-lg ${className}`} {...props}>
             {children}
@@ -103,10 +104,28 @@ export function Link({href, children, className='', ...props}: {href:Url, childr
     );
 }
   
-export function P({children, className='', ...props}: {children:React.ReactNode, className?:string}) {
+export const P = ({children, className='', ...props}: {children:React.ReactNode, className?:string}) => {
     return (
         <p className={`mb-4 text-lg font-gentona ${className}`} {...props}>
             {children}
         </p>
+    );
+}
+
+
+export const IconBullet = ({src, alt, children}:{src:StaticImageData, alt:string, children:React.ReactNode}) => {
+    return (
+        <span>
+            <Image src={src} alt={alt} className='inline-block w-8 h-8 mr-2' />
+            {children}
+        </span>
+    );
+}
+
+export const IconBulletList = ({children}:{children:React.ReactNode}) => {
+    return (
+        <div className='flex flex-col space-y-3'>
+            {children}
+        </div>
     );
 }

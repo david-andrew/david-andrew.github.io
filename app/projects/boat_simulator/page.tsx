@@ -1,4 +1,4 @@
-import { Link, P, H3} from '@/app/(components)/ui'
+import { Link, P, H3, IconBullet, IconBulletList} from '@/app/(components)/ui'
 import { Collage } from '@/app/(components)/collage'
 import { getImages } from '../fetch'
 import Image from 'next/image'
@@ -27,22 +27,19 @@ const Page = async (): Promise<JSX.Element> => {
             <H3>Photos</H3>
             <Collage images={images} rowSizes={[1,2,3]} />
             <H3>Try It</H3>
-            <div className='flex flex-col space-y-3'>
-                <span>
-                    <Image src={windows} alt='Windows Logo' className='inline-block w-8 h-8 mr-2' />
+            <IconBulletList>
+                <IconBullet src={windows} alt='Windows Logo'>
                     <Link href="https://www.dropbox.com/s/95v6y2a4zgls45y/Build11_Windows_64_bit.zip?dl=0">
                         Boat Simulator Build 11
                     </Link>
-                </span>
-                <span>
-                    <Image src={apple} alt='Apple Logo' className='inline-block w-8 h-8 mr-2' />
+                </IconBullet>
+                <IconBullet src={apple} alt='Apple Logo'>
                     Recommend using <Link href="https://www.winehq.org/">Wine</Link>
-                </span>
-                <span>
-                    <Image src={linux} alt='Linux Logo' className='inline-block w-8 h-8 mr-2' />
+                </IconBullet>
+                <IconBullet src={linux} alt='Linux Logo'>
                     Recommend using <Link href="https://www.winehq.org/">Wine</Link>
-                </span>
-            </div>
+                </IconBullet>
+            </IconBulletList>
         </>
     )
 }
