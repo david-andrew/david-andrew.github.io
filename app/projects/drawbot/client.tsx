@@ -18,10 +18,13 @@ export const Content = ({images}:{images:StaticImageData[]}): JSX.Element => {
             </P>
             <P>
                 For the final project, there were two components:
-                <ol>
-                    <li>Pick up a block on a table and move it to a target</li>
-                    <li>Any application of your choosing&mdash;my group decided to make a drawing robot</li>
-                </ol>
+            </P>
+            <ol className="list-decimal pl-10">
+                <li>Pick up a block on a table and move it to a target</li>
+                <li>Any application of your choosing&mdash;my group decided to make a drawing robot</li>
+            </ol>
+            <br/>
+            <P>
                 For the first task, you had to implement two different control schemes for moving the robot arm in 3D space. Along with a third provided
                 control scheme, the task was to then use all three controllers to run a sequence of moving the arm to the start location above a block,
                 closing the gripper on the block, and then moving the block to a target location and releasing it. For this part of the project, my
@@ -34,6 +37,7 @@ export const Content = ({images}:{images:StaticImageData[]}): JSX.Element => {
             </P>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <Image src={mona_lisa_contour} style={{ width: '70%' }} alt="contour map of mona lisa" />
+                {/* <Collage images={[mona_lisa_contour]} /> */}
             </div>
             <br />
             <P>
