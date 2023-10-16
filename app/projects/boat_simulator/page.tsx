@@ -1,6 +1,6 @@
 import { Link, P, H3, IconBullet, IconBulletList} from '@/app/(components)/ui'
 import { Collage } from '@/app/(components)/collage'
-import { getImages } from '../fetch'
+import { getImages } from '@/app/projects/fetch'
 import Image from 'next/image'
 import windows from '@/app/(images)/icons/windows_logo.png';
 import apple from '@/app/(images)/icons/apple_logo.png'
@@ -8,7 +8,6 @@ import linux from '@/app/(images)/icons/linux_logo.png'
 
 const Page = async (): Promise<JSX.Element> => {
     //image objects for photo collage
-    // const images = await getImages('app/(images)/boat_simulator')
     const images = await getImages('boat_simulator')
 
     return (
