@@ -116,7 +116,7 @@ export const P = ({children, className='', ...props}: {children:React.ReactNode,
 export const IconBullet = ({src, alt, children}:{src:StaticImageData, alt:string, children:React.ReactNode}) => {
     return (
         <span>
-            <Image src={src} alt={alt} className='inline-block w-8 h-8 mr-2' />
+            <Image src={src} alt={alt} className='inline-block w-8 h-8 mr-2 pointer-events-none select-none' draggable={false} />
             {children}
         </span>
     );

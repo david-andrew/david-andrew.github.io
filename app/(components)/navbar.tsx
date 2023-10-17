@@ -43,7 +43,7 @@ const NavbarButton = ({ content, href, active }: NavbarButtonProps) => {
 }
 
 
-export const NavbarDummy = (): JSX.Element => <div style={{height: 'var(--navbar-height)'}}>&nbsp;</div>;
+export const NavbarDummy = (): JSX.Element => <div className='pointer-events-none select-none' style={{height: 'var(--navbar-height)'}}>&nbsp;</div>;
 
 export const Navbar = (): JSX.Element => {
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
