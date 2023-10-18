@@ -12,6 +12,11 @@
   --navbar-height: 100px;     /* This will be overwritten right away */
 }
 
+::selection {
+  background-color: var(--accent-color);
+  color: white;
+}
+
 body {
   color: white;
   background-color: black;
