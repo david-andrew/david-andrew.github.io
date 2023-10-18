@@ -96,7 +96,7 @@ import { ComponentProps } from 'react';
 type NextLinkProps = ComponentProps<typeof NextLink>;
 type Url = NextLinkProps['href'];
 
-export const Link = ({href, children, className='', ...props}: {href:Url, children:React.ReactNode, className?:string}) => {
+export const Link = ({href, children, className='', ...props}: {href:Url, children:React.ReactNode, className?:string, target?:string}) => {
     return (
         <NextLink href={href} className={`text-blue-400 hover:text-blue-500 font-gentona text-lg ${className}`} {...props}>
             {children}

@@ -56,7 +56,7 @@ export const Content = ({images}:{images:StaticImageData[]}): JSX.Element => {
             <H3>Links</H3>
             <IconBulletList>
                 <IconBullet src={docs} alt="document icon">
-                    <Link href="/docs/drawbot/final_report.pdf">
+                    <Link href="/docs/drawbot/final_report.pdf" target="_blank">
                         Final Report
                     </Link>
                 </IconBullet>
