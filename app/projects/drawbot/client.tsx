@@ -3,8 +3,8 @@ import YouTube from "react-youtube";
 import { P, H3, IconBullet, IconBulletList, Link } from "@/app/(components)/ui";
 import { Collage } from "@/app/(components)/collage";
 import mona_lisa_contour from "@/app/(images)/drawbot/mona_lisa_contour.jpg";
-import docs from "@/app/(images)/icons/docs.png";
-import hashtag from "@/app/(images)/icons/hashtag.png";
+import docs from "@/app/(images)/icons/docs.svg";
+import hashtag from "@/app/(images)/icons/hashtag.svg";
 import Image, { StaticImageData } from "next/image";
 
 export const Content = ({images}:{images:StaticImageData[]}): JSX.Element => {
