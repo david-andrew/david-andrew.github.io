@@ -1,9 +1,8 @@
 import { Link, P, H3, IconBullet, IconBulletList} from '@/app/(components)/ui'
 import { Collage } from '@/app/(components)/collage'
 import { getImages } from '@/app/projects/fetch'
-import Image from 'next/image'
-import windows from '@/app/(images)/icons/windows_logo.png';
-import apple from '@/app/(images)/icons/apple_logo.png'
+import windows from '@/app/(images)/icons/windows.svg';
+import apple from '@/app/(images)/icons/apple.svg'
 import linux from '@/app/(images)/icons/linux_logo.png'
 
 const Page = async (): Promise<JSX.Element> => {
