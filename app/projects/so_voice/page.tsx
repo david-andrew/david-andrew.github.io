@@ -1,5 +1,11 @@
+import { ClipCollage } from "@/app/(components)/audio";
+
 const Page = (): JSX.Element => {
-    return <h1>So Voice!</h1>
+    return (
+        <>
+            <ClipCollage/>
+        </>
+    )
 }
 
 export default Page;
