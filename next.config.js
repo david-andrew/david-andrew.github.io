@@ -1,3 +1,4 @@
+const path = require('path')
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     /* turn on static export */
@@ -8,7 +9,7 @@ const nextConfig = {
 
     /* module loading of .mp3 and .wav files */
     webpack: (config, options) => {
-        config.resolve.alias['@'] = `${__dirname}/app`;
+        config.resolve.alias['@'] = path.resolve(__dirname, 'app')
         config.module.rules.push(
             {
                 test: /\.(mp3|wav)$/,

@@ -1,3 +1,4 @@
+"use client";
 import { AudioGrid } from "@/app/(components)/audio";
 import { H3, P, Link } from "@/app/(components)/ui";
 import atma16000 from "@/(audio)/so_voice/atma16000.wav";
