@@ -18,7 +18,7 @@ const RootLayout = ({children}: {children: React.ReactNode}): JSX.Element => {
         <body className={inter.className}>
             <div className="w-screen h-screen">
             <Navbar />
-            <div style={{height:'calc(100vh - var(--navbar-height))'}}>
+            <div style={{height:'calc(100vh - var(--navbar-height))'}} className='overflow-x-hidden'>
                 <ProjectsContextProvider>
                     {children}
                 </ProjectsContextProvider>
