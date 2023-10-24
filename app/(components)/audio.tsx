@@ -12,7 +12,7 @@ type AudioGridProps = {
 
 export const AudioGrid = ({ title, clips }: AudioGridProps) => {
     return (
-        <div className="bg-gray-800 text-white p-6 rounded-md">
+        <div className="bg-gray-800 text-white p-6 my-4 rounded-md">
             <h1 className="text-2xl mb-2 font-quadon">{title}</h1>
             <Divider/>
             <div className="grid grid-cols-2 gap-6">
