@@ -64,8 +64,7 @@ export const Divider = () => {
 }
 
 
-
-export function H1({children, className='', ...props}: {children:React.ReactNode, className?:string}) {
+export function H1({children, className='', ...props}: {children:React.ReactNode, className?:string, title?:string}) {
     return (
         <h1 className={`text-4xl my-4 font-quadon ${className}`} {...props}>
             {children}
@@ -73,7 +72,7 @@ export function H1({children, className='', ...props}: {children:React.ReactNode
     );
 }
   
-export function H2({children, className='', ...props}: {children:React.ReactNode, className?:string}) {
+export function H2({children, className='', ...props}: {children:React.ReactNode, className?:string, title?:string}) {
     return (
         <h2 className={`text-3xl my-3 font-quadon ${className}`} {...props}>
             {children}
@@ -81,7 +80,7 @@ export function H2({children, className='', ...props}: {children:React.ReactNode
     );
 }
   
-export function H3({children, className='', ...props}: {children:React.ReactNode, className?:string}) {
+export function H3({children, className='', ...props}: {children:React.ReactNode, className?:string, title?:string}) {
     return (
         <h3 className={`text-2xl my-2 font-quadon ${className}`} {...props}>
             {children}
@@ -89,7 +88,7 @@ export function H3({children, className='', ...props}: {children:React.ReactNode
     );
 }
 
-export function H4({children, className='', ...props}: {children:React.ReactNode, className?:string}) {
+export function H4({children, className='', ...props}: {children:React.ReactNode, className?:string, title?:string}) {
     return (
         <h3 className={`text-xl my-2 font-quadon ${className}`} {...props}>
             {children}
