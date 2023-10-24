@@ -1,6 +1,17 @@
 import { AudioGrid } from "@/app/(components)/audio";
 import { H3, P, Link } from "@/app/(components)/ui";
-
+import atma16000 from "@/(audio)/so_voice/atma16000.wav";
+import atma16000resynth from "@/(audio)/so_voice/atma16000resynth.wav"
+import david1 from "@/(audio)/so_voice/david1.wav"
+import david1_hat from "@/(audio)/so_voice/david1_hat.wav"
+import david2 from "@/(audio)/so_voice/david2.wav"
+import david2_hat from "@/(audio)/so_voice/david2_hat.wav"
+import nox from "@/(audio)/so_voice/nox.wav"
+import nox_hat from "@/(audio)/so_voice/nox_hat.wav"
+import pando_260800_4_y from "@/(audio)/so_voice/pando_260800_4_y.wav"
+import pando_260800_4_y_hat from "@/(audio)/so_voice/pando_260800_4_y_hat.wav"
+import when_david_heard_lpc from "@/(audio)/so_voice/when_david_heard_lpc.mp3"
+import when_david_heard_lpc_aaa from "@/(audio)/so_voice/when_david_heard_lpc_aaa.mp3"
 
 const Page = (): JSX.Element => {
     return (
@@ -35,17 +46,17 @@ const Page = (): JSX.Element => {
             <AudioGrid
                 title="Audio Resynthesis (16000 Hz)"
                 clips={[
-                    {label: 'Mother and Child (Real)', src: '/audio/so_voice/atma16000.wav'},
-                    {label: 'Mother and Child (Resynthesized)', src: '/audio/so_voice/atma16000resynth.wav'},
+                    {label: 'Mother and Child (Real)', src: atma16000},
+                    {label: 'Mother and Child (Resynthesized)', src: atma16000resynth},
                     
-                    {label: 'When David Heard (1) (Real)', src: '/audio/so_voice/david1.wav'},
-                    {label: 'When David Heard (1) (Resynthesized)', src: '/audio/so_voice/david1_hat.wav'},
+                    {label: 'When David Heard (1) (Real)', src: david1},
+                    {label: 'When David Heard (1) (Resynthesized)', src: david1_hat},
                     
-                    {label: 'When David Heard (2) (Real)', src: '/audio/so_voice/david2.wav'},
-                    {label: 'When David Heard (2) (Resynthesized)', src: '/audio/so_voice/david2_hat.wav'},
+                    {label: 'When David Heard (2) (Real)', src: david2},
+                    {label: 'When David Heard (2) (Resynthesized)', src: david2_hat},
                     
-                    {label: 'Nox Arumque (Real)', src: '/audio/so_voice/nox.wav'},
-                    {label: 'Nox Arumque (Resynthesized)', src: '/audio/so_voice/nox_hat.wav'},
+                    {label: 'Nox Arumque (Real)', src: nox},
+                    {label: 'Nox Arumque (Resynthesized)', src: nox_hat},
                 ]}
             />
             <P>
@@ -70,8 +81,8 @@ const Page = (): JSX.Element => {
             <AudioGrid
                 title="Autoencoder GAN Experiment"
                 clips={[
-                    { label: 'Real audio (16000 Hz)', src: '/audio/so_voice/pando_260800_4_y.wav' },
-                    { label: 'Auto-encoded version', src: '/audio/so_voice/pando_260800_4_y_hat.wav' },
+                    { label: 'Real audio (16000 Hz)', src: pando_260800_4_y},
+                    { label: 'Auto-encoded version', src: pando_260800_4_y_hat},
                 ]}
             />
             <P>
@@ -84,8 +95,8 @@ const Page = (): JSX.Element => {
             <AudioGrid
                 title="LPC Synthesis Experiment"
                 clips={[
-                    { label: 'When David Heard - Full lyrics', src: '/audio/so_voice/when_david_heard_lpc.mp3' },
-                    { label: "When David Heard - No lyrics (Aaah's)", src: '/audio/so_voice/when_david_heard_lpc_aaa.mp3' },
+                    { label: 'When David Heard - Full lyrics', src: when_david_heard_lpc},
+                    { label: "When David Heard - No lyrics (Aaah's)", src: when_david_heard_lpc_aaa},
                 ]}
             />
             <H3>Future</H3>
