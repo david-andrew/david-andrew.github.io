@@ -88,6 +88,14 @@ export function H3({children, className='', ...props}: {children:React.ReactNode
         </h3>
     );
 }
+
+export function H4({children, className='', ...props}: {children:React.ReactNode, className?:string}) {
+    return (
+        <h3 className={`text-xl my-2 font-quadon ${className}`} {...props}>
+            {children}
+        </h3>
+    );
+}
   
 
 import Image, { StaticImageData } from "next/image";
