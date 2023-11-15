@@ -33,11 +33,11 @@ const Page = async (): Promise<JSX.Element> => {
                 was needed, and the only fasteners were to hold components to the body. Normally, laser cut acrylic isn&apos;t cut with such tight
                 tolerances, but with a little bit of experimentation, I was able to get it to work quite nicely.
             </P>
-            <div className="grid grid-cols-2 gap-4 w-full">
+            <div className="sm:grid sm:grid-cols-2 sm:gap-4 w-full">
                 <div className="flex">
                     <Collage images={mazeSolver_images} />
                 </div>
-                <YouTube videoId="_ZzZNforl5k" opts={{ width: '100%', height: '100%' }} />
+                <YouTube videoId="_ZzZNforl5k" className="max-sm:h-[700px] sm:h-full max-sm:pt-4" opts={{ width: '100%', height: '100%' }} />
             </div>
             <H3>Balancing Robot</H3>
             <P>
@@ -52,11 +52,11 @@ const Page = async (): Promise<JSX.Element> => {
                 moment of inertia along the balance axis. Ultimately, the longest we managed to get it to balance for was the 20 seconds shown in the video
                 below.
             </P>
-            <div className="grid grid-cols-2 gap-4 w-full">
+            <div className="sm:grid sm:grid-cols-2 sm:gap-4 w-full">
                 <div className="flex">
                     <Collage images={balancer_images} />
                 </div>
-                <YouTube videoId="iOoxCsl8L_c" opts={{ width: '100%', height: '100%' }} />
+                <YouTube videoId="iOoxCsl8L_c" className="max-sm:h-[700px] sm:h-full max-sm:pt-4" opts={{ width: '100%', height: '100%' }} />
             </div>
             <H3>Hockey Robots</H3>
             <P>
@@ -67,14 +67,14 @@ const Page = async (): Promise<JSX.Element> => {
                 especially the striker.
             </P>
             <H4>Goalie</H4>
-            <Collage images={jhockey_goalie_images} />
+            <Collage images={jhockey_goalie_images}/>
             <P>
                 The goalie is relatively simple. Its main strategy is to simply drive back and forth in front of the goal, and extend an inner panel for
                 extra reach. It uses the same tread drive as the striker, but in a triangular pattern, mainly to accommodate having a large gear in the
                 single-stage reduction from the motors (and definitely not because it made it look more like WALL-E).
             </P>
             <H4>Striker</H4>
-            <Collage images={jhockey_striker_images} />
+            <Collage images={jhockey_striker_images}/>
             <P>
                 The striker was built with considerations for several mistakes that cropped up while building the goalie robot. While more complicated than
                 the goalie&apos;s drive train, the striker used a five-stage gear reduction. This allowed it to fit entirely inside the body, while also
@@ -83,21 +83,7 @@ const Page = async (): Promise<JSX.Element> => {
                 spiral is rotated just a few more degrees to release the pusher plate. To shoot again, the spiral just needs to continue rotating in the
                 same direction.
             </P>
-            {/* <Grid columns={2}>
-                <Grid.Column>
-                    <Grid.Row>
-                        <Image src={goalie_moving} style={{ width: '100%' }} />
-                        <P>Simple clip of the goalie robot driving (via remote control) while powered by a bench power supply</P>
-                    </Grid.Row>
-                </Grid.Column>
-                <Grid.Column>
-                    <Grid.Row>
-                        <Image src={striker_shooting} style={{ width: '100%' }} />
-                        <P>Demonstration of the striker shooting mechanism. Uses an archimedes spiral to wind up the shooter</P>
-                    </Grid.Row>
-                </Grid.Column>
-            </Grid> */}
-            <div className="grid grid-cols-2 gap-4 w-full">
+            <div className="sm:grid sm:grid-cols-2 sm:gap-4 w-full">
                 <div className="flex flex-col">
                     <Image src={goalie_moving} style={{ width: '100%' }} alt="goalie moving" />
                     <P>Simple clip of the goalie robot driving (via remote control) while powered by a bench power supply</P>
@@ -108,7 +94,7 @@ const Page = async (): Promise<JSX.Element> => {
                 </div>
             </div>
             <br />
-            <YouTube videoId="rFFHyE5L5rE" opts={{ width: '100%' }} />
+            <YouTube videoId="rFFHyE5L5rE" opts={{ width: '100%' }} className="h-[700px]" />
             <br />
             <P>Demonstration of the striker robot driving (via remote control) while powered by a bench power supply</P>
 
