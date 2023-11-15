@@ -1,6 +1,5 @@
-"use client"
 import { P, H3 } from "@/app/(components)/ui";
-import YouTube from 'react-youtube'
+import { YouTube } from "@/app/(components)/youtube";
 
 const Page = (): JSX.Element => {
     return (

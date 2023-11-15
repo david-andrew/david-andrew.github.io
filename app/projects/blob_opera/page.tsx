@@ -1,5 +1,4 @@
-"use client"
-import YouTube from 'react-youtube'
+import { YouTube } from '@/app/(components)/youtube'
 import { P, H1, H3, Divider, Link } from '@/app/(components)/ui'
 
 

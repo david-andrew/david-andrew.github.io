@@ -1,6 +1,5 @@
-"use client";
-import YouTube from "react-youtube";
 import { Link, Divider, P, H3 } from "@/app/(components)/ui";
+import { YouTube } from "@/app/(components)/youtube";
 
 const Page = (): JSX.Element => {
     return (
