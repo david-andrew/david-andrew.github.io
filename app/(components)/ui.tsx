@@ -97,7 +97,6 @@ export function H4({children, className='', ...props}: {children:React.ReactNode
 }
   
 
-import Image, { StaticImageData } from "next/image";
 import NextLink from "next/link";
 import { ComponentProps } from 'react';
 type NextLinkProps = ComponentProps<typeof NextLink>;
@@ -116,23 +115,5 @@ export const P = ({children, className='', ...props}: {children:React.ReactNode,
         <p className={`mb-4 text-lg font-gentona ${className}`} {...props}>
             {children}
         </p>
-    );
-}
-
-
-export const IconBullet = ({src, alt, children}:{src:StaticImageData, alt:string, children:React.ReactNode}) => {
-    return (
-        <span>
-            <Image src={src} alt={alt} className='inline-block w-8 h-8 mr-2 pointer-events-none select-none' draggable={false} />
-            {children}
-        </span>
-    );
-}
-
-export const IconBulletList = ({children}:{children:React.ReactNode}) => {
-    return (
-        <div className='flex flex-col space-y-3'>
-            {children}
-        </div>
     );
 }

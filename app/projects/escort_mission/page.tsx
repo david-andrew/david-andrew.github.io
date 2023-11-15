@@ -1,12 +1,8 @@
 import { getImages } from '@/app/projects/fetch'
-import { Link, P, H3, IconBulletList, IconBullet } from "@/app/(components)/ui";
+import { Link, P, H3 } from "@/app/(components)/ui";
+import { IconBullet, IconBulletList } from '@/app/(components)/icon_bullet';
 import { YouTube } from "@/app/(components)/youtube";
 import { Collage } from "@/app/(components)/collage";
-import linux from '@/app/(images)/icons/linux_logo.png'
-import windows from '@/app/(images)/icons/windows.svg';
-import apple from '@/app/(images)/icons/apple.svg'
-import gamepad from '@/app/(images)/icons/gamepad.svg'
-import github from '@/app/(images)/icons/github.svg'
 
 
 
@@ -45,17 +41,17 @@ const Page = async (): Promise<JSX.Element> => {
             <br/>
             <H3>Try It</H3>
             <IconBulletList>
-                <IconBullet src={linux} alt='linux icon'>
+                <IconBullet icon='linux'>
                     <Link href="https://github.com/david-andrew/escort_mission_2020/releases/download/0.5.0/linux_0_5_0.zip">
                         escort mission 0.5.0 (linux)
                     </Link>
                 </IconBullet>
-                <IconBullet src={windows} alt='windows icon'>
+                <IconBullet icon='windows'>
                     <Link href="https://github.com/david-andrew/escort_mission_2020/releases/download/0.5.0/windows_0_5_0.zip">
                         escort mission 0.5.0 (windows)
                     </Link>
                 </IconBullet>
-                <IconBullet src={apple} alt="apple icon">
+                <IconBullet icon='apple'>
                     <Link href="https://github.com/david-andrew/escort_mission_2020/releases/download/0.5.0/mac_0_5_0.zip">
                         escort mission 0.5.0 (mac)
                     </Link>
@@ -65,13 +61,13 @@ const Page = async (): Promise<JSX.Element> => {
             <br/>
             <H3>Links</H3>
             <IconBulletList>
-                <IconBullet src={gamepad} alt='gamepad icon'>
+                <IconBullet icon='gamepad'>
                     <Link href="https://itch.io/jam/gmtk-2020/rate/696988"> GMTK Submission Page </Link>
                 </IconBullet>
-                <IconBullet src={gamepad} alt='gamepad icon'>
+                <IconBullet icon='gamepad'>
                     <Link href="https://dsamson.itch.io/escort-mission-2020"> Itch.io Game Page</Link>
                 </IconBullet>
-                <IconBullet src={github} alt="github icon">
+                <IconBullet icon='github'>
                     <Link href="https://github.com/david-andrew/escort_mission_2020"> Github Repo</Link>
                 </IconBullet>
             </IconBulletList>

@@ -1,7 +1,7 @@
 "use client";
 import { AudioGrid } from '@/app/(components)/audio';
-import { Link, P, H3, IconBullet, IconBulletList } from '@/app/(components)/ui';
-import github from '@/app/(images)/icons/github.svg';
+import { Link, P, H3 } from '@/app/(components)/ui';
+import { IconBullet, IconBulletList } from '@/app/(components)/icon_bullet';
 import brother_john from '@/app/(audio)/ensemble/brother_john.mp3'
 import christmas_time from '@/app/(audio)/ensemble/christmas_time.mp3'
 import hark_the_herald from '@/app/(audio)/ensemble/hark_the_herald.mp3'
@@ -59,7 +59,7 @@ const Page = (): JSX.Element => {
             </P>
             <H3>Links</H3>
             <IconBulletList>
-                <IconBullet src={github} alt="github icon">
+                <IconBullet icon='github'>
                         <Link href="https://github.com/david-andrew/Ensemble">Github Repo</Link>
                 </IconBullet>
             </IconBulletList>

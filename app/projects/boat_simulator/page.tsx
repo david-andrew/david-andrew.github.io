@@ -1,9 +1,7 @@
-import { Link, P, H3, IconBullet, IconBulletList} from '@/app/(components)/ui'
+import { Link, P, H3} from '@/app/(components)/ui'
+import { IconBullet, IconBulletList } from '@/app/(components)/icon_bullet';
 import { Collage } from '@/app/(components)/collage'
 import { getImages } from '@/app/projects/fetch'
-import windows from '@/app/(images)/icons/windows.svg';
-import apple from '@/app/(images)/icons/apple.svg'
-import linux from '@/app/(images)/icons/linux_logo.png'
 
 const Page = async (): Promise<JSX.Element> => {
     //image objects for photo collage
@@ -26,15 +24,15 @@ const Page = async (): Promise<JSX.Element> => {
             <Collage images={images} rowSizes={[1,2,3]} />
             <H3>Try It</H3>
             <IconBulletList>
-                <IconBullet src={windows} alt='Windows Logo'>
+                <IconBullet icon='windows'>
                     <Link href="https://www.dropbox.com/s/95v6y2a4zgls45y/Build11_Windows_64_bit.zip?dl=0">
                         Boat Simulator Build 11
                     </Link>
                 </IconBullet>
-                <IconBullet src={apple} alt='Apple Logo'>
+                <IconBullet icon='apple'>
                     Recommend using <Link href="https://www.winehq.org/">Wine</Link>
                 </IconBullet>
-                <IconBullet src={linux} alt='Linux Logo'>
+                <IconBullet icon='linux'>
                     Recommend using <Link href="https://www.winehq.org/">Wine</Link>
                 </IconBullet>
             </IconBulletList>

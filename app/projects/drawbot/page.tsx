@@ -1,9 +1,8 @@
 import { YouTube } from "@/app/(components)/youtube";
-import { P, H3, IconBullet, IconBulletList, Link } from "@/app/(components)/ui";
+import { P, H3, Link } from "@/app/(components)/ui";
+import { IconBullet, IconBulletList } from "@/app/(components)/icon_bullet";
 import { Collage } from "@/app/(components)/collage";
 import mona_lisa_contour from "@/app/(images)/drawbot/mona_lisa_contour.jpg";
-import docs from "@/app/(images)/icons/docs.svg";
-import hashtag from "@/app/(images)/icons/hashtag.svg";
 import Image from "next/image";
 
 import { getImages } from '@/app/projects/fetch'
@@ -57,12 +56,12 @@ const Page = async (): Promise<JSX.Element> => {
             <YouTube videoId="FeDsPanEYDo" opts={{ width: '100%' }} />
             <H3>Links</H3>
             <IconBulletList>
-                <IconBullet src={docs} alt="document icon">
+                <IconBullet icon='docs'>
                     <Link href="/docs/drawbot/final_report.pdf" target="_blank">
                         Final Report
                     </Link>
                 </IconBullet>
-                <IconBullet src={hashtag} alt="hashtag icon">
+                <IconBullet icon='hashtag'>
                     <Link href="/docs/drawbot/project_code.zip">
                         Project Code
                     </Link>
