@@ -37,7 +37,7 @@ const Page = async (): Promise<JSX.Element> => {
             <Collage images={images}/>
             <H3>Gameplay Video</H3>
             <P>After submissions were closed, we were lucky enough to have a streamer feature our game</P>
-            <YouTube videoId="NSteCRVER3A" opts={{ width: '100%', playerVars: { start: 10, end: 125 } }} />
+            <YouTube videoId="NSteCRVER3A" opts={{ playerVars: { start: 10, end: 125 } }} />
             <br/>
             <H3>Try It</H3>
             <IconBulletList>

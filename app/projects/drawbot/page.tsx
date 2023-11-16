@@ -52,7 +52,7 @@ const Page = async (): Promise<JSX.Element> => {
             </P>
             <Collage images={images}/>
             <H3>Video Demo</H3>
-            <YouTube videoId="FeDsPanEYDo" opts={{ width: '100%' }} />
+            <YouTube videoId="FeDsPanEYDo"/>
             <H3>Links</H3>
             <IconBulletList>
                 <IconBullet icon='docs'>

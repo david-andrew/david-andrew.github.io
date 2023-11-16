@@ -27,7 +27,7 @@ const Page = (): JSX.Element => {
             />
             <Divider />
             <H3>Nox Arumque - Eric Whitacre</H3>
-            <YouTube videoId="RTEZeaxUP2U" opts={{ width: '100%' }} />
+            <YouTube videoId="RTEZeaxUP2U" />
             <Divider />
             <H1>Coming Soon™</H1>
             <H3>Seek Him that Maketh the Seven Stars - Jonathan Dove</H3>

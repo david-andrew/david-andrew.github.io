@@ -15,7 +15,7 @@ const Page = async (): Promise<JSX.Element> => {
                 Early in 2018, I was tasked by the band Foxing to help develop an animatronic for an upcoming music video they were shooting. They were
                 looking for a mechanically controlled puppet reminiscent of the alien chestburster puppet used in the original Alien movie:
             </P>
-            <YouTube videoId="I6D5sPitfgo" opts={{ width: '100%' }} />
+            <YouTube videoId="I6D5sPitfgo" />
             <br />
             <P>
                 They wanted the same style of mechanism, but wanted it to be more slender, reminiscent of a plant or flower. The band had also hired
@@ -49,7 +49,7 @@ const Page = async (): Promise<JSX.Element> => {
             <H3>Pictures</H3>
             <Collage images={images} />
             <H3>Final Music Video (Warning: Blood/Unsettling Medical Imagery)</H3>
-            <YouTube videoId="AopbOIH37gs" opts={{ width: '100%' }} />
+            <YouTube videoId="AopbOIH37gs"/>
         </>
     )
 }

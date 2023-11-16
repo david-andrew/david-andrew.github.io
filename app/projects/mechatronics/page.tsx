@@ -1,10 +1,10 @@
 import { P, H3, Link, H4 } from "@/app/(components)/ui";
 import { Collage } from "@/app/(components)/collage";
-import { getImages } from '@/app/projects/fetch'
 import { YouTube } from "@/app/(components)/youtube";
-import Image from "next/image";
+import { getImages } from '@/app/projects/fetch'
 import striker_shooting from '@/app/(images)/mechatronics/jhockey/striker_shooting.gif'
 import goalie_moving from '@/app/(images)/mechatronics/jhockey/goalie_moving.gif'
+import Image from "next/image";
 
 
 
@@ -37,7 +37,7 @@ const Page = async (): Promise<JSX.Element> => {
                 <div className="flex">
                     <Collage images={mazeSolver_images} />
                 </div>
-                <YouTube videoId="_ZzZNforl5k" className="max-sm:h-[700px] sm:h-full max-sm:pt-4" opts={{ width: '100%', height: '100%' }} />
+                <YouTube videoId="_ZzZNforl5k" className="max-sm:h-[700px] sm:h-full max-sm:pt-4" />
             </div>
             <H3>Balancing Robot</H3>
             <P>
@@ -56,7 +56,7 @@ const Page = async (): Promise<JSX.Element> => {
                 <div className="flex">
                     <Collage images={balancer_images} />
                 </div>
-                <YouTube videoId="iOoxCsl8L_c" className="max-sm:h-[700px] sm:h-full max-sm:pt-4" opts={{ width: '100%', height: '100%' }} />
+                <YouTube videoId="iOoxCsl8L_c" className="max-sm:h-[700px] sm:h-full max-sm:pt-4" />
             </div>
             <H3>Hockey Robots</H3>
             <P>
@@ -94,7 +94,7 @@ const Page = async (): Promise<JSX.Element> => {
                 </div>
             </div>
             <br />
-            <YouTube videoId="rFFHyE5L5rE" opts={{ width: '100%' }} className="h-[700px]" />
+            <YouTube videoId="rFFHyE5L5rE" className="h-[700px]" />
             <br />
             <P>Demonstration of the striker robot driving (via remote control) while powered by a bench power supply</P>
 

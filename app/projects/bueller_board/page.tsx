@@ -15,7 +15,7 @@ const Page = (): JSX.Element => {
                 While quite silly, our project actually ended up winning a prize for crowd favorite.
             </P>
             <H3>HopHacks Demo</H3>
-            <YouTube videoId="rpgYMfEShjQ" opts={{ width: '100%' }} />
+            <YouTube videoId="rpgYMfEShjQ" />
         </>
     );
 }

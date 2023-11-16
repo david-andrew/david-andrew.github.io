@@ -11,11 +11,11 @@ const Page = (): JSX.Element => {
             </P>
             <H3>Deep Field</H3>
             <P>CB West Chamber Choir - Trinity Cathedral, Trenton NJ, 2015</P>
-            <YouTube videoId="4WJfvuVrqfA" opts={{ width: '100%' }} />
+            <YouTube videoId="4WJfvuVrqfA"/>
             <Divider />
             <H3>Invictus</H3>
             <P>CB West Men&apos;s Ensemble - Main St Baptist Church, Doylestown PA, 2014</P>
-            <YouTube videoId="EcNoVvlkyM8" opts={{ width: '100%' }} />
+            <YouTube videoId="EcNoVvlkyM8"/>
         </>
     )
 }
