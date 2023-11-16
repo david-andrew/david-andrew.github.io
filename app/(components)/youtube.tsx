@@ -1,8 +1,9 @@
 export const YouTube = ({videoId, start, end, className=''}:{videoId:string, start?:number, end?:number, className?:string}) => {
-    let startParam = start ? `?start=${start}` : undefined;
-    let endParam = end ? `&end=${end}` : undefined;
+    let startParam = start ? `start=${start}` : undefined;
+    let endParam = end ? `end=${end}` : undefined;
     const timeParams = [startParam, endParam].filter(Boolean).join('&');
     const queryParams = timeParams ? `?${timeParams}` : '';
+    console.log(start, end, startParam, endParam, queryParams);
 
 
     return (
