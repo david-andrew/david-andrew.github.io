@@ -1,7 +1,7 @@
 import { YouTube } from "@/app/(components)/youtube";
 import { P, H3, Link } from "@/app/(components)/ui";
 import { IconBullet, IconBulletList } from "@/app/(components)/icon_bullet";
-import { Collage } from "@/app/(components)/collage";
+import { Collage, SingleImageCollage } from "@/app/(components)/collage";
 import mona_lisa_contour from "@/app/(images)/drawbot/mona_lisa_contour.jpg";
 import Image from "next/image";
 import { getImages } from '@/app/projects/fetch'
@@ -35,9 +35,8 @@ const Page = async (): Promise<JSX.Element> => {
                 of the work for this part, including fabricating a tool to hold the marker, and writing all the code for robot calibration and converting
                 images into robot trajectories.
             </P>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <Image src={mona_lisa_contour} style={{ width: '70%' }} alt="contour map of mona lisa" />
-                {/* <Collage images={[mona_lisa_contour]} /> */}
+            <div className="flex justify-center">
+                <SingleImageCollage className="w-[70%]" image={mona_lisa_contour} />
             </div>
             <br />
             <P>
