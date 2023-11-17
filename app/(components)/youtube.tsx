@@ -3,8 +3,6 @@ export const YouTube = ({videoId, start, end, className=''}:{videoId:string, sta
     let endParam = end ? `end=${end}` : undefined;
     const timeParams = [startParam, endParam].filter(Boolean).join('&');
     const queryParams = timeParams ? `?${timeParams}` : '';
-    console.log(start, end, startParam, endParam, queryParams);
-
 
     return (
         <div className={`w-full relative ${className}`} style={{paddingTop: '56.25%'}}>

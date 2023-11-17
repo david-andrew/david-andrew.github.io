@@ -6,6 +6,7 @@ import gamepad from '@/app/(images)/icons/gamepad.svg'
 import github from '@/app/(images)/icons/github.svg'
 import docs from "@/app/(images)/icons/docs.svg";
 import hashtag from "@/app/(images)/icons/hashtag.svg";
+import object_group from "@/app/(images)/icons/object_group.svg";
 
 type IconObject = {src: StaticImageData, alt: string};
 
@@ -19,6 +20,7 @@ const icon_map = {
     github: {src: github, alt: 'github icon'},
     docs: {src: docs, alt: 'document icon'},
     hashtag: {src: hashtag, alt: 'hashtag icon'},
+    "object group": {src: object_group, alt: 'object group icon'},
 } as const;
 type Icon = keyof typeof icon_map;
 
