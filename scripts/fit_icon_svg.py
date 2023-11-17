@@ -7,6 +7,8 @@ from pathlib import Path
 
 import pdb
 
+#TODO: this doesn't handle multiple paths in the SVG
+#      also doesn't handle if there is a Polygon or Circle element
 
 def main():
     already_processed_path = Path(__file__).parent / 'processed.txt'
