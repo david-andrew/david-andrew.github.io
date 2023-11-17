@@ -126,3 +126,30 @@ const getLayout = (images: StaticImageData[], rowSizes: number[] = [3, 4, 5]): {
 
     return rows
 }
+
+
+
+
+
+// single image with modal (carousel) for when clicked
+export const SingleImageCollage = ({image}:{image:StaticImageData}):JSX.Element => {
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalIdx, setModalIdx] = useState(0);
+    const onClick: MouseEventHandler<HTMLImageElement> = () => {
+        setModalOpen(true);
+        setModalIdx(0);
+    }
+
+    return (
+        <>
+            <Image
+                className='object-cover cursor-pointer select-none'
+                src={image}
+                onClick={onClick}
+                alt='image'
+                draggable={false}
+            />
+            {modalOpen && <Carousel images={[image]} i={modalIdx} setIdx={setModalIdx} isOpen={modalOpen} setIsOpen={setModalOpen}/>}
+        </>
+    )
+}

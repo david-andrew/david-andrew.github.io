@@ -33,3 +33,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# log of svg files processed by fit icon script
+scripts/processed.txt

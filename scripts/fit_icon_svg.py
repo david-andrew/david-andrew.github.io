@@ -2,24 +2,34 @@ from svg.path import parse_path
 from xml.dom import minidom
 from math import inf, ceil, floor
 from pathlib import Path
-from os.path import join
-from glob import glob
+# from os.path import join
+# from glob import glob
 
 import pdb
 
 
 def main():
-    base = Path(__file__).parent.parent
-    for svg_filepath in glob(join(base, 'app', '(images)', 'icons', '*.svg')):
-        print(f'Processing {svg_filepath}')
-        with open(svg_filepath, 'r') as f:
-            svg_content = f.read()
+    already_processed_path = Path(__file__).parent / 'processed.txt'
+    if already_processed_path.exists():
+        already_processed = set(Path(p) for p in already_processed_path.read_text().splitlines())
+    else:
+        already_processed = set()
+
+    icon_path = Path(__file__).parent.parent / 'app' / '(images)' / 'icons'
+    for svg_filepath in icon_path.glob('*.svg'):
+        
+        if svg_filepath in already_processed:
+            print(f'Skipping {svg_filepath.name}')
+            continue
+
+        print(f'Processing {svg_filepath.name}')
+        svg_content = svg_filepath.read_text()
         viewbox = compute_viewbox_from_svg(svg_content)
-        
         updated_svg_content = modify_svg_content(svg_content, viewbox, fill="#ffffff")
-        
-        with open(svg_filepath, 'w') as f:
-            f.write(updated_svg_content)
+        svg_filepath.write_text(updated_svg_content)
+
+        with already_processed_path.open('a') as f:
+            f.write(str(svg_filepath) + '\n')
 
 
 def modify_svg_content(svg_content, viewbox, fill):
