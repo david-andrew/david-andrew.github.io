@@ -56,7 +56,7 @@ export const getImages = async (route: string): Promise<StaticImageData[]> => {
     const root = `app/(images)/${route}`;
     const images = fs.readdirSync(root)
         .filter(item => fs.statSync(path.join(root, item)).isFile())
-        .filter(item => item.toLowerCase().endsWith('.jpg') || item.toLowerCase().endsWith('.png') || item.toLowerCase().endsWith('.jpeg'));
+        .filter(item => item.toLowerCase().endsWith('.jpg') || item.toLowerCase().endsWith('.png') || item.toLowerCase().endsWith('.jpeg') || item.toLowerCase().endsWith('.gif'));
     const imagePromises = images.map(
         async (image): Promise<StaticImageData|undefined> => {
             const imageModule = await import(`app/(images)/${route}/${image}`);
