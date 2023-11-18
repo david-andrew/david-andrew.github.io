@@ -1,8 +1,8 @@
-import { Link } from "@/app/(components)/ui";
+import { Link, P } from "@/app/(components)/ui";
 
 const Page = (): JSX.Element => {
     return (
-        <p>
+        <P>
             Composer is a web-based music entry application I am developing with my brother. Composer is still very early in the design process, but the
             goal is to create the most seamless experience for getting music onto the page. Initially, Composer will be a front end for{' '}
             <Link href="http://lilypond.org/">LilyPond</Link>, i.e. Composer will produce the source music code that gets compiled by
@@ -11,7 +11,7 @@ const Page = (): JSX.Element => {
             <Link href="https://new.steinberg.net/dorico/">Dorico</Link>,{' '}
             <Link href="https://www.avid.com/sibelius">Sibelius</Link>, and{' '}
             <Link href="https://musescore.org/en">MuseScore</Link>.
-        </p>
+        </P>
     );
 }
 

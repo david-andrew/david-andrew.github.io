@@ -19,7 +19,7 @@ const Page = async (): Promise<JSX.Element> => {
             <br />
             <P>
                 They wanted the same style of mechanism, but wanted it to be more slender, reminiscent of a plant or flower. The band had also hired
-                sculpter <Link href="https://www.instagram.com/jakecorricksculpture">Jake Corrick</Link> to model the exterior of the prop,
+                sculpter <Link href="https://www.instagram.com/jake_sculpts/">Jake Corrick</Link> to model the exterior of the prop,
                 so my task was mainly to develop the internal structure and control mechanisms, and ensure that it matched the vision Foxing was going for.
             </P>
             <P>

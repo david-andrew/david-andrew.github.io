@@ -1,4 +1,4 @@
-import { H3, P } from "@/app/(components)/ui";
+import { H3, P, OL } from "@/app/(components)/ui";
 import { Collage } from "@/app/(components)/collage";
 import { getImages } from "@/app/projects/fetch"
 import { YouTube } from "@/app/(components)/youtube";
@@ -72,12 +72,12 @@ const Page = async (): Promise<JSX.Element> => {
                 leaving, I&apos;ve done a small amount of work on it, but currently it&apos;s on pause until I gain access to a better workspace. When I do
                 pick it up again, future steps will include:
             </P>
-            <ol className="list-decimal pl-10">
+            <OL>
                 <li>Completing the shooting mechanism</li>
                 <li>Cleaning up the routing and attachment of electrical components</li>
                 <li>Expanding the vision system to use stereo vision to compute 3D coordinates of cups</li>
                 <li>Implementing an AI system for controlling robot actions</li>
-            </ol>
+            </OL>
         </>
     )
 }

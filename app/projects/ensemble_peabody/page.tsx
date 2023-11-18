@@ -1,6 +1,6 @@
 "use client";
 import { AudioGrid } from '@/app/(components)/audio';
-import { Link, P, H3 } from '@/app/(components)/ui';
+import { Link, P, H3, OL } from '@/app/(components)/ui';
 import { IconBullet, IconBulletList } from '@/app/(components)/icon_bullet';
 import brother_john from '@/app/(audio)/ensemble/brother_john.mp3'
 import christmas_time from '@/app/(audio)/ensemble/christmas_time.mp3'
@@ -17,7 +17,7 @@ const Page = (): JSX.Element => {
                 google text-to-speech. Using Python, I built a music parsing engine which would read in a (well formed) MusicXML file, and then perform the
                 following steps:
             </P>
-            <ol className='list-decimal pl-10'>
+            <OL>
                 <li>generate a list of all words sung in the piece</li>
                 <li>download audio for each word from the google text-to-speech API</li>
                 <li>
@@ -28,8 +28,7 @@ const Page = (): JSX.Element => {
                     to detect phoneme boundaries in each word
                 </li>
                 <li>send a recipe to Matlab containing each word, along with pitches and durations for constructing the song</li>
-            </ol>
-            <br/>
+            </OL>
             <P>
                 At this point, Matlab takes over and splices all of the words together according to the recipe, while also autotuning each word. This part
                 was performed in Matlab as it had better tools for quickly writing an autotuner, including pitch detection, pitch shifting, and very robust

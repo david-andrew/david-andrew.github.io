@@ -1,5 +1,5 @@
 import { YouTube } from "@/app/(components)/youtube";
-import { P, H3, Link } from "@/app/(components)/ui";
+import { P, H3, Link, OL } from "@/app/(components)/ui";
 import { IconBullet, IconBulletList } from "@/app/(components)/icon_bullet";
 import { Collage, SingleImageCollage } from "@/app/(components)/collage";
 import mona_lisa_contour from "@/app/(images)/drawbot/mona_lisa_contour.jpg";
@@ -19,11 +19,10 @@ const Page = async (): Promise<JSX.Element> => {
             <P>
                 For the final project, there were two components:
             </P>
-            <ol className="list-decimal pl-10">
+            <OL>
                 <li>Pick up a block on a table and move it to a target</li>
                 <li>Any application of your choosing&mdash;my group decided to make a drawing robot</li>
-            </ol>
-            <br/>
+            </OL>
             <P>
                 For the first task, you had to implement two different control schemes for moving the robot arm in 3D space. Along with a third provided
                 control scheme, the task was to then use all three controllers to run a sequence of moving the arm to the start location above a block,

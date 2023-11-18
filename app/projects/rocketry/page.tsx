@@ -1,4 +1,4 @@
-import { P, H3, Link } from "@/app/(components)/ui";
+import { P, H3, Link, UL } from "@/app/(components)/ui";
 import { YouTube } from "@/app/(components)/youtube";
 import { Collage, SingleImageCollage } from "@/app/(components)/collage";
 import { IconBullet, IconBulletList } from "@/app/(components)/icon_bullet";
@@ -24,12 +24,11 @@ const Page = async (): Promise<JSX.Element> => {
                 give a brief overview, hobby rockets with motors ranging from class H to class O are regulated, and require levels of certification to
                 legally operate. Class partitions per motor size are as follows:
             </P>
-            <ul className="list-disc pl-10">
+            <UL>
                 <li>Level 1: Class H - I</li>
                 <li>Level 2: Class J - L</li>
                 <li>Level 3: Class M - O</li>
-            </ul>
-            <br/>
+            </UL>
             <P>
                 Anything beyond class O is no longer considered hobby level, and requires specific approval from various regulatory bodies like the FAA. To
                 earn a level certification, an individual must demonstrate a working rocket with that level of motor (known as a certification flight).
@@ -54,13 +53,12 @@ const Page = async (): Promise<JSX.Element> => {
             <P>
                 To upgrade my rocket, performed the following modifications:
             </P>
-            <ul className="list-disc pl-10">
+            <UL>
                 <li>replaced engine mount with custom structure designed for a larger class J motor</li>
                 <li>added an arduino based avionics system for detecting altitude and activating the main chute</li>
                 <li>replaced the old fins with twice as many to ensure stability</li>
                 <li>added a new coat of paint and decals</li>
-            </ul>
-            <br />
+            </UL>
             <P>
                 The it was with the addition of the Star Wars decals that the rocket earned the name Rebel Scum.
             </P>

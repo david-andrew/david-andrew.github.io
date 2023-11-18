@@ -1,4 +1,4 @@
-import { Link, H3, P } from "@/app/(components)/ui";
+import { Link, H3, P, OL } from "@/app/(components)/ui";
 import { IconBullet, IconBulletList } from "@/app/(components)/icon_bullet";
 import { YouTube } from "@/app/(components)/youtube";
 import { Collage } from "@/app/(components)/collage";
@@ -44,7 +44,7 @@ const Page = async (): Promise<JSX.Element> => {
                 It is all controlled by a single Arduino Mega, which monitors the various sensors and controls the stepper motors and pneumatics. To press
                 the frets, the robot performs the following steps:
             </P>
-            <ol className="list-decimal pl-10">
+            <OL>
                 <li>Measure the slot location by sliding the fret board in front of the laser</li>
                 <li>Move the fret board to align the slot with the glue arm</li>
                 <li>Swing the glue arm towards the fret board</li>
@@ -59,7 +59,7 @@ const Page = async (): Promise<JSX.Element> => {
                 <li>Activate the pneumatics to close the snippers, and cut the fret wire</li>
                 <li>Deactivate the pneumatics to open the snippers</li>
                 <li>Repeat the above steps for the rest of the frets on the fret board</li>
-            </ol>
+            </OL>
             <H3>Software</H3>
             <P>
                 To control the robot, I developed a C++ driver program, and a number of support modules. For development and debugging, the code makes
