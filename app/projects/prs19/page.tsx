@@ -97,7 +97,6 @@ const Page = async (): Promise<JSX.Element> => {
             </div>
             <br />
             <YouTube videoId="1CZEYDhc4wY"/>
-            <br/>
             <H3>Links</H3>
             <IconBulletList>
                 <IconBullet icon="github">

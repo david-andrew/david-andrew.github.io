@@ -1,6 +1,6 @@
 import { YouTube } from "@/app/(components)/youtube";
 import { Link, P, H3 } from "@/app/(components)/ui";
-import { Collage } from "@/app/(components)/collage";
+import { Collage, SingleImageCollage } from "@/app/(components)/collage";
 import { getImages } from '@/app/projects/fetch'
 import Image from "next/image";
 import cad_design from '@/app/(images)/foxing_animatronic/cad_design.png';
@@ -26,9 +26,10 @@ const Page = async (): Promise<JSX.Element> => {
                 I opted for laser cut acrylic with a stiff plastic spine and thin steel cables to control the mechanism. The final design for the body is
                 shown below.
             </P>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
+            {/* <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <Image src={cad_design} style={{ width: '100%' }} alt="cad design" />
-            </div>
+            </div> */}
+            <SingleImageCollage image={cad_design} />
             <br />
             <P>
                 To control it, I fabricated dual joysticks out of steel and aluminum T-slot extrusions, as well as a pair of bicycle brake mechanism. One

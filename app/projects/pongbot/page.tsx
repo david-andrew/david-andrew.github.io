@@ -55,10 +55,9 @@ const Page = async (): Promise<JSX.Element> => {
                 smallest electric leaf blower I could find, but that ended up being way too powerful, so I&apos;m on the lookout for something even smaller.
             </P>
             <div className="grid grid-cols-2 gap-4">
-                <YouTube videoId="7YbrslKFqns" className="pt-[177.77%]"/>
-                <YouTube videoId="8hBZnOJ7Mzs"/>
+                <YouTube videoId="7YbrslKFqns" portrait/>
+                <YouTube videoId="8hBZnOJ7Mzs" portrait/>
             </div>
-            <br/>
             <H3>AI</H3>
             <P>
                 The AI system for pOngBot is intended to drive all high level actions the robot takes, such as taking a shot, waiting for the player to take

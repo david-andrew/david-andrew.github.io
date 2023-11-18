@@ -33,7 +33,7 @@ const Page = async (): Promise<JSX.Element> => {
                 was needed, and the only fasteners were to hold components to the body. Normally, laser cut acrylic isn&apos;t cut with such tight
                 tolerances, but with a little bit of experimentation, I was able to get it to work quite nicely.
             </P>
-            <div className="sm:grid sm:grid-cols-2 sm:gap-4 w-full">
+            <div className="sm:grid sm:grid-cols-2 sm:gap-4 w-full pb-4">
                 <div className="flex">
                     <Collage images={mazeSolver_images} />
                 </div>
@@ -52,7 +52,7 @@ const Page = async (): Promise<JSX.Element> => {
                 moment of inertia along the balance axis. Ultimately, the longest we managed to get it to balance for was the 20 seconds shown in the video
                 below.
             </P>
-            <div className="sm:grid sm:grid-cols-2 sm:gap-4 w-full">
+            <div className="sm:grid sm:grid-cols-2 sm:gap-4 w-full pb-4">
                 <div className="flex">
                     <Collage images={balancer_images} />
                 </div>
