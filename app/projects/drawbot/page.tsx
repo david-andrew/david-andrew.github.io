@@ -3,7 +3,6 @@ import { P, H3, Link, OL } from "@/app/(components)/ui";
 import { IconBullet, IconBulletList } from "@/app/(components)/icon_bullet";
 import { Collage, SingleImageCollage } from "@/app/(components)/collage";
 import mona_lisa_contour from "@/app/(images)/drawbot/mona_lisa_contour.jpg";
-import Image from "next/image";
 import { getImages } from '@/app/projects/fetch'
 
 const Page = async (): Promise<JSX.Element> => {

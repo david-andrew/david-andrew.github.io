@@ -26,9 +26,6 @@ const Page = async (): Promise<JSX.Element> => {
                 I opted for laser cut acrylic with a stiff plastic spine and thin steel cables to control the mechanism. The final design for the body is
                 shown below.
             </P>
-            {/* <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <Image src={cad_design} style={{ width: '100%' }} alt="cad design" />
-            </div> */}
             <SingleImageCollage image={cad_design} />
             <br />
             <P>
