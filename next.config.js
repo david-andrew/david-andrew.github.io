@@ -18,9 +18,19 @@ const nextConfig = {
                     filename: 'static/[path][name].[contenthash][ext]'
                 }
             },
+            /* module loading of .mp4 files */
+            {
+                test: /\.mp4$/,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'static/[path][name].[contenthash][ext]'
+                }
+            },
         )
         return config
     }
+
+    
 }
 
 module.exports = nextConfig

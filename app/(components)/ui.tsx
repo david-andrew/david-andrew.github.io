@@ -118,6 +118,14 @@ export const P = ({children, className='', ...props}: {children:React.ReactNode,
     );
 }
 
+export const Caption = ({children, className='', ...props}: {children:React.ReactNode, className?:string}) => {
+    return (
+        <p className={`w-full my-4 text-xl font-gentona text-center ${className}`} {...props}>
+            {children}
+        </p>
+    );
+}
+
 
 export const UL = ({children, className='', ...props}: {children:React.ReactNode, className?:string}) => {
     return (
