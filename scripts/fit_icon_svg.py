@@ -10,6 +10,8 @@ import pdb
 #TODO: this doesn't handle multiple paths in the SVG
 #      also doesn't handle if there is a Polygon or Circle element
 
+#TODO: this script should take the name of an icon to process, rather than processing all icons
+
 def main():
     already_processed_path = Path(__file__).parent / 'processed.txt'
     if already_processed_path.exists():
