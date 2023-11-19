@@ -8,30 +8,31 @@ import docs from "@/app/(images)/icons/docs.svg";
 import hashtag from "@/app/(images)/icons/hashtag.svg";
 import object_group from "@/app/(images)/icons/object_group.svg";
 import jhu_hub from "@/app/(images)/icons/jhu_hub.svg";
+import chrome from "@/app/(images)/icons/chrome.svg";
 
-type IconObject = {src: StaticImageData, alt: string};
 
 //TODO: is there a way to specify the type of the object keys?
-// {[key: Icon]: IconObject}
+// {[key: Icon]: StaticImageData}
 const icon_map = {
-    windows: {src: windows, alt: 'windows icon'},
-    apple: {src: apple, alt: 'apple icon'},
-    linux: {src: linux, alt: 'linux icon'},
-    gamepad: {src: gamepad, alt: 'gamepad icon'},
-    github: {src: github, alt: 'github icon'},
-    docs: {src: docs, alt: 'document icon'},
-    hashtag: {src: hashtag, alt: 'hashtag icon'},
-    "object group": {src: object_group, alt: 'object group icon'},
-    "jhu hub": {src: jhu_hub, alt: 'jhu hub icon'},
+    windows,
+    apple,
+    linux,
+    gamepad,
+    github,
+    docs,
+    hashtag,
+    "object group": object_group,
+    "jhu hub": jhu_hub,
+    chrome,
 } as const;
 type Icon = keyof typeof icon_map;
 
 
 export const IconBullet = ({icon, children}:{icon:Icon, children:React.ReactNode}) => {
-    const {src, alt} = icon_map[icon];
+    const src = icon_map[icon];
     return (
         <span>
-            <Image src={src} alt={alt} className='inline-block w-8 h-8 mr-2 pointer-events-none select-none' draggable={false} />
+            <Image src={src} alt={`${icon} icon`} className='inline-block w-8 h-8 mr-2 pointer-events-none select-none' draggable={false} />
             {children}
         </span>
     );
