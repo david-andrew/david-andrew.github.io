@@ -7,6 +7,7 @@ import { Dropdown } from "@/app/(components)/dropdown";
 
 const recommendedOrder: string[] = [
     'dewy',
+    'dewy_old',
     'website',
     'so_voice',
     'terminal_ray_tracer',
