@@ -12,7 +12,15 @@ import chrome from "@/app/(images)/icons/chrome.svg";
 import table from "@/app/(images)/icons/table.svg";
 import envelope from "@/app/(images)/icons/envelope.svg";
 import linkedin from "@/app/(images)/icons/linkedin.svg";
-import { twMerge } from 'tailwind-merge';
+import code from "@/app/(images)/icons/code.svg";
+import cubes from "@/app/(images)/icons/cubes.svg";
+import branch from "@/app/(images)/icons/branch.svg";
+import circuit from "@/app/(images)/icons/circuit.png";
+import gears from "@/app/(images)/icons/gears.png";
+import apl_shield from "@/app/(images)/icons/apl_shield.png";
+import jhu_shield from "@/app/(images)/icons/jhu_shield.png";
+import idt_starburst from "@/app/(images)/icons/idt_starburst.png";
+import jataware_logo from "@/app/(images)/icons/jataware_logo.png";
 
 //TODO: is there a way to specify the type of the object keys?
 // {[key: Icon]: StaticImageData}
@@ -30,6 +38,15 @@ const icon_map = {
     table,
     envelope,
     linkedin,
+    code,
+    cubes,
+    branch,
+    circuit,
+    gears,
+    "apl shield": apl_shield,
+    "jhu shield": jhu_shield,
+    "idt starburst": idt_starburst,
+    "jataware logo": jataware_logo,
 } as const;
 type Icon = keyof typeof icon_map;
 
@@ -37,12 +54,12 @@ type Icon = keyof typeof icon_map;
 export const IconBullet = ({icon, responsive=false, children}:{icon:Icon, responsive?:boolean, className?:string, children:React.ReactNode}) => {
     const src = icon_map[icon];
     return (
-        <span className='text-sm'>
+        <div className='flex flex-row text-sm items-center'>
             <Image src={src} alt={`${icon} icon`} className={`inline-block w-8 h-8 mr-2 ${responsive ? 'md:w-12 md:h-12 md:mr-3 lg:w-16 lg:h-16 lg:mr-4' : ''} pointer-events-none select-none`} draggable={false} />
             <span className='align-middle'>
                 {children}
             </span>
-        </span>
+        </div>
     );
 }
 

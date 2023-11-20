@@ -61,9 +61,9 @@ export const Container = ({children}:{children:React.ReactNode}) => {
 };
 
 
-export const Divider = () => {
+export const Divider = ({className=''}:{className?:string}) => {
     return (
-        <hr className="h-px my-4 bg-gray-500 border-0"/>
+        <hr className={twMerge("h-px my-4 bg-gray-500 border-0", className)}/>
     );
 }
 

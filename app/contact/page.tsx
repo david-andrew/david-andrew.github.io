@@ -2,7 +2,7 @@ import { IconBullet, IconBulletList } from "../(components)/icon_bullet";
 import { NavbarDummy } from "../(components)/navbar";
 import { Link } from "../(components)/ui";
 
-export default function Test() {
+const Page =() => {
     return (
         <>
             <div className="flex flex-col h-full">
@@ -25,3 +25,5 @@ export default function Test() {
         </>
     )
 }
+
+export default Page;
