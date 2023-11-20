@@ -18,7 +18,7 @@ export const AudioGrid = ({ title, clips }: AudioGridProps) => {
             <div className="grid grid-cols-2 gap-6">
                 {clips.map(({ label, src }, index) => (
                     <div key={index} className="flex flex-col h-full">
-                        <H4 className="mt-0 w-full whitespace-nowrap overflow-x-scroll md:overflow-x-hidden md:text-ellipsis"  title={label}>{label}</H4>
+                        <H4 className="mt-[0] w-full whitespace-nowrap overflow-x-scroll md:overflow-x-hidden md:text-ellipsis"  title={label}>{label}</H4>
                         <ReactAudioPlayer
                             src={src}
                             controls
