@@ -11,3 +11,11 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Deployment
 
 On pushing to the `master` branch, the site will be automatically deployed to [GitHub Pages](https://pages.github.com/).
+
+Local deployment and test hosting can be done with:
+
+```bash
+bun run build
+cd out
+bunx http-server
+```
