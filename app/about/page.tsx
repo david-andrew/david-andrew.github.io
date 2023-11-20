@@ -16,47 +16,21 @@ const Page = () => {
             <H1>Skills</H1>
             <IconBulletList>
                 <IconBullet icon="hashtag">
-                    {/* <List.Content>
-                        <List.Header>Programming (Advanced)</List.Header>
-                        <List.Description>Python, C, Typescript, MATLAB</List.Description>
-                    </List.Content> */}
                     <Content header='Programming (Advanced)' description='Python, C, Typescript, MATLAB' />
                 </IconBullet>
                 <IconBullet icon="code">
-                    {/* <List.Content>
-                        <List.Header>Programming (Moderate)</List.Header>
-                        <List.Description>Rust, Julia, CUDA C, C++, Java, Go, 6502 ASM, FORTRAN 77, Ti-BASIC</List.Description>
-                    </List.Content> */}
                     <Content header='Programming (Moderate)' description='Rust, Julia, CUDA C, C++, Java, Go, 6502 ASM, FORTRAN 77, Ti-BASIC' />
                 </IconBullet>
                 <IconBullet icon="cubes">
-                    {/* <List.Content>
-                        <List.Header>Frameworks</List.Header>
-                        <List.Description>PyTorch (with GPU), Yew, React, WebAssembly, Robot Operating System, OpenCV, Qt</List.Description>
-                    </List.Content> */}
                     <Content header='Frameworks' description='PyTorch (with GPU), Yew, React, WebAssembly, Robot Operating System, OpenCV, Qt' />
                 </IconBullet>
                 <IconBullet icon="branch">
-                    {/* <List.Content>
-                        <List.Header>Misc. Software</List.Header>
-                        <List.Description>Unix, Git, Godot, Unity3D, SolidWorks, PTC-Creo, Inkscape, Microsoft Office</List.Description>
-                    </List.Content> */}
                     <Content header='Misc. Software' description='Unix, Git, Godot, Unity3D, SolidWorks, PTC-Creo, Inkscape, Microsoft Office' />
                 </IconBullet>
                 <IconBullet icon="circuit">
-                    {/* <List.Content>
-                        <List.Header>Electronics</List.Header>
-                        <List.Description>
-                            Raspberry Pi, Arduino, radio control, basic digital electronics (servos, logic gates, op-amps, etc.)
-                        </List.Description>
-                    </List.Content> */}
                     <Content header='Electronics' description='Raspberry Pi, Arduino, radio control, basic digital electronics (servos, logic gates, op-amps, etc.)' />
                 </IconBullet>
                 <IconBullet icon="gears">
-                    {/* <List.Content>
-                        <List.Header>Manufacturing</List.Header>
-                        <List.Description>laser cutter, mill, lathe, MIG welding, drill press, band saw, chop saw</List.Description>
-                    </List.Content> */}
                     <Content header='Manufacturing' description='laser cutter, mill, lathe, MIG welding, drill press, band saw, chop saw' />
                 </IconBullet>
             </IconBulletList>
@@ -65,17 +39,9 @@ const Page = () => {
             <H3 className='mt-0'>Johns Hopkins University</H3>
             <IconBulletList>
                 <IconBullet icon="jhu shield">
-                    {/* <List.Content>
-                        <List.Header>Bachelor of Science in Mechanical Engineering</List.Header>
-                        <List.Description>Sept. 2014 - May 2018</List.Description>
-                    </List.Content> */}
                     <Content header='Bachelor of Science in Mechanical Engineering' description='Sept. 2014 - May 2018' />
                 </IconBullet>
                 <IconBullet icon="jhu shield">
-                    {/* <List.Content>
-                        <List.Header>Master of Science in Engineering in Robotics (Machine Learning concentration)</List.Header>
-                        <List.Description>Sept. 2018 - May 2019</List.Description>
-                    </List.Content> */}
                     <Content header='Master of Science in Engineering in Robotics (Machine Learning concentration)' description='Sept. 2018 - May 2019' />
                 </IconBullet>
             </IconBulletList>
@@ -84,17 +50,9 @@ const Page = () => {
             <H3 className='mt-0'>Johns Hopkins Applied Physics Lab</H3>
             <IconBulletList>
                 <IconBullet icon="apl shield">
-                    {/* <List.Content>
-                        <List.Header>Intern</List.Header>
-                        <List.Description>June 2016 - Aug. 2016</List.Description>
-                    </List.Content> */}
                     <Content header='Intern' description='June 2016 - Aug. 2016' />
                 </IconBullet>
                 <IconBullet icon="apl shield">
-                    {/* <List.Content>
-                        <List.Header>Software Engineer (part-time)</List.Header>
-                        <List.Description>Sept. 2016 - July 2017</List.Description>
-                    </List.Content> */}
                     <Content header='Software Engineer (part-time)' description='Sept. 2016 - July 2017' />
                 </IconBullet>
             </IconBulletList>
@@ -102,27 +60,15 @@ const Page = () => {
             <H3>Innovative Defense Technologies</H3>
             <IconBulletList>
                 <IconBullet icon="idt starburst">
-                    {/* <List.Content>
-                        <List.Header>Associate Systems Engineer</List.Header>
-                        <List.Description>June 2019 - Oct. 2020</List.Description>
-                    </List.Content> */}
                     <Content header='Associate Systems Engineer' description='June 2019 - Oct. 2020' />
                 </IconBullet>
                 <IconBullet icon="idt starburst">
-                    {/* <List.Content>
-                        <List.Header>Systems Engineer II (Data Science)</List.Header>
-                        <List.Description>Oct. 2020 - Feb. 2022</List.Description>
-                    </List.Content> */}
                     <Content header='Systems Engineer II (Data Science)' description='Oct. 2020 - Feb. 2022' />
                 </IconBullet>
             </IconBulletList>
             <H3>Jataware</H3>
             <IconBulletList>
                 <IconBullet icon="jataware logo">
-                    {/* <List.Content>
-                        <List.Header>Data Scientist</List.Header>
-                        <List.Description>Feb. 2022 - Present</List.Description>
-                    </List.Content> */}
                     <Content header='Data Scientist' description='Feb. 2022 - Present' />
                 </IconBullet>
             </IconBulletList>
