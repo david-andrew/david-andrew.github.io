@@ -49,7 +49,7 @@ export const Carousel = ({images, i, isOpen, setIsOpen, setIdx, loop=false}:Caro
         return () => {
             document.removeEventListener("keydown", handleKeydown);
         }
-    }, [isOpen, i, loop]); // Note the added dependencies
+    }, [isOpen, i, loop, setIsOpen, handleNext, handlePrev]); // Note the added dependencies
     
 
     const handlers = useSwipeable({
