@@ -1,3 +1,7 @@
+import NextLink from "next/link";
+import { ComponentProps } from 'react';
+import { twMerge } from "tailwind-merge";
+
 
 type CheckboxProps = {
     label: string;
@@ -8,7 +12,7 @@ type CheckboxProps = {
 
 export const Checkbox = ({ label, isChecked, onChange, className }: CheckboxProps) => {
     return (
-        <div className={`flex items-center ${className}`}>
+        <div className={twMerge('flex items-center', className)}>
             <input 
                 type="checkbox" 
                 id="custom-checkbox" 
@@ -66,7 +70,7 @@ export const Divider = () => {
 
 export function H1({children, className='', ...props}: {children:React.ReactNode, className?:string, title?:string}) {
     return (
-        <h1 className={`text-4xl my-6 font-quadon ${className}`} {...props}>
+        <h1 className={twMerge('text-4xl my-6 font-quadon', className)} {...props}>
             {children}
         </h1>
     );
@@ -74,7 +78,7 @@ export function H1({children, className='', ...props}: {children:React.ReactNode
   
 export function H2({children, className='', ...props}: {children:React.ReactNode, className?:string, title?:string}) {
     return (
-        <h2 className={`text-3xl mt-6 mb-3 font-quadon ${className}`} {...props}>
+        <h2 className={twMerge('text-3xl mt-6 mb-3 font-quadon', className)} {...props}>
             {children}
         </h2>
     );
@@ -82,7 +86,7 @@ export function H2({children, className='', ...props}: {children:React.ReactNode
   
 export function H3({children, className='', ...props}: {children:React.ReactNode, className?:string, title?:string}) {
     return (
-        <h3 className={`text-2xl mt-6 mb-2 font-quadon ${className}`} {...props}>
+        <h3 className={twMerge('text-2xl mt-6 mb-2 font-quadon', className)} {...props}>
             {children}
         </h3>
     );
@@ -90,29 +94,28 @@ export function H3({children, className='', ...props}: {children:React.ReactNode
 
 export function H4({children, className='', ...props}: {children:React.ReactNode, className?:string, title?:string}) {
     return (
-        <h3 className={`text-xl mt-4 mb-2 font-quadon ${className}`} {...props}>
+        <h3 className={twMerge('text-xl mt-4 mb-2 font-quadon ', className)} {...props}>
             {children}
         </h3>
     );
 }
   
 
-import NextLink from "next/link";
-import { ComponentProps } from 'react';
+
 type NextLinkProps = ComponentProps<typeof NextLink>;
 type Url = NextLinkProps['href'];
 
-export const Link = ({href, children, className='', ...props}: {href:Url, children:React.ReactNode, className?:string, target?:string}) => {
+export const Link = ({href, children, className='', ...props}: {href:Url, children?:React.ReactNode, className?:string, target?:string}) => {
     return (
-        <NextLink href={href} className={`text-blue-400 hover:text-blue-500 font-gentona text-xl ${className}`} {...props}>
-            {children}
+        <NextLink href={href} className={twMerge('text-blue-400 hover:text-blue-500 font-gentona text-xl', className)} {...props}>
+            {children || href.toString()}
         </NextLink>
     );
 }
   
 export const P = ({children, className='', ...props}: {children:React.ReactNode, className?:string}) => {
     return (
-        <p className={`mb-6 text-xl font-gentona text-justify ${className}`} {...props}>
+        <p className={twMerge('mb-6 text-xl font-gentona text-justify', className)} {...props}>
             {children}
         </p>
     );
@@ -120,7 +123,7 @@ export const P = ({children, className='', ...props}: {children:React.ReactNode,
 
 export const Caption = ({children, className='', ...props}: {children:React.ReactNode, className?:string}) => {
     return (
-        <p className={`w-full my-4 text-xl font-gentona text-center ${className}`} {...props}>
+        <p className={twMerge('w-full my-4 text-xl font-gentona text-center', className)} {...props}>
             {children}
         </p>
     );
@@ -129,7 +132,7 @@ export const Caption = ({children, className='', ...props}: {children:React.Reac
 
 export const UL = ({children, className='', ...props}: {children:React.ReactNode, className?:string}) => {
     return (
-        <ul className={`list-disc mb-6 pl-10 text-xl font-gentona ${className}`} {...props}>
+        <ul className={twMerge('list-disc mb-6 pl-10 text-xl font-gentona', className)} {...props}>
             {children}
         </ul>
     );
@@ -137,7 +140,7 @@ export const UL = ({children, className='', ...props}: {children:React.ReactNode
 
 export const OL = ({children, className='', ...props}: {children:React.ReactNode, className?:string}) => {
     return (
-        <ol className={`list-decimal mb-6 pl-10 text-xl font-gentona ${className}`} {...props}>
+        <ol className={twMerge('list-decimal mb-6 pl-10 text-xl font-gentona', className)} {...props}>
             {children}
         </ol>
     );

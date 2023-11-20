@@ -2,6 +2,7 @@
 import { MouseEventHandler, Suspense, useState } from 'react'
 import Image, { StaticImageData } from 'next/image'
 import { Carousel } from './carousel';
+import { twMerge } from 'tailwind-merge';
 
 type CollageProps = {
     images: StaticImageData[];
@@ -143,7 +144,7 @@ export const SingleImageCollage = ({image, className=''}:{image:StaticImageData,
     return (
         <>
             <Image
-                className={`object-cover cursor-pointer select-none ${className}`}
+                className={twMerge('object-cover cursor-pointer select-none', className)}
                 src={image}
                 onClick={onClick}
                 alt='image'

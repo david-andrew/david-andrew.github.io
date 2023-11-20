@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { twMerge } from 'tailwind-merge';
 
 interface DropdownProps<T extends string> {
     text: string;
@@ -17,7 +18,7 @@ function classNames(...classes: string[]) {
 
 export const Dropdown = <T extends string>({ text, selected, options, inverted, onClick, className  }: DropdownProps<T>): JSX.Element => {
     return (
-        <Menu as="div" className={`relative inline-block text-left ${className}`}>
+        <Menu as="div" className={twMerge('relative inline-block text-left', className)}>
             <div>
                 <Menu.Button className={`inline-flex w-full justify-center gap-x-1.5 rounded-md px-3 py-2 text-md font-semibold shadow-sm ring-1 ring-inset 
                     ${inverted ? 
