@@ -30,7 +30,7 @@ const Page = (): JSX.Element => {
             </P>
             <YouTube videoId="KlFp6GHRjoU" start={111}/>
             <H3>Try It</H3>
-            <P>
+            <P className="mb-2">
                 Controls: WASD to move, arrow keys to shoot. The Windows version historically has been the most stable, and works great with{' '}
                 <Link href="https://www.winehq.org/">Wine</Link>
             </P>

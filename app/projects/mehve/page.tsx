@@ -81,7 +81,7 @@ const Page = async (): Promise<JSX.Element> => {
                 more of the systems described above.
             </P>
             <H3>Try It</H3>
-            <P>Controls: WASD to steer, arrows keys to move the camera.</P>
+            <P className="mb-2">Controls: WASD to steer, arrows keys to move the camera.</P>
             <IconBulletList>
                 <IconBullet icon="linux">
                     <Link href="/docs/mehve/MehveGliderDemoLinux.zip">Glider Demo (Linux)</Link>
