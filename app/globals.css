@@ -21,3 +21,10 @@ body {
   color: white;
   background-color: black;
 }
+
+@layer utilities {
+  .hide-h-scrollbar::-webkit-scrollbar {
+      height: 0px;
+      /* background: #00000000; */
+  }
+}

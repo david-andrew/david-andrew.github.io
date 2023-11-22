@@ -38,7 +38,7 @@ const AutoHeightTextArea = ({text, setText, className=''}:{text:string, setText:
     return (
         <textarea
             ref={textAreaRef}
-            className={twMerge("font-mono resize-none overflow-x-scroll whitespace-pre outline outline-1 outline-[#808080] focus:outline-2 focus:outline-white px-0.5", className)} // Set fixed width and horizontal scroll
+            className={twMerge("hide-h-scrollbar overflow-y-hidden font-mono resize-none overflow-x-auto whitespace-pre outline outline-1 outline-[#808080] focus:outline-2 focus:outline-white px-0.5", className)}
             style={{ minHeight: '1em' }} // Minimum height of one line
             value={text}
             spellCheck={false}
