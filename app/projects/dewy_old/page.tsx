@@ -1,11 +1,12 @@
 import { P, H3, Link } from "@/app/(components)/ui";
 import { CodeBlock, Code } from "@/app/(components)/syntax";
 import { IconBullet, IconBulletList } from "@/app/(components)/icon_bullet";
+import { DemoGrammar, DewyLiveParser } from "./parser";
 
 
 
 //example grammars the user can prepopulate the demo with
-const exampleGrammars = [//: ExampleGrammar[] = [
+const exampleGrammars: DemoGrammar[] = [
     {
         label: "Even # of A's",
         grammar: "#S = 'AA'*;",
@@ -278,7 +279,7 @@ const unambiguousExpressionGrammar = exampleGrammars[5]
 const Page = (): JSX.Element => {
     return (
         <>
-            {/* <DewyLiveParser exampleGrammars={exampleGrammars} initialSample={exampleGrammars[4]} /> */}
+            <DewyLiveParser grammars={exampleGrammars} initial_idx={4} />
             <H3>About</H3>
             <P>
                 Dewy is a programming language I have been personally developing since 2016. The main goal is to build a language that has the exact feature
@@ -506,13 +507,13 @@ lines = ['FizzBuzz' '1' '2' 'Fizz' '4' 'Buzz' 'Fizz' '7' '8' 'Fizz' 'Buzz' '11' 
             <P>Since the language is far from complete, the most you can build right now is the Clustered Nonterminal Parser.</P>
             <CodeBlock
                 language="bash"
-                code={`git clone git@github.com:david-andrew/dewy.git
-cd dewy/src/compiler
+                code={`git clone git@github.com:david-andrew/dewy-lang.git
+cd dewy-lang/src/compiler
 make dewy
 ./dewy path/to/grammar/file path/to/source/file`}
             />
             <P>
-                The project includes several test grammar/source file pairs in the <Code code='tests/'/> directory. e.g. the simple expression grammars from
+                The project includes several test grammar/source file pairs in the <Code code='dewy-lang/tests/'/> directory. e.g. the simple expression grammars from
                 above could be run like so:
             </P>
             <CodeBlock
