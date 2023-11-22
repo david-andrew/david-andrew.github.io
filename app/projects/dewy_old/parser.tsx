@@ -2,12 +2,19 @@
 import { H4 } from "@/app/(components)/ui";
 import { useState, useEffect, useRef, Dispatch, SetStateAction } from "react";
 import { twMerge } from "tailwind-merge";
-
-//get DewyParserWrapper from from public/wasm/dewy_parser_wrapper.js
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-// const DewyParserWrapper = require('./dewy_parser_wrapper.js').default
-
-
+import DewyParserWrapper from './dewy_parser_wrapper.js';
+// import DewyParserWASM from './dewy_parser_wrapper.wasm';
+import dynamic from "next/dynamic";
+// const TestComponent = dynamic({
+//     loader: async () => {
+//         // const module = await import('./dewy_parser_wrapper.js');
+//         // return module.DewyParserWrapper;
+//         const exports = await import('./dewy_parser_wrapper.wasm');
+//     }
+// })
+WebAssembly.instantiateStreaming(fetch('./dewy_parser_wrapper.wasm'), {}).then((result) => {
+    console.log('wasm loaded', result)
+})
 
 //hook for managing strings output from the dewy parser process
 export const useStringBuffer = (): [string | undefined, (chunk: string) => void, () => void, () => void] => {
@@ -37,9 +44,6 @@ export const useStringBuffer = (): [string | undefined, (chunk: string) => void,
 
     return [output, addChunk, flushBuffer, reset]
 }
-
-
-
 
 
 export type ParserOutput = {
@@ -105,28 +109,28 @@ export const useDewyWasm = (grammar_source: string, input_source: string): Parse
     //handle setting up the wasm module and the function for calling the parser
     useEffect(() => {
         //kick of the loading process for getting the functions, and then call the result
-        // wasmPromiseRef.current = DewyParserWrapper({
-        //     onRuntimeInitialized: async () => {
-        //         //save the function for calling the parser
-        //         console.log('wasm runtime initialized')
-        //         const wasm: any = await wasmPromiseRef.current
-        //         const dewyParser = wasm.cwrap('dewy_parser', 'void', ['string', 'string'])
-        //         try {
-        //             dewyParser(grammar_source, input_source)
-        //         } catch {
-        //         } finally {
-        //             flushParserOutput()
-        //         }
-        //     },
-        //     //override the module's code for locating the wasm binary
-        //     /* eslint-disable @typescript-eslint/no-var-requires */
-        //     locateFile: () => require('./dewy_parser_wrapper.wasm').default,
-        //     //override the print function to write to our custom buffer
-        //     print: (text: string) => {
-        //         addParserChunk(text)
-        //         // console.log(`pushing chunk: ${text}`)
-        //     },
-        // })
+        wasmPromiseRef.current = DewyParserWrapper({
+            onRuntimeInitialized: async () => {
+                //save the function for calling the parser
+                console.log('wasm runtime initialized')
+                const wasm: any = await wasmPromiseRef.current
+                const dewyParser = wasm.cwrap('dewy_parser', 'void', ['string', 'string'])
+                try {
+                    dewyParser(grammar_source, input_source)
+                } catch {
+                } finally {
+                    flushParserOutput()
+                }
+            },
+            //override the module's code for locating the wasm binary
+            /* eslint-disable @typescript-eslint/no-var-requires */
+            locateFile: () => require('./dewy_parser_wrapper.wasm').default,
+            //override the print function to write to our custom buffer
+            print: (text: string) => {
+                addParserChunk(text)
+                // console.log(`pushing chunk: ${text}`)
+            },
+        })
 
         //clean up at the end of every render
         return (): void => {
@@ -250,6 +254,20 @@ export const DewyLiveParser = ({grammars, initial_idx=0}:{grammars:DemoGrammar[]
     const [sourceText, setSourceText] = useState(grammars[initial_idx].source);
     const [grammarText, setGrammarText] = useState(grammars[initial_idx].grammar);
     const [outputIdx, setOutputIdx] = useState(0);
+
+
+    //run the input through the dewy parser. Put a delay on the input boxes so that the wasm code isn't run too frequently
+    const [grammar, source] = useDelayed([grammarText, sourceText])
+    const parserOutput = useDewyWasm(grammar, source)
+
+    //determine if there was a parser/grammar error. Only show errors after the user starts the demo
+    const parseError = started && parserOutput?.result === 'failure'
+    const grammarError = started && parserOutput?.grammarError !== undefined
+    
+    useEffect(() => {
+        console.log('parser output changed', parserOutput)
+    }
+    , [parserOutput])
 
 
     const gap = started ? 'gap-x-[2%]' : 'gap-x-[5%]';

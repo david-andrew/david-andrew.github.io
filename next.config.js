@@ -26,7 +26,23 @@ const nextConfig = {
                     filename: 'static/[path][name].[contenthash][ext]'
                 }
             },
+            /* module loading of .wasm files */
+            // {
+            //     test: /\.wasm$/,
+            //     type: 'webassembly/async',
+            //     generator: {
+            //         filename: 'static/chunks/[path][name].[contenthash][ext]'
+            //     }
+            // }
+            
         )
+        // turn on webassembly
+        config.experiments = {
+            ...config.experiments,
+            asyncWebAssembly: true,
+        }
+
+
         return config
     }
 
