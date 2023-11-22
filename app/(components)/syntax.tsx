@@ -13,7 +13,7 @@ type Style = keyof typeof styles
 export const CodeBlock = ({ language, style, code }:{ language?:Language, style?:Style, code:string }) => { 
     return (
         // rounded corners around code block
-        <div className='rounded-md overflow-hidden pb-6'>
+        <div className='rounded-md overflow-hidden mb-6'>
             <SyntaxHighlighter language={language} style={style ? styles[style] : railscasts}>
                 {code}
             </SyntaxHighlighter>
@@ -23,25 +23,20 @@ export const CodeBlock = ({ language, style, code }:{ language?:Language, style?
 
 //single line of code
 export const Code = ({ language, style: style_str, code }: { language?:Language, style?:Style, code:string }) => {
-    // const backgroundColor = style ? styles[style].hljs.background || ; // Fetch background color from style
     const style = style_str ? styles[style_str] : railscasts
     const backgroundColor = style.hljs.background as string
     return (
-        <span className='rounded-md overflow-hidden'>
+        <span className='rounded-md'>
             <SyntaxHighlighter 
                 language={language} 
                 style={style}
                 customStyle={{
                     display: 'inline',
-                    padding: '0.2rem 0.5rem',
-                    margin: 0,
+                    padding: '0.125rem 0.25rem',
+                    margin: "0 0.125rem",
                     backgroundColor: backgroundColor,
-                    // border: 'none',
-                    fontSize: 'inherit',
-                    lineHeight: 'inherit'
-                }}
-                codeTagProps={{
-                    className: 'inline'
+                    border: '1px solid #444444',
+                    borderRadius: 'inherit',
                 }}
             >
                 {code}
