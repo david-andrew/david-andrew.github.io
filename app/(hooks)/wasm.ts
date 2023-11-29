@@ -10,8 +10,8 @@ export const useEmscriptenWasm = (basePath: string, print?:(s:string)=>void) => 
     const [wasmModule, setWasmModule] = useState<WasmModule | undefined>(undefined);
     const [error, setError] = useState<Error | undefined>(undefined);
 
-    let script: HTMLScriptElement | null = null;
-    // let scriptRef = useRef<HTMLScriptElement | null>(null);
+    // let script: HTMLScriptElement | null = null;
+    let scriptRef = useRef<HTMLScriptElement | null>(null);
 
     const initializeWasmModule = useCallback(async () => {
         const scriptPath = `${basePath}.js`;
@@ -26,10 +26,10 @@ export const useEmscriptenWasm = (basePath: string, print?:(s:string)=>void) => 
             }
 
             // Create and append script element
-            script = document.createElement('script');
-            script.src = scriptPath;
-            script.async = true;
-            script.onload = () => {
+            scriptRef.current = document.createElement('script');
+            scriptRef.current.src = scriptPath;
+            scriptRef.current.async = true;
+            scriptRef.current.onload = () => {
                 Module({
                     onRuntimeInitialized: () => {
                         console.log("onRuntimeInitialized");
@@ -39,7 +39,7 @@ export const useEmscriptenWasm = (basePath: string, print?:(s:string)=>void) => 
                     setWasmModule(module);
                 });
             };
-            document.body.appendChild(script);
+            document.body.appendChild(scriptRef.current);
         } catch (err) {
             setError(err as Error);
         }
@@ -48,8 +48,8 @@ export const useEmscriptenWasm = (basePath: string, print?:(s:string)=>void) => 
     const reloadWasmModule = useCallback(() => {
         // Reset the state and remove existing script
         setWasmModule(undefined);
-        if (script) {
-            document.body.removeChild(script);
+        if (scriptRef.current) {
+            document.body.removeChild(scriptRef.current);
         }
 
         // Reinitialize the module
@@ -61,11 +61,12 @@ export const useEmscriptenWasm = (basePath: string, print?:(s:string)=>void) => 
 
         return () => {
             // Cleanup script on unmount
-            if (script) {
-                document.body.removeChild(script);
+            if (scriptRef.current) {
+                document.body.removeChild(scriptRef.current);
+                scriptRef.current = null;
             }
         };
-    }, [initializeWasmModule, script]);
+    }, [initializeWasmModule]);
 
     return { wasm:wasmModule, error, reload:reloadWasmModule };
 };

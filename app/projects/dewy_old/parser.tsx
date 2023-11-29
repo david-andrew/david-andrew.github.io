@@ -96,6 +96,7 @@ const useDewyWasm = (grammar_source: string, input_source: string): ParserOutput
     //reload the wasm module when the input changes (since it crashes if we try to reuse it)
     useEffect(() => {
         reload()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [grammar_source, input_source])
 
     useEffect(() => {
@@ -108,6 +109,7 @@ const useDewyWasm = (grammar_source: string, input_source: string): ParserOutput
             flushParserOutput()
         }
         return (): void => { resetParserOutput() }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [wasm, error, grammar_source, input_source]);
 
     const parserOutput = rawParserOutput ? splitParserOutput(rawParserOutput) : undefined
@@ -135,7 +137,8 @@ export const useDelayed = <T,>(items: T[], delayMs: number = 200): T[] => {
             setDelayedItems(items)
             timeoutHandleRef.current = undefined
         }, delayMs)
-    }, [...items])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [delayMs, ...items])
 
     return delayedItems
 }
