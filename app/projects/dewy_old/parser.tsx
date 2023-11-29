@@ -1,20 +1,9 @@
 "use client";
 import { H4 } from "@/app/(components)/ui";
 import { useState, useEffect, useRef, Dispatch, SetStateAction } from "react";
+import { useEmscriptenWasm } from "@/app/(hooks)/wasm";
 import { twMerge } from "tailwind-merge";
-import DewyParserWrapper from './dewy_parser_wrapper.js';
-// import DewyParserWASM from './dewy_parser_wrapper.wasm';
-import dynamic from "next/dynamic";
-// const TestComponent = dynamic({
-//     loader: async () => {
-//         // const module = await import('./dewy_parser_wrapper.js');
-//         // return module.DewyParserWrapper;
-//         const exports = await import('./dewy_parser_wrapper.wasm');
-//     }
-// })
-WebAssembly.instantiateStreaming(fetch('./dewy_parser_wrapper.wasm'), {}).then((result) => {
-    console.log('wasm loaded', result)
-})
+
 
 //hook for managing strings output from the dewy parser process
 export const useStringBuffer = (): [string | undefined, (chunk: string) => void, () => void, () => void] => {
@@ -99,53 +88,37 @@ const splitParserOutput = (raw?: string): ParserOutput | undefined => {
 //hook for managing dewy parser web assembly
 //normally you would be able to load the wasm once, and then call the cwrapped function over and over
 //but that caused the parser to crash, so the hacky fix is to just reload the whole wasm module every time
-export const useDewyWasm = (grammar_source: string, input_source: string): ParserOutput | undefined => {
-    //promise to the wasm interface module
-    const wasmPromiseRef = useRef<Promise<any>>()
+const useDewyWasm = (grammar_source: string, input_source: string): ParserOutput | undefined => {
+    const [rawParserOutput, addParserChunk, flushParserOutput, resetParserOutput] = useStringBuffer()
 
-    //handling of string output from the parser process
-    const [parserOutput, addParserChunk, flushParserOutput, resetParserOutput] = useStringBuffer()
+    const {wasm, error, reload} = useEmscriptenWasm('/wasm/dewy_old/dewy_parser_wrapper', addParserChunk);
 
-    //handle setting up the wasm module and the function for calling the parser
+    //reload the wasm module when the input changes (since it crashes if we try to reuse it)
     useEffect(() => {
-        //kick of the loading process for getting the functions, and then call the result
-        wasmPromiseRef.current = DewyParserWrapper({
-            onRuntimeInitialized: async () => {
-                //save the function for calling the parser
-                console.log('wasm runtime initialized')
-                const wasm: any = await wasmPromiseRef.current
-                const dewyParser = wasm.cwrap('dewy_parser', 'void', ['string', 'string'])
-                try {
-                    dewyParser(grammar_source, input_source)
-                } catch {
-                } finally {
-                    flushParserOutput()
-                }
-            },
-            //override the module's code for locating the wasm binary
-            /* eslint-disable @typescript-eslint/no-var-requires */
-            locateFile: () => require('./dewy_parser_wrapper.wasm').default,
-            //override the print function to write to our custom buffer
-            print: (text: string) => {
-                addParserChunk(text)
-                // console.log(`pushing chunk: ${text}`)
-            },
-        })
-
-        //clean up at the end of every render
-        return (): void => {
-            resetParserOutput()
-        }
+        reload()
     }, [grammar_source, input_source])
 
-    //return the parser output as a single string
-    return splitParserOutput(parserOutput)
+    useEffect(() => {
+        if (!wasm || error) return;
+        const dewy_parser = wasm.cwrap('dewy_parser', 'void', ['string', 'string'])
+        try {
+            dewy_parser(grammar_source, input_source);
+        } catch {
+        } finally {
+            flushParserOutput()
+        }
+        return (): void => { resetParserOutput() }
+    }, [wasm, error, grammar_source, input_source]);
+
+    const parserOutput = rawParserOutput ? splitParserOutput(rawParserOutput) : undefined
+
+    return parserOutput
 }
 
 //delay updating a string so that the inputs can feel responsive to typing in them, and then when the user stops typing the process is run
 export const useDelayed = <T,>(items: T[], delayMs: number = 200): T[] => {
     //text to emit after delay interval
-    const [delayedItem, setDelayedItem] = useState<T[]>(items)
+    const [delayedItems, setDelayedItems] = useState<T[]>(items)
 
     //reference to the handle of the set timeout (so we can cancel if the text changes during the delay)
     const timeoutHandleRef = useRef<number>()
@@ -159,13 +132,12 @@ export const useDelayed = <T,>(items: T[], delayMs: number = 200): T[] => {
 
         //create a new timeout that sets the text at the end of the delay
         timeoutHandleRef.current = window.setTimeout(() => {
-            console.log('setting item', items)
-            setDelayedItem(items)
+            setDelayedItems(items)
             timeoutHandleRef.current = undefined
         }, delayMs)
     }, [...items])
 
-    return delayedItem
+    return delayedItems
 }
 
 
@@ -177,7 +149,7 @@ export type DemoGrammar = {
 }
 
 
-const AutoHeightTextArea = ({text, setText, className=''}:{text:string, setText:Dispatch<SetStateAction<string>>, className?:string}): JSX.Element => {
+const AutoHeightTextArea = ({text, setText, onFocus, className=''}:{text:string, setText:(s:string)=>void, className?:string, onFocus?:()=>void}): JSX.Element => {
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
   
     // Function to update textarea height
@@ -209,6 +181,7 @@ const AutoHeightTextArea = ({text, setText, className=''}:{text:string, setText:
             value={text}
             spellCheck={false}
             onChange={handleChange}
+            onFocus={onFocus}
         />
     );
 };
@@ -250,28 +223,26 @@ export const DewyLiveParser = ({grammars, initial_idx=0}:{grammars:DemoGrammar[]
     if (grammars.length < initial_idx) {
         throw new Error(`initial_idx must be less than the number of grammars. initial_idx: ${initial_idx}, grammars.length: ${grammars.length}`);
     }
-    const [started, setStarted] = useState(false);
-    const [sourceText, setSourceText] = useState(grammars[initial_idx].source);
-    const [grammarText, setGrammarText] = useState(grammars[initial_idx].grammar);
-    const [outputIdx, setOutputIdx] = useState(0);
-
+    const [demoStarted, setDemoStarted] = useState(false); //has the user clicked "try me"
+    const [outputIdx, setOutputIdx] = useState(0); //which output tab from the parser to show
+    const [sourceText, _setSourceText] = useState(grammars[initial_idx].source);
+    const [grammarText, _setGrammarText] = useState(grammars[initial_idx].grammar);
+    
+    //any input to the source or grammar text boxes will start the demo
+    const startDemo = () => { if (!demoStarted) setDemoStarted(true); }
+    const setSourceText = (text:string) => { _setSourceText(text); startDemo(); }
+    const setGrammarText = (text:string) => { _setGrammarText(text); startDemo(); }
 
     //run the input through the dewy parser. Put a delay on the input boxes so that the wasm code isn't run too frequently
     const [grammar, source] = useDelayed([grammarText, sourceText])
     const parserOutput = useDewyWasm(grammar, source)
 
     //determine if there was a parser/grammar error. Only show errors after the user starts the demo
-    const parseError = started && parserOutput?.result === 'failure'
-    const grammarError = started && parserOutput?.grammarError !== undefined
+    const parseError = demoStarted && parserOutput?.result === 'failure'
+    const grammarError = demoStarted && parserOutput?.grammarError !== undefined
     
-    useEffect(() => {
-        console.log('parser output changed', parserOutput)
-    }
-    , [parserOutput])
-
-
-    const gap = started ? 'gap-x-[2%]' : 'gap-x-[5%]';
-    const columns = started ? 'grid-cols-[4fr,0fr,5fr]' : 'grid-cols-[1fr,1fr]';
+    const gap = demoStarted ? 'gap-x-[2%]' : 'gap-x-[5%]';
+    const columns = demoStarted ? 'grid-cols-[4fr,0fr,5fr]' : 'grid-cols-[1fr,1fr]';
     return (
         <>
             {/* full desktop version */}
@@ -279,38 +250,38 @@ export const DewyLiveParser = ({grammars, initial_idx=0}:{grammars:DemoGrammar[]
                 <div className="flex flex-col justify-end">                
                     <H4 className="mt-0">Source Input</H4>
                 </div>
-                {started && (<H4 className="mt-0 select-none">&nbsp;</H4>)}
+                {demoStarted && (<H4 className="mt-0 select-none">&nbsp;</H4>)}
                 <div className="flex flex-col justify-end">
                     <H4 className="mt-0">Grammar Specification</H4>
                 </div>
-                <AutoHeightTextArea className="w-full bg-[#232323] text-xl" text={sourceText} setText={setSourceText}/>
-                {started && (
+                <AutoHeightTextArea className={twMerge("w-full bg-[#232323] text-xl", parseError ? 'outline-[#FF0000] focus:outline-[#FF0000]' : '')} text={sourceText} setText={setSourceText} onFocus={startDemo}/>
+                {demoStarted && (
                     <div className="flex whitespace-nowrap font-mono h-min select-none">
                         <span className="text-xl pr-1">&lt;</span>
                         <span className="text-lg outline outline-1 outline-white px-1">edit me</span>
                         <span className="text-xl pl-1">&gt;</span>
                     </div>
                 )}
-                <AutoHeightTextArea className="w-full bg-[#232323] text-xl" text={grammarText} setText={setGrammarText}/>
+                <AutoHeightTextArea className={twMerge("w-full bg-[#232323] text-xl", grammarError ? 'outline-[#FF0000] focus:outline-[#FF0000]' : '')} text={grammarText} setText={setGrammarText} onFocus={startDemo}/>
             </div>
             
             {/* mobile version */}
             <div className="md:hidden flex flex-col">
                 <H4 className="mt-0">Grammar Specification</H4>
-                <AutoHeightTextArea className="w-full bg-[#232323]" text={grammarText} setText={setGrammarText}/>
+                <AutoHeightTextArea className={twMerge("w-full bg-[#232323] text-lg", grammarError ? 'outline-[#FF0000] focus:outline-[#FF0000]' : '')} text={grammarText} setText={setGrammarText} onFocus={startDemo}/>
                 <H4>Source Input</H4>
-                <AutoHeightTextArea className="w-full bg-[#232323]" text={sourceText} setText={setSourceText}/>
+                <AutoHeightTextArea className={twMerge("w-full bg-[#232323] text-lg", parseError ? 'outline-[#FF0000] focus:outline-[#FF0000]' : '')} text={sourceText} setText={setSourceText} onFocus={startDemo}/>
             </div>
             {
-                !started && (
+                !demoStarted && (
                     <div className="flex flex-col justify-center pt-6">
-                        <button className="w-24 h-8 bg-[#232323] text-white rounded-md" onClick={() => setStarted(!started)}>
+                        <button className="w-24 h-8 bg-[#232323] text-white rounded-md" onClick={() => setDemoStarted(!demoStarted)}>
                             Try Me
                         </button>
                     </div>
                 )
             }
-            { started && (
+            { demoStarted && (
                 <div className="w-full my-6">
                     <Accordion title="Examples">
                         {/* list of buttons, one for each example grammar */}
@@ -348,17 +319,9 @@ export const DewyLiveParser = ({grammars, initial_idx=0}:{grammars:DemoGrammar[]
                                 }
                             </div>
                             <div className="w-full bg-[#232323] text-white  rounded-b-md rounded-tr-md overflow-hidden border border-t-0 border-solid border-[#444444]">
-                                <div className="whitespace-pre w-full overflow-x-auto p-4 font-mono text-xl">
+                                <div className="whitespace-pre w-full overflow-x-auto p-4 font-mono max-md:text-lg md:text-xl">
                                     {
-`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ac faucibus nisi. Aliquam tempus augue ut leo mattis posuere. Ut ac nunc nec massa efficitur tincidunt. Sed sed eros a metus gravida hendrerit at in arcu. Nullam at felis ac risus venenatis tempor. Duis mollis turpis quis tortor aliquam, non hendrerit ligula ornare. Mauris eu elit nisi. Phasellus ut venenatis nunc. Etiam condimentum interdum justo, sed efficitur risus lobortis at. Morbi eget erat erat. Aliquam tempus non metus at sodales. Fusce non aliquet lacus. Aliquam accumsan sed turpis sed pellentesque.
-
-Suspendisse potenti. Aliquam erat volutpat. Duis nec mi eget lacus consequat euismod. Praesent vel libero a massa vehicula congue. Curabitur in felis ullamcorper, varius urna vel, efficitur nulla. Proin tempus volutpat lacus, in vulputate eros pellentesque eget. Ut tincidunt ante eget augue iaculis suscipit. Pellentesque sagittis, erat at varius aliquet, mi nisl cursus ex, vitae hendrerit massa lorem et diam. Sed euismod feugiat risus, a fermentum augue luctus sed. Morbi viverra, quam in mattis iaculis, dolor ligula mattis dui, a aliquet purus sem eu nisi. Duis aliquet mi dolor, vestibulum rhoncus lorem viverra sed. Nam mollis id velit at sollicitudin. Donec non luctus magna, non fermentum velit. Aenean orci leo, fermentum sit amet tincidunt eget, finibus sed orci. Integer nec malesuada sem. Nulla eget nisi orci.
-
-Aliquam erat volutpat. Praesent tincidunt est sit amet vehicula maximus. Nam eu mattis sem, in tempus risus. Nullam laoreet, sapien accumsan suscipit mattis, sapien nulla laoreet nisi, ac ornare leo risus ac leo. Nunc elit ante, vestibulum in eros et, gravida ornare diam. Praesent tempus tincidunt mauris eget commodo. Nam consequat orci arcu, vel lobortis mi viverra venenatis. Integer tempor dui vitae nibh sodales, quis ultricies lectus hendrerit. Nam eget pharetra libero. Sed finibus lorem id erat hendrerit, ornare laoreet nunc facilisis. Pellentesque porttitor, purus at maximus consectetur, turpis enim luctus turpis, eget mattis nisl ligula placerat ex. Pellentesque mauris est, cursus vel libero quis, consectetur eleifend massa. Pellentesque condimentum, nisi et facilisis convallis, ipsum ex consequat eros, non feugiat odio felis sollicitudin tortor. Quisque ut odio volutpat, ullamcorper ante et, pellentesque eros. Donec ultrices metus ut libero blandit lacinia.
-
-Donec sit amet dictum dui. In eget molestie mi, viverra pellentesque nibh. Donec maximus scelerisque orci non interdum. Maecenas vestibulum tempus metus ut auctor. Aliquam quam ex, ullamcorper nec bibendum hendrerit, dignissim vitae justo. Donec tempus at tortor vel auctor. Curabitur sit amet egestas arcu, in dapibus erat. Sed nibh ex, ultrices eget porta id, pharetra et ipsum. Proin tellus elit, pellentesque eu faucibus eleifend, aliquet placerat elit. Cras vestibulum dignissim risus, non semper velit.
-
-Curabitur vel sem vel leo auctor blandit at at mauris. Vivamus ullamcorper dui tempus, mollis eros eu, efficitur velit. Fusce quis congue justo. Suspendisse vitae orci nec eros efficitur placerat eu ac lectus. Morbi aliquam pharetra arcu interdum tempus. Aliquam imperdiet finibus aliquet. Maecenas scelerisque vehicula tellus, quis fermentum nisl cursus pharetra. Mauris eu lobortis sapien. Mauris ac bibendum sem, sed egestas elit. Morbi auctor nec diam ac pretium. Sed sodales vel turpis nec malesuada.`
+                                        parserOutput ? parserOutput[parserOutputPrettyValues[outputIdx]] : 'Loading...'
                                     }
                                 </div>
                             </div>
