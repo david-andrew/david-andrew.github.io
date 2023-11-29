@@ -27,7 +27,41 @@ def main():
     os.chdir(Path("src/compiler"))
     shutil.copyfile(Path("../../../../public/wasm/dewy_old/dewy_parser_wrapper.h").absolute(), Path("dewy_parser_wrapper.h"))
     shutil.copyfile(Path("../../../../public/wasm/dewy_old/dewy_parser_wrapper.c").absolute(), Path("dewy_parser_wrapper.c"))
-    result = subprocess.run(["emcc", "dewy_parser_wrapper.c", "charset.c", "fset.c", "gss.c", "metaitem.c", "metascanner.c", "object.c", "reduction.c", "set.c", "sppf.c", "tuple.c", "ustring.c", "vector.c", "dictionary.c", "gotokey.c", "metaast.c", "metaparser.c", "metatoken.c", "parray.c", "scratch.c", "slice.c", "srnglr.c", "utilities.c", "-o", "dewy_parser_wrapper.js", "-s", "EXPORTED_FUNCTIONS=_dewy_parser", "-s", "MODULARIZE=1", "-s", "EXPORT_NAME='Module'", "-s", "ENVIRONMENT='web'", "-s", "ASSERTIONS=1", "-O3"])
+    result = subprocess.run([
+        "emcc",
+        "dewy_parser_wrapper.c",
+        "charset.c",
+        "fset.c",
+        "gss.c",
+        "metaitem.c",
+        "metascanner.c",
+        "object.c",
+        "reduction.c",
+        "set.c",
+        "sppf.c",
+        "tuple.c",
+        "ustring.c",
+        "vector.c",
+        "dictionary.c",
+        "gotokey.c",
+        "metaast.c",
+        "metaparser.c",
+        "metatoken.c",
+        "parray.c",
+        "scratch.c",
+        "slice.c",
+        "srnglr.c",
+        "utilities.c",
+        "-o", "dewy_parser_wrapper.js",
+        "-s", "EXPORTED_FUNCTIONS=_dewy_parser",
+        "-s", "EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']",
+        "-s", "MODULARIZE=1",
+        "-s", "EXPORT_NAME='Module'",
+        "-s", "ENVIRONMENT='web'",
+        "-s", "ASSERTIONS=1",
+        "-s", "EXIT_RUNTIME=1",
+        "-O3"
+    ])
     if result.returncode != 0:
         print("Error building dewy_parser_wrapper.js")
         sys.exit(1)
