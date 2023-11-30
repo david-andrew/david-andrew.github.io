@@ -22,6 +22,7 @@ import jhu_shield from "@/app/(images)/icons/jhu_shield.png";
 import idt_starburst from "@/app/(images)/icons/idt_starburst.png";
 import jataware_logo from "@/app/(images)/icons/jataware_logo.png";
 import trello from "@/app/(images)/icons/trello.svg";
+import { twMerge } from 'tailwind-merge';
 
 //TODO: is there a way to specify the type of the object keys?
 // {[key: Icon]: StaticImageData}
@@ -53,10 +54,10 @@ const icon_map = {
 type Icon = keyof typeof icon_map;
 
 
-export const IconBullet = ({icon, responsive=false, children}:{icon:Icon, responsive?:boolean, className?:string, children:React.ReactNode}) => {
+export const IconBullet = ({icon, responsive=false, className='', children}:{icon:Icon, responsive?:boolean, className?:string, children:React.ReactNode}) => {
     const src = icon_map[icon];
     return (
-        <div className='flex flex-row text-sm items-center'>
+        <div className={twMerge('flex flex-row text-sm items-center', className)}>
             <Image src={src} alt={`${icon} icon`} className={`inline-block w-8 h-8 mr-2 ${responsive ? 'md:w-12 md:h-12 md:mr-3 lg:w-16 lg:h-16 lg:mr-4' : ''} pointer-events-none select-none`} draggable={false} />
             <span className='align-middle'>
                 {children}
@@ -65,9 +66,9 @@ export const IconBullet = ({icon, responsive=false, children}:{icon:Icon, respon
     );
 }
 
-export const IconBulletList = ({children}:{children:React.ReactNode}) => {
+export const IconBulletList = ({children, className=""}:{className?:string, children:React.ReactNode}) => {
     return (
-        <div className='flex flex-col space-y-3'>
+        <div className={twMerge('flex flex-col space-y-3', className)}>
             {children}
         </div>
     );
