@@ -279,7 +279,7 @@ const unambiguousExpressionGrammar = exampleGrammars[5]
 const Page = (): JSX.Element => {
     return (
         <>
-            {/* <DewyLiveParser grammars={exampleGrammars} initial_idx={4} /> */}
+            <DewyLiveParser grammars={exampleGrammars} initial_idx={4} />
             <H3>About</H3>
             <P>
                 This is mostly old work experimenting with different parser-generator technologies for <Link href='/projects/dewy'>dewy</Link>.
