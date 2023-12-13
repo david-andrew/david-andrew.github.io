@@ -1,13 +1,13 @@
 "use client";
 import { H4 } from "@/app/(components)/ui";
-import { useState, useEffect, useRef, Dispatch, SetStateAction } from "react";
-import { useEmscriptenWasm } from "@/app/(hooks)/wasm";
+import { CodeEditor } from "@/app/(components)/syntax";
+import { dewy_meta_lang, dewy_meta_theme } from "@/app/(components)/syntax_dewy_meta";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { twMerge } from "tailwind-merge";
 
 
 //hook for managing strings output from the dewy parser process
 export const useStringBuffer = (): [string | undefined, (chunk: string) => void, () => void, () => void] => {
-    // const [buffer, setBuffer] = useState<string | undefined>()
     const bufferRef = useRef<string[]>()
     const [output, setOutput] = useState<string | undefined>()
 
@@ -85,37 +85,82 @@ const splitParserOutput = (raw?: string): ParserOutput | undefined => {
     }
 }
 
+
+//module for wasm is loaded by attaching a script element to the dom
+declare const Module: any;
+type WasmModule = {
+    cwrap: (name: string, returnType: string, argTypes: string[]) => any;
+};
+
 //hook for managing dewy parser web assembly
 //normally you would be able to load the wasm once, and then call the cwrapped function over and over
 //but that caused the parser to crash, so the hacky fix is to just reload the whole wasm module every time
 const useDewyWasm = (grammar_source: string, input_source: string): ParserOutput | undefined => {
     const [rawParserOutput, addParserChunk, flushParserOutput, resetParserOutput] = useStringBuffer()
+    
+    let scriptRef = useRef<HTMLScriptElement | null>(null);
 
-    const {wasm, error, reload} = useEmscriptenWasm('/wasm/dewy_old/dewy_parser_wrapper', addParserChunk);
+    const initializeWasmModule = useCallback(async () => {
+        const basePath = '/wasm/dewy_old/dewy_parser_wrapper'
+        const scriptPath = `${basePath}.js`;
+        const wasmPath = `${basePath}.wasm`;
 
-    //reload the wasm module when the input changes (since it crashes if we try to reuse it)
+        try {
+            // Check if the .js and .wasm files exist
+            const scriptResponse = await fetch(scriptPath);
+            const wasmResponse = await fetch(wasmPath);
+            if (!scriptResponse.ok || !wasmResponse.ok) {
+                throw new Error(`Failed to find script or WASM file at ${basePath}`);
+            }
+
+            // Create and append script element
+            scriptRef.current = document.createElement('script');
+            scriptRef.current.src = scriptPath;
+            scriptRef.current.async = true;
+            scriptRef.current.onload = () => {
+                Module({
+                    onRuntimeInitialized: () => {
+                        console.log("onRuntimeInitialized");
+                    },
+                    print: addParserChunk//print ?? console.log,
+                }).then((module: WasmModule) => {
+                    const dewy_parser = module.cwrap('dewy_parser', 'void', ['string', 'string'])
+                    try {
+                        dewy_parser(grammar_source, input_source);
+                    } catch (err) {
+                        console.error(err);
+                    } finally {
+                        flushParserOutput()
+                    }
+                });
+            };
+            document.body.appendChild(scriptRef.current);
+        } catch (err) {
+            console.error(err);
+            flushParserOutput();
+        }
+    }, [grammar_source, input_source]);
+
     useEffect(() => {
-        reload()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        initializeWasmModule();
+
+        return () => {
+            // Cleanup script on unmount
+            if (scriptRef.current) {
+                document.body.removeChild(scriptRef.current);
+                scriptRef.current = null;
+            }
+            resetParserOutput()
+        }
     }, [grammar_source, input_source])
 
-    useEffect(() => {
-        if (!wasm || error) return;
-        const dewy_parser = wasm.cwrap('dewy_parser', 'void', ['string', 'string'])
-        try {
-            dewy_parser(grammar_source, input_source);
-        } catch {
-        } finally {
-            flushParserOutput()
-        }
-        return (): void => { resetParserOutput() }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [wasm, error, grammar_source, input_source]);
 
     const parserOutput = rawParserOutput ? splitParserOutput(rawParserOutput) : undefined
 
     return parserOutput
-}
+};
+
+
 
 //delay updating a string so that the inputs can feel responsive to typing in them, and then when the user stops typing the process is run
 export const useDelayed = <T,>(items: T[], delayMs: number = 200): T[] => {
@@ -232,9 +277,9 @@ export const DewyLiveParser = ({grammars, initial_idx=0}:{grammars:DemoGrammar[]
     const [grammarText, _setGrammarText] = useState(grammars[initial_idx].grammar);
     
     //any input to the source or grammar text boxes will start the demo
-    const startDemo = () => { if (!demoStarted) setDemoStarted(true); }
-    const setSourceText = (text:string) => { _setSourceText(text); startDemo(); }
-    const setGrammarText = (text:string) => { _setGrammarText(text); startDemo(); }
+    const startDemo = () => { if (!demoStarted) { setDemoStarted(true) }}
+    const setSourceText = (text:string) => { _setSourceText(text); if (!demoStarted) setDemoStarted(true); }
+    const setGrammarText = (text:string) => { _setGrammarText(text); if (!demoStarted) setDemoStarted(true); }
 
     //run the input through the dewy parser. Put a delay on the input boxes so that the wasm code isn't run too frequently
     const [grammar, source] = useDelayed([grammarText, sourceText])
@@ -265,15 +310,25 @@ export const DewyLiveParser = ({grammars, initial_idx=0}:{grammars:DemoGrammar[]
                         <span className="text-xl pl-1">&gt;</span>
                     </div>
                 )}
-                <AutoHeightTextArea className={twMerge("w-full bg-[#232323] text-xl", grammarError ? 'outline-[#FF0000] focus:outline-[#FF0000]' : '')} text={grammarText} setText={setGrammarText} onFocus={startDemo}/>
+                {/* <AutoHeightTextArea className={twMerge("w-full bg-[#232323] text-xl", grammarError ? 'outline-[#FF0000] focus:outline-[#FF0000]' : '')} text={grammarText} setText={setGrammarText} onFocus={startDemo}/> */}
+                <CodeEditor 
+                    className={twMerge("w-full bg-[#232323] text-xl hide-h-scrollbar overflow-y-hidden overflow-x-auto", grammarError ? 'outline outline-[#FF0000] focus:outline-[#FF0000]' : '')}
+                    language={dewy_meta_lang()}
+                    theme={dewy_meta_theme}
+                    text={grammarText}
+                    setText={setGrammarText}
+                    onFocus={startDemo}
+                />
             </div>
             
             {/* mobile version */}
             <div className="md:hidden flex flex-col">
                 <H4 className="mt-0">Grammar Specification</H4>
-                <AutoHeightTextArea className={twMerge("w-full bg-[#232323] text-lg", grammarError ? 'outline-[#FF0000] focus:outline-[#FF0000]' : '')} text={grammarText} setText={setGrammarText} onFocus={startDemo}/>
+                {/* <AutoHeightTextArea className={twMerge("w-full bg-[#232323] text-lg", grammarError ? 'outline-[#FF0000] focus:outline-[#FF0000]' : '')} text={grammarText} setText={setGrammarText} onFocus={startDemo}/> */}
+                <div>placeholder</div>
                 <H4>Source Input</H4>
                 <AutoHeightTextArea className={twMerge("w-full bg-[#232323] text-lg", parseError ? 'outline-[#FF0000] focus:outline-[#FF0000]' : '')} text={sourceText} setText={setSourceText} onFocus={startDemo}/>
+                <div>placeholder</div>
             </div>
             {
                 !demoStarted && (

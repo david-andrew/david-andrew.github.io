@@ -2,10 +2,6 @@ import { H3, P, Link } from "@/app/(components)/ui";
 import { CodeBlock } from "@/app/(components)/syntax";
 import { IconBullet, IconBulletList } from "@/app/(components)/icon_bullet";
 
-// const Page = (): JSX.Element => {
-//     return <h1>&lt;Under Construction&gt;</h1>
-// }
-
 
 const Page = (): JSX.Element => {
     return (

@@ -191,7 +191,6 @@ const match_string = (s:string): Token[]|undefined => {
     let tokens: Token[] = [{type: "literal", start: 0, end: 1}];
     let token: Token|undefined;
     while (i < s.length) {
-        console.log('trying to match', s.slice(i))
         
         // hex literal in string
         token = match_hex(s.slice(i));
@@ -294,14 +293,14 @@ const matchers: match_fn[] = [
 ]
 
 const parse_dewy_meta_lang = (code: string): Token[] => {
-    console.log('parsing:', code)
+    // console.log('parsing:', code)
     let tokens: Token[] = [];
     let index = 0;
 
     while (index < code.length) {
         let token = matchers.reduce<Token|Token[]|undefined>((token, matcher) => token ? token : matcher(code.slice(index)), undefined);
         if (token) {
-            console.log('matched token(s):', token)
+            // console.log('matched token(s):', token)
             if (Array.isArray(token)) {
                 tokens.push(...token.map((t) => {
                     t.start += index;
@@ -316,7 +315,7 @@ const parse_dewy_meta_lang = (code: string): Token[] => {
                 index = token.end;
             }
         } else {
-            console.log('no match, skipping character:', code[index])
+            // console.log('no match, skipping character:', code[index])
             tokens.push({type: "invalid", start: index, end: index+1});
             index++;
         }
