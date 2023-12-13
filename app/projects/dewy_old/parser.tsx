@@ -325,7 +325,14 @@ export const DewyLiveParser = ({grammars, initial_idx=0}:{grammars:DemoGrammar[]
             <div className="md:hidden flex flex-col">
                 <H4 className="mt-0">Grammar Specification</H4>
                 {/* <AutoHeightTextArea className={twMerge("w-full bg-[#232323] text-lg", grammarError ? 'outline-[#FF0000] focus:outline-[#FF0000]' : '')} text={grammarText} setText={setGrammarText} onFocus={startDemo}/> */}
-                <div>placeholder</div>
+                <CodeEditor 
+                    className={twMerge("w-full bg-[#232323] text-lg hide-h-scrollbar overflow-y-hidden overflow-x-auto", grammarError ? 'outline outline-[#FF0000] focus:outline-[#FF0000]' : '')}
+                    language={dewy_meta_lang()}
+                    theme={dewy_meta_theme}
+                    text={grammarText}
+                    setText={setGrammarText}
+                    onFocus={startDemo}
+                />
                 <H4>Source Input</H4>
                 <AutoHeightTextArea className={twMerge("w-full bg-[#232323] text-lg", parseError ? 'outline-[#FF0000] focus:outline-[#FF0000]' : '')} text={sourceText} setText={setSourceText} onFocus={startDemo}/>
                 <div>placeholder</div>
