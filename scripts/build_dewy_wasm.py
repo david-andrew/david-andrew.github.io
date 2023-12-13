@@ -1,14 +1,14 @@
-#git clone git@github.com:david-andrew/dewy-lang.git
-#cd dewy-lang
-#git checkout 188da93
-#cd src/compiler
-#cp ../../public/wasm/dewy_old/dewy_parser_wrapper.h .
-#cp ../../public/wasm/dewy_old/dewy_parser_wrapper.c .
-# emcc dewy_parser_wrapper.c charset.c fset.c gss.c metaitem.c metascanner.c object.c reduction.c set.c sppf.c tuple.c ustring.c vector.c dictionary.c gotokey.c metaast.c metaparser.c metatoken.c parray.c scratch.c slice.c srnglr.c utilities.c -o dewy_parser_wrapper.js -s EXPORTED_FUNCTIONS='["_dewy_parser"]' -s MODULARIZE=1 -s EXPORT_NAME='Module' -s ENVIRONMENT='web' -s ASSERTIONS=1 -O3
-#cp dewy_parser_wrapper.js ../../public/wasm/dewy_old/
-#cp dewy_parser_wrapper.wasm ../../public/wasm/dewy_old/
-#cd ../..
-#rm -rf dewy-lang
+# git clone git@github.com:david-andrew/dewy-lang.git
+# cd dewy-lang
+# git checkout 188da93
+# cd src/compiler
+# cp ../../public/wasm/dewy_old/dewy_parser_wrapper.h .
+# cp ../../public/wasm/dewy_old/dewy_parser_wrapper.c .
+# emcc dewy_parser_wrapper.c charset.c fset.c gss.c metaitem.c metascanner.c object.c reduction.c set.c sppf.c tuple.c ustring.c vector.c dictionary.c gotokey.c metaast.c metaparser.c metatoken.c parray.c slice.c srnglr.c utilities.c -o dewy_parser_wrapper.js -s EXPORTED_FUNCTIONS='["_dewy_parser"]' -s EXPORTED_RUNTIME_METHODS='["ccall", "cwrap"]' -s MODULARIZE=1 -s EXPORT_NAME='Module' -s ENVIRONMENT='web' -s ASSERTIONS=1 -s EXIT_RUNTIME=1 -O3
+# cp dewy_parser_wrapper.js ../../public/wasm/dewy_old/
+# cp dewy_parser_wrapper.wasm ../../public/wasm/dewy_old/
+# cd ../..
+# rm -rf dewy-lang
 
 import subprocess
 import os
@@ -48,7 +48,6 @@ def main():
         "metaparser.c",
         "metatoken.c",
         "parray.c",
-        "scratch.c",
         "slice.c",
         "srnglr.c",
         "utilities.c",
