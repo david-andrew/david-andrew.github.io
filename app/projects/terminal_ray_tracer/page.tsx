@@ -1,14 +1,41 @@
 "use client";
+import { useRef } from 'react';
 import { P, Link, H3, Caption, Divider } from '@/app/(components)/ui'
 import { IconBullet, IconBulletList } from '@/app/(components)/icon_bullet'
 import { CodeBlock } from '@/app/(components)/syntax';
-import HoverVideoPlayer from 'react-hover-video-player'
 import v1 from '@/app/(images)/terminal_ray_tracer/v1.mp4'
 import v2 from '@/app/(images)/terminal_ray_tracer/v2.mp4'
 import v3 from '@/app/(images)/terminal_ray_tracer/v3.mp4'
 import v4 from '@/app/(images)/terminal_ray_tracer/v4.mp4'
 import v5 from '@/app/(images)/terminal_ray_tracer/v5.mp4'
 import v6 from '@/app/(images)/terminal_ray_tracer/v6.mp4'
+
+
+
+const HoverVideoPlayer = ({ videoSrc }:{videoSrc:string}) => {
+    const videoRef = useRef<HTMLVideoElement>(null);
+
+    const handleMouseEnter = () => {
+        if (videoRef.current) {
+            videoRef.current.play();
+        }
+    };
+
+    const handleMouseLeave = () => {
+        if (videoRef.current) {
+            videoRef.current.pause();
+        }
+    };
+
+    return (
+        <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="w-full h-full">
+            <video ref={videoRef} src={videoSrc} muted loop className="w-full h-full object-cover">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    );
+};
+
 
 
 const Page = (): JSX.Element => {
