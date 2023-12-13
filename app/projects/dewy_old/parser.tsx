@@ -122,7 +122,7 @@ const useDewyWasm = (grammar_source: string, input_source: string): ParserOutput
                     onRuntimeInitialized: () => {
                         console.log("onRuntimeInitialized");
                     },
-                    print: addParserChunk//print ?? console.log,
+                    print: addParserChunk
                 }).then((module: WasmModule) => {
                     const dewy_parser = module.cwrap('dewy_parser', 'void', ['string', 'string'])
                     try {
