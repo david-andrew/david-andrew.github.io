@@ -464,17 +464,6 @@ const Page = (): JSX.Element => {
                 </IconBullet>
             </IconBulletList>
             <br/>
-            {/* <UL>
-                <li>
-                    <Link href="https://github.com/david-andrew/dewy-lang/tree/C_SRNGLR_Parser">C SRNGLR Parser branch</Link>
-                </li>
-                <li>
-                    <Link href="https://github.com/david-andrew/dewy-lang/tree/C_Clustered_Nonterminal_Parser">C Clustered Nonterminal Parser branch</Link>
-                </li>
-                <li>
-                    <Link href="https://github.com/david-andrew/dewy-lang/tree/Python_GLL_Parser">Python GLL Parser branch</Link>
-                </li>
-            </UL> */}
             <P>
                 Clone the repo and checkout the branch you want to see:
             </P>
