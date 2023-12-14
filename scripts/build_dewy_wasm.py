@@ -18,16 +18,23 @@ from pathlib import Path
 
 import pdb
 
+def run(command: list[str]):
+    result = subprocess.run(command)
+    if result.returncode != 0:
+        print(f"Error running command: {' '.join(command)}")
+        sys.exit(1)
+
+
 def main():
     cwd = Path(__file__).parent.absolute()
     os.chdir(cwd)
-    subprocess.run(["git", "clone", "git@github.com:david-andrew/dewy-lang.git"])
+    run(["git", "clone", "git@github.com:david-andrew/dewy-lang.git"])
     os.chdir("dewy-lang")
-    subprocess.run(["git", "checkout", "188da93"])
+    run(["git", "checkout", "188da93"])
     os.chdir(Path("src/compiler"))
     shutil.copyfile(Path("../../../../public/wasm/dewy_old/dewy_parser_wrapper.h").absolute(), Path("dewy_parser_wrapper.h"))
     shutil.copyfile(Path("../../../../public/wasm/dewy_old/dewy_parser_wrapper.c").absolute(), Path("dewy_parser_wrapper.c"))
-    result = subprocess.run([
+    run([
         "emcc",
         "dewy_parser_wrapper.c",
         "charset.c",
@@ -59,11 +66,10 @@ def main():
         "-s", "ENVIRONMENT='web'",
         "-s", "ASSERTIONS=1",
         "-s", "EXIT_RUNTIME=1",
+        "--embed-file", "unicode_cases_be.bin@/unicode_cases_be.bin",
+        "--embed-file", "unicode_cases_le.bin@/unicode_cases_le.bin",
         "-O3"
     ])
-    if result.returncode != 0:
-        print("Error building dewy_parser_wrapper.js")
-        sys.exit(1)
     shutil.copyfile(Path("dewy_parser_wrapper.js"), Path("../../../../public/wasm/dewy_old/dewy_parser_wrapper.js"))
     shutil.copyfile(Path("dewy_parser_wrapper.wasm"), Path("../../../../public/wasm/dewy_old/dewy_parser_wrapper.wasm"))
     os.chdir(cwd)
