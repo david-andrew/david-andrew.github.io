@@ -11,7 +11,7 @@ export type ProjectMeta = {
     { github: string, lastUpdated?: never } | { lastUpdated: string, github?: never }
 );
 
-export type FetchedProjectMeta = ProjectMeta & { route: string, timestamp: Date|undefined };
+export type FetchedProjectMeta = ProjectMeta & { route: string };//, timestamp: Date|undefined };
 
 export const isProjectContent = (obj: any): obj is ProjectMeta => {
     return obj !== undefined

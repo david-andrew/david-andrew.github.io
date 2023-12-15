@@ -3,8 +3,7 @@ import Image from 'next/image'
 import profile from './(images)/profile.jpg'
 import { NavbarDummy } from './(components)/navbar'
 
-
-export default function Home() {
+const Home = () => {
     return (
         <div className="flex flex-col pointer-events-none select-none justify-center items-center font-quadon text-center h-full">
             <div style={{fontSize:'10vmin'}}>David-Andrew Samson</div>
@@ -14,3 +13,5 @@ export default function Home() {
         </div>
     )
 }
+
+export default Home

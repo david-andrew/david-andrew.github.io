@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Navbar } from './(components)/navbar'
 import { ColorPicker } from './(components)/color'
-import { ProjectsContextProvider } from './projects/context'
+import { GithubTimestampsProvider, ProjectsContextProvider } from "@/app/projects/context"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,17 +15,19 @@ export const metadata: Metadata = {
 const RootLayout = ({children}: {children: React.ReactNode}): JSX.Element => {
     return (
         <html lang="en">
-        <body className={inter.className}>
-            <div className="w-screen h-screen">
-            <Navbar />
-            <div style={{height:'calc(100vh - var(--navbar-height))'}} className='overflow-x-hidden'>
-                <ProjectsContextProvider>
-                    {children}
-                </ProjectsContextProvider>
-            </div>
-            <ColorPicker />
-            </div>
-        </body>
+            <body className={inter.className}>
+                <div className="w-screen h-screen">
+                <Navbar />
+                <div style={{height:'calc(100vh - var(--navbar-height))'}} className='overflow-x-hidden'>
+                    <GithubTimestampsProvider>
+                        <ProjectsContextProvider>
+                            {children}
+                        </ProjectsContextProvider>
+                    </GithubTimestampsProvider>
+                </div>
+                <ColorPicker />
+                </div>
+            </body>
         </html>
     )
 }
