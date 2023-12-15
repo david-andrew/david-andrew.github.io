@@ -5,11 +5,11 @@ import { H1, P } from "@/app/(components)/ui";
 import { useGithubTimestampsContext } from "./context";
 
 export const Heading = ({projects}:{projects:FetchedProjectMeta[]}): JSX.Element => {
+    const timestampContext = useGithubTimestampsContext();
     const pathname = usePathname();
     const project = projects.find(project => `/projects/${project.route}` === pathname);
     if (project === undefined) return <></>;
 
-    const timestampContext = useGithubTimestampsContext();
     const timestamps = timestampContext?.timestamps ?? new Map();
     const timestamp = timestamps.get(project.route);
 
