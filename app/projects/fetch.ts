@@ -31,14 +31,7 @@ export const getProjects = async (): Promise<FetchedProjectMeta[]> => {
                     if (isNaN(date.getTime())) return;
                     return date;
                 } 
-                const res = await fetch(
-                    `https://api.github.com/repos/david-andrew/${meta.github}/commits`, 
-                    {
-                        headers: {
-                            'Authorization': `token ${process.env.WEBSITE_GITHUB_PERSONAL_ACCESS_TOKEN}`
-                        }
-                    }
-                );
+                const res = await fetch(`https://api.github.com/repos/david-andrew/${meta.github}/commits`);
                 if (!res.ok) return
                 const commits = await res.json();
                 if (!Array.isArray(commits)) return
