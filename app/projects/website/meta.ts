@@ -7,6 +7,6 @@ export const meta: ProjectMeta = {
     imgSrc: logo,
     externalLink: 'https://github.com/david-andrew/david-andrew.github.io',
     summary: `This website, written in react/typescript`,
-    tags: ['React', 'TypeScript', 'WebAssembly', 'Semantic UI', 'CSS', 'HTML'],
+    tags: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'WebAssembly'],
 };
 
