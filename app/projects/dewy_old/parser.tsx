@@ -428,3 +428,18 @@ const break_into_lines = (text:string, min_line_length:number):string => {
         return text.slice(0, right_idx) + '\n' + text.slice(right_idx+1);
     }
 }
+
+
+export const GrammarCodeBlock = ({code}:{code:string}):JSX.Element => {
+    return (
+        <CodeEditor
+            className="w-full bg-[#232323] text-lg md:text-xl hide-h-scrollbar overflow-y-hidden overflow-x-auto"
+            language={dewy_meta_lang()}
+            theme={dewy_meta_theme}
+            text={code}
+            readonly
+            editable={false}
+            basicSetup={{ highlightActiveLine: false, }}
+        />
+    )
+} 

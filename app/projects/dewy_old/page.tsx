@@ -1,7 +1,8 @@
 import { P, H3, Link, UL } from "@/app/(components)/ui";
 import { CodeBlock, Code } from "@/app/(components)/syntax";
+// import { dewy_meta_lang, dewy_meta_theme } from "@/app/(components)/syntax_dewy_meta";
 import { IconBullet, IconBulletList } from "@/app/(components)/icon_bullet";
-import { DemoGrammar, DewyLiveParser } from "./parser";
+import { DemoGrammar, DewyLiveParser, GrammarCodeBlock } from "./parser";
 
 
 
@@ -336,14 +337,16 @@ const Page = (): JSX.Element => {
                 often times, the natural way to express a language will be ambiguous, and require careful work to disambiguate. For the math expression{' '}
                 <Code code='1 + 2 * 3'/>, or any other math expression, the unambiguous version of the grammar might look like this:
             </P>
-            <CodeBlock code={unambiguousExpressionGrammar.grammar} />
+            <GrammarCodeBlock code={unambiguousExpressionGrammar.grammar} />
+            <br/>            
             <P>
                 Precedence is handled by restricting which expressions can be subexpressions of the different expressions in the grammar.
                 Associativity is also handled in a similar fashion, namely the left or right hand side is restricted to specific subexpression
                 types that generate the correct associativity. Ultimately though, because generalized parsers can handle ambiguities, the
                 grammar can be simplified to something like this:
             </P>
-            <CodeBlock code={ambiguousExpressionGrammar.grammar} />
+            <GrammarCodeBlock code={ambiguousExpressionGrammar.grammar} />
+            <br/>
             <P>
                 Note that for the ambiguous grammar, precedence and associativity still need to be handled at some point in the process. Generalized parsers
                 just provide the flexibility to handle them later in the parsing process, when it is much more convenient.

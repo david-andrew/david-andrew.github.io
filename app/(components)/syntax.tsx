@@ -48,7 +48,7 @@ export const Code = ({ language, style: style_str, code }: { language?:Language,
 
 
 
-import { useCodeMirror, Extension } from "@uiw/react-codemirror";
+import { useCodeMirror, Extension, BasicSetupOptions } from "@uiw/react-codemirror";
 import { LanguageSupport } from "@codemirror/language";
 import { useEffect, useRef } from "react";
 
@@ -64,7 +64,10 @@ export type match_fn = (s:string) => Token|Token[]|undefined;
 
 export type CodeEditorProps = {
     text: string;
-    setText: (s: string) => void;
+    setText?: (s: string) => void;
+    readonly?: boolean;
+    editable?: boolean
+    basicSetup?: BasicSetupOptions
     theme:Extension
     language: LanguageSupport
     onFocus?: () => void;
@@ -72,15 +75,17 @@ export type CodeEditorProps = {
 };
 
 
-export const CodeEditor = ({text, setText, theme, language, onFocus, className}:CodeEditorProps): JSX.Element => {
+export const CodeEditor = ({text, setText, readonly, editable, basicSetup={}, theme, language, onFocus, className}:CodeEditorProps): JSX.Element => {
     const editor = useRef(null);
     const { setContainer } = useCodeMirror({
         container: editor.current,
         theme: theme,
         value: text,
+        readOnly: readonly,
+        editable: editable,
         extensions: [language],
         onChange: (value: string) => {
-            setText(value);
+            setText?.(value);
         },
         basicSetup: {
             lineNumbers: false,
@@ -103,6 +108,8 @@ export const CodeEditor = ({text, setText, theme, language, onFocus, className}:
             // bracketMatching?: boolean;
             // closeBrackets?: boolean;
             // crosshairCursor?: boolean;
+
+            ...basicSetup
         },
     });
 
