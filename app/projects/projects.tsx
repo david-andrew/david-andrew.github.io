@@ -4,8 +4,6 @@ import Link from 'next/link';
 import { FetchedProjectMeta, sortOptionsList } from "./types";
 import { useGithubTimestampsContext, useProjectsContext } from "./context";
 import { Dropdown } from "@/app/(components)/dropdown";
-import { convertToDate, isDefined } from "@/app/utils";
-import { useEffect } from 'react';
 
 const recommendedOrder: string[] = [
     'dewy',
@@ -83,42 +81,8 @@ const Card = ({ imgSrc, title, timestamp, description, tags, onClick }: CardProp
 export const ProjectsList = ({projects}:{projects:FetchedProjectMeta[]}): JSX.Element => {
     const { sortOption, setSortOption } = useProjectsContext();
     const timestampContext = useGithubTimestampsContext();
-
     const timestamps = timestampContext?.timestamps ?? new Map();
 
-    // fetch the timestamps from github and store them in the context
-    useEffect(() => {
-        if (timestampContext === undefined) return;
-        if (timestampContext.timestamps.size !== 0) return;
-        (async () => {
-            const { setTimestamps } = timestampContext;
-
-            // fetch the last updated time based on github api (or hardcoded value)
-            const timestampPromises: Promise<[string, Date]|undefined>[] = projects.map(async (project) => {
-                if (project.github === undefined) {
-                    const date = convertToDate(project.lastUpdated);
-                    if (isNaN(date.getTime())) { console.log('bad time', project, date); return undefined; }
-                    return [project.route, date] as [string, Date];
-                }
-                const res = await fetch(`https://api.github.com/repos/david-andrew/${project.github}/commits`);
-                if (!res.ok) { console.log('bad fetch', project, res); return undefined; }
-                const commits = await res.json();
-                if (!Array.isArray(commits)) { console.log('not an array', project, commits); return undefined; }
-                const latestCommit = commits[0];
-                if (!latestCommit) { console.log('no latest commit', project, commits); return undefined; }
-                const timestamp = new Date(latestCommit.commit.author.date);
-                return [project.route, timestamp] as [string, Date];
-            });
-
-        // set the timestamps in the context
-        const timestamps = new Map((await Promise.all(timestampPromises)).filter(isDefined));
-        console.log(projects)
-        console.log(timestamps);
-        setTimestamps(timestamps);
-        })();
-
-    }, [timestampContext])
-    
     // sort projects by sort option
     if (sortOption === 'Recommended') {
         projects.sort((a, b) => {
