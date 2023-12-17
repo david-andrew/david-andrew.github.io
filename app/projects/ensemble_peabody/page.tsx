@@ -22,7 +22,7 @@ const Page = (): JSX.Element => {
                 <li>download audio for each word from the google text-to-speech API</li>
                 <li>
                     use the{' '}
-                    <Link href="https://montreal-forced-aligner.readthedocs.io/en/latest/introduction.html">
+                    <Link href="https://montreal-forced-aligner.readthedocs.io/en/latest/">
                         Montreal Forced Aligner
                     </Link>{' '}
                     to detect phoneme boundaries in each word
