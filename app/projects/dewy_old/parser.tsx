@@ -139,6 +139,7 @@ const useDewyWasm = (grammar_source: string, input_source: string): ParserOutput
             console.error(err);
             flushParserOutput();
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [grammar_source, input_source]);
 
     useEffect(() => {
@@ -152,6 +153,7 @@ const useDewyWasm = (grammar_source: string, input_source: string): ParserOutput
             }
             resetParserOutput()
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [grammar_source, input_source])
 
 

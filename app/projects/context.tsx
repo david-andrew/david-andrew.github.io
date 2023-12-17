@@ -80,7 +80,7 @@ export const useFetchGithubTimestamps = (projects:FetchedProjectMeta[]) => {
             console.log(timestamps);
             setTimestamps(timestamps);
         })();
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [timestampContext])
 }
 
