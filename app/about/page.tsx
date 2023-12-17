@@ -82,7 +82,7 @@ const Page = () => {
             <P>
                 At Jataware, I worked on a variety of research and technical projects, with focuses on machine learning, and data science applications. For
                 example, I developed a <Link href="https://github.com/jataware/archytas">Archytas</Link>, a library for using large language models to perform task
-                via the Reason and Action (ReAct) method. There's also the related <Link href="https://github.com/jataware/boxytas">Boxytas project</Link> I authored,
+                via the Reason and Action (ReAct) method. There&apos;s also the related <Link href="https://github.com/jataware/boxytas">Boxytas project</Link> I authored,
                 for performing Retrieval Augmented Generation (RAG) as well as identifying causal relations between topics, grounded over a corpus of PDF documents. I
                 also researched and implemented approaches to <Link href="https://arxiv.org/abs/1703.05082">Selective Harvesting</Link> (i.e. efficient search + filtering
                 over enormous graph networks), implemented a highly optimized graph-neural-network convolution algorithm in CUDA, and also developed
