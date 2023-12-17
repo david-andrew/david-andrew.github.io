@@ -339,7 +339,6 @@ export const DewyLiveParser = ({grammars, initial_idx=0}:{grammars:DemoGrammar[]
                 </HorizontalScroll>
                 <H4>Source Input</H4>
                 <AutoHeightTextArea className={twMerge("w-full bg-[#232323] text-lg", parseError ? 'outline-[#FF0000] focus:outline-[#FF0000]' : '')} text={sourceText} setText={setSourceText} onFocus={startDemo}/>
-                <div>placeholder</div>
             </div>
             {
                 !demoStarted && (
