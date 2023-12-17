@@ -10,10 +10,24 @@ type Language = 'bash' | 'python'
 const styles = { hybrid, railscasts }
 type Style = keyof typeof styles
 
-export const CodeBlock = ({ language, style, code }:{ language?:Language, style?:Style, code:string }) => { 
+export const PlaintextBlock = ({ text, className='' }:{ text:string, className?:string }) => {
+    return (
+        <div className='mb-6'>
+            <HorizontalScroll className={twMerge("w-full", className)}>
+                <div className='w-full rounded-md'>
+                    <div className='p-2 whitespace-pre font-mono'>
+                        {text}
+                    </div>
+                </div>
+            </HorizontalScroll>
+        </div>
+    );
+}
+
+export const CodeBlock = ({ language, style, code, className='' }:{ language?:Language, style?:Style, code:string, className?:string }) => { 
     return (
         // rounded corners around code block
-        <div className='rounded-md overflow-hidden mb-6'>
+        <div className={twMerge('rounded-md overflow-hidden mb-6', className)}>
             <SyntaxHighlighter language={language} style={style ? styles[style] : railscasts}>
                 {code}
             </SyntaxHighlighter>
@@ -51,6 +65,8 @@ export const Code = ({ language, style: style_str, code }: { language?:Language,
 import { useCodeMirror, Extension, BasicSetupOptions } from "@uiw/react-codemirror";
 import { LanguageSupport } from "@codemirror/language";
 import { useEffect, useRef } from "react";
+import { twMerge } from 'tailwind-merge';
+import { HorizontalScroll } from '../projects/dewy_old/parser';
 
 
 export type Token = {

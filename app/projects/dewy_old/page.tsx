@@ -1,5 +1,5 @@
 import { P, H3, Link, UL } from "@/app/(components)/ui";
-import { CodeBlock, Code } from "@/app/(components)/syntax";
+import { CodeBlock, Code, PlaintextBlock } from "@/app/(components)/syntax";
 // import { dewy_meta_lang, dewy_meta_theme } from "@/app/(components)/syntax_dewy_meta";
 import { IconBullet, IconBulletList } from "@/app/(components)/icon_bullet";
 import { DemoGrammar, DewyLiveParser, GrammarCodeBlock } from "./parser";
@@ -354,8 +354,9 @@ const Page = (): JSX.Element => {
             <P>
                 Running the first grammar on <Code code='1 + 2 * 3'/> we get the following parse tree
             </P>
-            <CodeBlock
-                code={`#start:0
+            <PlaintextBlock
+                className="text-lg md:text-xl bg-[#232323]"
+                text={`#start:0
 ├── #__4:0
 │   ├── #__5:0
 │   │   ├── ϵ
@@ -401,8 +402,9 @@ const Page = (): JSX.Element => {
 └── ϵ: #__1`}
             />
             <P>while parsing the same input with the ambiguous grammar returns the following parse forest:</P>
-            <CodeBlock
-                code={` 0 #start:0
+            <PlaintextBlock
+                className="text-lg md:text-xl bg-[#232323]"
+                text={` 0 #start:0
  1 ├── #__4:0
  2 │   ├── ϵ
  3 │   └── [#E:2]
