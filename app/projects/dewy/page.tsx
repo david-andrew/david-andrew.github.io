@@ -38,7 +38,7 @@ loop i in [0..100)
                 // flatten
                 code={
 `multiples = [3 -> 'Fizz' 5 -> 'Buzz' /{7 -> 'Bazz' 11 -> 'Bar'}/]
-range = [0:100)
+range = [0..100)
 
 //indexing at [, ..] and [..,] adds singleton dimensions
 word_bools = range[, ..] .% multiples.keys[..,] .=? 0
