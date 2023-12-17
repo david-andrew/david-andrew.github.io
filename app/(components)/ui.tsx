@@ -145,3 +145,13 @@ export const OL = ({children, className='', ...props}: {children:React.ReactNode
         </ol>
     );
 }
+
+
+//TODO: make this use a firefox-looking scrollbar for non-firefox browsers
+export const HorizontalScroll = ({className='', children}:{className?:string, children:React.ReactNode}):JSX.Element => {
+    return (
+        <div className={twMerge("flex flex-row overflow-y-hidden overflow-x-auto", className)}> {/* hide-h-scrollbar */}
+            {children}
+        </div>
+    )
+}

@@ -1,5 +1,5 @@
 "use client";
-import { H4 } from "@/app/(components)/ui";
+import { H4, HorizontalScroll } from "@/app/(components)/ui";
 import { CodeEditor } from "@/app/(components)/syntax";
 import { dewy_meta_lang, dewy_meta_theme } from "@/app/(components)/syntax_dewy_meta";
 import { useState, useEffect, useRef, useCallback } from "react";
@@ -431,15 +431,6 @@ const break_into_lines = (text:string, min_line_length:number):string => {
     }
 }
 
-
-//TODO: make this use a firefox-looking scrollbar for non-firefox browsers
-export const HorizontalScroll = ({className='', children}:{className?:string, children:React.ReactNode}):JSX.Element => {
-    return (
-        <div className={twMerge("flex flex-row overflow-y-hidden overflow-x-auto", className)}> {/* hide-h-scrollbar */}
-            {children}
-        </div>
-    )
-}
 
 export const GrammarCodeBlock = ({code}:{code:string}):JSX.Element => {
     return (

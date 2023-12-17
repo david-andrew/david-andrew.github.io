@@ -66,7 +66,7 @@ import { useCodeMirror, Extension, BasicSetupOptions } from "@uiw/react-codemirr
 import { LanguageSupport } from "@codemirror/language";
 import { useEffect, useRef } from "react";
 import { twMerge } from 'tailwind-merge';
-import { HorizontalScroll } from '../projects/dewy_old/parser';
+import { HorizontalScroll } from '@/app/(components)/ui';
 
 
 export type Token = {
