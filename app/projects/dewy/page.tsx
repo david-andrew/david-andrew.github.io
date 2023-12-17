@@ -97,13 +97,13 @@ lines = ['FizzBuzz' '1' '2' 'Fizz' '4' 'Buzz' 'Fizz' '7' '8' 'Fizz' 'Buzz' '11' 
             <H3>Links</H3>
             <IconBulletList>
                 <IconBullet icon="github">
-                    <Link href="https://github.com/david-andrew/dewy">Github Repo</Link>
+                    <Link href="https://github.com/david-andrew/dewy-lang">Github Repo</Link>
                 </IconBullet>
                 <IconBullet icon="trello">
                     <Link href="https://trello.com/b/YYsedENy/dewyspeak">Project Trello Board</Link>
                 </IconBullet>
                 <IconBullet icon="docs">
-                    <Link href="https://david-andrew.github.io/dewy/">Language Documentation</Link>
+                    <Link href="https://david-andrew.github.io/dewy-lang/">Language Documentation</Link>
                 </IconBullet>
             </IconBulletList>
         </>
