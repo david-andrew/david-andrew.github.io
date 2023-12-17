@@ -80,12 +80,13 @@ const Page = () => {
                 techniques.
             </P>
             <P>
-                At Jataware, I worked on a variety of research and technical projects, with focuses on machine learning and data science applications. For
-                example, I developed a <Link href="https://github.com/jataware/semantic-search">custom library</Link> for performing semantic
-                search over text corpus, as well as identifying causal relations between topics. I also researched and implemented approaches to{' '}
-                <Link href="https://arxiv.org/abs/1703.05082">Selective Harvesting</Link> i.e. efficient search + filtering over enormous graph
-                networks. Additionally, I implemented a highly optimized graph-neural-network convolution algorithm in CUDA, and also developed several computer
-                vision approaches to align paper maps with digital coordinates for the{' '}
+                At Jataware, I worked on a variety of research and technical projects, with focuses on machine learning, and data science applications. For
+                example, I developed a <Link href="https://github.com/jataware/archytas">Archytas</Link>, a library for using large language models to perform task
+                via the Reason and Action (ReAct) method. There's also the related <Link href="https://github.com/jataware/boxytas">Boxytas project</Link> I authored,
+                for performing Retrieval Augmented Generation (RAG) as well as identifying causal relations between topics, grounded over a corpus of PDF documents. I
+                also researched and implemented approaches to <Link href="https://arxiv.org/abs/1703.05082">Selective Harvesting</Link> (i.e. efficient search + filtering
+                over enormous graph networks), implemented a highly optimized graph-neural-network convolution algorithm in CUDA, and also developed
+                several computer vision approaches to align paper maps with digital coordinates for the{' '}
                 <Link href="https://criticalminerals.darpa.mil/The-Competition">USGS georeference challenge</Link>. Plus lots of other
                 interesting machine learning applications and research here and there.
             </P>
@@ -99,18 +100,18 @@ const Page = () => {
                 autoencoding, and autocorrelation/cross-correlation. Additionally, I&apos;ve worked with CNNs, VGG, ResNet, U-net, Viola Jones, and a variety of
                 other architectures. For a <Link href="/projects/musical_dl">capstone project</Link> I developed a novel architecture that
                 leveraged the WaveNet vocoder model paired with a custom convolutional transformer network to create a realistic choral voice synthesizer. Prior
-                to that, at an internship with the Johns Hopkins Applied Physics Lab (JHUAPL), I worked on machine learning capabilities for controlling a
-                robotic limb by analyzing electromyogram (EMG) signals in an individual&apos;s upper arm.
+                to that, at an internship with the Johns Hopkins Applied Physics Lab (JHUAPL), I worked on machine learning capabilities for controlling a{' '}
+                <Link href="https://www.jhuapl.edu/work/projects/revolutionizing-prosthetics/research">robotic limb</Link> by analyzing electromyogram (EMG) signals
+                in an individual&apos;s upper arm.
             </P>
             <P>
                 For my undergraduate coursework, I mainly focused on mechanical design, and pure software development. Additionally, I participated in the JHU
                 Robotics Club, where I worked on several interesting robotics projects, including a{' '}
                 <Link href="/projects/drawbot">picture drawing robot arm</Link>, a{' '}
                 <Link href="/projects/pongbot">defintely not beer pong robot</Link>, and a{' '}
-                <Link href="/projects/robojay">Balancing tour guide robot</Link>. I also was a member of the JHU Rocketry Club, where I earned my
-                level 1 High Power Rocketry certification, <Link href="/projects/rebel_scum">attempted unsuccessfully</Link> to earn my level 2
-                certification, and participated in the <Link href="/projects/spaceport_america_cup">2018 Spaceport America Cup</Link>. And also,
-                whenever I had the opportunity, I enjoyed participating in the JHU hackathons held twice a year, leading to projects like{' '}
+                <Link href="/projects/robojay">Balancing tour guide robot</Link>. I also was a member of the <Link href="/projects/rocketry">JHU Rocketry Club</Link>, where I{' '}
+                earned my level 1 High Power Rocketry certification, attempted unsuccessfully to earn my level 2 certification, and participated in the 2018 Spaceport America Cup.
+                And lastly, whenever I had the opportunity, I enjoyed participating in the JHU hackathons held twice a year, leading to projects like{' '}
                 <Link href="/projects/ensemble_peabody">Ensemble (Hacking Harmony)</Link>,{' '}
                 <Link href="/projects/boat_simulator">Boat Simulator</Link>, and{' '}
                 <Link href="/projects/bueller_board">Bueller Board</Link>.
@@ -120,9 +121,9 @@ const Page = () => {
                 <Link href="/projects/dewy">custom programming language</Link>, a{' '}
                 <Link href="/projects/so_voice">deep learning music synthesizer</Link>,{' '}
                 <Link href="/projects/escort_mission">several</Link> <Link href="/projects/mehve">video</Link>{' '}
-                <Link href="/projects/lords_of_sola">games</Link>, as well as a few other{' '}
+                <Link href="/projects/ziggy_v">games</Link>, as well as a few other{' '}
                 <Link href="/projects/blob_opera">odds</Link> and <Link href="/projects/composer">ends</Link>. Typically, I like to
-                work on things that contain one or more elements of machine learning, music, or game development, but I also frequently find myself working on
+                work on things that are at the intersection of machine learning, music, or game development, but I also frequently find myself working on
                 completely unrelated things, e.g. hydroponics, sewing, or celestial navigation.
             </P>
         </Container>
