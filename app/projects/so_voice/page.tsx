@@ -23,8 +23,7 @@ const Page = (): JSX.Element => {
             </P>
             <H3>Method</H3>
             <P>
-                Since I intend to commercialize so voice! in the near future, I won&apos;t go into too much detail about the inner workings on here. But at
-                a high level, so voice! consists of two main parts: the parsing engine, and the synthesizer. The parsing engine reads in sheet music,
+                At a high level, so voice! consists of two main parts: the parsing engine, and the synthesizer. The parsing engine reads in sheet music,
                 currently from well formed (read curated) MusicXML files, and converts them to a serial representation that can be fed into a machine
                 learning pipeline. The synthesizer then pipes that representation through a series of deep learning models which ultimately output an audio
                 file that is the synthesized performance of the input. Eventually I&apos;d also like to add in a machine learning pipeline for reading sheet
