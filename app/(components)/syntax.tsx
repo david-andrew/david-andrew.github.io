@@ -13,8 +13,8 @@ type Style = keyof typeof styles
 export const PlaintextBlock = ({ text, className='' }:{ text:string, className?:string }) => {
     return (
         <div className='mb-6'>
-            <HorizontalScroll className={twMerge("w-full", className)}>
-                <div className='w-full rounded-md'>
+            <HorizontalScroll className={twMerge("w-full rounded-md", className)}>
+                <div className='w-full'>
                     <div className='p-2 whitespace-pre font-fira-code'>
                         {text}
                     </div>
@@ -136,8 +136,12 @@ export const CodeEditor = ({text, setText, readonly, editable, basicSetup={}, th
     });
 
     return (
-        <div className={className} onFocus={onFocus}>
-            <div ref={editor} />
+        <div className={twMerge('w-full rounded-md overflow-hidden', className)}>
+            <HorizontalScroll className="w-full">
+                <div onFocus={onFocus}>
+                    <div ref={editor} />
+                </div>
+            </HorizontalScroll>
         </div>
     );
 };

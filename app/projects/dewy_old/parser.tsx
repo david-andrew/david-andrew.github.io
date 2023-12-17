@@ -1,5 +1,5 @@
 "use client";
-import { H4, HorizontalScroll } from "@/app/(components)/ui";
+import { H4 } from "@/app/(components)/ui";
 import { CodeEditor } from "@/app/(components)/syntax";
 import { dewy_meta_lang, dewy_meta_theme } from "@/app/(components)/syntax_dewy_meta";
 import { useState, useEffect, useRef, useCallback } from "react";
@@ -226,7 +226,7 @@ const AutoHeightTextArea = ({text, setText, onFocus, className=''}:{text:string,
     return (
         <textarea
             ref={textAreaRef}
-            className={twMerge("hide-h-scrollbar overflow-y-hidden font-mono resize-none overflow-x-auto whitespace-pre outline outline-1 outline-[#808080] focus:outline-2 focus:outline-white px-0.5", className)}
+            className={twMerge("hide-h-scrollbar overflow-y-hidden rounded-md font-mono resize-none overflow-x-auto whitespace-pre outline outline-1 outline-[#808080] focus:outline-2 focus:outline-white px-0.5", className)}
             style={{ minHeight: '1em' }} // Minimum height of one line
             value={text}
             spellCheck={false}
@@ -312,31 +312,27 @@ export const DewyLiveParser = ({grammars, initial_idx=0}:{grammars:DemoGrammar[]
                         <span className="text-xl pl-1">&gt;</span>
                     </div>
                 )}
-                <HorizontalScroll className="w-full">
-                    <CodeEditor 
-                        className={twMerge("w-full bg-[#232323] text-xl", grammarError ? 'outline outline-[#FF0000] focus:outline-[#FF0000]' : '')}
-                        language={dewy_meta_lang()}
-                        theme={dewy_meta_theme}
-                        text={grammarText}
-                        setText={setGrammarText}
-                        onFocus={startDemo}
-                    />
-                </HorizontalScroll>
+                <CodeEditor 
+                    className={twMerge("w-full bg-[#232323] text-xl", grammarError ? 'outline outline-[#FF0000] focus:outline-[#FF0000]' : '')}
+                    language={dewy_meta_lang()}
+                    theme={dewy_meta_theme}
+                    text={grammarText}
+                    setText={setGrammarText}
+                    onFocus={startDemo}
+                />
             </div>
             
             {/* mobile version */}
             <div className="md:hidden flex flex-col">
                 <H4 className="mt-0">Grammar Specification</H4>
-                <HorizontalScroll className="w-full">
-                    <CodeEditor 
-                        className={twMerge("w-full bg-[#232323] text-lg hide-h-scrollbar overflow-y-hidden overflow-x-auto", grammarError ? 'outline outline-[#FF0000] focus:outline-[#FF0000]' : '')}
-                        language={dewy_meta_lang()}
-                        theme={dewy_meta_theme}
-                        text={grammarText}
-                        setText={setGrammarText}
-                        onFocus={startDemo}
-                    />
-                </HorizontalScroll>
+                <CodeEditor 
+                    className={twMerge("w-full bg-[#232323] text-lg hide-h-scrollbar overflow-y-hidden overflow-x-auto", grammarError ? 'outline outline-[#FF0000] focus:outline-[#FF0000]' : '')}
+                    language={dewy_meta_lang()}
+                    theme={dewy_meta_theme}
+                    text={grammarText}
+                    setText={setGrammarText}
+                    onFocus={startDemo}
+                />
                 <H4>Source Input</H4>
                 <AutoHeightTextArea className={twMerge("w-full bg-[#232323] text-lg", parseError ? 'outline-[#FF0000] focus:outline-[#FF0000]' : '')} text={sourceText} setText={setSourceText} onFocus={startDemo}/>
             </div>
@@ -435,16 +431,14 @@ const break_into_lines = (text:string, min_line_length:number):string => {
 
 export const GrammarCodeBlock = ({code}:{code:string}):JSX.Element => {
     return (
-        <HorizontalScroll className="w-full">
-            <CodeEditor
-                className="w-full bg-[#232323] text-lg md:text-xl"
-                language={dewy_meta_lang()}
-                theme={dewy_meta_theme}
-                text={code}
-                readonly
-                editable={false}
-                basicSetup={{ highlightActiveLine: false, }}
-            />
-        </HorizontalScroll>
+        <CodeEditor
+            className="w-full bg-[#232323] text-lg md:text-xl"
+            language={dewy_meta_lang()}
+            theme={dewy_meta_theme}
+            text={code}
+            readonly
+            editable={false}
+            basicSetup={{ highlightActiveLine: false, }}
+        />
     )
 } 
