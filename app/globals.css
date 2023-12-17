@@ -6,6 +6,7 @@
 @import '(fonts)/arnhem/arnhem.css';
 @import '(fonts)/gentona/gentona.css';
 @import '(fonts)/dejavu/dejavu.css';
+@import '(fonts)/fira_code/fira_code.css';
 
 :root {
   --accent-color: #000000;  /* This will be overwritten right away */

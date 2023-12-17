@@ -15,7 +15,7 @@ export const PlaintextBlock = ({ text, className='' }:{ text:string, className?:
         <div className='mb-6'>
             <HorizontalScroll className={twMerge("w-full", className)}>
                 <div className='w-full rounded-md'>
-                    <div className='p-2 whitespace-pre font-mono'>
+                    <div className='p-2 whitespace-pre font-fira-code'>
                         {text}
                     </div>
                 </div>

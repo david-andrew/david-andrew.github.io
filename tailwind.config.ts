@@ -23,6 +23,7 @@ const config: Config = {
         'arnhem': ['Arnhem'],
         'gentona': ['Gentona'],
         'dejavu': ['DejaVu'],
+        'fira-code': ['Fira Code'],
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
