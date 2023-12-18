@@ -78,8 +78,6 @@ export const useFetchGithubTimestamps = (projects: FetchedProjectMeta[]) => {
 
             // set the timestamps in the context
             const timestamps = new Map((await Promise.all(timestampPromises)).filter(isDefined))
-            console.log(projects)
-            console.log(timestamps)
             setTimestamps(timestamps)
         })()
         // eslint-disable-next-line react-hooks/exhaustive-deps
