@@ -1,4 +1,4 @@
-import { ProjectMeta } from "../types";
+import { ProjectMeta } from '../types'
 import logo from '@/app/(images)/logo.png'
 
 export const meta: ProjectMeta = {
@@ -8,5 +8,4 @@ export const meta: ProjectMeta = {
     externalLink: 'https://github.com/david-andrew/david-andrew.github.io',
     summary: `This website, written in react/typescript`,
     tags: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'WebAssembly'],
-};
-
+}

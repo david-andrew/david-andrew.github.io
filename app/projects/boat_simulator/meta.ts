@@ -1,4 +1,4 @@
-import { ProjectMeta } from "../types";
+import { ProjectMeta } from '../types'
 import boat_simulator from '@/app/(images)/projects/boat_simulator.jpg'
 
 export const meta: ProjectMeta = {
@@ -7,5 +7,4 @@ export const meta: ProjectMeta = {
     summary: 'Spring 2017 HopHacks submission',
     lastUpdated: 'March 2017',
     tags: ['Unity', 'C#', '3D game'],
-};
-
+}

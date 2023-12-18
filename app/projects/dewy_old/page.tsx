@@ -1,10 +1,8 @@
-import { P, H3, Link, UL } from "@/app/(components)/ui";
-import { CodeBlock, Code, PlaintextBlock } from "@/app/(components)/syntax";
+import { P, H3, Link, UL } from '@/app/(components)/ui'
+import { CodeBlock, Code, PlaintextBlock } from '@/app/(components)/syntax'
 // import { dewy_meta_lang, dewy_meta_theme } from "@/app/(components)/syntax_dewy_meta";
-import { IconBullet, IconBulletList } from "@/app/(components)/icon_bullet";
-import { DemoGrammar, DewyLiveParser, GrammarCodeBlock } from "./parser";
-
-
+import { IconBullet, IconBulletList } from '@/app/(components)/icon_bullet'
+import { DemoGrammar, DewyLiveParser, GrammarCodeBlock } from './parser'
 
 //example grammars the user can prepopulate the demo with
 const exampleGrammars: DemoGrammar[] = [
@@ -276,83 +274,108 @@ int main()
 const ambiguousExpressionGrammar = exampleGrammars[4]
 const unambiguousExpressionGrammar = exampleGrammars[5]
 
-
 const Page = (): JSX.Element => {
     return (
         <>
             <DewyLiveParser grammars={exampleGrammars} initial_idx={4} />
             <H3>About</H3>
             <P>
-                This is mostly old work experimenting with different parser-generator technologies for <Link href='/projects/dewy'>dewy</Link>.
-                The above demo is a C implementation of a Scannerless Right-Nulled Generalized Left-Right (SRNGLR) parser-generator. You can specify
-                a grammar using my context-free grammar syntax, and provide an input string which will be parsed according to that grammar. You can
-                then view parse forest and other various outputs from the parser in the results table. There are also several example grammars you
-                can choose from to get started.
+                This is mostly old work experimenting with different parser-generator technologies for{' '}
+                <Link href="/projects/dewy">dewy</Link>. The above demo is a C implementation of a Scannerless
+                Right-Nulled Generalized Left-Right (SRNGLR) parser-generator. You can specify a grammar using my
+                context-free grammar syntax, and provide an input string which will be parsed according to that grammar.
+                You can then view parse forest and other various outputs from the parser in the results table. There are
+                also several example grammars you can choose from to get started.
             </P>
-            <P>
-                Some interesting features of SRNGLR parsers:
-            </P>
+            <P>Some interesting features of SRNGLR parsers:</P>
             <UL>
-                <li>scannerless means tokenizing and parsing are combined into a single step. This complicates handling whitespace, but provides much more flexibility in identifying structure</li>
-                <li>GLR is a generalized approach to LR parsing that is able to parse multiple paths in parallel, and handle ambiguous grammars</li>
-                <li>Right-Nulled is a fix applied to GLR parser tables as the original GLR specification had a bug for some right recursion cases</li>
+                <li>
+                    scannerless means tokenizing and parsing are combined into a single step. This complicates handling
+                    whitespace, but provides much more flexibility in identifying structure
+                </li>
+                <li>
+                    GLR is a generalized approach to LR parsing that is able to parse multiple paths in parallel, and
+                    handle ambiguous grammars
+                </li>
+                <li>
+                    Right-Nulled is a fix applied to GLR parser tables as the original GLR specification had a bug for
+                    some right recursion cases
+                </li>
             </UL>
             <P>
                 The main papers on on implementing SRNGLR parsers are{' '}
-                <Link href="https://raw.githubusercontent.com/david-andrew/dewy-lang/master/resources/Right_Nulled_GLR_Parsers.pdf">Right-Nulled GLR Parsers</Link>{' '}
+                <Link href="https://raw.githubusercontent.com/david-andrew/dewy-lang/master/resources/Right_Nulled_GLR_Parsers.pdf">
+                    Right-Nulled GLR Parsers
+                </Link>{' '}
                 and{' '}
-                <Link href="https://raw.githubusercontent.com/david-andrew/dewy-lang/master/resources/Faster_Scannerless_Parsing.pdf">Faster Scannerless GLR Parsing</Link>
+                <Link href="https://raw.githubusercontent.com/david-andrew/dewy-lang/master/resources/Faster_Scannerless_Parsing.pdf">
+                    Faster Scannerless GLR Parsing
+                </Link>
             </P>
             <P>
                 In addition to the C SRNGLR parser, I also worked on C and Python implementations of{' '}
-                <Link href="https://raw.githubusercontent.com/david-andrew/dewy-lang/master/resources/gll/2019_derivation_representation_using_binary_subtree_sets.pdf">Clustered Nonterminal Parsing (CNP)</Link>{' '}
+                <Link href="https://raw.githubusercontent.com/david-andrew/dewy-lang/master/resources/gll/2019_derivation_representation_using_binary_subtree_sets.pdf">
+                    Clustered Nonterminal Parsing (CNP)
+                </Link>{' '}
                 and a Python implementation of{' '}
-                <Link href="https://raw.githubusercontent.com/david-andrew/dewy-lang/master/resources/gll/2020_purely_function_gll_parsing.pdf">Functional GLL Parsing</Link>{' '}
+                <Link href="https://raw.githubusercontent.com/david-andrew/dewy-lang/master/resources/gll/2020_purely_function_gll_parsing.pdf">
+                    Functional GLL Parsing
+                </Link>{' '}
             </P>
-            <P>    
-                I am quite convinced that GLL parsing is the future, due to the ease of implementation, and the versatility afforded by generalized
-                parsing techniques. It will be a killer feature in dewy when I finally am able to get it working. The main issue I had with all of 
-                these generalized parser generators is the data structure they produce&mdash;SRNGLR produces a{' '}
-                <Link href="https://lark-parser.readthedocs.io/en/latest/_static/sppf/sppf.html">parse forest</Link>, and CNP and GLL produce a 
-                Binary Subtree Representation (see:{' '}
-                <Link href="https://raw.githubusercontent.com/david-andrew/dewy-lang/master/resources/gll/2019_derivation_representation_using_binary_subtree_sets.pdf">Clustered Nonterminal Parsing</Link>).
-                Selecting from ambiguities and converting to the more standard Abstract Syntax Trees (AST) structure is non-trivial.
-                Working on these had become a time sink, so for now, development on parser-generators has been put on hold in lieu of hand crafting a parser. 
+            <P>
+                I am quite convinced that GLL parsing is the future, due to the ease of implementation, and the
+                versatility afforded by generalized parsing techniques. It will be a killer feature in dewy when I
+                finally am able to get it working. The main issue I had with all of these generalized parser generators
+                is the data structure they produce&mdash;SRNGLR produces a{' '}
+                <Link href="https://lark-parser.readthedocs.io/en/latest/_static/sppf/sppf.html">parse forest</Link>,
+                and CNP and GLL produce a Binary Subtree Representation (see:{' '}
+                <Link href="https://raw.githubusercontent.com/david-andrew/dewy-lang/master/resources/gll/2019_derivation_representation_using_binary_subtree_sets.pdf">
+                    Clustered Nonterminal Parsing
+                </Link>
+                ). Selecting from ambiguities and converting to the more standard Abstract Syntax Trees (AST) structure
+                is non-trivial. Working on these had become a time sink, so for now, development on parser-generators
+                has been put on hold in lieu of hand crafting a parser.
             </P>
             <H3>Parsing Theory</H3>
             <P>
-                All programming languages start with a compiler, which itself is made of several parts, namely: lexing, parsing, semantic analysis, and code
-                generation. Eventually, dewy will make use of some sort of scannerless generalized parser-generator (likely GLL) which allows the lexing and
-                parsing phases be combined into a single step, as well as allowing for an extremely simple parser implementation (a particularly useful
-                property for bootstrapping the language).
+                All programming languages start with a compiler, which itself is made of several parts, namely: lexing,
+                parsing, semantic analysis, and code generation. Eventually, dewy will make use of some sort of
+                scannerless generalized parser-generator (likely GLL) which allows the lexing and parsing phases be
+                combined into a single step, as well as allowing for an extremely simple parser implementation (a
+                particularly useful property for bootstrapping the language).
             </P>
             <P>
-                To parse a mathematical expression like <Code code='1 + 2 * 3'/> we first have to define the grammar for how raw text gets converted to a
-                parse tree. For this, I&apos;ve developed the Dewy Meta Language which allows for the specification of any Context Free Grammar (CFG), as
-                well as some context sensitive grammars. Additionally, the meta-language / parser are optimized to allow for arbitrary unicode characters
-                as part of the language alphabet, whereas parsers are often limited a much smaller alphabet, e.g. ASCII.
+                To parse a mathematical expression like <Code code="1 + 2 * 3" /> we first have to define the grammar
+                for how raw text gets converted to a parse tree. For this, I&apos;ve developed the Dewy Meta Language
+                which allows for the specification of any Context Free Grammar (CFG), as well as some context sensitive
+                grammars. Additionally, the meta-language / parser are optimized to allow for arbitrary unicode
+                characters as part of the language alphabet, whereas parsers are often limited a much smaller alphabet,
+                e.g. ASCII.
             </P>
             <P>
-                Normally a grammar must be unambiguous to work with standard LR, LALR, etc. parsers. This complicates the process of writing the grammar, as
-                often times, the natural way to express a language will be ambiguous, and require careful work to disambiguate. For the math expression{' '}
-                <Code code='1 + 2 * 3'/>, or any other math expression, the unambiguous version of the grammar might look like this:
+                Normally a grammar must be unambiguous to work with standard LR, LALR, etc. parsers. This complicates
+                the process of writing the grammar, as often times, the natural way to express a language will be
+                ambiguous, and require careful work to disambiguate. For the math expression <Code code="1 + 2 * 3" />,
+                or any other math expression, the unambiguous version of the grammar might look like this:
             </P>
             <GrammarCodeBlock code={unambiguousExpressionGrammar.grammar} />
-            <br/>            
+            <br />
             <P>
-                Precedence is handled by restricting which expressions can be subexpressions of the different expressions in the grammar.
-                Associativity is also handled in a similar fashion, namely the left or right hand side is restricted to specific subexpression
-                types that generate the correct associativity. Ultimately though, because generalized parsers can handle ambiguities, the
-                grammar can be simplified to something like this:
+                Precedence is handled by restricting which expressions can be subexpressions of the different
+                expressions in the grammar. Associativity is also handled in a similar fashion, namely the left or right
+                hand side is restricted to specific subexpression types that generate the correct associativity.
+                Ultimately though, because generalized parsers can handle ambiguities, the grammar can be simplified to
+                something like this:
             </P>
             <GrammarCodeBlock code={ambiguousExpressionGrammar.grammar} />
-            <br/>
+            <br />
             <P>
-                Note that for the ambiguous grammar, precedence and associativity still need to be handled at some point in the process. Generalized parsers
-                just provide the flexibility to handle them later in the parsing process, when it is much more convenient.
+                Note that for the ambiguous grammar, precedence and associativity still need to be handled at some point
+                in the process. Generalized parsers just provide the flexibility to handle them later in the parsing
+                process, when it is much more convenient.
             </P>
             <P>
-                Running the first grammar on <Code code='1 + 2 * 3'/> we get the following parse tree
+                Running the first grammar on <Code code="1 + 2 * 3" /> we get the following parse tree
             </P>
             <PlaintextBlock
                 className="text-lg md:text-xl bg-[#232323]"
@@ -452,62 +475,59 @@ const Page = (): JSX.Element => {
 45 └── ϵ: #__5`}
             />
             <P>
-                Notice the ambiguity nodes for <Code code='#E'/> on lines 4 and 35, representing the two options for parsing the expression, namely{' '}
-                <Code code='(1 + 2) * 3'/> vs <Code code='1 + (2 * 3)'/> respectively
+                Notice the ambiguity nodes for <Code code="#E" /> on lines 4 and 35, representing the two options for
+                parsing the expression, namely <Code code="(1 + 2) * 3" /> vs <Code code="1 + (2 * 3)" /> respectively
             </P>
             <H3>Build It Yourself</H3>
-            <P>Each of the parser implementations is on its own branch of the <Link href="github.com/david-andrew/dewy-lang">dewy github repo</Link>:</P>
+            <P>
+                Each of the parser implementations is on its own branch of the{' '}
+                <Link href="github.com/david-andrew/dewy-lang">dewy github repo</Link>:
+            </P>
             <IconBulletList className="ml-6">
                 <IconBullet icon="github">
-                    <Link href="https://github.com/david-andrew/dewy-lang/tree/C_SRNGLR_Parser">C SRNGLR Parser branch</Link>
+                    <Link href="https://github.com/david-andrew/dewy-lang/tree/C_SRNGLR_Parser">
+                        C SRNGLR Parser branch
+                    </Link>
                 </IconBullet>
                 <IconBullet icon="github">
-                <Link href="https://github.com/david-andrew/dewy-lang/tree/C_Clustered_Nonterminal_Parser">C Clustered Nonterminal Parser branch</Link>
+                    <Link href="https://github.com/david-andrew/dewy-lang/tree/C_Clustered_Nonterminal_Parser">
+                        C Clustered Nonterminal Parser branch
+                    </Link>
                 </IconBullet>
                 <IconBullet icon="github">
-                <Link href="https://github.com/david-andrew/dewy-lang/tree/Python_GLL_Parser">Python GLL Parser branch</Link>
+                    <Link href="https://github.com/david-andrew/dewy-lang/tree/Python_GLL_Parser">
+                        Python GLL Parser branch
+                    </Link>
                 </IconBullet>
             </IconBulletList>
-            <br/>
-            <P>
-                Clone the repo and checkout the branch you want to see:
-            </P>
+            <br />
+            <P>Clone the repo and checkout the branch you want to see:</P>
             <CodeBlock
                 language="bash"
-                code={
-`git clone git@github.com:david-andrew/dewy-lang.git
+                code={`git clone git@github.com:david-andrew/dewy-lang.git
 cd dewy-lang
 git checkout C_SRNGLR_Parser #or C_Clustered_Nonterminal_Parser or Python_GLL_Parser
 cd src`}
             />
-            <P>
-                The two C parsers can be built and run with:                
-            </P>
+            <P>The two C parsers can be built and run with:</P>
             <CodeBlock
                 language="bash"
-                code={
-`make dewy
+                code={`make dewy
 ./dewy path/to/grammar/file path/to/source/file`}
             />
             <P>
-                The project includes several test grammar/source file pairs in the <Code code='dewy-lang/tests/'/> directory. e.g.
-                the simple expression grammars from above could be run like so:
+                The project includes several test grammar/source file pairs in the <Code code="dewy-lang/tests/" />{' '}
+                directory. e.g. the simple expression grammars from above could be run like so:
             </P>
             <CodeBlock
                 language="bash"
-                code={
-`./dewy ../tests/8.grammar ../tests/8.source #ambiguous version
+                code={`./dewy ../tests/8.grammar ../tests/8.source #ambiguous version
 ./dewy ../tests/3.grammar ../tests/3.source #unambiguous version`}
             />
-            <P>
-                The Python parser (which only operates on internal data) can be run directly with:
-            </P>
-            <CodeBlock
-                language="bash"
-                code="python fungll.py"
-            />
+            <P>The Python parser (which only operates on internal data) can be run directly with:</P>
+            <CodeBlock language="bash" code="python fungll.py" />
         </>
     )
 }
 
-export default Page;
+export default Page

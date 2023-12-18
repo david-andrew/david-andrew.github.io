@@ -1,8 +1,8 @@
-"use client";
-import { AudioGrid } from "@/app/(components)/audio";
-import { Link, H3, P } from "@/app/(components)/ui";
-import { IconBullet, IconBulletList } from "@/app/(components)/icon_bullet";
-import { Collage, SingleImageCollage } from "@/app/(components)/collage";
+'use client'
+import { AudioGrid } from '@/app/(components)/audio'
+import { Link, H3, P } from '@/app/(components)/ui'
+import { IconBullet, IconBulletList } from '@/app/(components)/icon_bullet'
+import { Collage, SingleImageCollage } from '@/app/(components)/collage'
 
 import architecture from '@/app/(images)/musical_dl/architecture.png'
 import danny_boy_untuned from '@/app/(audio)/musical_dl/danny_boy_untuned.mp3'
@@ -16,57 +16,69 @@ import demons1 from '@/app/(audio)/musical_dl/demons1.mp3'
 import demons2 from '@/app/(audio)/musical_dl/demons2.mp3'
 import demons3 from '@/app/(audio)/musical_dl/demons3.mp3'
 
-
 const Page = (): JSX.Element => {
     return (
         <>
             <P>
-                For the capstone project of Machine Learning: Deep Learning (EN.601.682), we were tasked to form teams and apply deep learning to a topic of
-                our choosing. My team of 3 attempted to create a deep learning based choral music synthesizer. Since singing voice synthesizers were (and
-                still are) a relatively unexplored area of machine learning, we each decided to apply separate ML architectures to our problem&mdash;I chose
-                to focus on the WaveNet architecture.
+                For the capstone project of Machine Learning: Deep Learning (EN.601.682), we were tasked to form teams
+                and apply deep learning to a topic of our choosing. My team of 3 attempted to create a deep learning
+                based choral music synthesizer. Since singing voice synthesizers were (and still are) a relatively
+                unexplored area of machine learning, we each decided to apply separate ML architectures to our
+                problem&mdash;I chose to focus on the WaveNet architecture.
             </P>
             <H3>WaveNet</H3>
             <P>
-                At the time, the state of the art in pure speech synthesis was Google&apos;s WaveNet architecture, used extensively by their Google
-                Assistant. The{' '}
-                <Link href="https://deepmind.com/blog/article/wavenet-generative-model-raw-audio">DeepMind blog post about WaveNets</Link>{' '}
-                does a really great job illustrating how they work, but at a high level, WaveNets are a type of convolutional network which seeks to
-                directly model the distribution of real audio. WaveNets generate audio one sample at a time, and make use of a special type of so-called
-                dilated convolution which allows the architecture to simultaneously handle both small scale and large scale details present in audio data.
+                At the time, the state of the art in pure speech synthesis was Google&apos;s WaveNet architecture, used
+                extensively by their Google Assistant. The{' '}
+                <Link href="https://deepmind.com/blog/article/wavenet-generative-model-raw-audio">
+                    DeepMind blog post about WaveNets
+                </Link>{' '}
+                does a really great job illustrating how they work, but at a high level, WaveNets are a type of
+                convolutional network which seeks to directly model the distribution of real audio. WaveNets generate
+                audio one sample at a time, and make use of a special type of so-called dilated convolution which allows
+                the architecture to simultaneously handle both small scale and large scale details present in audio
+                data.
             </P>
             <P>
-                The specific implementation of WaveNet I used was the <Link href="https://github.com/NVIDIA/nv-wavenet">nv-wavenet</Link> by
-                Nvidia, which included several optimizations allowing for much faster audio synthesis. The final speech synthesis architecture looked very
-                similar to their <Link href="https://github.com/NVIDIA/tacotron2">Tacotron2</Link> architecture, consisting of a WaveNet
-                trained to generate audio from spectrograms, and a transformer trained to generate spectrograms given audio features&mdash;In their case the
-                transformer converts text to spectrograms, while mine converts from features like pitch, volume, vowel, singer, etc.
+                The specific implementation of WaveNet I used was the{' '}
+                <Link href="https://github.com/NVIDIA/nv-wavenet">nv-wavenet</Link> by Nvidia, which included several
+                optimizations allowing for much faster audio synthesis. The final speech synthesis architecture looked
+                very similar to their <Link href="https://github.com/NVIDIA/tacotron2">Tacotron2</Link> architecture,
+                consisting of a WaveNet trained to generate audio from spectrograms, and a transformer trained to
+                generate spectrograms given audio features&mdash;In their case the transformer converts text to
+                spectrograms, while mine converts from features like pitch, volume, vowel, singer, etc.
             </P>
             <P>
-                For the application of choir synthesis, we found the <Link href="https://zenodo.org/record/1193957">VocalSet dataset</Link>{' '}
-                which consists of 10 hours of monophonic singing by 20 singers. The data mostly consists of various scales and arpeggios sung on the vowels
-                &apos;a&apos;, &apos;e&apos;, &apos;i&apos;, &apos;o&apos;, and &apos;u&apos;, along with several other vocal techniques. To train the
-                WaveNet, I pulled out just the normal scales sung on each of the vowels, and had the WaveNet learn to reconstruct the raw audio given a
-                spectrogram. I then built a simple transformer network which would generate spectrograms for the WaveNet. The features used by the
-                transformer were either provided by the dataset itself (namely singer, and vowel), or were generated by analyzing the audio (pitch detection
-                for pitch, and mean absolute value for volume).
+                For the application of choir synthesis, we found the{' '}
+                <Link href="https://zenodo.org/record/1193957">VocalSet dataset</Link> which consists of 10 hours of
+                monophonic singing by 20 singers. The data mostly consists of various scales and arpeggios sung on the
+                vowels &apos;a&apos;, &apos;e&apos;, &apos;i&apos;, &apos;o&apos;, and &apos;u&apos;, along with several
+                other vocal techniques. To train the WaveNet, I pulled out just the normal scales sung on each of the
+                vowels, and had the WaveNet learn to reconstruct the raw audio given a spectrogram. I then built a
+                simple transformer network which would generate spectrograms for the WaveNet. The features used by the
+                transformer were either provided by the dataset itself (namely singer, and vowel), or were generated by
+                analyzing the audio (pitch detection for pitch, and mean absolute value for volume).
             </P>
             <P>
                 For the last piece of my solution, I pulled in the work I had done during a{' '}
-                <Link href="/projects/ensemble_peabody">recent hackathon</Link>, in which I had built a simple MusicXML parsing engine. With
-                the parsing engine, I could read simple sheet music, and generate the features that the neural network understood, allowing me to have the
-                network perform specific pieces.
+                <Link href="/projects/ensemble_peabody">recent hackathon</Link>, in which I had built a simple MusicXML
+                parsing engine. With the parsing engine, I could read simple sheet music, and generate the features that
+                the neural network understood, allowing me to have the network perform specific pieces.
             </P>
             <H3>Pipeline Diagram</H3>
             <SingleImageCollage image={architecture} />
             <H3>Results</H3>
             <P>
-                For a first attempt, I think it worked surprisingly well&mdash;the audio definitely sounded like a choir of singers, just all of them were
-                tone deaf. As a last minute addition, I added an autotuner to correct the pitch deficiency, and actually got some surprisingly good results.
+                For a first attempt, I think it worked surprisingly well&mdash;the audio definitely sounded like a choir
+                of singers, just all of them were tone deaf. As a last minute addition, I added an autotuner to correct
+                the pitch deficiency, and actually got some surprisingly good results.
             </P>
             <AudioGrid
                 title="Danny Boy"
-                clips={[{ label: 'Original (untuned)', src: danny_boy_untuned }, {label: 'Autotuned version', src: danny_boy_tuned }]}
+                clips={[
+                    { label: 'Original (untuned)', src: danny_boy_untuned },
+                    { label: 'Autotuned version', src: danny_boy_tuned },
+                ]}
             />
             <AudioGrid
                 title="More Examples"
@@ -81,35 +93,39 @@ const Page = (): JSX.Element => {
             <AudioGrid
                 title="The (Best) Worst Examples"
                 clips={[
-                        { label: '', src: demons2 },
-                        { label: '', src: demons3 },
-                        
-                        { label: '', src: may_you_depart_untuned },
-                        { label: '', src: demons1 },
+                    { label: '', src: demons2 },
+                    { label: '', src: demons3 },
+
+                    { label: '', src: may_you_depart_untuned },
+                    { label: '', src: demons1 },
                 ]}
             />
 
             <H3>Lessons &amp; Future Work</H3>
             <P>
-                From working on this project, and analyzing the results, I&apos;ve learned two things: 1) audio is a very hard data domain to work with, 2)
-                pitch detection is not a solved problem. The first one I mostly expected, but the second really surprised me&mdash;pitch detection is still
-                an <Link href="https://ai.googleblog.com/2019/11/spice-self-supervised-pitch-estimation.html">active area of research</Link>
-                ! Ultimately, a mostly vanilla WaveNet isn&apos;t suited for singing voice synthesis due to several assumptions made about spoken voice,
-                namely that the dynamic range of pitches a spoken voice experiences is relatively small. The spectrograms used as feature input to the
-                WaveNet do not possess a suitable range of frequencies for singing applications, and increasing the range runs into issues of not enough
+                From working on this project, and analyzing the results, I&apos;ve learned two things: 1) audio is a
+                very hard data domain to work with, 2) pitch detection is not a solved problem. The first one I mostly
+                expected, but the second really surprised me&mdash;pitch detection is still an{' '}
+                <Link href="https://ai.googleblog.com/2019/11/spice-self-supervised-pitch-estimation.html">
+                    active area of research
+                </Link>
+                ! Ultimately, a mostly vanilla WaveNet isn&apos;t suited for singing voice synthesis due to several
+                assumptions made about spoken voice, namely that the dynamic range of pitches a spoken voice experiences
+                is relatively small. The spectrograms used as feature input to the WaveNet do not possess a suitable
+                range of frequencies for singing applications, and increasing the range runs into issues of not enough
                 resolution, or too much memory used by the model.
             </P>
             <P>
-                Moving forward, I have continued to work on the problem of choral voice synthesis, and am starting to make good progress in my{' '}
-                <Link href="/projects/so_voice">so voice!</Link> project. The experience I gained from this attempt has been invaluable in
-                guiding my approach to building a more viable version.
+                Moving forward, I have continued to work on the problem of choral voice synthesis, and am starting to
+                make good progress in my <Link href="/projects/so_voice">so voice!</Link> project. The experience I
+                gained from this attempt has been invaluable in guiding my approach to building a more viable version.
             </P>
             <H3>Links</H3>
             <IconBulletList>
                 <IconBullet icon="github">
                     <Link href="https://github.com/david-andrew/MusicalDL">Github Repo</Link>
                 </IconBullet>
-                <IconBullet icon='jhu hub'>
+                <IconBullet icon="jhu hub">
                     <Link href="https://hub.jhu.edu/2019/06/11/ai-deep-learning/?fbclid=IwAR0YwrO_cX_AaLKPG7PzZkOdeKVsjJf0SXe3CFiOQNH5KjxjZeduwP0_3zY">
                         Johns Hopkins HUB Article
                     </Link>
@@ -119,4 +135,4 @@ const Page = (): JSX.Element => {
     )
 }
 
-export default Page;
+export default Page

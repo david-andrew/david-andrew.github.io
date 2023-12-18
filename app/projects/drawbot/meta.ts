@@ -1,5 +1,4 @@
-
-import { ProjectMeta } from "../types";
+import { ProjectMeta } from '../types'
 import mona_lisa_contour from '@/app/(images)/drawbot/mona_lisa_contour.jpg'
 
 export const meta: ProjectMeta = {
@@ -8,5 +7,4 @@ export const meta: ProjectMeta = {
     summary: 'UR5 robot arm project',
     lastUpdated: 'December 2017',
     tags: ['Matlab', 'UR5 robot', 'ROS'],
-};
-
+}

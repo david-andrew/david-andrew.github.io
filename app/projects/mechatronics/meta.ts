@@ -1,5 +1,4 @@
-
-import { ProjectMeta } from "../types";
+import { ProjectMeta } from '../types'
 import logo from '@/app/(images)/logo.png'
 
 export const meta: ProjectMeta = {
@@ -8,5 +7,4 @@ export const meta: ProjectMeta = {
     summary: 'Robots from mechatronics',
     lastUpdated: 'May 2019',
     tags: ['Arduino', 'C++', 'SolidWorks', 'mechanical design'],
-};
-
+}

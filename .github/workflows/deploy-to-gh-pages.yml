@@ -1,35 +1,35 @@
 name: Build and Deploy to gh-pages
 
 on:
-  push:
-    branches:
-      - master  # Trigger on pushes to the master branch
+    push:
+        branches:
+            - master # Trigger on pushes to the master branch
 
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest  # Use the latest Ubuntu environment
+    build-and-deploy:
+        runs-on: ubuntu-latest # Use the latest Ubuntu environment
 
-    steps:
-    - name: Checkout Source Code
-      uses: actions/checkout@v2  # Checks-out your repository
+        steps:
+            - name: Checkout Source Code
+              uses: actions/checkout@v2 # Checks-out your repository
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '16'  # Set the Node.js version
+            - name: Set up Node.js
+              uses: actions/setup-node@v2
+              with:
+                  node-version: '16' # Set the Node.js version
 
-    - name: Install bun
-      run: |
-        curl -fsSL https://bun.sh/install | bash
-        echo "$HOME/.bun/bin" >> $GITHUB_PATH
+            - name: Install bun
+              run: |
+                  curl -fsSL https://bun.sh/install | bash
+                  echo "$HOME/.bun/bin" >> $GITHUB_PATH
 
-    - name: Install Dependencies and Build
-      run: |
-        bun install
-        bun run build  # Build your Next.js app
+            - name: Install Dependencies and Build
+              run: |
+                  bun install
+                  bun run build  # Build your Next.js app
 
-    - name: copy deployment to gh-pages branch
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}  # Uses a token provided by Actions
-        publish_dir: ./out  # Directory to push to gh-pages, adjust if your output directory is different
+            - name: copy deployment to gh-pages branch
+              uses: peaceiris/actions-gh-pages@v3
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }} # Uses a token provided by Actions
+                  publish_dir: ./out # Directory to push to gh-pages, adjust if your output directory is different

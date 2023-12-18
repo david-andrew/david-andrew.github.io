@@ -1,5 +1,4 @@
-
-import { ProjectMeta } from "../types";
+import { ProjectMeta } from '../types'
 import wse18 from '@/app/(images)/projects/wse18.png'
 
 export const meta: ProjectMeta = {
@@ -8,5 +7,4 @@ export const meta: ProjectMeta = {
     summary: 'Biometric security interlock system. Mechanical Engineering Senior Design capstone project',
     lastUpdated: 'May 2018',
     tags: ['Raspberry Pi', 'Python', 'C++', 'Qt', 'interlock', 'fingerprint', 'biometric'],
-};
-
+}

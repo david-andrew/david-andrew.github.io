@@ -1,12 +1,10 @@
-
-import { ProjectMeta } from "../types";
+import { ProjectMeta } from '../types'
 import logo from '@/app/(images)/logo.png'
 
 export const meta: ProjectMeta = {
     title: 'pOngBot',
-    imgSrc: logo,    
+    imgSrc: logo,
     summary: 'Autonomous beer pong playing robot',
     lastUpdated: 'June 2020',
     tags: ['Arduino', 'C++', 'computer vision', 'Viola-Jones', 'mechanical design'],
-};
-
+}

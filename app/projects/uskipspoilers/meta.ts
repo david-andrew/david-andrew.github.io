@@ -1,5 +1,4 @@
-
-import { ProjectMeta } from "../types";
+import { ProjectMeta } from '../types'
 import logo from '@/app/(images)/logo.png'
 
 export const meta: ProjectMeta = {
@@ -8,5 +7,4 @@ export const meta: ProjectMeta = {
     github: 'uSkipSpoilers',
     summary: 'A small chrome extension for blocking spoilers in YouTube videos',
     tags: ['React', 'TypeScript', 'Chrome', 'Extension'],
-};
-
+}

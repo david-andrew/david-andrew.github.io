@@ -9,23 +9,23 @@
 @import '(fonts)/fira_code/fira_code.css';
 
 :root {
-  --accent-color: #000000;  /* This will be overwritten right away */
-  --navbar-height: 100px;     /* This will be overwritten right away */
+    --accent-color: #000000; /* This will be overwritten right away */
+    --navbar-height: 100px; /* This will be overwritten right away */
 }
 
 ::selection {
-  background-color: var(--accent-color);
-  color: white;
+    background-color: var(--accent-color);
+    color: white;
 }
 
 body {
-  color: white;
-  background-color: black;
+    color: white;
+    background-color: black;
 }
 
 @layer utilities {
-  .hide-h-scrollbar::-webkit-scrollbar {
-      height: 0px;
-      /* background: #00000000; */
-  }
+    .hide-h-scrollbar::-webkit-scrollbar {
+        height: 0px;
+        /* background: #00000000; */
+    }
 }

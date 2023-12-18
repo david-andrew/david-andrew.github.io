@@ -1,5 +1,4 @@
-
-import { ProjectMeta } from "../types";
+import { ProjectMeta } from '../types'
 import logo from '@/app/(images)/logo.png'
 
 export const meta: ProjectMeta = {
@@ -8,5 +7,4 @@ export const meta: ProjectMeta = {
     github: 'mehve',
     summary: '3D adventure game inspire by "Nausicaa of the Valley of the Wind"',
     tags: ['Godot', 'GDScript', '3D game'],
-};
-
+}

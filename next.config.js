@@ -15,16 +15,16 @@ const nextConfig = {
                 test: /\.(mp3|wav)$/,
                 type: 'asset/resource',
                 generator: {
-                    filename: 'static/[path][name].[contenthash][ext]'
-                }
+                    filename: 'static/[path][name].[contenthash][ext]',
+                },
             },
             /* module loading of .mp4 files */
             {
                 test: /\.mp4$/,
                 type: 'asset/resource',
                 generator: {
-                    filename: 'static/[path][name].[contenthash][ext]'
-                }
+                    filename: 'static/[path][name].[contenthash][ext]',
+                },
             },
         )
         // turn on webassembly
@@ -33,11 +33,8 @@ const nextConfig = {
             asyncWebAssembly: true,
         }
 
-
         return config
-    }
-
-    
+    },
 }
 
 module.exports = nextConfig
