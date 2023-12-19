@@ -2,9 +2,18 @@ import { H3, P, Link } from '@/app/(components)/ui'
 import { CodeBlock } from '@/app/(components)/syntax'
 import { IconBullet, IconBulletList } from '@/app/(components)/icon_bullet'
 
-const Page = (): JSX.Element => {
+import dynamic from 'next/dynamic'
+const Python = dynamic(() => import('./test'), { ssr: false })
+
+import { fetch_dewy_source } from './fetch_dewy'
+
+const Page = async (): Promise<JSX.Element> => {
+    const dewy_source = await fetch_dewy_source()
+    // console.log(dewy_source)
+
     return (
         <>
+            <Python preloads={dewy_source} code="_result = 'this is a different string'" />
             <div>TODO: demo goes here</div>
             <H3>About</H3>
             <P>
