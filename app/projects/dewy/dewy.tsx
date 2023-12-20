@@ -2,6 +2,18 @@
 import { useEffect, useState } from 'react'
 import { PyodideInterface, loadPyodide } from 'pyodide'
 
+/*
+Tasks:
+- use importlib modification to be able to load modules from PyModules (i.e. {name, code})
+- when importing a file, figure out how to ignore any if __name__ == '__main__' blocks
+    ---> possibly just modify the condition to be false (e.g. replace with if False:, etc.)
+- write a small main entrypoint that imports whatever function for calling the interpreter
+- have some better approach for getting input from the user.
+    ---> should be an input text field on the page, somehow need to route to that.
+         possibly override python's input() function
+         or see if there's a way to direct pyodide when input is called
+*/
+
 export const usePyodide = () => {
     const [pyodide, setPyodide] = useState<PyodideInterface | undefined>(undefined)
 
@@ -21,7 +33,12 @@ export const usePyodide = () => {
     return pyodide
 }
 
-export const Python = ({ preloads = [], code }: { preloads?: string[]; code: string }): JSX.Element => {
+export type PyModule = {
+    name: string
+    code: string
+}
+
+export const Python = ({ modules = [], main }: { modules?: PyModule[]; main: string }): JSX.Element => {
     const pyodide = usePyodide()
     const [ready, setReady] = useState(false)
     const [output, setOutput] = useState<string | undefined>(undefined)
@@ -29,8 +46,8 @@ export const Python = ({ preloads = [], code }: { preloads?: string[]; code: str
         if (pyodide === undefined) return
         ;(async () => {
             await pyodide.runPythonAsync('_result = None')
-            for (const preload of preloads) {
-                await pyodide.runPythonAsync(preload)
+            for (const module of modules) {
+                await pyodide.runPythonAsync(module.code)
             }
             setReady(true)
         })()
@@ -39,11 +56,11 @@ export const Python = ({ preloads = [], code }: { preloads?: string[]; code: str
     useEffect(() => {
         if (pyodide === undefined || !ready) return
         ;(async () => {
-            await pyodide.runPythonAsync(code)
+            await pyodide.runPythonAsync(main)
             const result = pyodide.globals.get('_result')
             setOutput(result)
         })()
-    }, [pyodide, code, ready])
+    }, [pyodide, main, ready])
 
     if (pyodide === undefined) return <div>Loading pyodide...</div>
     if (!ready) return <div>Loading preloads...</div>

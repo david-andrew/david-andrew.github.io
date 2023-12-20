@@ -3,7 +3,7 @@ import { CodeBlock } from '@/app/(components)/syntax'
 import { IconBullet, IconBulletList } from '@/app/(components)/icon_bullet'
 
 import dynamic from 'next/dynamic'
-const Python = dynamic(() => import('./test'), { ssr: false })
+const Python = dynamic(() => import('./dewy'), { ssr: false })
 
 import { fetch_dewy_source } from './fetch_dewy'
 
@@ -13,7 +13,7 @@ const Page = async (): Promise<JSX.Element> => {
 
     return (
         <>
-            <Python preloads={dewy_source} code="_result = 'this is a different string'" />
+            <Python modules={dewy_source} main="_result = 'this is a different string'" />
             <div>TODO: demo goes here</div>
             <H3>About</H3>
             <P>
