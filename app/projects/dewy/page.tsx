@@ -16,9 +16,21 @@ const Page = async (): Promise<JSX.Element> => {
             <Python
                 modules={dewy_source}
                 main={`
-from backend import get_version
-_result = f'dewy version {get_version()}'
+from tokenizer import tokenize
+from postok import post_process
+from parser import top_level_parse # type: ignore[reportShadowedImports]
+from dewy import Scope
 
+def dewy(src:str):
+    tokens = tokenize(src)
+    post_process(tokens)
+
+    root = Scope.default()
+    ast = top_level_parse(tokens, root)
+    res = ast.eval(root)
+    if res: print(res)
+
+dewy("printl'Hello from dewy!'")
 `}
             />
             <div>TODO: demo goes here</div>

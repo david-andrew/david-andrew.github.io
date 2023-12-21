@@ -5,13 +5,10 @@ import { PyodideInterface, loadPyodide } from 'pyodide'
 /*
 Tasks:
 - use importlib modification to be able to load modules from PyModules (i.e. {name, code})
-- when importing a file, figure out how to ignore any if __name__ == '__main__' blocks
-    ---> possibly just modify the condition to be false (e.g. replace with if False:, etc.)
 - write a small main entrypoint that imports whatever function for calling the interpreter
 - have some better approach for getting input from the user.
     ---> should be an input text field on the page, somehow need to route to that.
-         possibly override python's input() function
-         or see if there's a way to direct pyodide when input is called
+         pyodide has functions for overriding input/output
 */
 
 export const usePyodide = () => {
@@ -90,8 +87,8 @@ export const Python = ({ modules = [], main }: { modules?: PyModule[]; main: str
             await pyodide.runPythonAsync(module_loader_py)
             for (const module of modules) {
                 //escape module code (quotes, newlines, etc.)
-                const code = module.code.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\n/g, '\\n')
-                await pyodide.runPythonAsync(`register_file('${module.name}', '${code}')`)
+                const code = module.code.replace(/\\/g, '\\\\').replace(/'/g, "\\'") //.replace(/\n/g, '\\n')
+                await pyodide.runPythonAsync(`register_file('${module.name}', '''${code}''')`)
             }
             setReady(true)
         })()
