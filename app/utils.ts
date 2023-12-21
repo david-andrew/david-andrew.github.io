@@ -1,6 +1,17 @@
 // used to type-correctly filter (T|undefined)[] to T[]
 export const isDefined = <T>(value: T | undefined): value is T => value !== undefined
 
+export const try_or_undefined = <T, U>(fn:(value:T)=>U): (value:T)=>U|undefined => {
+    return (value:T) => {
+        try {
+            return fn(value)
+        } catch (e) {
+            console.error(e)
+            console.error(value)
+        }
+    }
+}
+
 const monthMap = new Map<string, number>([
     ['january', 0],
     ['february', 1],

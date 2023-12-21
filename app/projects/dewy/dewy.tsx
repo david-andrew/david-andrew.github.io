@@ -109,41 +109,93 @@ export const Python = ({ modules = [], main }: { modules?: PyModule[]; main: str
     return <div>output: {output}</div>
 }
 
-export default Python
+// export default Python
+import { CodeEditor } from '@/app/(components)/syntax'
+import { dewy_meta_lang, dewy_meta_theme } from '@/app/(components)/syntax_dewy_meta'
+const DewyDemo = ({
+    dewy_interpreter_source,
+    dewy_examples,
+}: {
+    dewy_interpreter_source: PyModule[]
+    dewy_examples: string[]
+}): JSX.Element => {
+    const [text, setText] = useState(dewy_examples[0])
 
-// const useDewy = () => {
-//     const [ready, setReady] = useState(false)
-//     const pyodide = usePyodide()
-//     useEffect(() => {
-//         ;(async () => {
-//             if (pyodide === undefined) return
-//             // await pyodide.runPythonAsync(dewy)
-//         })()
-//     }, [pyodide])
-// }
+    return (
+        <>
+            <CodeEditor
+                className="w-full bg-[#232323] text-xl md:text-lg"
+                text={text}
+                language={dewy_meta_lang()}
+                theme={dewy_meta_theme}
+            />
+            <Terminal />
+            {/* <Python
+                modules={dewy_interpreter_source}
+                main={`
+from tokenizer import tokenize
+from postok import post_process
+from parser import top_level_parse
+from dewy import Scope
 
-// export const Test = (): JSX.Element => {
-//     const [count, setCount] = useState(0)
-//     const pyodide = usePyodide()
-//     // useEffect(() => {
-//     //     if (pyodide === undefined) return
-//     //     if (count === 1) {
-//     //         pyodide.runPythonAsync(program1).then((result) => {
-//     //             console.log(result)
-//     //         })
-//     //     }
-//     //     if (count === 2) {
-//     //         pyodide.runPythonAsync(program2).then((result) => {
-//     //             console.log(result)
-//     //         })
-//     //     }
-//     // }, [count, pyodide])
+def dewy(src:str):
+    tokens = tokenize(src)
+    post_process(tokens)
 
-//     return (
-//         <>
-//             <button onClick={() => setCount((c) => c + 1)}>Start {count}</button>
-//         </>
-//     )
-// }
+    root = Scope.default()
+    ast = top_level_parse(tokens, root)
+    res = ast.eval(root)
+    if res: print(res)
 
-// export default Test
+dewy("printl'Hello from dewy!'")
+`}
+            /> */}
+        </>
+    )
+}
+
+export default DewyDemo
+
+import { useRef } from 'react'
+
+const Terminal = (): JSX.Element => {
+    const [terminalOutput, setTerminalOutput] = useState<string[]>([])
+    const [userInput, setUserInput] = useState('')
+    const terminalRef = useRef<HTMLDivElement>(null)
+
+    // Function to append text to the terminal
+    const writeToTerminal = (text: string) => {
+        setTerminalOutput((prev) => [...prev, text])
+    }
+
+    // Function to handle user input submission
+    const handleInputSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            writeToTerminal(userInput)
+            setUserInput('')
+            // Optionally, resolve a promise here
+        }
+    }
+
+    // Auto-scroll to the bottom
+    useEffect(() => {
+        if (terminalRef.current) {
+            terminalRef.current.scrollTop = terminalRef.current.scrollHeight
+        }
+    }, [terminalOutput])
+
+    return (
+        <div ref={terminalRef} className="bg-black text-white p-4 h-96 overflow-auto">
+            {terminalOutput.map((line, index) => (
+                <div key={index}>{line}</div>
+            ))}
+            <input
+                type="text"
+                value={userInput}
+                onChange={(e) => setUserInput(e.target.value)}
+                onKeyDown={handleInputSubmit}
+                className="bg-transparent text-white border-none outline-none"
+            />
+        </div>
+    )
+}

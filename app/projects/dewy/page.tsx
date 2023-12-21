@@ -1,39 +1,19 @@
 import { H3, P, Link } from '@/app/(components)/ui'
-import { CodeBlock } from '@/app/(components)/syntax'
+import { CodeBlock, CodeEditor } from '@/app/(components)/syntax'
 import { IconBullet, IconBulletList } from '@/app/(components)/icon_bullet'
 
 import dynamic from 'next/dynamic'
-const Python = dynamic(() => import('./dewy'), { ssr: false })
+const DewyDemo = dynamic(() => import('./dewy'), { ssr: false })
 
-import { fetch_dewy_source } from './fetch_dewy'
+import { fetch_dewy_interpreter_source, fetch_dewy_examples } from './fetch_dewy'
 
 const Page = async (): Promise<JSX.Element> => {
-    const dewy_source = await fetch_dewy_source()
-    // console.log(dewy_source)
+    const dewy_interpreter_source = await fetch_dewy_interpreter_source()
+    const dewy_examples = await fetch_dewy_examples()
 
     return (
         <>
-            <Python
-                modules={dewy_source}
-                main={`
-from tokenizer import tokenize
-from postok import post_process
-from parser import top_level_parse # type: ignore[reportShadowedImports]
-from dewy import Scope
-
-def dewy(src:str):
-    tokens = tokenize(src)
-    post_process(tokens)
-
-    root = Scope.default()
-    ast = top_level_parse(tokens, root)
-    res = ast.eval(root)
-    if res: print(res)
-
-dewy("printl'Hello from dewy!'")
-`}
-            />
-            <div>TODO: demo goes here</div>
+            <DewyDemo {...{ dewy_interpreter_source, dewy_examples }} />
             <H3>About</H3>
             <P>
                 Dewy is a programming language I have been developing off and on since 2016. The main goal is to build a
