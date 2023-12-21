@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { PyodideInterface, loadPyodide } from 'pyodide'
+import { XtermComponent } from './terminal'
 
 /*
 Tasks:
@@ -129,7 +130,7 @@ const DewyDemo = ({
                 language={dewy_meta_lang()}
                 theme={dewy_meta_theme}
             />
-            <Terminal />
+            <XtermComponent />
             {/* <Python
                 modules={dewy_interpreter_source}
                 main={`
@@ -157,45 +158,3 @@ dewy("printl'Hello from dewy!'")
 export default DewyDemo
 
 import { useRef } from 'react'
-
-const Terminal = (): JSX.Element => {
-    const [terminalOutput, setTerminalOutput] = useState<string[]>([])
-    const [userInput, setUserInput] = useState('')
-    const terminalRef = useRef<HTMLDivElement>(null)
-
-    // Function to append text to the terminal
-    const writeToTerminal = (text: string) => {
-        setTerminalOutput((prev) => [...prev, text])
-    }
-
-    // Function to handle user input submission
-    const handleInputSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
-            writeToTerminal(userInput)
-            setUserInput('')
-            // Optionally, resolve a promise here
-        }
-    }
-
-    // Auto-scroll to the bottom
-    useEffect(() => {
-        if (terminalRef.current) {
-            terminalRef.current.scrollTop = terminalRef.current.scrollHeight
-        }
-    }, [terminalOutput])
-
-    return (
-        <div ref={terminalRef} className="bg-black text-white p-4 h-96 overflow-auto">
-            {terminalOutput.map((line, index) => (
-                <div key={index}>{line}</div>
-            ))}
-            <input
-                type="text"
-                value={userInput}
-                onChange={(e) => setUserInput(e.target.value)}
-                onKeyDown={handleInputSubmit}
-                className="bg-transparent text-white border-none outline-none"
-            />
-        </div>
-    )
-}
