@@ -3,22 +3,11 @@ import importlib.machinery
 import sys
 
 # Simulated file contents
-file_contents = {
-    'file1': """
-def foo():
-    print('bar')
+file_contents: dict[str,str] = {}
 
-def baz():
-    return 42
-""",
-    'file2': """
-from file1 import baz
-
-def qux():
-    return baz() + 1
-"""
-    # Add more files as needed
-}
+# Register a file
+def register_file(name, code):
+    file_contents[name] = code
 
 # Custom module loader
 class StringLoader(importlib.abc.Loader):

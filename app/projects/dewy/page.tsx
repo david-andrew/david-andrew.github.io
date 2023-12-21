@@ -13,7 +13,14 @@ const Page = async (): Promise<JSX.Element> => {
 
     return (
         <>
-            <Python modules={dewy_source} main="_result = 'this is a different string'" />
+            <Python
+                modules={dewy_source}
+                main={`
+from backend import get_version
+_result = f'dewy version {get_version()}'
+
+`}
+            />
             <div>TODO: demo goes here</div>
             <H3>About</H3>
             <P>

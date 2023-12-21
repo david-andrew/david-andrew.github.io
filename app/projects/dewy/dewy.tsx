@@ -38,6 +38,48 @@ export type PyModule = {
     code: string
 }
 
+// python for loading modules from strings in pyodide
+const module_loader_py = `
+import importlib.abc
+import importlib.machinery
+import sys
+
+# Simulated file contents
+file_contents: dict[str,str] = {}
+
+# Register a file
+def register_file(name, code):
+    file_contents[name] = code
+
+# Custom module loader
+class StringLoader(importlib.abc.Loader):
+    def __init__(self, name, code):
+        self.name = name
+        self.code = code
+
+    def get_source(self, fullname):
+        return self.code
+
+    def get_filename(self, fullname):
+        return '<string_loader: {}>'.format(fullname)
+
+    def is_package(self, fullname):
+        return False
+
+    def exec_module(self, module):
+        exec(compile(self.get_source(module.__name__), self.get_filename(module.__name__), 'exec'), module.__dict__)
+
+# Custom module finder
+class StringFinder(importlib.abc.MetaPathFinder):
+    def find_spec(self, fullname, path, target=None):
+        if fullname in file_contents:
+            return importlib.machinery.ModuleSpec(fullname, StringLoader(fullname, file_contents[fullname]), is_package=False)
+        return None
+
+# Install the custom finder
+sys.meta_path.insert(0, StringFinder())
+`
+
 export const Python = ({ modules = [], main }: { modules?: PyModule[]; main: string }): JSX.Element => {
     const pyodide = usePyodide()
     const [ready, setReady] = useState(false)
@@ -45,9 +87,11 @@ export const Python = ({ modules = [], main }: { modules?: PyModule[]; main: str
     useEffect(() => {
         if (pyodide === undefined) return
         ;(async () => {
-            await pyodide.runPythonAsync('_result = None')
+            await pyodide.runPythonAsync(module_loader_py)
             for (const module of modules) {
-                await pyodide.runPythonAsync(module.code)
+                //escape module code (quotes, newlines, etc.)
+                const code = module.code.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\n/g, '\\n')
+                await pyodide.runPythonAsync(`register_file('${module.name}', '${code}')`)
             }
             setReady(true)
         })()
@@ -56,6 +100,7 @@ export const Python = ({ modules = [], main }: { modules?: PyModule[]; main: str
     useEffect(() => {
         if (pyodide === undefined || !ready) return
         ;(async () => {
+            await pyodide.runPythonAsync('_result = None')
             await pyodide.runPythonAsync(main)
             const result = pyodide.globals.get('_result')
             setOutput(result)
