@@ -1,18 +1,21 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { PyodideInterface, loadPyodide } from 'pyodide'
-import { XtermComponent } from './terminal'
+import { useXterm } from './terminal'
 
-/*
-Tasks:
-- use importlib modification to be able to load modules from PyModules (i.e. {name, code})
-- write a small main entrypoint that imports whatever function for calling the interpreter
-- have some better approach for getting input from the user.
-    ---> should be an input text field on the page, somehow need to route to that.
-         pyodide has functions for overriding input/output
-*/
+// class WriteHandler {
+//     callback?: (msg: string) => void
+//     constructor(callback?: (msg: string) => void) {
+//         this.callback = callback
+//     }
+//     write(buffer: Uint8Array): number {
+//         const msg = new TextDecoder('utf-8').decode(buffer)
+//         this.callback?.(msg)
+//         return buffer.length
+//     }
+// }
 
-export const usePyodide = () => {
+export const usePyodide = (stdout?: (msg: string) => void) => {
     const [pyodide, setPyodide] = useState<PyodideInterface | undefined>(undefined)
 
     useEffect(() => {
@@ -20,6 +23,18 @@ export const usePyodide = () => {
             const loadedPyodide = await loadPyodide({
                 indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.23.4/full/',
                 fullStdLib: false,
+                stdin: () => {
+                    return prompt('this is a custom prompt') ?? ''
+                },
+                stderr: (msg: string) => {
+                    console.log('this is stderr: ', msg)
+                },
+            })
+            loadedPyodide.setStdout({
+                raw: (c: number) => {
+                    const msg = String.fromCharCode(c)
+                    stdout?.(msg)
+                },
             })
             console.log('Pyodide is ready to use:', loadedPyodide.version)
             setPyodide(loadedPyodide)
@@ -78,8 +93,16 @@ class StringFinder(importlib.abc.MetaPathFinder):
 sys.meta_path.insert(0, StringFinder())
 `
 
-export const Python = ({ modules = [], main }: { modules?: PyModule[]; main: string }): JSX.Element => {
-    const pyodide = usePyodide()
+type PythonProps = {
+    modules?: PyModule[]
+    main: string
+    // stdin?: () => string
+    stdout?: (msg: string) => void
+    // stderr?: (msg: string) => void
+}
+
+export const Python = ({ modules = [], main, stdout }: PythonProps): JSX.Element => {
+    const pyodide = usePyodide(stdout)
     const [ready, setReady] = useState(false)
     const [output, setOutput] = useState<string | undefined>(undefined)
     useEffect(() => {
@@ -113,6 +136,7 @@ export const Python = ({ modules = [], main }: { modules?: PyModule[]; main: str
 // export default Python
 import { CodeEditor } from '@/app/(components)/syntax'
 import { dewy_meta_lang, dewy_meta_theme } from '@/app/(components)/syntax_dewy_meta'
+// import { dewy_lang, dewy_theme } from '@/app/(components)/syntax_dewy'
 const DewyDemo = ({
     dewy_interpreter_source,
     dewy_examples,
@@ -120,24 +144,54 @@ const DewyDemo = ({
     dewy_interpreter_source: PyModule[]
     dewy_examples: string[]
 }): JSX.Element => {
-    const [text, setText] = useState(dewy_examples[0])
+    const [text, setText] = useState("printl'Hello from Dewy!'")
+    const [count, setCount] = useState(0)
+    const [source, setSource] = useState(text)
+    const escaped_source = source.replace(/\\/g, '\\\\').replace(/'/g, "\\'")
+
+    const { divRef, write } = useXterm()
 
     return (
         <>
             <CodeEditor
                 className="w-full bg-[#232323] text-xl md:text-lg"
                 text={text}
+                setText={setText}
                 language={dewy_meta_lang()}
                 theme={dewy_meta_theme}
             />
-            <XtermComponent />
-            {/* <Python
+            <button
+                className="font-gentona text-2xl py-2 px-4 bg-[#232323] hover:bg-[#404040] text-white rounded-md"
+                onClick={() => {
+                    setCount((c) => c + 1)
+                    setSource(text)
+                }}
+            >
+                Run
+            </button>
+            <Python
+                stdout={write}
                 modules={dewy_interpreter_source}
                 main={`
+# run count = ${count}. This line re-runs the interpreter every time the button is clicked.
+
+# turn off any printing while importing stuff
+import sys
+import io
+_stdout = sys.stdout
+_stderr = sys.stderr
+sys.stdout = io.StringIO()
+sys.stderr = io.StringIO()
+
+# silent imports
 from tokenizer import tokenize
 from postok import post_process
 from parser import top_level_parse
 from dewy import Scope
+
+# turn printing back on
+sys.stdout = _stdout
+sys.stderr = _stderr
 
 def dewy(src:str):
     tokens = tokenize(src)
@@ -148,13 +202,12 @@ def dewy(src:str):
     res = ast.eval(root)
     if res: print(res)
 
-dewy("printl'Hello from dewy!'")
+dewy('''${escaped_source}''')
 `}
-            /> */}
+            />
+            <div ref={divRef} />
         </>
     )
 }
 
 export default DewyDemo
-
-import { useRef } from 'react'

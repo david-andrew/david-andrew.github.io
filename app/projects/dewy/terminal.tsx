@@ -3,21 +3,28 @@ import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
 import 'xterm/css/xterm.css'
 
-export const XtermComponent = () => {
-    const terminalRef = useRef(null)
-    const xtermRef = useRef(null)
+type TerminalInterface = {
+    divRef: React.RefObject<HTMLDivElement>
+    write: (msg: string) => void
+    // read: () => string
+    // clear: () => void
+    // onCtrlC: ()  => void
+}
+
+export const useXterm = (): TerminalInterface => {
+    const divRef = useRef<HTMLDivElement>(null)
+    const xtermRef = useRef<Terminal>()
 
     useEffect(() => {
         // Initialize Xterm
-        if (terminalRef.current && !xtermRef.current) {
-            const term = new Terminal()
+        if (divRef.current && !xtermRef.current) {
+            const term = new Terminal({
+                convertEol: true,
+            })
             const fitAddon = new FitAddon()
             term.loadAddon(fitAddon)
-            term.open(terminalRef.current)
+            term.open(divRef.current)
             fitAddon.fit()
-
-            // Example: Write something to the terminal
-            term.writeln('Welcome to Xterm.js in React!')
 
             // Store the term reference for later use
             xtermRef.current = term
@@ -31,7 +38,10 @@ export const XtermComponent = () => {
         }
     }, [])
 
-    return <div className="w-full" ref={terminalRef} />
-}
+    const write = (msg: string) => {
+        xtermRef.current?.write(msg)
+        console.log('writing message to terminal: ', msg)
+    }
 
-// export default XtermComponent
+    return { divRef, write }
+}
