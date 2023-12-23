@@ -40,7 +40,6 @@ export const useXterm = (): TerminalInterface => {
 
     const write = (msg: string) => {
         xtermRef.current?.write(msg)
-        console.log('writing message to terminal: ', msg)
     }
 
     return { divRef, write }

@@ -1,22 +1,50 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { PyodideInterface, loadPyodide } from 'pyodide'
 import { useXterm } from './terminal'
 
-// class WriteHandler {
-//     callback?: (msg: string) => void
-//     constructor(callback?: (msg: string) => void) {
-//         this.callback = callback
-//     }
-//     write(buffer: Uint8Array): number {
-//         const msg = new TextDecoder('utf-8').decode(buffer)
-//         this.callback?.(msg)
-//         return buffer.length
-//     }
-// }
+class BufferedOutput {
+    private buffer: string[] = []
+    private write: (msg: string) => void
+    maxLength?: number
 
-export const usePyodide = (stdout?: (msg: string) => void) => {
+    constructor(write: (msg: string) => void, maxLength?: number) {
+        this.write = write
+        this.maxLength = maxLength
+    }
+
+    receiveChar(c: number) {
+        const msg = String.fromCharCode(c)
+        this.buffer.push(msg)
+        if ((this.maxLength && this.buffer.length > this.maxLength) || msg === '\n') {
+            this.flush()
+        }
+    }
+
+    flush() {
+        this.write(this.buffer.join(''))
+        this.buffer = []
+    }
+
+    clear() {
+        this.buffer = []
+    }
+}
+
+type UsePyodideProps = {
+    stdout?: (msg: string) => void
+}
+
+type UsePyodideHook = {
+    pyodide: PyodideInterface | undefined
+    flush: () => void
+}
+
+export const usePyodide = ({ stdout = (m: string) => {} }: UsePyodideProps): UsePyodideHook => {
     const [pyodide, setPyodide] = useState<PyodideInterface | undefined>(undefined)
+    const bufRef = useRef<BufferedOutput>(new BufferedOutput(stdout, 1024))
+    const receiveChar = bufRef.current.receiveChar.bind(bufRef.current)
+    const flush = bufRef.current.flush.bind(bufRef.current)
 
     useEffect(() => {
         const initializePyodide = async () => {
@@ -31,10 +59,7 @@ export const usePyodide = (stdout?: (msg: string) => void) => {
                 },
             })
             loadedPyodide.setStdout({
-                raw: (c: number) => {
-                    const msg = String.fromCharCode(c)
-                    stdout?.(msg)
-                },
+                raw: receiveChar,
             })
             console.log('Pyodide is ready to use:', loadedPyodide.version)
             setPyodide(loadedPyodide)
@@ -43,7 +68,7 @@ export const usePyodide = (stdout?: (msg: string) => void) => {
         initializePyodide()
     }, [])
 
-    return pyodide
+    return { pyodide, flush }
 }
 
 export type PyModule = {
@@ -93,7 +118,7 @@ class StringFinder(importlib.abc.MetaPathFinder):
 sys.meta_path.insert(0, StringFinder())
 `
 
-type PythonProps = {
+type UsePythonProps = {
     modules?: PyModule[]
     main: string
     // stdin?: () => string
@@ -101,10 +126,14 @@ type PythonProps = {
     // stderr?: (msg: string) => void
 }
 
-export const Python = ({ modules = [], main, stdout }: PythonProps): JSX.Element => {
-    const pyodide = usePyodide(stdout)
+type PythonHookState = 'loadingPyodide' | 'loadingPreloads' | 'running' //| 'error' | pdb? | 'done'
+type UsePythonHook = {
+    state: PythonHookState
+}
+
+export const usePython = ({ modules = [], main, stdout }: UsePythonProps): UsePythonHook => {
+    const { pyodide, flush } = usePyodide({ stdout })
     const [ready, setReady] = useState(false)
-    const [output, setOutput] = useState<string | undefined>(undefined)
     useEffect(() => {
         if (pyodide === undefined) return
         ;(async () => {
@@ -121,16 +150,14 @@ export const Python = ({ modules = [], main, stdout }: PythonProps): JSX.Element
     useEffect(() => {
         if (pyodide === undefined || !ready) return
         ;(async () => {
-            await pyodide.runPythonAsync('_result = None')
             await pyodide.runPythonAsync(main)
-            const result = pyodide.globals.get('_result')
-            setOutput(result)
+            flush()
         })()
     }, [pyodide, main, ready])
 
-    if (pyodide === undefined) return <div>Loading pyodide...</div>
-    if (!ready) return <div>Loading preloads...</div>
-    return <div>output: {output}</div>
+    if (pyodide === undefined) return { state: 'loadingPyodide' }
+    if (!ready) return { state: 'loadingPreloads' }
+    return { state: 'running' }
 }
 
 // export default Python
@@ -151,28 +178,10 @@ const DewyDemo = ({
 
     const { divRef, write } = useXterm()
 
-    return (
-        <>
-            <CodeEditor
-                className="w-full bg-[#232323] text-xl md:text-lg"
-                text={text}
-                setText={setText}
-                language={dewy_meta_lang()}
-                theme={dewy_meta_theme}
-            />
-            <button
-                className="font-gentona text-2xl py-2 px-4 bg-[#232323] hover:bg-[#404040] text-white rounded-md"
-                onClick={() => {
-                    setCount((c) => c + 1)
-                    setSource(text)
-                }}
-            >
-                Run
-            </button>
-            <Python
-                stdout={write}
-                modules={dewy_interpreter_source}
-                main={`
+    const { state } = usePython({
+        stdout: write,
+        modules: dewy_interpreter_source,
+        main: `
 # run count = ${count}. This line re-runs the interpreter every time the button is clicked.
 
 # turn off any printing while importing stuff
@@ -203,8 +212,37 @@ def dewy(src:str):
     if res: print(res)
 
 dewy('''${escaped_source}''')
-`}
+sys.stdout.flush()
+`,
+    })
+
+    return (
+        <>
+            <CodeEditor
+                className="w-full bg-[#232323] text-xl md:text-lg"
+                text={text}
+                setText={setText}
+                language={dewy_meta_lang()}
+                theme={dewy_meta_theme}
             />
+            <button
+                className="font-gentona text-2xl py-2 px-4 bg-[#232323] hover:bg-[#404040] text-white rounded-md"
+                onClick={() => {
+                    setCount((c) => c + 1)
+                    setSource(text)
+                }}
+            >
+                Run
+            </button>
+            {(() => {
+                if (state === 'loadingPyodide') {
+                    return <div>Loading pyodide...</div>
+                } else if (state === 'loadingPreloads') {
+                    return <div>Loading preloads...</div>
+                }
+                return <div>Running</div>
+            })()}
+
             <div ref={divRef} />
         </>
     )
