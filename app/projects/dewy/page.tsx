@@ -1,9 +1,7 @@
 import { H3, P, Link } from '@/app/(components)/ui'
 import { CodeBlock, CodeEditor } from '@/app/(components)/syntax'
 import { IconBullet, IconBulletList } from '@/app/(components)/icon_bullet'
-
-import dynamic from 'next/dynamic'
-const DewyDemo = dynamic(() => import('./dewy'), { ssr: false })
+import { DewyDemo } from './dewy'
 
 import { fetch_dewy_interpreter_source, fetch_dewy_examples } from './fetch_dewy'
 

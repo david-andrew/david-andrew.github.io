@@ -1,5 +1,5 @@
 import { isDefined, try_or_undefined } from "@/app/utils"
-import { PyModule } from "./dewy"
+import { PyModule } from "./_dewy"
 
 export const fetch_dewy_interpreter_source = async (): Promise<PyModule[]> => { 
     const root = 'https://raw.githubusercontent.com/david-andrew/dewy-lang/master/src/compiler/'
