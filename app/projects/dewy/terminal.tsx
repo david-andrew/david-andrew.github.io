@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
 import 'xterm/css/xterm.css'
@@ -6,6 +6,9 @@ import 'xterm/css/xterm.css'
 type TerminalInterface = {
     divRef: React.RefObject<HTMLDivElement>
     write: (msg: string) => void
+    read: () => Promise<string>
+
+    //TODO: want the interface to be a function that can be called without having to manage watching input manually
     // read: () => string
     // clear: () => void
     // onCtrlC: ()  => void
@@ -14,6 +17,7 @@ type TerminalInterface = {
 export const useXterm = (): TerminalInterface => {
     const divRef = useRef<HTMLDivElement>(null)
     const xtermRef = useRef<Terminal>()
+    const [reading, setReading] = useState(false)
 
     useEffect(() => {
         // Initialize Xterm
@@ -25,6 +29,27 @@ export const useXterm = (): TerminalInterface => {
             term.loadAddon(fitAddon)
             term.open(divRef.current)
             fitAddon.fit()
+
+            // Call the input callback whenever user types something
+            term.onData((data) => {
+                if (data === '\b' || data === '\x7f') {
+                    term.write('\b \b')
+                } else if (data === '\r') {
+                    term.write('\r\n')
+                } else {
+                    term.write(data)
+                }
+            })
+
+            // prevent up/down arrow keys from operating
+            term.attachCustomKeyEventHandler((e) => {
+                if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+                    return false
+                }
+                return true
+            })
+
+            //TODO: right arrow should only work if not at the end of the current input. And left arrow should stop at the beginning of the current input
 
             // Store the term reference for later use
             xtermRef.current = term
@@ -38,9 +63,18 @@ export const useXterm = (): TerminalInterface => {
         }
     }, [])
 
+    // TODO:
+    // 1. set reading to true
+    // 2. collect input until user presses enter
+    // 3. set reading to false
+    // 4. resolve promise with input
+    const read = async (): Promise<string> => {
+        return 'test'
+    }
+
     const write = (msg: string) => {
         xtermRef.current?.write(msg)
     }
 
-    return { divRef, write }
+    return { divRef, read, write }
 }

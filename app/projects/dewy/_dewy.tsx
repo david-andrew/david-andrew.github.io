@@ -33,12 +33,15 @@ class BufferedOutput {
 
 type UsePyodideProps = {
     stdout?: (msg: string) => void
+    stdin?: () => string
 }
 
 type UsePyodideHook = {
     pyodide: PyodideInterface | undefined
     flush: () => void
 }
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export const usePyodide = ({ stdout = (m: string) => {} }: UsePyodideProps): UsePyodideHook => {
     const [pyodide, setPyodide] = useState<PyodideInterface | undefined>(undefined)
@@ -51,9 +54,9 @@ export const usePyodide = ({ stdout = (m: string) => {} }: UsePyodideProps): Use
             const loadedPyodide = await loadPyodide({
                 indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.23.4/full/',
                 fullStdLib: false,
-                stdin: () => {
-                    return prompt('this is a custom prompt') ?? ''
-                },
+                // stdin: () => {
+                //     return prompt('this is a custom prompt') ?? ''
+                // },
                 stderr: (msg: string) => {
                     console.log('this is stderr: ', msg)
                 },
@@ -61,6 +64,21 @@ export const usePyodide = ({ stdout = (m: string) => {} }: UsePyodideProps): Use
             loadedPyodide.setStdout({
                 raw: receiveChar,
             })
+
+            // test setting a custom module that can be called from python
+            const js_input_module = {
+                js_input: async (): Promise<string> => {
+                    await sleep(4000)
+                    return 'asynchronous input received'
+                },
+                // myread: () => 'this is some random text',
+                // asyncread: async () => {
+                //     await sleep(10000)
+                //     return 'this is some awaited random text'
+                // },
+            }
+            loadedPyodide.registerJsModule('js_input', js_input_module)
+
             console.log('Pyodide is ready to use:', loadedPyodide.version)
             setPyodide(loadedPyodide)
         }
@@ -122,7 +140,7 @@ sys.meta_path.insert(0, StringFinder())
 type UsePythonProps = {
     modules?: PyModule[]
     main: string
-    // stdin?: () => string
+    stdin?: () => string
     stdout?: (msg: string) => void
     // stderr?: (msg: string) => void
 }
@@ -132,8 +150,8 @@ type UsePythonHook = {
     state: PythonHookState
 }
 
-export const usePython = ({ modules = [], main, stdout }: UsePythonProps): UsePythonHook => {
-    const { pyodide, flush } = usePyodide({ stdout })
+export const usePython = ({ modules = [], main, stdout, stdin }: UsePythonProps): UsePythonHook => {
+    const { pyodide, flush } = usePyodide({ stdout, stdin })
     const [ready, setReady] = useState(false)
     useEffect(() => {
         if (pyodide === undefined) return
@@ -176,13 +194,21 @@ const DewyDemo = ({ dewy_interpreter_source, dewy_examples }: DewyDemoProps): JS
     const [source, setSource] = useState(text)
     const escaped_source = source.replace(/\\/g, '\\\\').replace(/'/g, "\\'")
 
-    const { divRef, write } = useXterm()
+    //handling input:
+    // onInput passed to xterm. writes to a buffer
+    // when stdin() is called from python:
+    // 1. clear buffer
+    // 2. listen to buffer until a newline is encountered
+    // 3. terminal output needs to be adjusted to show the input as it is typed
+
+    const { divRef, write, read } = useXterm()
 
     const { state } = usePython({
         stdout: write,
+        //stdin: read,
         modules: dewy_interpreter_source,
         main: `
-# run count = ${count}. This line re-runs the interpreter every time the button is clicked.
+# run count = ${count}. This line re-runs the interpreter every time the run button is clicked.
 
 # turn off any printing while importing stuff
 import sys
@@ -196,11 +222,31 @@ sys.stderr = io.StringIO()
 from tokenizer import tokenize
 from postok import post_process
 from parser import top_level_parse
-from dewy import Scope
+from dewy import Scope, Builtin
 
 # turn printing back on
 sys.stdout = _stdout
 sys.stderr = _stderr
+
+# replace input with an async version provided by javascript
+from js_input import js_input
+import asyncio
+def new_input(prompt=''):
+    print(prompt, end='', flush=True)
+    loop = asyncio.get_event_loop()
+    asyncio.set_event_loop(loop)
+    result = loop.run_until_complete(js_input())
+    #loop.close()
+    return result
+
+
+#todo make all python input calls use this new input
+Builtin.funcs['readl'] = new_input
+
+# test input
+#print('input test', flush=True)
+#print(new_input('enter something: '))
+#print('end input test')
 
 def dewy(src:str):
     tokens = tokenize(src)
@@ -213,6 +259,12 @@ def dewy(src:str):
 
 dewy('''${escaped_source}''')
 sys.stdout.flush()
+
+#from myjsmodule import myread, asyncread
+#print(myread())
+#
+##await the async function
+#print(await asyncread())
 `,
     })
 
