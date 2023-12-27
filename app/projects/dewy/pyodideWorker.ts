@@ -1,13 +1,15 @@
-importScripts('https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js')
+import { uuidv4 } from 'sync-message'
+import { loadPyodide, PyodideInterface } from 'pyodide'
 
-// let pyodideReady = false
-let pyodide
 
-// declare pyodide on the self object
-// declare const self: { pyodide: PyodideInterface };
+let pyodide: PyodideInterface | undefined
 
 async function loadPyodideAndPackages() {
-    pyodide = await loadPyodide()
+    pyodide = await loadPyodide(
+        {
+            indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.23.4/full/',
+        }
+    )
 }
 
 loadPyodideAndPackages()
@@ -18,7 +20,7 @@ self.onmessage = async (e) => {
     }
     pyodide.setStdout({
         batched: (text) => {
-            console.log('from pyodide', text)
+            console.log('from pyodide', uuidv4(), text)
             // self.postMessage({ stdout: text })
         },
     })
@@ -27,7 +29,7 @@ self.onmessage = async (e) => {
         let { python } = e.data
         let result = await pyodide.runPythonAsync(python)
         self.postMessage({ result })
-    } catch (error) {
+    } catch (error: any) {
         self.postMessage({ error: error.message })
     }
 }

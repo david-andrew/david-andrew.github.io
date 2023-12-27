@@ -6,7 +6,8 @@ export const usePyodide = (): [(pythonCode: string) => void, string] => {
     const [output, setOutput] = useState<string>('')
 
     useEffect(() => {
-        const newWorker = new Worker('/pyodide/pyodideWorker.js')
+        // const newWorker = new Worker('/pyodide/pyodideWorker.js')
+        const newWorker = new Worker(new URL('./pyodideWorker.ts', import.meta.url))
 
         newWorker.onmessage = (e: MessageEvent) => {
             if (e.data.error) {
