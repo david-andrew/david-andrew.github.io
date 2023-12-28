@@ -1,35 +1,56 @@
-import { uuidv4 } from 'sync-message'
+import { uuidv4, readMessage, Channel } from 'sync-message'
 import { loadPyodide, PyodideInterface } from 'pyodide'
 
 
 let pyodide: PyodideInterface | undefined
+let channel: Channel | undefined;
 
 async function loadPyodideAndPackages() {
+    console.log('starting to load pyodide...')
     pyodide = await loadPyodide(
         {
             indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.23.4/full/',
         }
     )
-}
-
-loadPyodideAndPackages()
-
-self.onmessage = async (e) => {
-    if (!pyodide) {
-        return
-    }
+    console.log('done loading pyodide...')
     pyodide.setStdout({
         batched: (text) => {
             console.log('from pyodide', uuidv4(), text)
             // self.postMessage({ stdout: text })
         },
     })
+    pyodide.setStdin({
+        stdin: () => {
+            if (!channel) { return '<failed to read from stdin. no channel available>' }
+            const messageId = uuidv4()
+            postMessage({ messageId })
+            const _message = readMessage(channel, messageId)
+            console.log('from stdin message:', _message)
+            const {message} = _message
+            return message
+        }
+    })
+}
 
-    try {
-        let { python } = e.data
-        let result = await pyodide.runPythonAsync(python)
-        self.postMessage({ result })
-    } catch (error: any) {
-        self.postMessage({ error: error.message })
+loadPyodideAndPackages()
+
+onmessage = async (e) => {
+    if (e.data === undefined) return
+    
+    if (e.data.python !== undefined) {
+        if (!pyodide) {
+            console.error('pyodide not loaded yet')
+            return
+        }
+        try {
+            let { python } = e.data
+            let result = await pyodide.runPythonAsync(python)
+            postMessage({ result })
+        } catch (error: any) {
+            postMessage({ error: error.message })
+        }
+    } else if (e.data.channel !== undefined) {
+        console.log('received channel', e.data.channel)
+        channel = e.data.channel
     }
 }
