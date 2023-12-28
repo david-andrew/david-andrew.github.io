@@ -15,7 +15,7 @@ async function loadPyodideAndPackages() {
     console.log('done loading pyodide...')
     pyodide.setStdout({
         batched: (text) => {
-            console.log('from pyodide', uuidv4(), text)
+            console.log('stdout from pyodide', text)
             // self.postMessage({ stdout: text })
         },
     })
@@ -24,6 +24,7 @@ async function loadPyodideAndPackages() {
             if (!channel) { return '<failed to read from stdin. no channel available>' }
             const messageId = uuidv4()
             postMessage({ messageId })
+            console.log('pyodide trying to read from stdin. waiting for message id', messageId)
             const _message = readMessage(channel, messageId)
             console.log('from stdin message:', _message)
             const {message} = _message
@@ -35,6 +36,7 @@ async function loadPyodideAndPackages() {
 loadPyodideAndPackages()
 
 onmessage = async (e) => {
+    console.log('worker received message', e.data)
     if (e.data === undefined) return
     
     if (e.data.python !== undefined) {
