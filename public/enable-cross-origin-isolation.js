@@ -1,3 +1,6 @@
+// domains to skip cross origin isolation for
+const whitelisted_domains = ['api.github.com']
+
 /*! coi-serviceworker v0.1.7 - Guido Zuidhof and contributors, licensed under MIT */
 let coepCredentialless = false
 if (typeof window === 'undefined') {
@@ -26,7 +29,7 @@ if (typeof window === 'undefined') {
 
         // Check if the request is for the GitHub API
         console.log('fetching', r.url)
-        if (r.url.includes('api.github.com')) {
+        if (whitelisted_domains.some((domain) => r.url.includes(domain))) {
             console.log('fetching github api like normal instead of with with cross origin isolation')
             // If it is, just perform a regular fetch without modifying headers
             event.respondWith(fetch(r).catch((e) => console.error(e)))

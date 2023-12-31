@@ -7,28 +7,14 @@ import { makeAtomicsChannel, writeMessage } from 'sync-message'
 // }
 
 export const usePyodide = (): [boolean, (pythonCode: string) => void] => {
-    const [netService, setNetService] = useState<ServiceWorkerRegistration>()
     const [channel, setChannel] = useState<ReturnType<typeof makeAtomicsChannel>>()
     const [pyodideWorker, setPyodideWorker] = useState<Worker | null>(null)
 
-    // //on init, register the network service worker
-    // useEffect(() => {
-    //     ;(async () => {
-    //         const reg = await navigator.serviceWorker.register(new URL('./networkService.ts', import.meta.url))
-    //         // const reg = await navigator.serviceWorker.register('/test-service-worker.js', { scope: '/' })
-    //         console.log('network service worker registration success', reg)
-    //         setNetService(reg)
-    //     })()
-    // }, [])
-
-    //once the network service worker is registered, create the channel
+    //on init create the atomics channel
     useEffect(() => {
-        // if (netService) {
-        // const channel = makeServiceWorkerChannel({ scope: netService.scope })
         const channel = makeAtomicsChannel()
         console.log('created channel', channel)
         setChannel(channel)
-        // }
     }, [])
 
     //once the channel is created, create the pyodide worker
@@ -74,58 +60,6 @@ export const usePyodide = (): [boolean, (pythonCode: string) => void] => {
             }
         }
     }, [channel])
-
-    // useEffect(() => {
-    //     // activate the pyodide web worker and the network service worker
-    //     const newWorker = new Worker(new URL('./pyodideWorker.ts', import.meta.url))
-    //     navigator.serviceWorker.register(new URL('./networkService.ts', import.meta.url)).then(
-    //         (registration) => {
-    //             console.log('network service worker registration success', registration)
-    //         },
-    //         (error) => {
-    //             console.error('network service worker registration failed', error)
-    //         },
-    //     )
-
-    //     //send the channel to the worker
-    //     if (channelRef.current === null) {
-    //         console.error('channel was null!', channelRef.current)
-    //     } else {
-    //         console.log('sending channel to worker', channelRef.current)
-    //         newWorker.postMessage({ channel: channelRef.current })
-    //     }
-
-    //     newWorker.onmessage = (e: MessageEvent) => {
-    //         console.log('received message from worker', e)
-    //         if (e.data.messageId !== undefined) {
-    //             const channel = channelRef.current
-    //             if (channel === null) {
-    //                 console.error('channel was null!', channelRef.current)
-    //                 return
-    //             }
-    //             const id = e.data.messageId
-    //             //demo of async message returning something for stdin
-    //             setTimeout(() => {
-    //                 console.log(
-    //                     'sending message to worker',
-    //                     channel,
-    //                     { message: 'hello from network service worker' },
-    //                     id,
-    //                 )
-    //                 writeMessage(channel, { message: 'hello from network service worker' }, id)
-    //             }, 1000)
-    //         } else if (e.data.error) {
-    //             console.error(e.data.error)
-    //         } else {
-    //             console.log('unknown message received message from worker', e)
-    //             setOutput(e.data.result)
-    //         }
-    //     }
-
-    //     setWorker(newWorker)
-
-    //     return () => newWorker.terminate()
-    // }, [])
 
     const runPython = (pythonCode: string) => {
         if (pyodideWorker) {

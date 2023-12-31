@@ -18,14 +18,15 @@ async function loadPyodideAndPackages() {
     })
     pyodide.setStdin({
         stdin: () => {
-            // return (prompt('Program is requesting user input:') ?? '') + '\n'
-            if (!channel) { return '<failed to read from stdin. no channel available>' }
+            if (!channel) {
+                return '<failed to read from stdin. no channel available>'
+            }
             const messageId = uuidv4()
             postMessage({ messageId })
             console.log('pyodide trying to read from stdin. waiting for message id', messageId)
             const _message = readMessage(channel, messageId)
             console.log('from stdin message:', _message)
-            const {message} = _message
+            const { message } = _message
             return message
         },
     })
