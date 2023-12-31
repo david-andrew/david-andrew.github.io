@@ -18,6 +18,9 @@ const RootLayout = async ({ children }: { children: React.ReactNode }): Promise<
 
     return (
         <html lang="en">
+            <head>
+                <script src="/enable-cross-origin-isolation.js" async />
+            </head>
             <body className={inter.className}>
                 <div className="w-screen h-screen">
                     <Navbar />

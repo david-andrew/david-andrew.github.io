@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
-import { makeServiceWorkerChannel, writeMessage } from 'sync-message'
+import { makeAtomicsChannel, writeMessage } from 'sync-message'
 
 // type UsePyodideHook = {
 
@@ -8,25 +8,28 @@ import { makeServiceWorkerChannel, writeMessage } from 'sync-message'
 
 export const usePyodide = (): [boolean, (pythonCode: string) => void] => {
     const [netService, setNetService] = useState<ServiceWorkerRegistration>()
-    const [channel, setChannel] = useState<ReturnType<typeof makeServiceWorkerChannel>>()
+    const [channel, setChannel] = useState<ReturnType<typeof makeAtomicsChannel>>()
     const [pyodideWorker, setPyodideWorker] = useState<Worker | null>(null)
 
-    //on init, register the network service worker
-    useEffect(() => {
-        ;(async () => {
-            const reg = await navigator.serviceWorker.register(new URL('./networkService.ts', import.meta.url))
-            console.log('network service worker registration success', reg)
-            setNetService(reg)
-        })()
-    }, [])
+    // //on init, register the network service worker
+    // useEffect(() => {
+    //     ;(async () => {
+    //         const reg = await navigator.serviceWorker.register(new URL('./networkService.ts', import.meta.url))
+    //         // const reg = await navigator.serviceWorker.register('/test-service-worker.js', { scope: '/' })
+    //         console.log('network service worker registration success', reg)
+    //         setNetService(reg)
+    //     })()
+    // }, [])
 
     //once the network service worker is registered, create the channel
     useEffect(() => {
-        if (netService) {
-            const channel = makeServiceWorkerChannel({ scope: netService.scope })
-            setChannel(channel)
-        }
-    }, [netService])
+        // if (netService) {
+        // const channel = makeServiceWorkerChannel({ scope: netService.scope })
+        const channel = makeAtomicsChannel()
+        console.log('created channel', channel)
+        setChannel(channel)
+        // }
+    }, [])
 
     //once the channel is created, create the pyodide worker
     useEffect(() => {
@@ -42,21 +45,27 @@ export const usePyodide = (): [boolean, (pythonCode: string) => void] => {
                     const id = e.data.messageId
 
                     //demo of async message returning something for stdin
-                    console.log('sending message to worker', channel, { message: 'default stdin message' }, id)
-                    writeMessage(channel, { message: 'default stdin message' }, id)
-                    // setTimeout(() => {
-                    //     console.log(
-                    //         'sending message to worker',
-                    //         channel,
-                    //         { message: 'default stdin message. hello from network service worker' },
-                    //         id,
-                    //     )
-                    //     writeMessage(
-                    //         channel,
-                    //         { message: 'default stdun message. hello from network service worker' },
-                    //         id,
-                    //     )
-                    // }, 1000)
+                    // console.log('sending message to worker', channel, { message: 'default stdin message' }, id)
+                    // writeMessage(channel, { message: 'default stdin message' }, id)
+                    setTimeout(() => {
+                        console.log(
+                            'sending message to worker',
+                            channel,
+                            {
+                                message:
+                                    'default stdin message. <Promise>hello from network service worker</Promise> 1 second later',
+                            },
+                            id,
+                        )
+                        writeMessage(
+                            channel,
+                            {
+                                message:
+                                    'default stdun message. <Promise>hello from network service worker</Promise> 1 second later',
+                            },
+                            id,
+                        )
+                    }, 1000)
                 } else if (e.data.error) {
                     console.error(e.data.error)
                 } else {
@@ -144,7 +153,14 @@ export const MyComponent: React.FC = () => {
                 value={pythonCode}
                 onChange={(e) => setPythonCode(e.target.value)}
             />
-            <button onClick={() => runPython(pythonCode)}>Run Python</button>
+            <button
+                onClick={() => {
+                    console.log('running python code:', pythonCode)
+                    runPython(pythonCode)
+                }}
+            >
+                Run Python
+            </button>
             <p>Pyodide Ready: {`${ready}`}</p>
         </div>
     )
