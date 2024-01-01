@@ -1,84 +1,63 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
-import { makeAtomicsChannel, writeMessage } from 'sync-message'
+import { makeAtomicsChannel, writeMessage, Channel } from 'sync-message'
+import { PyodideWorker, InputRequester } from './pyodideWorker'
+import * as Comlink from 'comlink'
+import { Remote } from 'comlink'
 
-// type UsePyodideHook = {
-
-// }
-
-export const usePyodide = (): [boolean, (pythonCode: string) => void] => {
+export const usePyodide = (): ((pythonCode: string) => Promise<void>) | undefined => {
     const [channel, setChannel] = useState<ReturnType<typeof makeAtomicsChannel>>()
-    const [pyodideWorker, setPyodideWorker] = useState<Worker | null>(null)
+    const [ready, setReady] = useState<boolean>(false)
+    const pyodideWorker = useRef<Remote<PyodideWorker>>()
+
+    const inputRequester: InputRequester = (channel: Channel, id: string) => {
+        setTimeout(() => {
+            const m = {
+                message: '<Promise>hello from network service worker</Promise> 1 second later',
+            }
+            console.log('sending message to worker', m, id)
+            writeMessage(channel, m, id)
+        }, 1000)
+    }
 
     //on init create the atomics channel
     useEffect(() => {
+        //TODO: try catch around this for if browser doesn't support?
         const channel = makeAtomicsChannel()
-        console.log('created channel', channel)
         setChannel(channel)
     }, [])
 
-    //once the channel is created, create the pyodide worker
+    // once the channel is created, create the pyodide worker
     useEffect(() => {
         if (channel) {
-            const newWorker = new Worker(new URL('./pyodideWorker.ts', import.meta.url))
-            newWorker.postMessage({ channel })
-            setPyodideWorker(newWorker)
-
-            // set the onmessage handler
-            newWorker.onmessage = (e: MessageEvent) => {
-                console.log('received message from worker', e)
-                if (e.data.messageId !== undefined) {
-                    const id = e.data.messageId
-
-                    //demo of async message returning something for stdin
-                    // console.log('sending message to worker', channel, { message: 'default stdin message' }, id)
-                    // writeMessage(channel, { message: 'default stdin message' }, id)
-                    setTimeout(() => {
-                        console.log(
-                            'sending message to worker',
-                            channel,
-                            {
-                                message:
-                                    'default stdin message. <Promise>hello from network service worker</Promise> 1 second later',
-                            },
-                            id,
-                        )
-                        writeMessage(
-                            channel,
-                            {
-                                message:
-                                    'default stdun message. <Promise>hello from network service worker</Promise> 1 second later',
-                            },
-                            id,
-                        )
-                    }, 1000)
-                } else if (e.data.error) {
-                    console.error(e.data.error)
-                } else {
-                    console.log('unknown message received message from worker', e)
-                }
-            }
+            ;(async () => {
+                const worker = new Worker(new URL('./pyodideWorker.ts', import.meta.url))
+                const workerProxy = Comlink.wrap<PyodideWorker>(worker)
+                await workerProxy.setChannel(channel)
+                await workerProxy.setInputRequester(Comlink.proxy(inputRequester))
+                await workerProxy.initializePyodide()
+                pyodideWorker.current = workerProxy
+                setReady(true)
+            })()
         }
     }, [channel])
 
-    const runPython = (pythonCode: string) => {
-        if (pyodideWorker) {
-            // console.log('sending message to worker', pythonCode)
-            pyodideWorker.postMessage({ python: pythonCode })
-        } else {
-            console.log('pyodide worker is null')
-        }
-    }
+    const runPython = ready
+        ? async (pythonCode: string) => {
+              await pyodideWorker.current?.runPython(pythonCode)
+          }
+        : undefined
 
-    //TODO: return some sort of status + more comprehensive interface to pyodide
-    const ready = pyodideWorker !== null
-    //TODO: ready should be based on when the pyodide worker says it's ready...
-    return [ready, runPython]
+    return runPython
 }
 
-export const MyComponent: React.FC = () => {
+export const MyComponent = (): JSX.Element => {
     const [pythonCode, setPythonCode] = useState<string>('print("Hello from Python!")\na = input()\nprint(a)')
-    const [ready, runPython] = usePyodide()
+    const runPython = usePyodide()
+
+    if (!runPython) {
+        return <div>loading...</div>
+    }
 
     return (
         <div className="flex flex-col">
@@ -95,7 +74,6 @@ export const MyComponent: React.FC = () => {
             >
                 Run Python
             </button>
-            <p>Pyodide Ready: {`${ready}`}</p>
         </div>
     )
 }
