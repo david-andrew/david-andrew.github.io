@@ -71,6 +71,7 @@ export const usePyodide = ({
                 setReady(true)
             })()
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [channel])
 
     const runPython = ready

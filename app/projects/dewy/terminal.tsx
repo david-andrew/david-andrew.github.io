@@ -73,6 +73,7 @@ export const useXterm = (): TerminalInterface => {
     }
 
     const write = (msg: string) => {
+        console.log('writing to xterm:', msg, xtermRef.current)
         xtermRef.current?.write(msg)
     }
 

@@ -71,13 +71,14 @@ export const MyComponent = ({ dewy_interpreter_source, dewy_examples }: DewyDemo
     useEffect(() => {
         if (addModule === undefined || run == undefined) return
         ;(async () => {
-            for (const module of dewy_interpreter_source) {
-                await addModule(module)
-                console.log('added module:', module.name)
+            for (const mod of dewy_interpreter_source) {
+                await addModule(mod)
+                console.log('added module:', mod.name)
             }
             // await run(dewySetup)
             setReady(true)
         })()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [addModule, run])
 
     if (!ready) {

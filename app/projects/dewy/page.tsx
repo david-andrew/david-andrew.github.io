@@ -1,8 +1,8 @@
 import { H3, P, Link } from '@/app/(components)/ui'
 import { CodeBlock, CodeEditor } from '@/app/(components)/syntax'
 import { IconBullet, IconBulletList } from '@/app/(components)/icon_bullet'
-// import { DewyDemo } from './dewy'
-import { MyComponent } from './test_pyodide'
+import { DewyDemo } from './dewy'
+// import { MyComponent } from './test_pyodide'
 
 import { fetch_dewy_interpreter_source, fetch_dewy_examples } from './fetch_dewy'
 
@@ -12,8 +12,8 @@ const Page = async (): Promise<JSX.Element> => {
 
     return (
         <>
-            {/* <DewyDemo {...{ dewy_interpreter_source, dewy_examples }} /> */}
-            <MyComponent {...{ dewy_interpreter_source, dewy_examples }} />
+            <DewyDemo {...{ dewy_interpreter_source, dewy_examples }} />
+            {/* <MyComponent {...{ dewy_interpreter_source, dewy_examples }} /> */}
             <H3>About</H3>
             <P>
                 Dewy is a programming language I have been developing off and on since 2016. The main goal is to build a
