@@ -1,23 +1,29 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
 import { makeAtomicsChannel, writeMessage, Channel } from 'sync-message'
-import { PyodideWorker, InputRequester } from './pyodideWorker'
+import { PyodideWorker, InputRequester, RawStdout, BatchStdout } from './pyodideWorker'
 import * as Comlink from 'comlink'
 import { Remote } from 'comlink'
+import { sleep } from '@/app/utils'
 
-export const usePyodide = (): ((pythonCode: string) => Promise<void>) | undefined => {
-    const [channel, setChannel] = useState<ReturnType<typeof makeAtomicsChannel>>()
+type UsePyodideProps = {
+    rawStdout?: RawStdout
+    batchStdout?: BatchStdout
+    stdin?: () => Promise<string>
+}
+type UsePyodideHook = ((pythonCode: string) => Promise<void>) | undefined
+
+export const usePyodide = ({ rawStdout, batchStdout, stdin }: UsePyodideProps): UsePyodideHook => {
+    const [channel, setChannel] = useState<Channel>()
     const [ready, setReady] = useState<boolean>(false)
     const pyodideWorker = useRef<Remote<PyodideWorker>>()
 
     const inputRequester: InputRequester = (channel: Channel, id: string) => {
-        setTimeout(() => {
-            const m = {
-                message: '<Promise>hello from network service worker</Promise> 1 second later',
-            }
-            console.log('sending message to worker', m, id)
-            writeMessage(channel, m, id)
-        }, 1000)
+        ;(async () => {
+            const message = (await stdin?.()) ?? '<no stdin function provided>'
+            console.log('sending message to worker', message, id)
+            writeMessage(channel, { message }, id)
+        })()
     }
 
     //on init create the atomics channel
@@ -33,9 +39,17 @@ export const usePyodide = (): ((pythonCode: string) => Promise<void>) | undefine
             ;(async () => {
                 const worker = new Worker(new URL('./pyodideWorker.ts', import.meta.url))
                 const workerProxy = Comlink.wrap<PyodideWorker>(worker)
+
+                // set required values and callbacks
                 await workerProxy.setChannel(channel)
                 await workerProxy.setInputRequester(Comlink.proxy(inputRequester))
+                if (rawStdout) await workerProxy.setRawStdout(Comlink.proxy(rawStdout))
+                if (batchStdout) await workerProxy.setBatchStdout(Comlink.proxy(batchStdout))
+
+                // only call after setting all the values and callbacks
                 await workerProxy.initializePyodide()
+
+                // set the workerProxy to the ref and mark ready
                 pyodideWorker.current = workerProxy
                 setReady(true)
             })()
@@ -53,7 +67,18 @@ export const usePyodide = (): ((pythonCode: string) => Promise<void>) | undefine
 
 export const MyComponent = (): JSX.Element => {
     const [pythonCode, setPythonCode] = useState<string>('print("Hello from Python!")\na = input()\nprint(a)')
-    const runPython = usePyodide()
+
+    const batchStdout = (msg: string) => {
+        console.log('this is stdout: ', msg)
+    }
+    //TODO: raw stdout with custom batching
+
+    const stdin = async () => {
+        await sleep(4000)
+        return 'asynchronous input received'
+    }
+
+    const runPython = usePyodide({ stdin, batchStdout })
 
     if (!runPython) {
         return <div>loading...</div>

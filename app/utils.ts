@@ -1,8 +1,8 @@
 // used to type-correctly filter (T|undefined)[] to T[]
 export const isDefined = <T>(value: T | undefined): value is T => value !== undefined
 
-export const try_or_undefined = <T, U>(fn:(value:T)=>U): (value:T)=>U|undefined => {
-    return (value:T) => {
+export const try_or_undefined = <T, U>(fn: (value: T) => U): ((value: T) => U | undefined) => {
+    return (value: T) => {
         try {
             return fn(value)
         } catch (e) {
@@ -49,4 +49,8 @@ export const convertToDate = (monthYearString: string): Date => {
     }
 
     return new Date(year, monthIndex)
+}
+
+export const sleep = async (ms: number) => {
+    return new Promise((resolve) => setTimeout(resolve, ms))
 }

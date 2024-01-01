@@ -3,17 +3,22 @@ import { loadPyodide as fetchPyodide, PyodideInterface } from 'pyodide'
 import { expose } from 'comlink'
 
 export type InputRequester = (channel: Channel, id: string) => void
+export type RawStdout = (char: number) => void
+export type BatchStdout = (text: string) => void
 export type PyodideWorker = {
     setChannel: (channel: Channel) => void
     setInputRequester: (inputRequester: InputRequester) => void
+    setRawStdout: (rawStdout: RawStdout) => void
+    setBatchStdout: (batchStdout: BatchStdout) => void
     initializePyodide: () => Promise<void>
     runPython: (code: string) => Promise<string>
 }
 
-// export class PyodideWorker {
 let _pyodide: PyodideInterface | undefined
 let _channel: Channel | undefined
 let _inputRequester: InputRequester | undefined
+let _rawStdout: RawStdout | undefined
+let _batchStdout: BatchStdout | undefined
 
 const setChannel = (channel: Channel) => {
     console.log('received channel in worker', channel)
@@ -25,31 +30,59 @@ const setInputRequester = (inputRequester: InputRequester) => {
     _inputRequester = inputRequester
 }
 
+const setRawStdout = (rawStdout: RawStdout) => {
+    console.log('received rawStdout in worker', rawStdout)
+    _rawStdout = rawStdout
+}
+
+const setBatchStdout = (batchStdout: BatchStdout) => {
+    console.log('received batchStdout in worker', batchStdout)
+    _batchStdout = batchStdout
+}
+
 const initializePyodide = async () => {
+    if (!_channel) {
+        console.error('failed pyodide initialization. channel not set yet')
+        return
+    }
+    if (!_inputRequester) {
+        console.error('failed pyodide initialization. inputRequester not set yet')
+        return
+    }
+    if (!_rawStdout && !_batchStdout) {
+        console.error('failed pyodide initialization. stdout not set yet')
+        return
+    }
+
     console.log('starting to load pyodide...')
     _pyodide = await fetchPyodide({
         indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.23.4/full/',
     })
     console.log('done loading pyodide...')
-    _pyodide.setStdout({
-        batched: (text) => {
-            console.log('stdout from pyodide', text)
-            // self.postMessage({ stdout: text })
-        },
-    })
+
+    // set up stdout
+    if (_rawStdout !== undefined) {
+        _pyodide.setStdout({
+            raw: (char: number) => {
+                _rawStdout!(char)
+            },
+        })
+    } else {
+        _pyodide.setStdout({
+            batched: (text) => {
+                _batchStdout!(text)
+            },
+        })
+    }
+
+    // set up stdin
     _pyodide.setStdin({
         stdin: () => {
-            if (!_channel) {
-                return '<failed to read from stdin. no channel available>'
-            }
-            if (!_inputRequester) {
-                return '<failed to read from stdin. no inputRequester available>'
-            }
             const messageId = uuidv4()
             // postMessage({ messageId })
-            _inputRequester(_channel, messageId)
+            _inputRequester!(_channel!, messageId)
             console.log('pyodide trying to read from stdin. waiting for message id', messageId)
-            const { message } = readMessage(_channel, messageId)
+            const { message } = readMessage(_channel!, messageId)
             // console.log('from stdin message:', message)
             return message
         },
@@ -73,6 +106,8 @@ const runPython = async (code: string) => {
 const pyodideWorker: PyodideWorker = {
     setChannel,
     setInputRequester,
+    setRawStdout,
+    setBatchStdout,
     initializePyodide,
     runPython,
 }
