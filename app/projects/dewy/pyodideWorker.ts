@@ -87,6 +87,13 @@ const initializePyodide = async () => {
             return message
         },
     })
+
+    // set stderr to be the console.error
+    _pyodide.setStderr({
+        batched: (text) => {
+            console.error(text)
+        },
+    })
 }
 
 const runPython = async (code: string) => {

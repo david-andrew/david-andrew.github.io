@@ -175,6 +175,7 @@ export const usePython = ({ stdout, stdin }: UsePythonProps): UsePythonHook => {
         await runPython!(`register_file('${module.name}', '''${code}''')`)
     }
     const run = async (code: string) => {
+        console.log('running python code from usePython:', code)
         await runPython!(code)
         flush()
     }
