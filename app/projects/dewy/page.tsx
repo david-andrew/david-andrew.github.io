@@ -13,7 +13,7 @@ const Page = async (): Promise<JSX.Element> => {
     return (
         <>
             {/* <DewyDemo {...{ dewy_interpreter_source, dewy_examples }} /> */}
-            <MyComponent />
+            <MyComponent {...{ dewy_interpreter_source, dewy_examples }} />
             <H3>About</H3>
             <P>
                 Dewy is a programming language I have been developing off and on since 2016. The main goal is to build a

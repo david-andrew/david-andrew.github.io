@@ -69,7 +69,7 @@ export const useXterm = (): TerminalInterface => {
     // 3. set reading to false
     // 4. resolve promise with input
     const read = async (): Promise<string> => {
-        return 'test'
+        return '<test stdin from xterm. todo:read actual stdin>'
     }
 
     const write = (msg: string) => {

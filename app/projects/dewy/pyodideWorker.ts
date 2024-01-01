@@ -90,7 +90,6 @@ const initializePyodide = async () => {
 }
 
 const runPython = async (code: string) => {
-    console.log('in web worker, trying to run code: ', code)
     if (!_pyodide) {
         console.error('pyodide not loaded yet')
         return

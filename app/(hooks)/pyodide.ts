@@ -81,3 +81,117 @@ export const usePyodide = ({
 
     return { runPython, flush }
 }
+
+export type PyModule = {
+    name: string
+    code: string
+}
+
+// python for loading modules from strings in pyodide
+const module_loader_py = `
+import importlib.abc
+import importlib.machinery
+import sys
+
+# Simulated file contents
+file_contents: dict[str,str] = {}
+
+# Register a file
+def register_file(name, code):
+    file_contents[name] = code
+
+# Custom module loader
+class StringLoader(importlib.abc.Loader):
+    def __init__(self, name, code):
+        self.name = name
+        self.code = code
+
+    def get_source(self, fullname):
+        return self.code
+
+    def get_filename(self, fullname):
+        return '<string_loader: {}>'.format(fullname)
+
+    def is_package(self, fullname):
+        return False
+
+    def exec_module(self, module):
+        exec(compile(self.get_source(module.__name__), self.get_filename(module.__name__), 'exec'), module.__dict__)
+
+# Custom module finder
+class StringFinder(importlib.abc.MetaPathFinder):
+    def find_spec(self, fullname, path, target=None):
+        if fullname in file_contents:
+            return importlib.machinery.ModuleSpec(fullname, StringLoader(fullname, file_contents[fullname]), is_package=False)
+        return None
+
+# Install the custom finder
+sys.meta_path.insert(0, StringFinder())
+`
+
+type UsePythonProps = {
+    // modules?: PyModule[]
+    // main: string
+    stdin?: () => Promise<string>
+    stdout?: (msg: string) => void
+    // stderr?: (msg: string) => void
+}
+
+// type PythonHookState = 'loadingPyodide' | 'loadingPreloads' | 'running' //| 'error' | pdb? | 'done'
+type UsePythonHook =
+    | {
+          addModule: (module: PyModule) => Promise<void>
+          run: (code: string) => Promise<void>
+      }
+    | {
+          addModule: undefined
+          run: undefined
+      }
+
+export const usePython = ({ stdout, stdin }: UsePythonProps): UsePythonHook => {
+    const { runPython, flush } = usePyodide({ stdout, stdin })
+    const [ready, setReady] = useState(false)
+
+    // create the module loader
+    useEffect(() => {
+        if (runPython === undefined) return
+        ;(async () => {
+            await runPython(module_loader_py)
+            setReady(true)
+
+            // for (const mod of modules) {
+            //     //escape module code (quotes, newlines, etc.)
+            //     const code = mod.code.replace(/\\/g, '\\\\').replace(/'/g, "\\'")
+            //     await runPython(`register_file('${mod.name}', '''${code}''')`)
+            // }
+        })()
+    }, [runPython])
+
+    if (!ready) return { addModule: undefined, run: undefined }
+
+    const addModule = async (module: PyModule) => {
+        //escape module code (quotes, newlines, etc.)
+        const code = module.code.replace(/\\/g, '\\\\').replace(/'/g, "\\'")
+        await runPython!(`register_file('${module.name}', '''${code}''')`)
+    }
+    const run = async (code: string) => {
+        await runPython!(code)
+        flush()
+    }
+
+    return { addModule, run }
+
+    // // run the main code
+    // useEffect(() => {
+    //     if (runPython === undefined || !ready) return
+    //     ;(async () => {
+    //         await runPython(main)
+    //         flush()
+    //     })()
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [runPython, main, ready])
+
+    // if (runPython === undefined) return { state: 'loadingPyodide' }
+    // if (!ready) return { state: 'loadingPreloads' }
+    // return { state: 'running' }
+}
