@@ -10,8 +10,10 @@ import { dewy_meta_lang, dewy_meta_theme } from '@/app/(components)/syntax_dewy_
 
 /*
 [Tasks]
-- switch to the correct code editor+terminal (probably in _dewy file?)
-- terminal handling input request
+[x] switch to the correct code editor+terminal (probably in _dewy file?)
+[x] terminal handling input request
+[ ] change font in terminal to monospace and correct size!
+
 */
 //TODO: probably need to modify the print/input functions in Scope.default() to flush after every use
 //TODO: may need to set stderr in pyodide to go to the terminal
@@ -32,11 +34,20 @@ from tokenizer import tokenize
 from postok import post_process
 from parser import top_level_parse
 from dewy import Scope, Builtin
+from functools import partial
 
 # turn printing back on
 sys.stdout = _stdout
 sys.stderr = _stderr
 
+# update the builtin print function to flush after every use
+Builtin.funcs = {
+    'print': partial(print, end='', flush=True),
+    'printl': partial(print, flush=True),
+    'readl': input
+}
+
+# define main entry point
 def dewy(src:str):
     tokens = tokenize(src)
     post_process(tokens)
@@ -58,14 +69,7 @@ export type DewyDemoProps = {
 
 const DewyDemo = ({ dewy_interpreter_source, dewy_examples }: DewyDemoProps): JSX.Element => {
     const [ready, setReady] = useState(false)
-    const [source, setSource] = useState("printl'Hello from Dewy!'")
-
-    //handling input:
-    // onInput passed to xterm. writes to a buffer
-    // when stdin() is called from python:
-    // 1. clear buffer
-    // 2. listen to buffer until a newline is encountered
-    // 3. terminal output needs to be adjusted to show the input as it is typed
+    const [source, setSource] = useState("print'what is your name? '\nname = readl\nprintl'Hello {name}'")
 
     const { divRef, write, read } = useXterm()
 

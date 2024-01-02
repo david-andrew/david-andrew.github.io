@@ -11,7 +11,7 @@ type UsePyodideProps = {
 }
 type UsePyodideHook = {
     runPython: ((pythonCode: string) => Promise<void>) | undefined
-    flush: () => void
+    // flush: () => void
 }
 
 export const usePyodide = ({
@@ -22,18 +22,9 @@ export const usePyodide = ({
     const [ready, setReady] = useState<boolean>(false)
     const pyodideWorker = useRef<Remote<PyodideWorker>>()
 
-    const maxLength: number | undefined = 1024
-    const bufRef = useRef<string[]>([])
-    const flush = () => {
-        stdout(bufRef.current.join(''))
-        bufRef.current = []
-    }
+    // unbuffered input handling for stdout
     const receiveChar = (c: number) => {
-        const msg = String.fromCharCode(c)
-        bufRef.current.push(msg)
-        if ((maxLength && bufRef.current.length > maxLength) || msg === '\n') {
-            flush()
-        }
+        stdout(String.fromCharCode(c))
     }
 
     const inputRequester: InputRequester = (channel: Channel, id: string) => {
@@ -62,9 +53,19 @@ export const usePyodide = ({
                 await workerProxy.setChannel(channel)
                 await workerProxy.setInputRequester(Comlink.proxy(inputRequester))
                 await workerProxy.setRawStdout(Comlink.proxy(receiveChar))
+                // await workerProxy.setJsFlush(Comlink.proxy(flush))
 
                 // only call after setting all the values and callbacks
                 await workerProxy.initializePyodide()
+
+                // // add a js module for flushing stdout
+                // await workerProxy.addJsModule({
+                //     name: 'js_stdout',
+                //     obj: Comlink.proxy({
+                //         flush: flush,
+                //         // test: Comlink.proxy(() => console.log('test calling js function from python!')),
+                //     }),
+                // })
 
                 // set the workerProxy to the ref and mark ready
                 pyodideWorker.current = workerProxy
@@ -76,11 +77,11 @@ export const usePyodide = ({
 
     const runPython = ready
         ? async (pythonCode: string) => {
-              await pyodideWorker.current?.runPython(pythonCode)
+              await pyodideWorker.current!.runPython(pythonCode)
           }
         : undefined
 
-    return { runPython, flush }
+    return { runPython }
 }
 
 export type PyModule = {
@@ -131,14 +132,11 @@ sys.meta_path.insert(0, StringFinder())
 `
 
 type UsePythonProps = {
-    // modules?: PyModule[]
-    // main: string
     stdin?: () => Promise<string>
     stdout?: (msg: string) => void
     // stderr?: (msg: string) => void
 }
 
-// type PythonHookState = 'loadingPyodide' | 'loadingPreloads' | 'running' //| 'error' | pdb? | 'done'
 type UsePythonHook =
     | {
           addModule: (module: PyModule) => Promise<void>
@@ -150,7 +148,7 @@ type UsePythonHook =
       }
 
 export const usePython = ({ stdout, stdin }: UsePythonProps): UsePythonHook => {
-    const { runPython, flush } = usePyodide({ stdout, stdin })
+    const { runPython } = usePyodide({ stdout, stdin })
     const [ready, setReady] = useState(false)
 
     // create the module loader
@@ -172,7 +170,6 @@ export const usePython = ({ stdout, stdin }: UsePythonProps): UsePythonHook => {
     const run = async (code: string) => {
         console.log('running python code from usePython:', code)
         await runPython!(code)
-        flush()
     }
 
     return { addModule, run }
