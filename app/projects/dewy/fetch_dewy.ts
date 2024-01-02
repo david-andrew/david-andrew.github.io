@@ -17,7 +17,17 @@ export const fetch_dewy_interpreter_source = async (): Promise<PyModule[]> => {
     return await Promise.all(contents)
 }
 
-export const fetch_dewy_examples = async (): Promise<string[]> => {
+export type DewySource = {
+    name: string
+    code: string
+}
+
+export type FetchedDewySourceExamples = {
+    good_examples: DewySource[]
+    bad_examples: DewySource[]
+}
+
+export const fetch_dewy_examples = async (): Promise<FetchedDewySourceExamples> => {
     const root = 'https://raw.githubusercontent.com/david-andrew/dewy-lang/master/'
     const readme_url = `${root}README.md`
     const readme_response = await fetch(readme_url)
@@ -31,29 +41,51 @@ export const fetch_dewy_examples = async (): Promise<string[]> => {
     const end = readme_lines.findIndex((line, i) => i > start && !line.startsWith('|'))
     const example_lines = readme_lines.slice(start, end)
 
-    // map to a list of the filename, and the status
-    const examples_paths = example_lines
+    type RawFileAndStatus = { link: string; status: string }
+
+    // map to a list of the markdown links, and the status
+    const { good_rows, bad_rows } = example_lines
+        // collect rows in the table that have content (markdown link + status)
         .map(
-            try_or_undefined((line) => {
-                const [_, filename, status, __] = line.split('|').map((s) => s.trim())
-                return { filename, status }
+            try_or_undefined((line): RawFileAndStatus => {
+                const [_, link, status, __] = line.split('|').map((s) => s.trim())
+                return { link, status }
             }),
         )
         // remove undefined rows
         .filter(isDefined)
-        // select only examples that are marked successful
-        .filter((example) => example.status === '[✓]')
-        // map to just the filepath. paths are markdown links of the form [some_name](path/to/file)
-        .map(try_or_undefined((example) => example.filename.split(']')[1].split('(')[1].split(')')[0]))
-        // remove undefined rows
-        .filter(isDefined)
+        //partition successful vs broken examples
+        .reduce(
+            (acc, example) => {
+                if (example.status === '[✓]') {
+                    acc.good_rows.push(example.link)
+                } else if (example.status === '[✗]') {
+                    acc.bad_rows.push(example.link)
+                }
+                return acc
+            },
+            { good_rows: [] as string[], bad_rows: [] as string[] },
+        )
 
-    // collect the contents of each file
-    const contents = examples_paths.map(async (path) => {
+    // grab the actual filename and path
+    type FileAndPath = { name: string; path: string }
+    const convertMarkdownLink = try_or_undefined((link: string): FileAndPath => {
+        return {
+            name: link.split(']')[0].split('[')[1],
+            path: link.split(']')[1].split('(')[1].split(')')[0],
+        }
+    })
+    const fetchContents = async ({ name, path }: FileAndPath) => {
         const url = `${root}${path}`
         const response = await fetch(url)
-        return await response.text()
-    })
+        return { name, code: await response.text() }
+    }
 
-    return await Promise.all(contents)
+    const good_examples = good_rows.map(convertMarkdownLink).filter(isDefined).map(fetchContents)
+    const bad_examples = bad_rows.map(convertMarkdownLink).filter(isDefined).map(fetchContents)
+
+    return {
+        good_examples: await Promise.all(good_examples),
+        bad_examples: await Promise.all(bad_examples),
+    }
 }

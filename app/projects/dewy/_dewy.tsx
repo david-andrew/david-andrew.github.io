@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react'
 import { useXterm } from './terminal'
 import { PyModule, usePython } from '@/app/(hooks)/pyodide'
 import { Loading } from '@/app/loading'
+import { Accordion } from '@/app/(components)/accordion'
+import { FetchedDewySourceExamples } from './fetch_dewy'
 
 import { CodeEditor } from '@/app/(components)/syntax'
 import { dewy_meta_lang, dewy_meta_theme } from '@/app/(components)/syntax_dewy_meta'
@@ -13,11 +15,19 @@ import { dewy_meta_lang, dewy_meta_theme } from '@/app/(components)/syntax_dewy_
 [x] switch to the correct code editor+terminal (probably in _dewy file?)
 [x] terminal handling input request
 [x] change font in terminal to monospace and correct size!
-[ ] push to master
+[x] merge branch to master
+[ ] example program presets you can click
+[ ] make run button + code editor disabled while running
+[x] handling hitting pdb. probably replace pdb call with a message and exit(1)
+[ ] syntax highlighting
+[ ] mobile firefox never loads
+[x] catching exceptions in the demo
+[ ] "undefined" printed out at the end of the loop example
+
+[ ] add `a = sin(x)^2 + cos(x)^2` to the dewy example programs (currently broken)
+
 
 */
-//TODO: probably need to modify the print/input functions in Scope.default() to flush after every use
-//TODO: may need to set stderr in pyodide to go to the terminal
 
 const createDewyRunner = (src: string) => {
     const escaped_source = src.replace(/\\/g, '\\\\').replace(/'/g, "\\'")
@@ -56,16 +66,27 @@ def dewy(src:str):
     root = Scope.default()
     ast = top_level_parse(tokens, root)
     res = ast.eval(root)
-    if res: print(res)
+    # if res: print(res) #causes weird behavior in most cases
+
+# replace pdb.set_trace with a message and exit(1)
+import pdb
+def pdb_set_trace():
+    print('ERROR: encountered syntax which is not yet implemented. exiting.', flush=True)
+    exit(1)
+pdb.set_trace = pdb_set_trace
 
 # run dewy source code
-dewy('''${escaped_source}'''); sys.stdout.flush()
+try:
+    dewy('''${escaped_source}'''); sys.stdout.flush()
+except:
+    print('ERROR: encountered syntax which is not yet implemented. exiting.', flush=True)
 `
 }
 
 export type DewyDemoProps = {
     dewy_interpreter_source: PyModule[]
-    dewy_examples: string[]
+    dewy_examples: FetchedDewySourceExamples
+    //dewy_broken_examples: DewySource[]
 }
 
 const DewyDemo = ({ dewy_interpreter_source, dewy_examples }: DewyDemoProps): JSX.Element => {
@@ -116,6 +137,43 @@ const DewyDemo = ({ dewy_interpreter_source, dewy_examples }: DewyDemoProps): JS
 
                 {/* Note the terminal element needs to exist from the start, else xterm won't hook in correctly */}
                 <div className="border-2 border-white rounded-md" ref={divRef} />
+
+                <div className="w-full">
+                    <Accordion title="Working Examples">
+                        {/* list of buttons, one for each example working program */}
+                        <div className="flex flex-row flex-wrap gap-2">
+                            {dewy_examples.good_examples.map(({ name, code }, idx) => (
+                                <button
+                                    key={idx}
+                                    className="font-gentona text-2xl px-4 h-[3.5em] whitespace-pre bg-[#232323] hover:bg-[#404040] text-white rounded-md"
+                                    onClick={() => {
+                                        clear()
+                                        setSource(code)
+                                    }}
+                                >
+                                    {name}
+                                </button>
+                            ))}
+                        </div>
+                    </Accordion>
+                    <Accordion title="Broken Examples">
+                        {/* list of buttons, one for each example broken program */}
+                        <div className="flex flex-row flex-wrap gap-2">
+                            {dewy_examples.bad_examples.map(({ name, code }, idx) => (
+                                <button
+                                    key={idx}
+                                    className="font-gentona text-2xl px-4 h-[3.5em] whitespace-pre bg-[#232323] hover:bg-[#404040] text-white rounded-md"
+                                    onClick={() => {
+                                        clear()
+                                        setSource(code)
+                                    }}
+                                >
+                                    {name}
+                                </button>
+                            ))}
+                        </div>
+                    </Accordion>
+                </div>
 
                 {/* loading spinner over whole element while not ready */}
                 {!ready && (
