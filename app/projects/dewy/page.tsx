@@ -1,8 +1,7 @@
 import { H3, P, Link } from '@/app/(components)/ui'
-import { CodeBlock, CodeEditor } from '@/app/(components)/syntax'
+import { CodeBlock } from '@/app/(components)/syntax'
 import { IconBullet, IconBulletList } from '@/app/(components)/icon_bullet'
 import { DewyDemo } from './dewy'
-// import { MyComponent } from './test_pyodide'
 
 import { fetch_dewy_interpreter_source, fetch_dewy_examples } from './fetch_dewy'
 

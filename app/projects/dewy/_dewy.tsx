@@ -8,6 +8,14 @@ import { CodeEditor } from '@/app/(components)/syntax'
 import { dewy_meta_lang, dewy_meta_theme } from '@/app/(components)/syntax_dewy_meta'
 // import { dewy_lang, dewy_theme } from '@/app/(components)/syntax_dewy'
 
+/*
+[Tasks]
+- switch to the correct code editor+terminal (probably in _dewy file?)
+- terminal handling input request
+*/
+//TODO: probably need to modify the print/input functions in Scope.default() to flush after every use
+//TODO: may need to set stderr in pyodide to go to the terminal
+
 const createDewyRunner = (src: string) => {
     const escaped_source = src.replace(/\\/g, '\\\\').replace(/'/g, "\\'")
     return `
