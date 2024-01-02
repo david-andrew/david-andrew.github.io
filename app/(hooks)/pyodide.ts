@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
 import { makeAtomicsChannel, writeMessage, Channel } from 'sync-message'
-import { PyodideWorker, InputRequester, RawStdout, BatchStdout } from '@/app/projects/dewy/pyodideWorker'
+import { PyodideWorker, InputRequester } from '@/app/projects/dewy/pyodideWorker'
 import * as Comlink from 'comlink'
 import { Remote } from 'comlink'
 
@@ -159,12 +159,6 @@ export const usePython = ({ stdout, stdin }: UsePythonProps): UsePythonHook => {
         ;(async () => {
             await runPython(module_loader_py)
             setReady(true)
-
-            // for (const mod of modules) {
-            //     //escape module code (quotes, newlines, etc.)
-            //     const code = mod.code.replace(/\\/g, '\\\\').replace(/'/g, "\\'")
-            //     await runPython(`register_file('${mod.name}', '''${code}''')`)
-            // }
         })()
     }, [runPython])
 

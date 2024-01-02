@@ -1,5 +1,5 @@
 type LoadingProps = {
-    size?: 'small' | 'medium' | 'large'
+    size: 'small' | 'medium' | 'large'
 }
 
 const spinnerSizes = {
@@ -9,11 +9,11 @@ const spinnerSizes = {
 }
 
 //entire page is black with a loading spinner
-const Loading = ({ size = 'large' }: LoadingProps): JSX.Element => {
+export const Loading = ({ size }: LoadingProps): JSX.Element => {
     const spinnerSizeClass = spinnerSizes[size]
 
     return (
-        <div className="fixed w-screen h-screen bg-black flex justify-center items-center">
+        <>
             <div role="status">
                 <svg
                     aria-hidden="true"
@@ -33,8 +33,16 @@ const Loading = ({ size = 'large' }: LoadingProps): JSX.Element => {
                 </svg>
                 <span className="sr-only">Loading...</span>
             </div>
+        </>
+    )
+}
+
+const LoadingPage = (): JSX.Element => {
+    return (
+        <div className="fixed w-screen h-screen bg-black flex justify-center items-center">
+            <Loading size="large" />
         </div>
     )
 }
 
-export default Loading
+export default LoadingPage

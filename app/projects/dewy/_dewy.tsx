@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import { useXterm } from './terminal'
 import { PyModule, usePython } from '@/app/(hooks)/pyodide'
+import { Loading } from '@/app/loading'
 
 import { CodeEditor } from '@/app/(components)/syntax'
 import { dewy_meta_lang, dewy_meta_theme } from '@/app/(components)/syntax_dewy_meta'
@@ -78,28 +79,35 @@ const DewyDemo = ({ dewy_interpreter_source, dewy_examples }: DewyDemoProps): JS
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [addModule, run])
 
-    if (!ready) {
-        return <div>Loading Demo...</div>
-    }
-
     return (
         <>
-            <CodeEditor
-                className="w-full bg-[#232323] text-xl md:text-lg"
-                text={source}
-                setText={setSource}
-                language={dewy_meta_lang()}
-                theme={dewy_meta_theme}
-            />
-            <button
-                className="font-gentona text-2xl py-2 px-4 bg-[#232323] hover:bg-[#404040] text-white rounded-md"
-                onClick={() => {
-                    run!(createDewyRunner(source))
-                }}
-            >
-                Run
-            </button>
-            <div ref={divRef} />
+            <div className="relative">
+                <CodeEditor
+                    className="w-full bg-[#232323] text-xl md:text-lg"
+                    text={source}
+                    setText={setSource}
+                    language={dewy_meta_lang()}
+                    theme={dewy_meta_theme}
+                />
+                <button
+                    className="font-gentona text-2xl py-2 px-4 bg-[#232323] hover:bg-[#404040] text-white rounded-md"
+                    onClick={() => {
+                        run!(createDewyRunner(source))
+                    }}
+                >
+                    Run
+                </button>
+
+                {/* Note the terminal element needs to exist from the start, else xterm won't hook in correctly */}
+                <div ref={divRef} />
+
+                {/* loading spinner over whole element while not ready */}
+                {!ready && (
+                    <div className="absolute top-0 left-0 right-0 bottom-0 bg-black bg-opacity-75 flex justify-center items-center">
+                        <Loading size="medium" />
+                    </div>
+                )}
+            </div>
         </>
     )
 }
