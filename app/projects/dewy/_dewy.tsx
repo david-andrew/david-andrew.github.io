@@ -8,6 +8,7 @@ import { FetchedDewySourceExamples } from './fetch_dewy'
 
 import { CodeEditor } from '@/app/(components)/syntax'
 import { dewy_meta_lang, dewy_meta_theme } from '@/app/(components)/syntax_dewy_meta'
+import { twMerge } from 'tailwind-merge'
 // import { dewy_lang, dewy_theme } from '@/app/(components)/syntax_dewy'
 
 /*
@@ -86,11 +87,11 @@ except:
 export type DewyDemoProps = {
     dewy_interpreter_source: PyModule[]
     dewy_examples: FetchedDewySourceExamples
-    //dewy_broken_examples: DewySource[]
 }
 
 const DewyDemo = ({ dewy_interpreter_source, dewy_examples }: DewyDemoProps): JSX.Element => {
     const [ready, setReady] = useState(false)
+    const [running, setRunning] = useState(false)
     const [source, setSource] = useState("print'what is your name? '\nname = readl\nprintl'Hello {name}'")
 
     const { divRef, write, read, clear } = useXterm()
@@ -122,14 +123,21 @@ const DewyDemo = ({ dewy_interpreter_source, dewy_examples }: DewyDemoProps): JS
                     setText={setSource}
                     language={dewy_meta_lang()}
                     theme={dewy_meta_theme}
+                    readonly={running}
                 />
                 <div>
                     <button
-                        className="font-gentona text-2xl py-2 px-4 bg-[#232323] hover:bg-[#404040] text-white rounded-md"
-                        onClick={() => {
+                        className={twMerge(
+                            'font-gentona text-2xl py-2 px-4 rounded-md',
+                            running ? 'bg-[#343434] text-gray-500' : 'bg-[#232323] hover:bg-[#404040] text-white',
+                        )}
+                        onClick={async () => {
+                            setRunning(true)
                             clear()
-                            run!(createDewyRunner(source))
+                            await run!(createDewyRunner(source))
+                            setRunning(false)
                         }}
+                        disabled={running}
                     >
                         Run
                     </button>
