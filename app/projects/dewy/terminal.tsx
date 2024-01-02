@@ -51,9 +51,9 @@ export const useXterm = (): TerminalInterface => {
                 }
             })
 
-            // prevent up/down arrow keys from operating
+            // prevent arrow keys from operating
             term.attachCustomKeyEventHandler((e) => {
-                if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+                if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
                     return false
                 }
                 return true
