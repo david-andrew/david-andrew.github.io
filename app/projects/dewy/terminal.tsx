@@ -22,6 +22,8 @@ export const useXterm = (): TerminalInterface => {
         if (divRef.current && !xtermRef.current) {
             const term = new Terminal({
                 convertEol: true,
+                fontSize: 18, //TODO: some way to set this differently if on mobile?
+                fontFamily: 'monospace',
             })
             const fitAddon = new FitAddon()
             term.loadAddon(fitAddon)

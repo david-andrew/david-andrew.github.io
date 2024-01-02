@@ -12,7 +12,8 @@ import { dewy_meta_lang, dewy_meta_theme } from '@/app/(components)/syntax_dewy_
 [Tasks]
 [x] switch to the correct code editor+terminal (probably in _dewy file?)
 [x] terminal handling input request
-[ ] change font in terminal to monospace and correct size!
+[x] change font in terminal to monospace and correct size!
+[ ] push to master
 
 */
 //TODO: probably need to modify the print/input functions in Scope.default() to flush after every use
