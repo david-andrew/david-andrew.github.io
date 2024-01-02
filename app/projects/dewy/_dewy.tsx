@@ -71,7 +71,7 @@ const DewyDemo = ({ dewy_interpreter_source, dewy_examples }: DewyDemoProps): JS
     const [ready, setReady] = useState(false)
     const [source, setSource] = useState("print'what is your name? '\nname = readl\nprintl'Hello {name}'")
 
-    const { divRef, write, read } = useXterm()
+    const { divRef, write, read, clear } = useXterm()
 
     const { addModule, run } = usePython({
         stdout: write,
@@ -93,7 +93,7 @@ const DewyDemo = ({ dewy_interpreter_source, dewy_examples }: DewyDemoProps): JS
 
     return (
         <>
-            <div className="relative">
+            <div className="relative flex flex-col gap-4">
                 <CodeEditor
                     className="w-full bg-[#232323] text-xl md:text-lg"
                     text={source}
@@ -101,17 +101,20 @@ const DewyDemo = ({ dewy_interpreter_source, dewy_examples }: DewyDemoProps): JS
                     language={dewy_meta_lang()}
                     theme={dewy_meta_theme}
                 />
-                <button
-                    className="font-gentona text-2xl py-2 px-4 bg-[#232323] hover:bg-[#404040] text-white rounded-md"
-                    onClick={() => {
-                        run!(createDewyRunner(source))
-                    }}
-                >
-                    Run
-                </button>
+                <div>
+                    <button
+                        className="font-gentona text-2xl py-2 px-4 bg-[#232323] hover:bg-[#404040] text-white rounded-md"
+                        onClick={() => {
+                            clear()
+                            run!(createDewyRunner(source))
+                        }}
+                    >
+                        Run
+                    </button>
+                </div>
 
                 {/* Note the terminal element needs to exist from the start, else xterm won't hook in correctly */}
-                <div ref={divRef} />
+                <div className="border-2 border-white rounded-md" ref={divRef} />
 
                 {/* loading spinner over whole element while not ready */}
                 {!ready && (

@@ -8,6 +8,7 @@ type TerminalInterface = {
     divRef: React.RefObject<HTMLDivElement>
     write: (msg: string) => void
     read: () => Promise<string>
+    clear: () => void
 }
 
 export const useXterm = (): TerminalInterface => {
@@ -82,5 +83,9 @@ export const useXterm = (): TerminalInterface => {
         xtermRef.current?.write(msg)
     }
 
-    return { divRef, read, write }
+    const clear = () => {
+        xtermRef.current?.clear()
+    }
+
+    return { divRef, read, write, clear }
 }
