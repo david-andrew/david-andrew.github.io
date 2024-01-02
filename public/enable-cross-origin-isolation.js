@@ -26,9 +26,9 @@ if (typeof window === 'undefined') {
 
     self.addEventListener('fetch', function (event) {
         const r = event.request
-
-        // Check if the request is for the GitHub API
         console.log('fetching', r.url)
+
+        // skip if request is for one of the whitelisted domains
         if (whitelisted_domains.some((domain) => r.url.includes(domain))) {
             console.log('fetching github api like normal instead of with with cross origin isolation')
             // If it is, just perform a regular fetch without modifying headers
