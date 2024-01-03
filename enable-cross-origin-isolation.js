@@ -1,6 +1,10 @@
 // domains to skip cross origin isolation for
 const whitelisted_domains = ['api.github.com']
 
+// if the url contains any of these terms, the request will be isolated
+// basically isolate the dewy web worker, and dewy page itself
+const isolations_terms = ['pyodideWorker', 'dewy']
+
 /*! coi-serviceworker v0.1.7 - Guido Zuidhof and contributors, licensed under MIT */
 let coepCredentialless = false
 if (typeof window === 'undefined') {
@@ -26,15 +30,17 @@ if (typeof window === 'undefined') {
 
     self.addEventListener('fetch', function (event) {
         const r = event.request
-        console.log('fetching', r.url)
-
-        // skip if request is for one of the whitelisted domains
-        if (whitelisted_domains.some((domain) => r.url.includes(domain))) {
-            console.log('fetching github api like normal instead of with with cross origin isolation')
+        // skip isolation if request does not contain one of the specified terms or is whitelisted
+        if (
+            !isolations_terms.some((term) => r.url.includes(term)) ||
+            whitelisted_domains.some((domain) => r.url.includes(domain))
+        ) {
             // If it is, just perform a regular fetch without modifying headers
+            console.log('fetch', r.url)
             event.respondWith(fetch(r).catch((e) => console.error(e)))
             return
         }
+        console.log('isolated fetch', r.url)
 
         if (r.cache === 'only-if-cached' && r.mode !== 'same-origin') {
             return
