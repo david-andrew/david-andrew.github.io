@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, createContext, useContext } from 'react'
 import { makeAtomicsChannel, writeMessage, Channel } from 'sync-message'
 import { PyodideWorker, InputRequester } from '@/app/projects/dewy/pyodideWorker'
 import * as Comlink from 'comlink'
@@ -22,11 +22,18 @@ export const usePyodide = ({
     const [ready, setReady] = useState<boolean>(false)
     const pyodideWorker = useRef<Remote<PyodideWorker>>()
 
+    //TODO: something browser storage or cookie based
+    // const { atomicsSupported, setAtomicsSupported } = useAtomicsSupportContext()
+
     // unbuffered input handling for stdout
     const receiveChar = (c: number) => {
         stdout(String.fromCharCode(c))
     }
 
+    //TODO:input requester should be different if atomics is not supported
+    // i.e. fallback to prompt. but how do we call from a service worker?
+    //probably proxy prompt(). need to adjust service worker so it can take
+    // () => Promise<string> | () => string
     const inputRequester: InputRequester = (channel: Channel, id: string) => {
         ;(async () => {
             const message = (await stdin?.()) ?? '<no stdin function provided>'
@@ -35,11 +42,31 @@ export const usePyodide = ({
         })()
     }
 
-    //on init create the atomics channel
+    //on init, try to create the atomics channel
+    //TODO: this can't use state because the page is refreshed
+    //      need to use either web storage, or cookie, or etc...
     useEffect(() => {
-        //TODO: try catch around this for if browser doesn't support?
+        // if (atomicsSupported !== 'unsupported') {
+        //     try {
         const channel = makeAtomicsChannel()
         setChannel(channel)
+        //     setAtomicsSupported('supported')
+        // } catch (e) {
+        //     if (atomicsSupported === 'checking') {
+        //         // if failed a second time, mark as unsupported
+        //         setAtomicsSupported('unsupported')
+        //     } else if (atomicsSupported === 'unknown' || atomicsSupported === 'supported') {
+        //         //refresh the page to try again (refresh cross origin isolation)
+        //         setAtomicsSupported('checking')
+        //         window.location.reload()
+        //     }
+        // }
+
+        // reload on navigating away from page to reset cross origin isolation
+        return () => {
+            window.location.reload()
+        }
+        // }
     }, [])
 
     // once the channel is created, create the pyodide worker
