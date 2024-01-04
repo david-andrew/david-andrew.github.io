@@ -87,11 +87,11 @@
 
 import { serviceWorkerFetchListener } from 'sync-message'
 
-self.addEventListener('install', () => {
-    console.log('installing service worker')
-    self.skipWaiting()
-})
-self.addEventListener('activate', (event) => event.waitUntil(self.clients.claim()))
+// self.addEventListener('install', () => {
+//     console.log('installing service worker')
+//     self.skipWaiting()
+// })
+// self.addEventListener('activate', (event) => event.waitUntil(self.clients.claim()))
 
 // self.addEventListener('fetch', serviceWorkerFetchListener())
 const fetchListener = serviceWorkerFetchListener()
