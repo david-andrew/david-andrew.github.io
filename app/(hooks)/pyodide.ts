@@ -1,6 +1,6 @@
 'use client'
-import { useState, useEffect, useRef, createContext, useContext } from 'react'
-import { makeAtomicsChannel, writeMessage, Channel } from 'sync-message'
+import { useState, useEffect, useRef, createContext, useContext, use } from 'react'
+import { /*makeAtomicsChannel,*/ writeMessage, Channel, makeServiceWorkerChannel } from 'sync-message'
 import { PyodideWorker, InputRequester } from '@/app/projects/dewy/pyodideWorker'
 import * as Comlink from 'comlink'
 import { Remote } from 'comlink'
@@ -11,7 +11,6 @@ type UsePyodideProps = {
 }
 type UsePyodideHook = {
     runPython: ((pythonCode: string) => Promise<void>) | undefined
-    // flush: () => void
 }
 
 export const usePyodide = ({
@@ -22,18 +21,12 @@ export const usePyodide = ({
     const [ready, setReady] = useState<boolean>(false)
     const pyodideWorker = useRef<Remote<PyodideWorker>>()
 
-    //TODO: something browser storage or cookie based
-    // const { atomicsSupported, setAtomicsSupported } = useAtomicsSupportContext()
-
     // unbuffered input handling for stdout
     const receiveChar = (c: number) => {
         stdout(String.fromCharCode(c))
     }
 
-    //TODO:input requester should be different if atomics is not supported
-    // i.e. fallback to prompt. but how do we call from a service worker?
-    //probably proxy prompt(). need to adjust service worker so it can take
-    // () => Promise<string> | () => string
+    // function for requesting input from the app asynchonously, and passing it to the worker
     const inputRequester: InputRequester = (channel: Channel, id: string) => {
         ;(async () => {
             const message = (await stdin?.()) ?? '<no stdin function provided>'
@@ -43,30 +36,9 @@ export const usePyodide = ({
     }
 
     //on init, try to create the atomics channel
-    //TODO: this can't use state because the page is refreshed
-    //      need to use either web storage, or cookie, or etc...
     useEffect(() => {
-        // if (atomicsSupported !== 'unsupported') {
-        //     try {
-        const channel = makeAtomicsChannel()
+        const channel = makeServiceWorkerChannel({ scope: '_next/static/chunks/' }) //makeAtomicsChannel()
         setChannel(channel)
-        //     setAtomicsSupported('supported')
-        // } catch (e) {
-        //     if (atomicsSupported === 'checking') {
-        //         // if failed a second time, mark as unsupported
-        //         setAtomicsSupported('unsupported')
-        //     } else if (atomicsSupported === 'unknown' || atomicsSupported === 'supported') {
-        //         //refresh the page to try again (refresh cross origin isolation)
-        //         setAtomicsSupported('checking')
-        //         window.location.reload()
-        //     }
-        // }
-
-        // reload on navigating away from page to reset cross origin isolation
-        return () => {
-            window.location.reload()
-        }
-        // }
     }, [])
 
     // once the channel is created, create the pyodide worker
@@ -84,15 +56,6 @@ export const usePyodide = ({
 
                 // only call after setting all the values and callbacks
                 await workerProxy.initializePyodide()
-
-                // // add a js module for flushing stdout
-                // await workerProxy.addJsModule({
-                //     name: 'js_stdout',
-                //     obj: Comlink.proxy({
-                //         flush: flush,
-                //         // test: Comlink.proxy(() => console.log('test calling js function from python!')),
-                //     }),
-                // })
 
                 // set the workerProxy to the ref and mark ready
                 pyodideWorker.current = workerProxy

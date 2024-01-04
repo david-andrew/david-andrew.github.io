@@ -1,9 +1,10 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { Navbar } from './(components)/navbar'
-import { ColorPicker } from './(components)/color'
+import { Navbar } from '@/app/(components)/navbar'
+import { ColorPicker } from '@/app/(components)/color'
 import { GithubTimestampsProvider, ProjectsContextProvider, GithubTimestampsFetcher } from '@/app/projects/context'
+// import { PyodideStdinServiceWorker } from '@/app/projects/dewy/pyodideStdinServiceEntry'
 import { getProjects } from '@/app/projects/fetch'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -19,9 +20,10 @@ const RootLayout = async ({ children }: { children: React.ReactNode }): Promise<
     return (
         <html lang="en">
             <head>
-                <script src="/enable-cross-origin-isolation.js" async />
+                <script src="/pyodideCommsService.js" async />
             </head>
             <body className={inter.className}>
+                {/* <PyodideStdinServiceWorker /> */}
                 <div className="w-screen h-screen">
                     <Navbar />
                     <div style={{ height: 'calc(100vh - var(--navbar-height))' }} className="overflow-x-hidden">
