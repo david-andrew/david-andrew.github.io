@@ -5,6 +5,7 @@ import { Navbar } from '@/app/(components)/navbar'
 import { ColorPicker } from '@/app/(components)/color'
 import { GithubTimestampsProvider, ProjectsContextProvider, GithubTimestampsFetcher } from '@/app/projects/context'
 import { getProjects } from '@/app/projects/fetch'
+import { twMerge } from 'tailwind-merge'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,7 +22,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }): Promise<
             <head>
                 <script src="/pyodideCommsService.js" async />
             </head>
-            <body className={inter.className}>
+            <body className={twMerge(inter.className, 'overflow-x-hidden')}>
                 <div className="w-screen h-screen">
                     <Navbar />
                     <div style={{ height: 'calc(100vh - var(--navbar-height))' }} className="overflow-x-hidden">
