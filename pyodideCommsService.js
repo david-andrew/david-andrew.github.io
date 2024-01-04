@@ -34,7 +34,7 @@ if (typeof window === 'undefined') {
             return
         }
 
-        console.log('pyodide comms fetch', request.url)
+        // console.log('pyodide comms fetch', request.url)
         const respond = async () => {
             const success = (message) => {
                 const response = { message, version: VERSION }
@@ -81,7 +81,7 @@ if (typeof window === 'undefined') {
     ;(() => {
         navigator.serviceWorker.register(window.document.currentScript.src).then(
             (registration) => {
-                console.log('Pyodide Comms Service Worker registered', registration.scope)
+                // console.log('Pyodide Comms Service Worker registered', registration.scope)
             },
             (err) => {
                 console.error('Pyodide Comms Service Worker failed to register:', err)
