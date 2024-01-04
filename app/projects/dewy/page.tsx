@@ -1,4 +1,4 @@
-import { H3, P, Link } from '@/app/(components)/ui'
+import { H3, P, Link, UL } from '@/app/(components)/ui'
 import { CodeBlock } from '@/app/(components)/syntax'
 import { IconBullet, IconBulletList } from '@/app/(components)/icon_bullet'
 import { DewyDemo } from './dewy'
@@ -14,12 +14,46 @@ const Page = async (): Promise<JSX.Element> => {
             <DewyDemo {...{ dewy_interpreter_source, dewy_examples }} />
             <H3>About</H3>
             <P>
-                Dewy is a programming language I have been developing off and on since 2016. The main goal is to build a
-                language with all the features I&apos;ve always wished existed in a single language. Dewy is a general
-                purpose language with a focus on scientific and engineering applications. At a high level, Dewy is sort
-                of like an amalgamation of the best aspects of Matlab, Python, TypeScript, and Rust, but with its own
-                unique flare.
+                Dewy is a programming language I have been developing off and on since 2016. The Dewy Programming
+                Language is a general purpose language designed with engineering applications in mind. Think the
+                functionality and ease of use of matlab or python combined with the speed of a compiled language like C
+                or Rust, but with its own unique flare.
             </P>
+            <P className="mb-2">Some key planned features include:</P>
+            <UL>
+                <li>
+                    <strong>Functional and Imperative</strong> - Dewy is an imperitive language with strong support for
+                    functional programming. This allows for a very flexible programming style, where you can use the
+                    best tool for the job.
+                </li>
+
+                <li>
+                    <strong>Expression based syntax</strong> - Dewy uses an expression based syntax, meaning that
+                    everything is an expression. This allows for a very simple yet powerful syntax, where common
+                    language features often are just a free consequence of the syntax
+                </li>
+
+                <li>
+                    <strong>Garbage-collector-free memory management</strong> - Dewy uses a unique memory management
+                    system, allowing for fast and efficient memory management without the need for a garbage collector.
+                </li>
+
+                <li>
+                    <strong>Strong type system</strong> - Dewy has a powerful static type system with inference,
+                    reminiscent of those in Typescript and Julia.
+                </li>
+
+                <li>
+                    <strong>Built in unit system</strong> - Dewy has a built in unit system, allowing you to easily work
+                    with units and convert between them. This is especially useful for engineering applications.
+                </li>
+
+                <li>
+                    <strong>Strong math support</strong> - Dewy has strong support many math features, including complex
+                    numbers, quaternions, vectors, matrices, and more. This is especially useful for engineering
+                    applications.
+                </li>
+            </UL>
             <P>An example of the common FizzBuzz program implemented in Dewy might look like this:</P>
             <CodeBlock
                 // flatten
@@ -76,32 +110,62 @@ raw_lines = ['FizzBuzz' '' '' 'Fizz' '' 'Buzz' 'Fizz' '' '' 'Fizz' 'Buzz' '' ...
 lines = ['FizzBuzz' '1' '2' 'Fizz' '4' 'Buzz' 'Fizz' '7' '8' 'Fizz' 'Buzz' '11' ...]
 `}
             />
+            <H3>Current Status</H3>
             <P>
-                Currently, I am learning LLVM, in order to build a compiler back-end to connect with the aforementioned
-                parser front-end. Further steps will involve adding some missing features to the parser, writing out the
-                full language Context Free Grammar (CFG) in the meta-language, building out the standard library, and
-                then compiling the language in itself.
-            </P>
-            <H3>Semantic Analysis &amp; Code Generation</H3>
-            <P>
-                The next steps involve implementing the semantic analysis, and code generation pieces of the compiler.
-                With a suitable CFG specification for the language, the CNP will output parse trees for given input
-                source text. The parse trees need to be analyzed to ensure that they follow the languages semantics,
-                e.g. variables may only be referenced when in scope, function calls have the same number of arguments as
-                their definitions, type safety checks, etc.
+                Currently I&apos;m working through a simple interpreter for the language (powering the demo above).
+                Previously I had been doing a lot of development on bleeding edge{' '}
+                <Link href="/projects/dewy_old">parser generators</Link>, but that ended up being too big of a time sink
+                for not much visible progress. Instead, for the time being, I ended up just hand rolling a parser in
+                python, which has led to actually runnable code! I&apos;ll definitely revisit parser generators in the
+                future when the language is further along.
             </P>
             <P>
-                After semantic analysis, the last step of the compiler is code generation. For dewy, I plan to leverage
-                the <Link href="https://llvm.org/">LLVM compiler toolchain</Link>, meaning I convert the parse tree into{' '}
+                After the parser is complete, the next steps will be working on compiling to{' '}
                 <Link href="https://en.wikipedia.org/wiki/LLVM#Intermediate_representation">LLVM IR</Link> (read LLVM
-                assembly), which is then optimized and compiled down to a binary executable. I&apos;m also considering
-                having an optional C code generator, which would allow for extreme levels of portability in the
-                compiler&mdash;most systems could build and run the Dewy compiler, as a C99 compiler would be the only
-                dependency.
+                assembly), as well as starting to build out the standard library, and then bootstrapping the compiler to
+                be able to compile itself.
+            </P>
+            <H3>About the Demo</H3>
+            <P>
+                The demo above was actually pretty complex to put together. The current interpreter is written in
+                python, and this website is statically hosted, which meant the demo required some way to statically run
+                python code without a server. For this, I used <Link href="https://pyodide.org/">Pyodide</Link>, which
+                is basically <Link href="https://github.com/python/cpython">CPython</Link> compiled to{' '}
+                <Link href="https://webassembly.org/">WebAssembly</Link> via{' '}
+                <Link href="https://emscripten.org/">Emscripten.</Link>
             </P>
             <P>
-                In the future, I&apos;ll have plenty of updates for integrating the CNP front-end with the LLVM back
-                end.
+                Pyodide itself isn&apos;t too difficult to use, except for the fact that it doesn&apos;t have good
+                support for asynchronous standard input&mdash;it really wants to halt the entire UI while you type input
+                into a stock browser popup prompt. To get around this, I found a{' '}
+                <Link href="https://www.npmjs.com/package/sync-message">handy library</Link> where you run pyodide in a
+                web worker, and then any time it wants to read input, the worker makes a synchronous XHR request to a
+                service worker, blocking the pyodide web worker until the service worker receives a response from the
+                main thread with the input, which the service worker can then pass back to the pyodide worker. Suffice
+                it to say, I don&apos;t think I ever want to deal with service workers again.
+            </P>
+            <P>
+                Now that python is handled, the next aspect is getting the Dewy interpreter itself to run. For this, I
+                fetch (at website build time) the source code directly from{' '}
+                <Link href="https://github.com/david-andrew/dewy-lang/tree/master/src/compiler">github</Link>. I then
+                abuse the python import lib to allow loading "modules" directly from strings, and then pass all of the
+                dewy source in as modules. Then I have a little wrapper function for the entry point which receives the
+                source code string, and runs the program. The entry point can then be called from the browser via a
+                javascript wrapper function.
+            </P>
+            <P>
+                The final piece of the puzzle is the text entry, and terminal emulator. For text input, I&apos;m using
+                the <Link href="https://codemirror.net/">Code Mirror Library</Link>with a custom syntax highlighter
+                (actually the current syntax highlighter was for the{' '}
+                <Link href="/projects/dewy_old">Dewy meta language</Link>, but it works well enough in the meantime).
+                For the terminal, I use the <Link href="https://xtermjs.org/">xterm.js</Link> library. I then hooked up
+                stdin and stdout from pyodide to interact with the terminal, and voila! A Dewy interpreter running in
+                the browser.
+            </P>
+            <P>
+                There are definitely some rough edges, and the parser only supports a small handful of features, but it
+                runs! It&apos;s probably the easiest way to try out the language, and I&apos;m looking forward to
+                getting all of the broken example programs working!
             </P>
 
             <H3>Links</H3>
@@ -109,11 +173,11 @@ lines = ['FizzBuzz' '1' '2' 'Fizz' '4' 'Buzz' 'Fizz' '7' '8' 'Fizz' 'Buzz' '11' 
                 <IconBullet icon="github">
                     <Link href="https://github.com/david-andrew/dewy-lang">Github Repo</Link>
                 </IconBullet>
-                <IconBullet icon="trello">
+                {/* <IconBullet icon="trello">
                     <Link href="https://trello.com/b/YYsedENy/dewyspeak">Project Trello Board</Link>
-                </IconBullet>
+                </IconBullet> */}
                 <IconBullet icon="docs">
-                    <Link href="https://david-andrew.github.io/dewy-lang/">Language Documentation</Link>
+                    <Link href="https://david-andrew.github.io/dewy-lang/">Language Docs</Link>
                 </IconBullet>
             </IconBulletList>
         </>
