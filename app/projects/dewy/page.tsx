@@ -82,7 +82,7 @@ range = [0..100)
 //indexing at [, ..] and [..,] adds singleton dimensions
 word_bools = range[, ..] .% multiples.keys[..,] .=? 0
 
-// #\` means transpose, which behaves like python's zip()
+// \` means transpose, which behaves like python's zip()
 word_grid = [multiples.values word_bools]\`.map(
 [word bools] => bools.map(b => if b word else '')
 )
