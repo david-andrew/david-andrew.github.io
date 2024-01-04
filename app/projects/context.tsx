@@ -52,24 +52,24 @@ export const useFetchGithubTimestamps = (projects: FetchedProjectMeta[]) => {
                 if (project.github === undefined) {
                     const date = convertToDate(project.lastUpdated)
                     if (isNaN(date.getTime())) {
-                        console.log('bad time', project, date)
+                        console.error('bad time', project, date)
                         return undefined
                     }
                     return [project.route, date] as [string, Date]
                 }
                 const res = await fetch(`https://api.github.com/repos/david-andrew/${project.github}/commits`)
                 if (!res.ok) {
-                    console.log('bad fetch', project, res)
+                    console.error('bad fetch', project, res)
                     return undefined
                 }
                 const commits = await res.json()
                 if (!Array.isArray(commits)) {
-                    console.log('not an array', project, commits)
+                    console.error('not an array', project, commits)
                     return undefined
                 }
                 const latestCommit = commits[0]
                 if (!latestCommit) {
-                    console.log('no latest commit', project, commits)
+                    console.error('no latest commit', project, commits)
                     return undefined
                 }
                 const timestamp = new Date(latestCommit.commit.author.date)

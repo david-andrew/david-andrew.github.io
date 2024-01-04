@@ -108,7 +108,6 @@ const DewyDemo = ({ dewy_interpreter_source, dewy_examples }: DewyDemoProps): JS
         ;(async () => {
             for (const mod of dewy_interpreter_source) {
                 await addModule(mod)
-                console.log('added python module:', mod.name)
             }
             setReady(true)
         })()

@@ -31,7 +31,7 @@ export const usePyodide = ({
     const inputRequester: InputRequester = (channel: Channel, id: string) => {
         ;(async () => {
             const message = (await stdin?.()) ?? '<no stdin function provided>'
-            console.log('sending message to worker', message, id)
+            // console.log('sending message to worker', message, id)
             writeMessage(channel, { message }, id)
         })()
     }
@@ -167,7 +167,6 @@ export const usePython = ({ stdout, stdin }: UsePythonProps): UsePythonHook => {
         await runPython!(`register_file('${module.name}', '''${code}''')`)
     }
     const run = async (code: string) => {
-        console.log('running python code from usePython:', code)
         await runPython!(code)
     }
 

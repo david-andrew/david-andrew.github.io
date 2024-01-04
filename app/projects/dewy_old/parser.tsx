@@ -121,7 +121,7 @@ const useDewyWasm = (grammar_source: string, input_source: string): ParserOutput
             scriptRef.current.onload = () => {
                 Module({
                     onRuntimeInitialized: () => {
-                        console.log('onRuntimeInitialized')
+                        // console.log('onRuntimeInitialized')
                     },
                     print: addParserChunk,
                 }).then((module: WasmModule) => {
