@@ -46,8 +46,7 @@ const initializePyodide = async () => {
         return
     }
     if (!_inputRequester) {
-        console.error('failed pyodide initialization. inputRequester not set yet')
-        return
+        console.warn('no inputRequester was set')
     }
     if (!_rawStdout && !_batchStdout) {
         console.error('failed pyodide initialization. stdout not set yet')
@@ -78,12 +77,29 @@ const initializePyodide = async () => {
     // set up stdin
     _pyodide.setStdin({
         stdin: () => {
-            const messageId = uuidv4()
-            // postMessage({ messageId })
-            _inputRequester!(_channel!, messageId)
-            console.log('pyodide trying to read from stdin. waiting for message id', messageId)
-            const { message } = readMessage(_channel!, messageId)
-            // console.log('from stdin message:', message)
+            // normal input handling asynchronously
+            if (_inputRequester) {
+                const messageId = uuidv4()
+                _inputRequester!(_channel!, messageId)
+                console.log('pyodide trying to read from stdin. waiting for message id', messageId)
+                const { message } = readMessage(_channel!, messageId)
+                return message
+            }
+
+            // fallback to displaying an error message
+            console.error('no inputRequester available')
+            const message = '<input error>'
+
+            // write the message to stdout
+            if (_rawStdout) {
+                for (const c of message + '\n') {
+                    _rawStdout(c.charCodeAt(0))
+                }
+            } else if (_batchStdout) {
+                _batchStdout(message)
+            }
+
+            // return the message
             return message
         },
     })

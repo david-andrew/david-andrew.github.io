@@ -1,6 +1,6 @@
 'use client'
-import { useState, useEffect, useRef, createContext, useContext, use } from 'react'
-import { /*makeAtomicsChannel,*/ writeMessage, Channel, makeServiceWorkerChannel } from 'sync-message'
+import { useState, useEffect, useRef } from 'react'
+import { writeMessage, Channel, makeServiceWorkerChannel } from 'sync-message'
 import { PyodideWorker, InputRequester } from '@/app/projects/dewy/pyodideWorker'
 import * as Comlink from 'comlink'
 import { Remote } from 'comlink'
@@ -18,6 +18,7 @@ export const usePyodide = ({
     stdin = async () => '<no stdin callback set>',
 }: UsePyodideProps): UsePyodideHook => {
     const [channel, setChannel] = useState<Channel>()
+    const serviceUnsupportedRef = useRef<true | undefined>()
     const [ready, setReady] = useState<boolean>(false)
     const pyodideWorker = useRef<Remote<PyodideWorker>>()
 
@@ -37,7 +38,12 @@ export const usePyodide = ({
 
     //on init, try to create the atomics channel
     useEffect(() => {
-        const channel = makeServiceWorkerChannel({ scope: '_next/static/chunks/' }) //makeAtomicsChannel()
+        // check if service workers are supported
+        if (!('serviceWorker' in navigator)) {
+            console.error('service workers not supported. Falling back to prompt() io')
+            serviceUnsupportedRef.current = true
+        }
+        const channel = makeServiceWorkerChannel({ scope: '_next/static/chunks/' })
         setChannel(channel)
     }, [])
 
@@ -50,14 +56,17 @@ export const usePyodide = ({
 
                 // set required values and callbacks
                 await workerProxy.setChannel(channel)
-                await workerProxy.setInputRequester(Comlink.proxy(inputRequester))
                 await workerProxy.setRawStdout(Comlink.proxy(receiveChar))
-                // await workerProxy.setJsFlush(Comlink.proxy(flush))
+
+                // set input handler only if service workers are supported
+                if (serviceUnsupportedRef.current === undefined) {
+                    await workerProxy.setInputRequester(Comlink.proxy(inputRequester))
+                }
 
                 // only call after setting all the values and callbacks
                 await workerProxy.initializePyodide()
 
-                // set the workerProxy to the ref and mark ready
+                // save the workerProxy to the ref and mark ready
                 pyodideWorker.current = workerProxy
                 setReady(true)
             })()
@@ -163,18 +172,4 @@ export const usePython = ({ stdout, stdin }: UsePythonProps): UsePythonHook => {
     }
 
     return { addModule, run }
-
-    // // run the main code
-    // useEffect(() => {
-    //     if (runPython === undefined || !ready) return
-    //     ;(async () => {
-    //         await runPython(main)
-    //         flush()
-    //     })()
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [runPython, main, ready])
-
-    // if (runPython === undefined) return { state: 'loadingPyodide' }
-    // if (!ready) return { state: 'loadingPreloads' }
-    // return { state: 'running' }
 }

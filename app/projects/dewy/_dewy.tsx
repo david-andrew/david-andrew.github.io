@@ -17,15 +17,13 @@ import { twMerge } from 'tailwind-merge'
 [x] terminal handling input request
 [x] change font in terminal to monospace and correct size!
 [x] merge branch to master
-[ ] example program presets you can click
-[ ] make run button + code editor disabled while running
+[x] example program presets you can click
+[x] make run button + code editor disabled while running
 [x] handling hitting pdb. probably replace pdb call with a message and exit(1)
 [ ] syntax highlighting
-[ ] mobile firefox never loads
+[x] mobile firefox never loads
 [x] catching exceptions in the demo
-[ ] "undefined" printed out at the end of the loop example
-
-[ ] add `a = sin(x)^2 + cos(x)^2` to the dewy example programs (currently broken)
+[x] "undefined" printed out at the end of the loop example
 
 
 */
@@ -79,7 +77,10 @@ pdb.set_trace = pdb_set_trace
 # run dewy source code
 try:
     dewy('''${escaped_source}'''); sys.stdout.flush()
-except:
+except IOError:
+    print('ERROR: failed to read input. exiting.', flush=True)
+except Exception as e:
+    print(e)
     print('ERROR: encountered syntax which is not yet implemented. exiting.', flush=True)
 `
 }
