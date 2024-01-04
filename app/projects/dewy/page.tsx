@@ -15,14 +15,14 @@ const Page = async (): Promise<JSX.Element> => {
             <H3>About</H3>
             <P>
                 Dewy is a programming language I have been developing off and on since 2016. It is a general purpose
-                language designed with engineering applications in mind. Think the functionality and ease of use of
+                language, designed with engineering applications in mind. Think the functionality and ease of use of
                 matlab or python combined with the speed of a compiled language like C or Rust, but with its own unique
                 flare.
             </P>
             <P className="mb-2">Some key planned features include:</P>
             <UL>
                 <li>
-                    <strong>Functional and Imperative</strong> - Dewy is an imperitive language with strong support for
+                    <strong>Functional and Imperative</strong> - Dewy is an imperative language with strong support for
                     functional programming. This allows for a very flexible programming style, where you can use the
                     best tool for the job.
                 </li>
