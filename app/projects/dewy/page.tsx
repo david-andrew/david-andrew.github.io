@@ -148,10 +148,10 @@ lines = ['FizzBuzz' '1' '2' 'Fizz' '4' 'Buzz' 'Fizz' '7' '8' 'Fizz' 'Buzz' '11' 
                 Now that python is handled, the next aspect is getting the Dewy interpreter itself to run. For this, I
                 fetch (at website build time) the source code directly from{' '}
                 <Link href="https://github.com/david-andrew/dewy-lang/tree/master/src/compiler">github</Link>. I then
-                abuse the python import lib to allow loading "modules" directly from strings, and then pass all of the
-                dewy source in as modules. Then I have a little wrapper function for the entry point which receives the
-                source code string, and runs the program. The entry point can then be called from the browser via a
-                javascript wrapper function.
+                abuse the python import lib to allow loading &quot;modules&quot; directly from strings, and then pass
+                all of the dewy source in as modules. Then I have a little wrapper function for the entry point which
+                receives the source code string, and runs the program. The entry point can then be called from the
+                browser via a javascript wrapper function.
             </P>
             <P>
                 The final piece of the puzzle is the text entry, and terminal emulator. For text input, I&apos;m using
