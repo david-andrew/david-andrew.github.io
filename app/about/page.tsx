@@ -97,8 +97,8 @@ const Page = () => {
 
             <H1>General</H1>
             <P>
-                I have 5 years of professional software engineering experience, as well as experience working with many
-                state-of-the-art machine learning techniques.
+                I have multiple years of professional software engineering experience, as well as experience working
+                with many state-of-the-art machine learning techniques.
             </P>
             <P>
                 At Jataware, I worked on a variety of research and technical projects, with focuses on machine learning,
@@ -110,8 +110,8 @@ const Page = () => {
                 over a corpus of PDF documents. I also researched and implemented approaches to{' '}
                 <Link href="https://arxiv.org/abs/1703.05082">Selective Harvesting</Link> (i.e. efficient search +
                 filtering over enormous graph networks), implemented a highly optimized graph-neural-network convolution
-                algorithm in CUDA, and also developed several computer vision approaches to align paper maps with
-                digital coordinates for the{' '}
+                algorithm in CUDA, and also worked on computer vision approaches to align paper maps with digital
+                coordinates for the{' '}
                 <Link href="https://criticalminerals.darpa.mil/The-Competition">USGS georeference challenge</Link>. Plus
                 lots of other interesting machine learning applications and research here and there.
             </P>

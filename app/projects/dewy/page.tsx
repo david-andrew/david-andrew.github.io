@@ -14,10 +14,10 @@ const Page = async (): Promise<JSX.Element> => {
             <DewyDemo {...{ dewy_interpreter_source, dewy_examples }} />
             <H3>About</H3>
             <P>
-                Dewy is a programming language I have been developing off and on since 2016. The Dewy Programming
-                Language is a general purpose language designed with engineering applications in mind. Think the
-                functionality and ease of use of matlab or python combined with the speed of a compiled language like C
-                or Rust, but with its own unique flare.
+                Dewy is a programming language I have been developing off and on since 2016. It is a general purpose
+                language designed with engineering applications in mind. Think the functionality and ease of use of
+                matlab or python combined with the speed of a compiled language like C or Rust, but with its own unique
+                flare.
             </P>
             <P className="mb-2">Some key planned features include:</P>
             <UL>
