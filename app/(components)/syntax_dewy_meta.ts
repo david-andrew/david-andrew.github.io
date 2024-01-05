@@ -2,11 +2,9 @@ import { LanguageSupport } from '@codemirror/language'
 import { StreamLanguage } from '@codemirror/language'
 import { createTheme } from '@uiw/codemirror-themes'
 import { tags as t } from '@lezer/highlight'
-import { Token, match_fn } from './syntax'
+import { BaseTokenizerState, Token, match_fn, parse_lang, get_lang_support } from './syntax'
 
-type TokenizerState = {
-    tokens: Token[]
-    index: number
+type TokenizerState = BaseTokenizerState & {
     block_comment_open_depth: number // = 0 //external state to allow parsing multiline comments in a line-by-line fashion
 }
 
@@ -295,65 +293,9 @@ const matchers: match_fn<TokenizerState>[] = [
     match_punctuation,
 ]
 
-const parse_dewy_meta_lang = (code: string, state: TokenizerState): Token[] => {
-    // console.log('parsing:', code)
-    let tokens: Token[] = []
-    let index = 0
+const parse_dewy_meta_lang = (code: string, state: TokenizerState): Token[] => parse_lang(code, state, matchers)
 
-    while (index < code.length) {
-        let token = matchers.reduce<Token | Token[] | undefined>(
-            (token, matcher) => (token ? token : matcher(code.slice(index), state)),
-            undefined,
-        )
-        if (token) {
-            // console.log('matched token(s):', token)
-            if (Array.isArray(token)) {
-                tokens.push(
-                    ...token.map((t) => {
-                        t.start += index
-                        t.end += index
-                        return t
-                    }),
-                )
-                index = token[token.length - 1].end
-            } else {
-                token.start += index
-                token.end += index
-                tokens.push(token)
-                index = token.end
-            }
-        } else {
-            // console.log('no match, skipping character:', code[index])
-            tokens.push({ type: 'invalid', start: index, end: index + 1 })
-            index++
-        }
-    }
-
-    return tokens
-}
-
-export const dewy_meta_lang = (): LanguageSupport => {
-    const parser = {
-        token: (stream: any, state: any) => {
-            if (state.index >= state.tokens.length) {
-                state.tokens = parse_dewy_meta_lang(stream.string, state)
-                state.index = 0
-            }
-
-            if (state.index < state.tokens.length) {
-                const token = state.tokens[state.index++]
-                stream.pos = token.end
-                return token.type
-            }
-
-            stream.skipToEnd()
-            return null
-        },
-        startState: get_default_tokenizer_state,
-    }
-
-    return new LanguageSupport(StreamLanguage.define(parser))
-}
+export const dewy_meta_lang = get_lang_support(parse_dewy_meta_lang, get_default_tokenizer_state)
 
 export const dewy_meta_theme = createTheme({
     theme: 'light',

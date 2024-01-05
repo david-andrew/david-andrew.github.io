@@ -68,7 +68,7 @@ export const Code = ({ language, style: style_str, code }: { language?: Language
 }
 
 import { useCodeMirror, Extension, BasicSetupOptions } from '@uiw/react-codemirror'
-import { LanguageSupport } from '@codemirror/language'
+import { LanguageSupport, StreamLanguage } from '@codemirror/language'
 import { useEffect, useRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { HorizontalScroll } from '@/app/(components)/ui'
@@ -79,7 +79,77 @@ export type Token = {
     end: number
 }
 
+export type BaseTokenizerState = {
+    tokens: Token[]
+    index: number
+}
+
 export type match_fn<T> = (s: string, state: T) => Token | Token[] | undefined
+
+export const parse_lang = <T,>(code: string, state: T, matchers: match_fn<T>[]): Token[] => {
+    // console.log('parsing:', code)
+    let tokens: Token[] = []
+    let index = 0
+
+    while (index < code.length) {
+        let token = matchers.reduce<Token | Token[] | undefined>(
+            (token, matcher) => (token ? token : matcher(code.slice(index), state)),
+            undefined,
+        )
+        if (token) {
+            // console.log('matched token(s):', token)
+            if (Array.isArray(token)) {
+                tokens.push(
+                    ...token.map((t) => {
+                        t.start += index
+                        t.end += index
+                        return t
+                    }),
+                )
+                index = token[token.length - 1].end
+            } else {
+                token.start += index
+                token.end += index
+                tokens.push(token)
+                index = token.end
+            }
+        } else {
+            // console.log('no match, skipping character:', code[index])
+            tokens.push({ type: 'invalid', start: index, end: index + 1 })
+            index++
+        }
+    }
+
+    return tokens
+}
+
+export const get_lang_support = <T extends BaseTokenizerState>(
+    parse_lang: (code: string, state: T) => Token[],
+    get_default_tokenizer_state: () => T,
+): (() => LanguageSupport) => {
+    return (): LanguageSupport => {
+        const parser = {
+            token: (stream: any, state: T) => {
+                if (state.index >= state.tokens.length) {
+                    state.tokens = parse_lang(stream.string, state)
+                    state.index = 0
+                }
+
+                if (state.index < state.tokens.length) {
+                    const token = state.tokens[state.index++]
+                    stream.pos = token.end
+                    return token.type
+                }
+
+                stream.skipToEnd()
+                return null
+            },
+            startState: get_default_tokenizer_state,
+        }
+
+        return new LanguageSupport(StreamLanguage.define(parser))
+    }
+}
 
 export type CodeEditorProps = {
     text: string
