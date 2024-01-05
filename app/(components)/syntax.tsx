@@ -79,7 +79,7 @@ export type Token = {
     end: number
 }
 
-export type match_fn = (s: string) => Token | Token[] | undefined
+export type match_fn<T> = (s: string, state: T) => Token | Token[] | undefined
 
 export type CodeEditorProps = {
     text: string

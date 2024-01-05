@@ -4,8 +4,18 @@ import { createTheme } from '@uiw/codemirror-themes'
 import { tags as t } from '@lezer/highlight'
 import { Token, match_fn } from './syntax'
 
+type TokenizerState = {
+    tokens: Token[]
+    index: number
+    block_comment_open_depth: number // = 0 //external state to allow parsing multiline comments in a line-by-line fashion
+}
+
+const get_default_tokenizer_state: () => TokenizerState = () => {
+    return { tokens: [], index: 0, block_comment_open_depth: 0 }
+}
+
 //#eps = 'ϵ' | '\\e' | "''" | '""' | "{}";                    // ϵ, \e, '', "", or {} indicates empty element, i.e. nullable
-const match_eps = (s: string): Token | undefined => {
+const match_eps = (s: string, state: TokenizerState): Token | undefined => {
     //determine if s starts with an eps token
     if (s.startsWith('ϵ')) {
         return { type: 'null', start: 0, end: 1 }
@@ -16,7 +26,7 @@ const match_eps = (s: string): Token | undefined => {
 }
 
 //#anyset = '\\' [uUxX] | [VUξ];                              // V, U, ξ, \U, \u, \X, or \x used to indicate any unicode character
-const match_anyset = (s: string): Token | undefined => {
+const match_anyset = (s: string, state: TokenizerState): Token | undefined => {
     //determine if s starts with an anyset token
     if (s.startsWith('\\u') || s.startsWith('\\U') || s.startsWith('\\x') || s.startsWith('\\X')) {
         return { type: 'unit', start: 0, end: 2 }
@@ -28,7 +38,7 @@ const match_anyset = (s: string): Token | undefined => {
 }
 
 //#line_comment = '/\/' '\n'~* / '\n'~;                       // single line comment
-const match_line_comment = (s: string): Token | undefined => {
+const match_line_comment = (s: string, state: TokenizerState): Token | undefined => {
     if (s.startsWith('//')) {
         let i = 2
         while (i < s.length && s[i] != '\n') {
@@ -40,26 +50,25 @@ const match_line_comment = (s: string): Token | undefined => {
 }
 
 // block comment starts with /{ and ends with }/, and is allowed to contain nested block comments (all a single comment)
-let block_comment_open_depth: number = 0 //external state to allow parsing multiline comments in a line-by-line fashion
-const match_block_comment = (s: string): Token | undefined => {
+const match_block_comment = (s: string, state: TokenizerState): Token | undefined => {
     let i = 0
     if (s.startsWith('/{')) {
-        block_comment_open_depth += 1
+        state.block_comment_open_depth += 1
         i = 2
     }
 
-    if (block_comment_open_depth == 0) {
+    if (state.block_comment_open_depth == 0) {
         return undefined
     }
 
-    while (block_comment_open_depth > 0 && i < s.length) {
+    while (state.block_comment_open_depth > 0 && i < s.length) {
         if (s.startsWith('/{', i)) {
-            block_comment_open_depth++
+            state.block_comment_open_depth++
             i += 2
             continue
         }
         if (s.startsWith('}/', i)) {
-            block_comment_open_depth--
+            state.block_comment_open_depth--
             i += 2
             continue
         }
@@ -70,7 +79,7 @@ const match_block_comment = (s: string): Token | undefined => {
 }
 
 //#number = [0-9]+ / [0-9];                                   // decimal number literal. Used to indicate # of repetitions
-const match_number = (s: string): Token | undefined => {
+const match_number = (s: string, state: TokenizerState): Token | undefined => {
     let i = 0
     while (i < s.length && /[0-9]/.test(s[i])) {
         i++
@@ -84,7 +93,7 @@ const match_number = (s: string): Token | undefined => {
 }
 
 //#hex = '\\' [uUxX] [0-9a-fA-F]+ / [0-9a-fA-F];              // hex number literal. Basically skipping the number part makes it #any
-const match_hex = (s: string): Token | undefined => {
+const match_hex = (s: string, state: TokenizerState): Token | undefined => {
     if (s.startsWith('\\u') || s.startsWith('\\U') || s.startsWith('\\x') || s.startsWith('\\X')) {
         let i = 2
         while (i < s.length && /[0-9a-fA-F]/.test(s[i])) {
@@ -97,7 +106,7 @@ const match_hex = (s: string): Token | undefined => {
 
 //#escape = '\\' ξ;                                           // an escape character. Recognized escaped characters are \n \r \t \v \b \f \a.
 //                                                            // all others just put the second character literally. Common literals include \\ \' \" \[ \] \-
-const match_escape = (s: string): Token | undefined => {
+const match_escape = (s: string, state: TokenizerState): Token | undefined => {
     if (s.startsWith('\\')) {
         if (s[1] == 'n' || s[1] == 'r' || s[1] == 't' || s[1] == 'v' || s[1] == 'b' || s[1] == 'f' || s[1] == 'a') {
             return { type: 'escape', start: 0, end: 2 }
@@ -110,7 +119,7 @@ const match_escape = (s: string): Token | undefined => {
 //#charsetchar = ξ - [\-\[\]] - #wschar;                      // characters allowed in a set are any unicode excluding '-', '[', or ']', and whitespace
 //#item = #charsetchar | #escape | #hex;                      // items that make up character sets, i.e. raw chars, escape chars, or hex chars
 //#charset = '[' (#ws #item (#ws '-' #ws #item)? #ws)+ ']';   // set of chars specified literally. Whitespace is ignored, and must be escaped.
-const match_charset = (s: string): Token[] | undefined => {
+const match_charset = (s: string, state: TokenizerState): Token[] | undefined => {
     if (s.startsWith('[')) {
         let tokens: Token[] = [{ type: 'bracket', start: 0, end: 1 }]
         let i = 1
@@ -122,7 +131,7 @@ const match_charset = (s: string): Token[] | undefined => {
                 continue
             }
 
-            token = match_hex(s.slice(i))
+            token = match_hex(s.slice(i), state)
             if (token) {
                 token.start += i
                 token.end += i
@@ -131,7 +140,7 @@ const match_charset = (s: string): Token[] | undefined => {
                 continue
             }
 
-            token = match_escape(s.slice(i))
+            token = match_escape(s.slice(i), state)
             if (token) {
                 token.start += i
                 token.end += i
@@ -172,7 +181,7 @@ const match_charset = (s: string): Token[] | undefined => {
 // #string = "'" (ξ - "'" | #escape | #hex)2+ "'";             // '' string of 2+ characters
 // #caseless_string = "{" (ξ - [{}] | #escape | #hex)2+ "}";   // {} string of 2+ characters where case is ignored for each character
 const string_delimiter_pair_map = { '"': '"', "'": "'", '{': '}' }
-const match_string = (s: string): Token[] | undefined => {
+const match_string = (s: string, state: TokenizerState): Token[] | undefined => {
     if (s.length <= 2) {
         return undefined
     }
@@ -192,7 +201,7 @@ const match_string = (s: string): Token[] | undefined => {
     let token: Token | undefined
     while (i < s.length) {
         // hex literal in string
-        token = match_hex(s.slice(i))
+        token = match_hex(s.slice(i), state)
         if (token) {
             token.start += i
             token.end += i
@@ -202,7 +211,7 @@ const match_string = (s: string): Token[] | undefined => {
         }
 
         // escape character in string
-        token = match_escape(s.slice(i))
+        token = match_escape(s.slice(i), state)
         if (token) {
             token.start += i
             token.end += i
@@ -224,7 +233,7 @@ const match_string = (s: string): Token[] | undefined => {
     return undefined
 }
 
-const match_parentheses = (s: string): Token | undefined => {
+const match_parentheses = (s: string, state: TokenizerState): Token | undefined => {
     if (s.startsWith('(')) {
         return { type: 'paren', start: 0, end: 1 }
     }
@@ -235,7 +244,7 @@ const match_parentheses = (s: string): Token | undefined => {
 }
 
 //#hashtag = '#' [a-zA-Z] [a-zA-Z0-9_]* / [a-zA-Z0-9_];
-const match_hashtag = (s: string): Token | undefined => {
+const match_hashtag = (s: string, state: TokenizerState): Token | undefined => {
     if (s.startsWith('#')) {
         let i = 1
         while (i < s.length && /[a-zA-Z0-9_]/.test(s[i])) {
@@ -247,7 +256,7 @@ const match_hashtag = (s: string): Token | undefined => {
 }
 
 // #operator = [|\-/>]
-const match_binary_operator = (s: string): Token | undefined => {
+const match_binary_operator = (s: string, state: TokenizerState): Token | undefined => {
     if ('=|-/>'.includes(s[0])) {
         return { type: 'operator', start: 0, end: 1 }
     }
@@ -255,7 +264,7 @@ const match_binary_operator = (s: string): Token | undefined => {
 }
 
 // #operator = [.*+?~]
-const match_unary_operator = (s: string): Token | undefined => {
+const match_unary_operator = (s: string, state: TokenizerState): Token | undefined => {
     if ('.*+?~'.includes(s[0])) {
         return { type: 'logicOperator', start: 0, end: 1 }
     }
@@ -263,14 +272,14 @@ const match_unary_operator = (s: string): Token | undefined => {
 }
 
 // #punctuation = [;]
-const match_punctuation = (s: string): Token | undefined => {
+const match_punctuation = (s: string, state: TokenizerState): Token | undefined => {
     if (s[0] == ';') {
         return { type: 'punctuation', start: 0, end: 1 }
     }
     return undefined
 }
 
-const matchers: match_fn[] = [
+const matchers: match_fn<TokenizerState>[] = [
     match_block_comment, //TODO: broken. can't deal with multi-line comments
     match_line_comment,
     match_eps,
@@ -286,14 +295,14 @@ const matchers: match_fn[] = [
     match_punctuation,
 ]
 
-const parse_dewy_meta_lang = (code: string): Token[] => {
+const parse_dewy_meta_lang = (code: string, state: TokenizerState): Token[] => {
     // console.log('parsing:', code)
     let tokens: Token[] = []
     let index = 0
 
     while (index < code.length) {
         let token = matchers.reduce<Token | Token[] | undefined>(
-            (token, matcher) => (token ? token : matcher(code.slice(index))),
+            (token, matcher) => (token ? token : matcher(code.slice(index), state)),
             undefined,
         )
         if (token) {
@@ -327,7 +336,7 @@ export const dewy_meta_lang = (): LanguageSupport => {
     const parser = {
         token: (stream: any, state: any) => {
             if (state.index >= state.tokens.length) {
-                state.tokens = parse_dewy_meta_lang(stream.string)
+                state.tokens = parse_dewy_meta_lang(stream.string, state)
                 state.index = 0
             }
 
@@ -340,9 +349,7 @@ export const dewy_meta_lang = (): LanguageSupport => {
             stream.skipToEnd()
             return null
         },
-        startState() {
-            return { tokens: [], index: 0 }
-        },
+        startState: get_default_tokenizer_state,
     }
 
     return new LanguageSupport(StreamLanguage.define(parser))
