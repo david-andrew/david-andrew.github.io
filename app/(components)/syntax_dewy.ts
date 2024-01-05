@@ -4,15 +4,17 @@ import { createTheme } from '@uiw/codemirror-themes'
 import { tags as t } from '@lezer/highlight'
 import { Token, get_lang_support, match_fn, parse_lang } from './syntax'
 
+// any (dewy) token that can span multiple lines
+type Context = 'block_comment' | 'block' | 'string'
+
 type TokenizerState = {
     tokens: Token[]
     index: number
-    block_comment_open_depth: number // = 0 //external state to allow parsing multiline comments in a line-by-line fashion
-    //TODO: other state
+    context_stack: Context[]
 }
 
 const get_default_tokenizer_state: () => TokenizerState = () => {
-    return { tokens: [], index: 0, block_comment_open_depth: 0 }
+    return { tokens: [], index: 0, context_stack: ['block'] }
 }
 
 //#line_comment = '/\/' '\n'~* / '\n'~;                       // single line comment
@@ -31,22 +33,24 @@ const match_line_comment = (s: string, state: TokenizerState): Token | undefined
 const match_block_comment = (s: string, state: TokenizerState): Token | undefined => {
     let i = 0
     if (s.startsWith('/{')) {
-        state.block_comment_open_depth += 1
+        state.context_stack.push('block_comment')
         i = 2
     }
 
-    if (state.block_comment_open_depth == 0) {
+    if (state.context_stack.at(-1) !== 'block_comment') {
         return undefined
     }
 
-    while (state.block_comment_open_depth > 0 && i < s.length) {
+    while (state.context_stack.at(-1) === 'block_comment' && i < s.length) {
         if (s.startsWith('/{', i)) {
-            state.block_comment_open_depth++
+            // state.block_comment_open_depth++
+            state.context_stack.push('block_comment')
             i += 2
             continue
         }
         if (s.startsWith('}/', i)) {
-            state.block_comment_open_depth--
+            // state.block_comment_open_depth--
+            state.context_stack.pop()
             i += 2
             continue
         }
@@ -76,3 +80,32 @@ const matchers: match_fn<TokenizerState>[] = [
 
 const parse_dewy_lang = (code: string, state: TokenizerState): Token[] => parse_lang(code, state, matchers)
 export const dewy_lang = get_lang_support(parse_dewy_lang, get_default_tokenizer_state)
+
+export const dewy_theme = createTheme({
+    theme: 'light',
+    settings: {
+        background: '#232323',
+        caret: '#AEAFAD',
+        selection: '#356282',
+        selectionMatch: '#00ff00', //'#00000000', //don't highlight matches
+        lineHighlight: '#333333',
+    },
+    styles: [
+        { tag: t.comment, color: '#787b80' }, //comments
+        { tag: t.literal, color: '#ce9178' }, //string and charset characters
+        { tag: t.bracket, color: '#179fff' }, //brackets
+        { tag: t.escape, color: '#d7ba7d' }, //escape character
+        { tag: t.number, color: '#b5cea8' }, //number
+        { tag: t.tagName, color: '#9cdcfe' }, //hashtag
+
+        //colors tbd
+        { tag: t.null, color: '#00ff00' }, //epsilon
+        { tag: t.unit, color: '#ff00ff' }, //anyset
+        { tag: t.paren, color: '#ffd700' }, //parenthesis
+        { tag: t.operator, color: '#ffffff' }, //binary operators (= + - / >)
+        { tag: t.punctuation, color: '#ffffff' }, //semicolon
+        { tag: t.logicOperator, color: '#d44c4c' }, //unary operators
+
+        { tag: t.invalid, color: '#ff0000' }, //errors
+    ],
+})

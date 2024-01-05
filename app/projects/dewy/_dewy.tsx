@@ -7,9 +7,8 @@ import { Accordion } from '@/app/(components)/accordion'
 import { FetchedDewySourceExamples } from './fetch_dewy'
 
 import { CodeEditor } from '@/app/(components)/syntax'
-import { dewy_meta_lang, dewy_meta_theme } from '@/app/(components)/syntax_dewy_meta'
+import { dewy_lang, dewy_theme } from '@/app/(components)/syntax_dewy'
 import { twMerge } from 'tailwind-merge'
-// import { dewy_lang, dewy_theme } from '@/app/(components)/syntax_dewy'
 
 /*
 [Tasks]
@@ -121,8 +120,8 @@ const DewyDemo = ({ dewy_interpreter_source, dewy_examples }: DewyDemoProps): JS
                     className="w-full bg-[#232323] text-xl md:text-lg"
                     text={source}
                     setText={setSource}
-                    language={dewy_meta_lang()}
-                    theme={dewy_meta_theme}
+                    language={dewy_lang()}
+                    theme={dewy_theme}
                     readonly={running}
                 />
                 <div>
