@@ -55,8 +55,10 @@ const get_default_tokenizer_state: () => TokenizerState = () => {
 
 const keywords = new Set(['loop', 'lazy', 'do', 'if', 'return', 'express', 'let', 'const'])
 const match_keyword = (s: string): Token | undefined => {
-    if (keywords.has(s)) {
-        return { type: 'keyword', start: 0, end: s.length }
+    for (let keyword of keywords) {
+        if (s.startsWith(keyword)) {
+            return { type: 'keyword', start: 0, end: keyword.length }
+        }
     }
     return undefined
 }
@@ -76,7 +78,7 @@ const match_identifier = (s: string): Token | undefined => {
         while (i < s.length && continue_characters.has(s[i])) {
             i++
         }
-        return { type: 'identifier', start: 0, end: i }
+        return { type: 'name', start: 0, end: i }
     }
     return undefined
 }
@@ -87,7 +89,7 @@ const match_hashtag = (s: string): Token | undefined => {
         while (i < s.length && continue_characters.has(s[i])) {
             i++
         }
-        if (i > 1) return { type: 'hashtag', start: 0, end: i }
+        if (i > 1) return { type: 'tagName', start: 0, end: i }
     }
     return undefined
 }
@@ -112,7 +114,7 @@ const match_raw_string = (s: string, state: TokenizerState): Token | undefined =
 
             // push the current context onto the stack and set the new context
             state.context_stack.push({ type: 'raw_string', string_opener: quote, quote_count: num_quotes })
-            return { type: 'raw_string_start', start: 0, end: 2 }
+            return { type: 'literal', start: 0, end: 2 }
         }
     }
 
@@ -131,7 +133,7 @@ const match_raw_string = (s: string, state: TokenizerState): Token | undefined =
             i += delimiter.length
         }
 
-        return { type: 'raw_string', start: 0, end: i }
+        return { type: 'literal', start: 0, end: i }
     }
     return undefined
 }
@@ -235,12 +237,18 @@ const match_line_comment = (s: string): Token | undefined => {
 // block comment starts with /{ and ends with }/, and is allowed to contain nested block comments (all a single comment)
 const match_block_comment = (s: string, state: TokenizerState): Token | undefined => {
     //start the block comment
-    if (s.startsWith('/{')) {
-        state.context_stack.push({ type: 'block_comment' })
-        return { type: 'comment', start: 0, end: 2 }
+    const context = get_context(state)
+    if (context.type === 'block') {
+        if (s.startsWith('/{')) {
+            state.context_stack.push({ type: 'block_comment' })
+            return { type: 'comment', start: 0, end: 2 }
+        } else {
+            return undefined
+        }
     }
 
-    if (state.context_stack.at(-1)?.type !== 'block_comment') return undefined
+    // //shouldn't be necessary...
+    // if (context.type !== 'block_comment') return undefined
 
     //interior and end of the block comment
     let i = 0
@@ -277,7 +285,7 @@ const match_escape = (s: string): Token | undefined => {
 const match_map: { [key in Context['type']]: match_fn<TokenizerState>[] } = {
     block_comment: [match_block_comment],
     string: [], //match_string
-    block: [match_block_comment, match_line_comment, match_raw_string], //[match_keyword, match_identifier, match_hashtag, match_line_comment, match_block_comment, match_raw_string], //, match_string
+    block: [match_block_comment, match_line_comment, match_raw_string, match_keyword, match_hashtag, match_identifier],
     type_param: [], //[match_type_param]
     raw_string: [match_raw_string],
 }
@@ -285,6 +293,178 @@ const get_matchers = (state: TokenizerState) => match_map[get_context(state).typ
 
 const parse_dewy_lang = (code: string, state: TokenizerState): Token[] => parse_lang(code, state, get_matchers)
 export const dewy_lang = get_lang_support(parse_dewy_lang, get_default_tokenizer_state)
+
+/* 
+comment: Tag
+    A comment.
+lineComment: Tag
+    A line comment.
+blockComment: Tag
+    A block comment.
+docComment: Tag
+    A documentation comment.
+name: Tag
+    Any kind of identifier.
+variableName: Tag
+    The name of a variable.
+typeName: Tag
+    A type name.
+tagName: Tag
+    A tag name (subtag of typeName).
+propertyName: Tag
+    A property or field name.
+attributeName: Tag
+    An attribute name (subtag of propertyName).
+className: Tag
+    The name of a class.
+labelName: Tag
+    A label name.
+namespace: Tag
+    A namespace name.
+macroName: Tag
+    The name of a macro.
+literal: Tag
+    A literal value.
+string: Tag
+    A string literal.
+docString: Tag
+    A documentation string.
+character: Tag
+    A character literal (subtag of string).
+attributeValue: Tag
+    An attribute value (subtag of string).
+number: Tag
+    A number literal.
+integer: Tag
+    An integer number literal.
+float: Tag
+    A floating-point number literal.
+bool: Tag
+    A boolean literal.
+regexp: Tag
+    Regular expression literal.
+escape: Tag
+    An escape literal, for example a backslash escape in a string.
+color: Tag
+    A color literal.
+url: Tag
+    A URL literal.
+keyword: Tag
+    A language keyword.
+self: Tag
+    The keyword for the self or this object.
+null: Tag
+    The keyword for null.
+atom: Tag
+    A keyword denoting some atomic value.
+unit: Tag
+    A keyword that represents a unit.
+modifier: Tag
+    A modifier keyword.
+operatorKeyword: Tag
+    A keyword that acts as an operator.
+controlKeyword: Tag
+    A control-flow related keyword.
+definitionKeyword: Tag
+    A keyword that defines something.
+moduleKeyword: Tag
+    A keyword related to defining or interfacing with modules.
+operator: Tag
+    An operator.
+derefOperator: Tag
+    An operator that dereferences something.
+arithmeticOperator: Tag
+    Arithmetic-related operator.
+logicOperator: Tag
+    Logical operator.
+bitwiseOperator: Tag
+    Bit operator.
+compareOperator: Tag
+    Comparison operator.
+updateOperator: Tag
+    Operator that updates its operand.
+definitionOperator: Tag
+    Operator that defines something.
+typeOperator: Tag
+    Type-related operator.
+controlOperator: Tag
+    Control-flow operator.
+punctuation: Tag
+    Program or markup punctuation.
+separator: Tag
+    Punctuation that separates things.
+bracket: Tag
+    Bracket-style punctuation.
+angleBracket: Tag
+    Angle brackets (usually < and > tokens).
+squareBracket: Tag
+    Square brackets (usually [ and ] tokens).
+paren: Tag
+    Parentheses (usually ( and ) tokens). Subtag of bracket.
+brace: Tag
+    Braces (usually { and } tokens). Subtag of bracket.
+content: Tag
+    Content, for example plain text in XML or markup documents.
+heading: Tag
+    Content that represents a heading.
+heading1: Tag
+    A level 1 heading.
+heading2: Tag
+    A level 2 heading.
+heading3: Tag
+    A level 3 heading.
+heading4: Tag
+    A level 4 heading.
+heading5: Tag
+    A level 5 heading.
+heading6: Tag
+    A level 6 heading.
+contentSeparator: Tag
+    A prose separator (such as a horizontal rule).
+list: Tag
+    Content that represents a list.
+quote: Tag
+    Content that represents a quote.
+emphasis: Tag
+    Content that is emphasized.
+strong: Tag
+    Content that is styled strong.
+link: Tag
+    Content that is part of a link.
+monospace: Tag
+    Content that is styled as code or monospace.
+strikethrough: Tag
+    Content that has a strike-through style.
+inserted: Tag
+    Inserted text in a change-tracking format.
+deleted: Tag
+    Deleted text.
+changed: Tag
+    Changed text.
+invalid: Tag
+    An invalid or unsyntactic element.
+meta: Tag
+    Metadata or meta-instruction.
+documentMeta: Tag
+    Metadata that applies to the entire document.
+annotation: Tag
+    Metadata that annotates or adds attributes to a given syntactic element.
+processingInstruction: Tag
+    Processing instruction or preprocessor directive. Subtag of meta.
+definition(tag: Tag) → Tag
+    Modifier that indicates that a given element is being defined. Expected to be used with the various name tags.
+constant(tag: Tag) → Tag
+    Modifier that indicates that something is constant. Mostly expected to be used with variable names.
+function(tag: Tag) → Tag
+    Modifier used to indicate that a variable or property name is being called or defined as a function.
+standard(tag: Tag) → Tag
+    Modifier that can be applied to names to indicate that they belong to the language's standard environment.
+local(tag: Tag) → Tag
+    Modifier that indicates a given names is local to some scope.
+special(tag: Tag) → Tag
+    A generic variant modifier that can be used to tag language-specific alternative variants of some common tag. It is recommended for themes to define special forms of at least the string and variable name tags, since those come up a lot.
+
+*/
 
 export const dewy_theme = createTheme({
     theme: 'light',
@@ -302,6 +482,8 @@ export const dewy_theme = createTheme({
         { tag: t.escape, color: '#d7ba7d' }, //escape character
         { tag: t.number, color: '#b5cea8' }, //number
         { tag: t.tagName, color: '#9cdcfe' }, //hashtag
+        { tag: t.keyword, color: '#569cd6' }, //keywords
+        { tag: t.name, color: '#4ec9b0' }, //identifiers
 
         //colors tbd
         { tag: t.null, color: '#00ff00' }, //epsilon

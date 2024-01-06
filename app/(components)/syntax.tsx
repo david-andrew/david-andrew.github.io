@@ -72,9 +72,10 @@ import { LanguageSupport, StreamLanguage } from '@codemirror/language'
 import { useEffect, useRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { HorizontalScroll } from '@/app/(components)/ui'
+import { tags } from '@lezer/highlight'
 
 export type Token = {
-    type: string
+    type: keyof typeof tags
     start: number
     end: number
 }
