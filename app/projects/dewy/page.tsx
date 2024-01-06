@@ -113,6 +113,12 @@ lines = ['FizzBuzz' '1' '2' 'Fizz' '4' 'Buzz' 'Fizz' '7' '8' 'Fizz' 'Buzz' '11' 
             <H3>Current Status</H3>
             <P>
                 Currently I&apos;m working through a simple interpreter for the language (powering the demo above).
+                I&apos;ve got a tokenizer, a basic interpreter backend, and handling of a few basic types of syntaxes
+                via the parser. But the majority of the syntax is still unimplemented, hence the long list of
+                &quot;Broken Examples&quot;. Thus the current focus is finishing parser support for the rest of the
+                syntax features.
+            </P>
+            <P>
                 Previously I had been doing a lot of development on bleeding edge{' '}
                 <Link href="/projects/dewy_old">parser generators</Link>, but that ended up being too big of a time sink
                 for not much visible progress. Instead, for the time being, I ended up just hand rolling a parser in
@@ -121,9 +127,9 @@ lines = ['FizzBuzz' '1' '2' 'Fizz' '4' 'Buzz' 'Fizz' '7' '8' 'Fizz' 'Buzz' '11' 
             </P>
             <P>
                 After the parser is complete, the next steps will be working on compiling to{' '}
-                <Link href="https://en.wikipedia.org/wiki/LLVM#Intermediate_representation">LLVM IR</Link> (read LLVM
-                assembly), as well as starting to build out the standard library, and then bootstrapping the compiler to
-                be able to compile itself.
+                <Link href="https://en.wikipedia.org/wiki/LLVM#Intermediate_representation">LLVM IR</Link> (and possibly
+                to C as a portable alternative), as well as starting to build out the standard library, and then
+                bootstrapping the compiler to be able to compile itself.
             </P>
             <H3>About the Demo</H3>
             <P>

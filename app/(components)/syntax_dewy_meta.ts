@@ -293,7 +293,7 @@ const matchers: match_fn<TokenizerState>[] = [
     match_punctuation,
 ]
 
-const parse_dewy_meta_lang = (code: string, state: TokenizerState): Token[] => parse_lang(code, state, matchers)
+const parse_dewy_meta_lang = (code: string, state: TokenizerState): Token[] => parse_lang(code, state, () => matchers)
 
 export const dewy_meta_lang = get_lang_support(parse_dewy_meta_lang, get_default_tokenizer_state)
 

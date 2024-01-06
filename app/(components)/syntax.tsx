@@ -84,14 +84,17 @@ export type BaseTokenizerState = {
     index: number
 }
 
-export type match_fn<T> = (s: string, state: T) => Token | Token[] | undefined
+export type match_fn<T> =
+    | ((s: string) => Token | Token[] | undefined)
+    | ((s: string, state: T) => Token | Token[] | undefined)
 
-export const parse_lang = <T,>(code: string, state: T, matchers: match_fn<T>[]): Token[] => {
+export const parse_lang = <T,>(code: string, state: T, get_matchers: (state: T) => match_fn<T>[]): Token[] => {
     // console.log('parsing:', code)
     let tokens: Token[] = []
     let index = 0
 
     while (index < code.length) {
+        const matchers = get_matchers(state)
         let token = matchers.reduce<Token | Token[] | undefined>(
             (token, matcher) => (token ? token : matcher(code.slice(index), state)),
             undefined,
