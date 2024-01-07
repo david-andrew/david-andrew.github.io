@@ -79,8 +79,8 @@ try:
 except IOError:
     print('ERROR: failed to read input. exiting.', flush=True)
 except Exception as e:
-    print(e)
-    print('ERROR: encountered problem while trying to run. exiting.', flush=True)
+    print(f'ERROR: {e}')
+    print('ERROR: encountered problem while running. exiting.', flush=True)
 `
 }
 
