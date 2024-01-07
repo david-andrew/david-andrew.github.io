@@ -69,7 +69,7 @@ export const Code = ({ language, style: style_str, code }: { language?: Language
 
 import { useCodeMirror, Extension, BasicSetupOptions } from '@uiw/react-codemirror'
 import { LanguageSupport, StreamLanguage } from '@codemirror/language'
-import { useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { HorizontalScroll } from '@/app/(components)/ui'
 import { tags } from '@lezer/highlight'
@@ -179,8 +179,18 @@ export const CodeEditor = ({
     className,
 }: CodeEditorProps): JSX.Element => {
     const editor = useRef(null)
+    const parent = useRef<HTMLDivElement>(null)
+    const [parentWidth, setParentWidth] = useState(1024)
+
+    useEffect(() => {
+        if (parent.current && parent.current.clientWidth !== parentWidth) {
+            setParentWidth(parent.current.clientWidth)
+        }
+    })
+
     const { setContainer } = useCodeMirror({
         container: editor.current,
+        minWidth: `${parentWidth}px`,
         theme: theme,
         value: text,
         readOnly: readonly,
@@ -222,7 +232,7 @@ export const CodeEditor = ({
     })
 
     return (
-        <div className={twMerge('w-full rounded-md overflow-hidden', className)}>
+        <div className={twMerge('w-full rounded-md overflow-hidden', className)} ref={parent}>
             <HorizontalScroll className="w-full">
                 <div onFocus={onFocus}>
                     <div ref={editor} />
