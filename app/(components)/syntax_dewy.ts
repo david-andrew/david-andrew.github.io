@@ -6,13 +6,9 @@ import { Token, get_lang_support, match_fn, parse_lang } from './syntax'
 
 /*
 Tokens todo:
-- keyword
-- identifier
-- hashtag
 - block
 - type param
 - escape (inside of strings)
-- raw string
 - string
 - integer
 - based number
@@ -25,13 +21,15 @@ Tokens todo:
 */
 
 // any (dewy) token that can span multiple lines
+type BlockOpener = '(' | '[' | '{'
+type BlockCloser = ')' | ']' | '}'
 type Context =
     | {
           type: 'block_comment' | 'type_param'
       }
     | {
           type: 'block'
-          block_opener: '(' | '[' | '{'
+          block_opener: BlockOpener
       }
     | {
           type: 'string' | 'raw_string'
@@ -138,88 +136,190 @@ const match_raw_string = (s: string, state: TokenizerState): Token | undefined =
     return undefined
 }
 
+//integer
+const match_integer = (s: string): Token | undefined => {
+    if (s.length == 0 || !digits.has(s[0])) return undefined
+
+    let i = 1
+    while (i < s.length && (digits.has(s[i]) || s[i] == '_')) {
+        i++
+    }
+    if (i == 0) return undefined
+    return { type: 'number', start: 0, end: i }
+}
+
+const match_float = (s: string): Token | undefined => {
+    if (s.length == 0 || !digits.has(s[0])) return undefined
+    let i = 1
+    while (i < s.length && (digits.has(s[i]) || s[i] == '_')) {
+        i++
+    }
+    if (i == 0) return undefined
+    if (s[i] != '.') return undefined
+    i++
+    if (i == s.length || !digits.has(s[i])) return undefined
+    let j = 1
+    while ((i + j < s.length && digits.has(s[i + j])) || s[i + j] == '_') {
+        j++
+    }
+    if (j == 0) return undefined
+    return { type: 'number', start: 0, end: i + j }
+}
+
+//based number
+// const bases = new Set(['0b', '0t', '0q', '0s', '0o', '0d', '0z', '0x', '0u', '0r', '0y'])
+const number_bases = new Map([
+    ['0b', new Set('01')], //binary
+    ['0t', new Set('012')], //ternary
+    ['0q', new Set('0123')], //quaternary
+    ['0s', new Set('012345')], //seximal
+    ['0o', new Set('01234567')], //octal
+    ['0d', new Set('0123456789')], //decimal
+    ['0z', new Set('0123456789xeXE')], //dozenal
+    ['0x', new Set('0123456789abcdefABCDEF')], //hexadecimal
+    ['0u', new Set('0123456789abcdefghijklmnopqrstuvABCDEFGHIJKLMNOPQRSTUV')], //base 32 (duotrigesimal)
+    ['0r', new Set('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')], //base 36 (hexatrigesimal)
+    ['0y', new Set('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!$')], //base 64 (tetrasexagesimal)
+])
+
+const match_based_integer = (s: string): Token | undefined => {
+    for (let [base, digits] of number_bases) {
+        if (s.toLowerCase().startsWith(base)) {
+            let i = base.length
+            while (i < s.length && (digits.has(s[i]) || s[i] == '_')) {
+                i++
+            }
+            if (i == base.length) return undefined
+            return { type: 'number', start: 0, end: i }
+        }
+    }
+    return undefined
+}
+
+const match_based_float = (s: string): Token | undefined => {
+    for (let [base, digits] of number_bases) {
+        if (s.toLowerCase().startsWith(base)) {
+            let i = base.length
+            while (i < s.length && (digits.has(s[i]) || s[i] == '_')) {
+                i++
+            }
+            if (i == base.length) return undefined
+            if (s[i] != '.') return undefined
+            i++
+            let j = 0
+            while (i + j < s.length && (digits.has(s[i + j]) || s[i + j] == '_')) {
+                j++
+            }
+            if (j == 0) return undefined
+            return { type: 'number', start: 0, end: i + j }
+        }
+    }
+    return undefined
+}
+
+//boolean
+const match_boolean = (s: string): Token | undefined => {
+    if (s.startsWith('true') && !alpha.has(s[4])) return { type: 'bool', start: 0, end: 4 }
+    if (s.startsWith('false') && !alpha.has(s[5])) return { type: 'bool', start: 0, end: 5 }
+    return undefined
+}
+
 //block
 //type param
 //string
-//integer
-//based number
-//boolean
 
 // unary operators, binary, shift operator, comma, dot dot
-const operators = new Set([
-    // unary_prefix_operators
-    '+',
-    '-',
-    '*',
-    '/',
-    'not',
-    '@',
-    '...',
+const operators = new Set(
+    [
+        // unary_prefix_operators
+        '+',
+        '-',
+        '*',
+        '/',
+        'not',
+        '@',
+        '...',
 
-    // unary_postfix_operators
-    '?',
-    '`',
-    ';',
+        // unary_postfix_operators
+        '?',
+        '`',
+        ';',
 
-    // binary_operators
-    '+',
-    '-',
-    '*',
-    '/',
-    '%',
-    '^',
-    '=?',
-    '>?',
-    '<?',
-    '>=?',
-    '<=?',
-    'in?',
-    'is?',
-    'isnt?',
-    '<=>',
-    '|',
-    '&',
-    'and',
-    'or',
-    'nand',
-    'nor',
-    'xor',
-    'xnor',
-    '??',
-    'else',
-    '=',
-    ':=',
-    'as',
-    'in',
-    'transmute',
-    '@?',
-    '|>',
-    '<|',
-    '=>',
-    '->',
-    '<->',
-    '<-',
-    '.',
-    // ':', //handled by match_type_param
+        // binary_operators
+        '+',
+        '-',
+        '*',
+        '/',
+        '%',
+        '^',
+        '=?',
+        '>?',
+        '<?',
+        '>=?',
+        '<=?',
+        'in?',
+        'is?',
+        'isnt?',
+        '<=>',
+        '|',
+        '&',
+        'and',
+        'or',
+        'nand',
+        'nor',
+        'xor',
+        'xnor',
+        '??',
+        'else',
+        '=',
+        ':=',
+        'as',
+        'in',
+        'transmute',
+        '@?',
+        '|>',
+        '<|',
+        '=>',
+        '->',
+        '<->',
+        '<-',
+        '.',
+        // ':', //handled by match_type_param
 
-    // shift_operators
-    '<<',
-    '>>',
-    '<<<',
-    '>>>',
-    '<<!',
-    '!>>',
+        // shift_operators
+        '<<',
+        '>>',
+        '<<<',
+        '>>>',
+        '<<!',
+        '!>>',
 
-    // special operators
-    ',',
-    '..',
-])
+        // special operators
+        ',',
+        '..',
+    ].sort((a, b) => b.length - a.length),
+)
 
 const match_operator = (s: string): Token | undefined => {
-    if (operators.has(s)) {
-        return { type: 'operator', start: 0, end: s.length }
+    for (let operator of operators) {
+        if (s.startsWith(operator)) {
+            //ensure either the last character is not a letter or the operator is not followed by a letter
+            if (alpha.has(s[operator.length - 1]) && s[operator.length] && alpha.has(s[operator.length])) continue
+
+            return { type: 'operator', start: 0, end: operator.length }
+        }
     }
     return undefined
+}
+
+const whitespace = new Set(' \t\n\r\v\f')
+const match_whitespace = (s: string): Token | undefined => {
+    let i = 0
+    while (i < s.length && whitespace.has(s[i])) {
+        i++
+    }
+    if (i == 0) return undefined
+    return { type: 'comment', start: 0, end: i }
 }
 
 //#line_comment = '/\/' '\n'~* / '\n'~;                       // single line comment
@@ -269,6 +369,38 @@ const match_block_comment = (s: string, state: TokenizerState): Token | undefine
     return { type: 'comment', start: 0, end: i }
 }
 
+// pair_opening_delims = '{(['
+// pair_closing_delims = '})]'
+
+const valid_delim_closers: Map<BlockOpener, Set<BlockCloser>> = new Map([
+    ['{', new Set<BlockCloser>(['}'])],
+    ['(', new Set<BlockCloser>([')', ']'])],
+    ['[', new Set<BlockCloser>([']', ')'])],
+])
+
+const isBlockOpener = (s: string): s is BlockOpener => {
+    return valid_delim_closers.has(s as BlockOpener)
+}
+
+const match_block = (s: string, state: TokenizerState): Token | undefined => {
+    if (isBlockOpener(s[0])) {
+        state.context_stack.push({ type: 'block', block_opener: s[0] })
+        return { type: 'bracket', start: 0, end: 1 }
+    }
+
+    const context = get_context(state)
+    if (context.type !== 'block') return undefined
+
+    const { block_opener } = context
+    const block_closers = valid_delim_closers.get(block_opener)!
+    for (let closer of block_closers) {
+        if (s.startsWith(closer)) {
+            state.context_stack.pop()
+            return { type: 'bracket', start: 0, end: 1 }
+        }
+    }
+}
+
 //#escape = '\\' ξ;                                           // an escape character. Recognized escaped characters are \n \r \t \v \b \f \a.
 //                                                            // all others just put the second character literally. Common literals include \\ \' \" \[ \] \-
 const match_escape = (s: string): Token | undefined => {
@@ -281,11 +413,78 @@ const match_escape = (s: string): Token | undefined => {
     return undefined
 }
 
+const match_string = (s: string, state: TokenizerState): Token | undefined => {
+    const context = get_context(state)
+
+    //start the string
+    if (context.type === 'block') {
+        if (s.startsWith('"') || s.startsWith("'")) {
+            let quote = s[0] as '"' | "'"
+            let num_quotes = 1
+            while (num_quotes + 1 < s.length && s[num_quotes + 1] === quote) {
+                num_quotes++
+            }
+
+            // if even number only take the opening quotes
+            if (num_quotes % 2 === 0) {
+                num_quotes /= 2
+            }
+
+            // push the current context onto the stack and set the new context
+            state.context_stack.push({ type: 'string', string_opener: quote, quote_count: num_quotes })
+            return { type: 'literal', start: 0, end: 1 }
+        }
+    }
+
+    // interior of the string
+    if (context.type === 'string') {
+        const escape = match_escape(s)
+        if (escape) return escape
+
+        if (s[0] === '{') {
+            const block = match_block(s, state)
+            if (block) return block
+        }
+
+        const { string_opener, quote_count } = context
+        const delimiter = string_opener.repeat(quote_count)
+        let i = 0
+        while (i < s.length && !s.slice(i).startsWith(delimiter) && s[i] !== '{' && s[i] !== '\\') {
+            i++
+        }
+
+        //check if the string is closed
+        if (s.slice(i).startsWith(delimiter)) {
+            state.context_stack.pop()
+            i += delimiter.length
+        }
+
+        return { type: 'literal', start: 0, end: i }
+    }
+    return undefined
+}
+
 //TODO: use match map:
 const match_map: { [key in Context['type']]: match_fn<TokenizerState>[] } = {
     block_comment: [match_block_comment],
-    string: [], //match_string
-    block: [match_block_comment, match_line_comment, match_raw_string, match_keyword, match_hashtag, match_identifier],
+    string: [match_string], //match_string
+    block: [
+        match_block_comment,
+        match_line_comment,
+        match_whitespace,
+        match_raw_string,
+        match_keyword,
+        match_operator,
+        match_boolean,
+        match_hashtag,
+        match_identifier,
+        match_based_float,
+        match_based_integer,
+        match_float,
+        match_integer,
+        match_block,
+        match_string,
+    ],
     type_param: [], //[match_type_param]
     raw_string: [match_raw_string],
 }
@@ -484,6 +683,7 @@ export const dewy_theme = createTheme({
         { tag: t.tagName, color: '#9cdcfe' }, //hashtag
         { tag: t.keyword, color: '#569cd6' }, //keywords
         { tag: t.name, color: '#4ec9b0' }, //identifiers
+        { tag: t.bool, color: '#569cd6' }, //boolean
 
         //colors tbd
         { tag: t.null, color: '#00ff00' }, //epsilon
