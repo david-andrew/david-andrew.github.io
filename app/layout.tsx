@@ -22,8 +22,8 @@ const RootLayout = async ({ children }: { children: React.ReactNode }): Promise<
             <head>
                 <script src="/pyodideCommsService.js" async />
             </head>
-            <body className={twMerge(inter.className, 'overflow-x-hidden')}>
-                <div className="w-screen h-screen">
+            <body className={twMerge(inter.className, 'overflow-hidden bg-slate-900')}>
+                <div className="w-screen h-screen bg-black overflow-hidden">
                     <Navbar />
                     <div style={{ height: 'calc(100vh - var(--navbar-height))' }} className="overflow-x-hidden">
                         <GithubTimestampsProvider>
