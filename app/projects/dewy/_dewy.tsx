@@ -80,7 +80,7 @@ except IOError:
     print('ERROR: failed to read input. exiting.', flush=True)
 except Exception as e:
     print(e)
-    print('ERROR: encountered syntax which is not yet implemented. exiting.', flush=True)
+    print('ERROR: encountered problem while trying to run. exiting.', flush=True)
 `
 }
 

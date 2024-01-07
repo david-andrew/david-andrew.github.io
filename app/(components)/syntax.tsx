@@ -186,6 +186,16 @@ export const CodeEditor = ({
         if (parent.current && parent.current.clientWidth !== parentWidth) {
             setParentWidth(parent.current.clientWidth)
         }
+
+        //callback for when the window is resized
+        if (!parent.current) return
+        const resizeObserver = new ResizeObserver(() => {
+            if (parent.current && parent.current.clientWidth !== parentWidth) {
+                setParentWidth(parent.current.clientWidth)
+            }
+        })
+        resizeObserver.observe(parent.current)
+        return () => resizeObserver.disconnect()
     })
 
     const { setContainer } = useCodeMirror({

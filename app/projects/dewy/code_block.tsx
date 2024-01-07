@@ -7,6 +7,8 @@ export const DewyCodeBlock = ({ src }: { src: string }): JSX.Element => {
         <CodeEditor
             className="w-full bg-[#232323] text-xl md:text-lg my-6"
             readonly
+            editable={false}
+            basicSetup={{ highlightActiveLine: false }}
             language={dewy_lang()}
             theme={dewy_theme}
             text={src}
