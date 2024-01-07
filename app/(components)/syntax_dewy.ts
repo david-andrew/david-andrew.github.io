@@ -1,28 +1,11 @@
-// import { LanguageSupport } from '@codemirror/language'
-// import { StreamLanguage } from '@codemirror/language'
 import { createTheme } from '@uiw/codemirror-themes'
 import { tags as t } from '@lezer/highlight'
 import { Token, get_lang_support, match_fn, parse_lang } from './syntax'
 
-/*
-Tokens todo:
-- block
-- type param
-- escape (inside of strings)
-- string
-- integer
-- based number
-- boolean
-- operator
-- shift operator
-- comma
-- dot dot
-- (dot dot dot is a unary operator)
-*/
+// Quick and dirty Dewy syntax highlighting. possibly not 100% correct
 
-// any (dewy) token that can span multiple lines
-type BlockOpener = '(' | '[' | '{'
-type BlockCloser = ')' | ']' | '}'
+type BlockOpener = '(' | '[' | '{' | '<'
+type BlockCloser = ')' | ']' | '}' | '>'
 type Context =
     | {
           type: 'block_comment' | 'type_param'
@@ -54,7 +37,7 @@ const get_default_tokenizer_state: () => TokenizerState = () => {
 const keywords = new Set(['loop', 'lazy', 'do', 'if', 'return', 'express', 'let', 'const'])
 const match_keyword = (s: string): Token | undefined => {
     for (let keyword of keywords) {
-        if (s.startsWith(keyword)) {
+        if (s.startsWith(keyword) && !alpha.has(s[keyword.length])) {
             return { type: 'keyword', start: 0, end: keyword.length }
         }
     }
@@ -224,10 +207,6 @@ const match_boolean = (s: string): Token | undefined => {
     return undefined
 }
 
-//block
-//type param
-//string
-
 // unary operators, binary, shift operator, comma, dot dot
 const operators = new Set(
     [
@@ -284,7 +263,7 @@ const operators = new Set(
         '<->',
         '<-',
         '.',
-        // ':', //handled by match_type_param
+        ':',
 
         // shift_operators
         '<<',
@@ -369,13 +348,11 @@ const match_block_comment = (s: string, state: TokenizerState): Token | undefine
     return { type: 'comment', start: 0, end: i }
 }
 
-// pair_opening_delims = '{(['
-// pair_closing_delims = '})]'
-
 const valid_delim_closers: Map<BlockOpener, Set<BlockCloser>> = new Map([
     ['{', new Set<BlockCloser>(['}'])],
     ['(', new Set<BlockCloser>([')', ']'])],
     ['[', new Set<BlockCloser>([']', ')'])],
+    ['<', new Set<BlockCloser>(['>'])],
 ])
 
 const isBlockOpener = (s: string): s is BlockOpener => {

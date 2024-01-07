@@ -1,5 +1,3 @@
-import { LanguageSupport } from '@codemirror/language'
-import { StreamLanguage } from '@codemirror/language'
 import { createTheme } from '@uiw/codemirror-themes'
 import { tags as t } from '@lezer/highlight'
 import { BaseTokenizerState, Token, match_fn, parse_lang, get_lang_support } from './syntax'
