@@ -19,7 +19,7 @@ import { twMerge } from 'tailwind-merge'
 [x] example program presets you can click
 [x] make run button + code editor disabled while running
 [x] handling hitting pdb. probably replace pdb call with a message and exit(1)
-[ ] syntax highlighting
+[x] syntax highlighting
 [x] mobile firefox never loads
 [x] catching exceptions in the demo
 [x] "undefined" printed out at the end of the loop example

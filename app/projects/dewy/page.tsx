@@ -1,6 +1,6 @@
 import { H3, P, Link, UL } from '@/app/(components)/ui'
-import { CodeBlock } from '@/app/(components)/syntax'
 import { IconBullet, IconBulletList } from '@/app/(components)/icon_bullet'
+import { DewyCodeBlock } from './code_block'
 import { DewyDemo } from './dewy'
 
 import { fetch_dewy_interpreter_source, fetch_dewy_examples } from './fetch_dewy'
@@ -55,9 +55,8 @@ const Page = async (): Promise<JSX.Element> => {
                 </li>
             </UL>
             <P>An example of the common FizzBuzz program implemented in Dewy might look like this:</P>
-            <CodeBlock
-                // flatten
-                code={`multiples = [3 -> 'Fizz' 5 -> 'Buzz' /{7 -> 'Bazz' 11 -> 'Bar'}/]
+            <DewyCodeBlock
+                src={`multiples = [3 -> 'Fizz' 5 -> 'Buzz' /{7 -> 'Bazz' 11 -> 'Bar'}/]
 loop i in [0..100)
 {
     printed_words = false
@@ -74,9 +73,8 @@ loop i in [0..100)
 }`}
             />
             <P>Or a more functional style implementation might look like this:</P>
-            <CodeBlock
-                // flatten
-                code={`multiples = [3 -> 'Fizz' 5 -> 'Buzz' /{7 -> 'Bazz' 11 -> 'Bar'}/]
+            <DewyCodeBlock
+                src={`multiples = [3 -> 'Fizz' 5 -> 'Buzz' /{7 -> 'Bazz' 11 -> 'Bar'}/]
 range = [0..100)
 
 //indexing at [, ..] and [..,] adds singleton dimensions
@@ -97,9 +95,8 @@ lines.join('\\n') |> printl
 `}
             />
             <P>For clarity, the variables at each step look like so:</P>
-            <CodeBlock
-                // flatten
-                code={`word_bools = [[true false false true false false true false ...]
+            <DewyCodeBlock
+                src={`word_bools = [[true false false true false false true false ...]
              [true false false false false true false false ...]]
 
 word_grid = [['Fizz' '' '' 'Fizz' '' '' 'Fizz' '' '' 'Fizz' '' '' ...]
