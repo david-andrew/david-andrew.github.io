@@ -91,8 +91,7 @@ lines = [raw_lines range]\`.map(
     (raw_line, i) => if raw_line.length =? 0 '{i}' else raw_line
 )
 
-lines.join('\\n') |> printl
-`}
+lines.join('\\n') |> printl`}
             />
             <P>For clarity, the variables at each step look like so:</P>
             <DewyCodeBlock
@@ -104,8 +103,7 @@ word_grid = [['Fizz' '' '' 'Fizz' '' '' 'Fizz' '' '' 'Fizz' '' '' ...]
 
 raw_lines = ['FizzBuzz' '' '' 'Fizz' '' 'Buzz' 'Fizz' '' '' 'Fizz' 'Buzz' '' ...]
 
-lines = ['FizzBuzz' '1' '2' 'Fizz' '4' 'Buzz' 'Fizz' '7' '8' 'Fizz' 'Buzz' '11' ...]
-`}
+lines = ['FizzBuzz' '1' '2' 'Fizz' '4' 'Buzz' 'Fizz' '7' '8' 'Fizz' 'Buzz' '11' ...]`}
             />
             <H3>Current Status</H3>
             <P>
