@@ -1,2 +1,9 @@
-# TODO: script for optimizing images in app/(images)/clovers
-# I think it probably just calls jpegoptim (and maybe pngquant)
+from pathlib import Path
+import subprocess
+import os
+import pdb
+
+images_path = Path(__file__).parent.parent / 'app' / '(images)' / 'clovers'
+
+for jpeg_path in images_path.glob('*.jpg'):
+    subprocess.run(['jpegoptim', '--size=1000', jpeg_path])

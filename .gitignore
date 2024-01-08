@@ -35,4 +35,4 @@ yarn-error.log*
 next-env.d.ts
 
 # log of svg files processed by fit icon script
-scripts/processed.txt
+scripts/processed*.txt

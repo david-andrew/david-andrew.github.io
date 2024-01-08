@@ -13,7 +13,7 @@ import pdb
 #TODO: this script should take the name of an icon to process, rather than processing all icons
 
 def main():
-    already_processed_path = Path(__file__).parent / 'processed.txt'
+    already_processed_path = Path(__file__).parent / 'processed_svg.txt'
     if already_processed_path.exists():
         already_processed = set(Path(p) for p in already_processed_path.read_text().splitlines())
     else:
