@@ -34,7 +34,7 @@ const get_default_tokenizer_state: () => TokenizerState = () => {
     return { tokens: [], index: 0, context_stack: [] }
 }
 
-const keywords = new Set(['loop', 'lazy', 'do', 'if', 'return', 'express', 'let', 'const'])
+const keywords = new Set(['loop', 'lazy', 'do', 'if', 'return', 'express', 'import', 'let', 'const'])
 const match_keyword = (s: string): Token | undefined => {
     for (let keyword of keywords) {
         if (s.startsWith(keyword) && !alpha.has(s[keyword.length])) {
