@@ -13,11 +13,13 @@ const Page = async (): Promise<JSX.Element> => {
                 fundamentals of computer architecture by building a computer from the ground up. The course starts with
                 NAND gates (simulated in a hardware emulator), and progresses through the construction of a full
                 computer system, including a CPU, memory, and ultimately an operating system capable of running a
-                program such as Tetris. I&apos;ve always had a passing interest in computer architecture (especially
-                since it&apos;s closely related to{' '}
-                <Link href="/projects/dewy">my passion of programming language design</Link>), and I finally got around
-                to completing the course, which was a ton of fun! This page is mainly to link to my solutions for each
-                of the course&apos;s projects.
+                program such as Tetris.
+            </P>
+            <P>
+                I&apos;ve always had a passing interest in computer architecture (especially since it&apos;s closely
+                related to <Link href="/projects/dewy">my passion of programming language design</Link>), and I finally
+                got around to completing the course, which was a ton of fun! This page is mainly to link to my solutions
+                for each of the course&apos;s projects.
             </P>
             <H3>Tetris</H3>
             <P>Here&apos;s a few shots of my Tetris implementation.</P>
