@@ -12,6 +12,7 @@ const recommendedOrder: string[] = [
     'so_voice',
     'terminal_ray_tracer',
     'timelapse',
+    'nand2tetris',
     'musical_dl',
     'ensemble_peabody',
     'blob_opera',
