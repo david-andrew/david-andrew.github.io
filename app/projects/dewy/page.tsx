@@ -68,7 +68,7 @@ loop i in [0..100)
             printed_words = true
         }
     }
-    if not? printed_words print(i)
+    if not printed_words print(i)
     printl()
 }`}
             />
