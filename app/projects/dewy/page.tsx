@@ -156,9 +156,7 @@ lines = ['FizzBuzz' '1' '2' 'Fizz' '4' 'Buzz' 'Fizz' '7' '8' 'Fizz' 'Buzz' '11' 
             </P>
             <P>
                 The final piece of the puzzle is the text entry, and terminal emulator. For text input, I&apos;m using
-                the <Link href="https://codemirror.net/">Code Mirror Library</Link>with a custom syntax highlighter
-                (actually the current syntax highlighter was for the{' '}
-                <Link href="/projects/dewy_old">Dewy meta language</Link>, but it works well enough in the meantime).
+                the <Link href="https://codemirror.net/">Code Mirror Library</Link> with a custom syntax highlighter.
                 For the terminal, I use the <Link href="https://xtermjs.org/">xterm.js</Link> library. I then hooked up
                 stdin and stdout from pyodide to interact with the terminal, and voila! A Dewy interpreter running in
                 the browser.
