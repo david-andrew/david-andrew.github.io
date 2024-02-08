@@ -115,37 +115,35 @@ const DewyDemo = ({ dewy_interpreter_source, dewy_examples }: DewyDemoProps): JS
 
     return (
         <>
-            <div id="FullDewyDemo" className="relative flex flex-col gap-4">
-                <div id="MinDewyDemo">
-                    <CodeEditor
-                        className="w-full bg-[#232323] text-xl md:text-lg"
-                        text={source}
-                        setText={setSource}
-                        language={dewy_lang()}
-                        theme={dewy_theme}
-                        readonly={running}
-                    />
-                    <div>
-                        <button
-                            className={twMerge(
-                                'font-gentona text-2xl py-2 px-4 rounded-md',
-                                running ? 'bg-[#343434] text-gray-500' : 'bg-[#232323] hover:bg-[#404040] text-white',
-                            )}
-                            onClick={async () => {
-                                setRunning(true)
-                                clear()
-                                await run!(createDewyRunner(source))
-                                setRunning(false)
-                            }}
-                            disabled={running}
-                        >
-                            Run
-                        </button>
-                    </div>
-
-                    {/* Note the terminal element needs to exist from the start, else xterm won't hook in correctly */}
-                    <div className="border-2 border-white rounded-md" ref={divRef} />
+            <div className="relative flex flex-col gap-4">
+                <CodeEditor
+                    className="w-full bg-[#232323] text-xl md:text-lg"
+                    text={source}
+                    setText={setSource}
+                    language={dewy_lang()}
+                    theme={dewy_theme}
+                    readonly={running}
+                />
+                <div>
+                    <button
+                        className={twMerge(
+                            'font-gentona text-2xl py-2 px-4 rounded-md',
+                            running ? 'bg-[#343434] text-gray-500' : 'bg-[#232323] hover:bg-[#404040] text-white',
+                        )}
+                        onClick={async () => {
+                            setRunning(true)
+                            clear()
+                            await run!(createDewyRunner(source))
+                            setRunning(false)
+                        }}
+                        disabled={running}
+                    >
+                        Run
+                    </button>
                 </div>
+
+                {/* Note the terminal element needs to exist from the start, else xterm won't hook in correctly */}
+                <div className="border-2 border-white rounded-md" ref={divRef} />
 
                 <div className="w-full">
                     <Accordion title="Working Examples">
