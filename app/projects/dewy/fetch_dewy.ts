@@ -36,6 +36,7 @@ export const fetch_dewy_examples = async (): Promise<FetchedDewySourceExamples> 
     // find the lines that are part of the table of examples
     const readme_lines = readme.split('\n')
     const start = readme_lines.findIndex((line) =>
+        // TODO: make this a more robust check
         line.includes('| Filename                                                        | status |'),
     )
     const end = readme_lines.findIndex((line, i) => i > start && !line.startsWith('|'))
