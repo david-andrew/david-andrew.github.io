@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useXterm } from './terminal'
 import { PyModule, usePython } from '@/app/(hooks)/pyodide'
 import { Loading } from '@/app/loading'
@@ -95,6 +95,7 @@ const DewyDemo = ({ dewy_interpreter_source, dewy_examples }: DewyDemoProps): JS
     const [source, setSource] = useState("print'what is your name? '\nname = readl\nprintl'Hello {name}'")
 
     const { divRef, write, read, clear, focus } = useXterm()
+    const editorFocusCallbackRef = useRef<() => void>()
 
     const { addModule, run: run_python } = usePython({
         stdout: write,
@@ -107,7 +108,7 @@ const DewyDemo = ({ dewy_interpreter_source, dewy_examples }: DewyDemoProps): JS
         focus() // focus on the terminal
         await run_python!(createDewyRunner(source))
         setRunning(false)
-        // focus back on the code editor
+        editorFocusCallbackRef.current?.() // focus back on the code editor
     }
 
     // initialize dewy modules and entry point
@@ -136,6 +137,9 @@ const DewyDemo = ({ dewy_interpreter_source, dewy_examples }: DewyDemoProps): JS
                         if (keys.length === 2 && keys.includes('Control') && keys.includes('Enter')) {
                             run_current_code()
                         }
+                    }}
+                    setFocusCallback={(f) => {
+                        editorFocusCallbackRef.current = f
                     }}
                 />
                 <div>

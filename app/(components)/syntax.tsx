@@ -70,7 +70,7 @@ export const Code = ({ language, style: style_str, code }: { language?: Language
 import { useCodeMirror, Extension, BasicSetupOptions } from '@uiw/react-codemirror'
 import CodeMirror from '@uiw/react-codemirror'
 import { LanguageSupport, StreamLanguage } from '@codemirror/language'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, use } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { HorizontalScroll } from '@/app/(components)/ui'
 import { tags } from '@lezer/highlight'
@@ -203,6 +203,7 @@ export type CodeEditorProps = {
     onFocus?: () => void
     keyListener?: (keys: string[], event: KeyboardEvent) => void
     className?: string
+    setFocusCallback?: (f: () => void) => void
 }
 
 export const CodeEditor = ({
@@ -216,8 +217,9 @@ export const CodeEditor = ({
     onFocus,
     keyListener,
     className,
+    setFocusCallback,
 }: CodeEditorProps): JSX.Element => {
-    const editor = useRef(null)
+    const editor = useRef<HTMLDivElement>(null)
     const parent = useRef<HTMLDivElement>(null)
     const [parentWidth, setParentWidth] = useState(1024)
 
@@ -237,7 +239,7 @@ export const CodeEditor = ({
         return () => resizeObserver.disconnect()
     })
 
-    const { setContainer } = useCodeMirror({
+    const { view, setContainer } = useCodeMirror({
         container: editor.current,
         minWidth: `${parentWidth}px`,
         theme: theme,
@@ -278,6 +280,9 @@ export const CodeEditor = ({
     useEffect(() => {
         if (editor.current) {
             setContainer(editor.current)
+            setFocusCallback?.(() => {
+                view?.focus()
+            })
         }
     })
 
