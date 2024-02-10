@@ -99,8 +99,12 @@ export const useXterm = (minLines: number = 4, maxLines: number = 25): TerminalI
     }
 
     const clear = () => {
-        xtermRef.current?.clear()
-        setNumLines(initNumLines)
+        //write a newline so that even if the cursor was on the first line, the line will be erased
+        //once newline is written, clear the terminal and reset the line count
+        xtermRef.current?.write('\r\n', () => {
+            xtermRef.current?.clear()
+            setNumLines(initNumLines)
+        })
     }
 
     const focus = () => {

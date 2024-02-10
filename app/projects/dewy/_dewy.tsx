@@ -87,12 +87,15 @@ except Exception as e:
 export type DewyDemoProps = {
     dewy_interpreter_source: PyModule[]
     dewy_examples?: FetchedDewySourceExamples
+    initial_code?: string
 }
 
-const DewyDemo = ({ dewy_interpreter_source, dewy_examples }: DewyDemoProps): JSX.Element => {
+const DewyDemo = ({ dewy_interpreter_source, dewy_examples, initial_code }: DewyDemoProps): JSX.Element => {
     const [ready, setReady] = useState(false)
     const [running, setRunning] = useState(false)
-    const [source, setSource] = useState("print'what is your name? '\nname = readl\nprintl'Hello {name}'")
+    const [source, setSource] = useState(
+        initial_code ?? "print'what is your name? '\nname = readl\nprintl'Hello {name}'",
+    )
 
     const { divRef, write, read, clear, focus } = useXterm()
     const editorFocusCallbackRef = useRef<() => void>()
