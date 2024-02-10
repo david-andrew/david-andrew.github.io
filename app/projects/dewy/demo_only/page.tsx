@@ -25,7 +25,7 @@ const Content = ({ dewy_interpreter_source }: { dewy_interpreter_source: PyModul
         const resizeObserver = new ResizeObserver((entries) => {
             for (let entry of entries) {
                 // handle the resize event here
-                console.log('Size changed', entry.contentRect)
+                // console.log('Size changed', entry.contentRect)
                 const { width, height } = entry.contentRect
                 // Post message to parent with size
                 window.parent.postMessage({ width, height })
