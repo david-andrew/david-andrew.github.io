@@ -13,12 +13,13 @@ type TerminalInterface = {
     focus: () => void
 }
 
-export const useXterm = (): TerminalInterface => {
+export const useXterm = (minLines: number = 4, maxLines: number = 25): TerminalInterface => {
     const divRef = useRef<HTMLDivElement>(null)
     const xtermRef = useRef<Terminal>()
     const inputBufferRef = useRef<string[]>()
     const inputDoneCallbackRef = useRef<(input: string) => void>()
-    const [numLines, setNumLines] = useDebouncedState(1, 20)
+    const initNumLines = 1
+    const [numLines, setNumLines] = useDebouncedState(initNumLines, 20)
 
     useEffect(() => {
         // Initialize Xterm
@@ -79,9 +80,8 @@ export const useXterm = (): TerminalInterface => {
 
     useEffect(() => {
         if (xtermRef.current) {
-            xtermRef.current.resize(80, Math.min(Math.max(numLines, 4), 25))
+            xtermRef.current.resize(80, Math.min(Math.max(numLines, minLines), maxLines))
         }
-        console.log('numLines:', numLines)
     }, [numLines])
 
     // set state to reading and wait for input to resolve
@@ -100,7 +100,7 @@ export const useXterm = (): TerminalInterface => {
 
     const clear = () => {
         xtermRef.current?.clear()
-        setNumLines(1)
+        setNumLines(initNumLines)
     }
 
     const focus = () => {
