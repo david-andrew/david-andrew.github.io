@@ -28,7 +28,7 @@ const Content = ({ dewy_interpreter_source }: { dewy_interpreter_source: PyModul
                 // console.log('Size changed', entry.contentRect)
                 const { width, height } = entry.contentRect
                 // Post message to parent with size
-                window.parent.postMessage({ width, height }, window.location.hostname === 'localhost' ? '*' : '/')
+                window.parent.postMessage({ width, height }, '*') //anywhere is welcome to iframe and receive the message
             }
         })
 
