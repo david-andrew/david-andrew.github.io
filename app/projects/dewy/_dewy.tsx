@@ -94,16 +94,25 @@ const DewyDemo = ({ dewy_interpreter_source, dewy_examples }: DewyDemoProps): JS
     const [running, setRunning] = useState(false)
     const [source, setSource] = useState("print'what is your name? '\nname = readl\nprintl'Hello {name}'")
 
-    const { divRef, write, read, clear } = useXterm()
+    const { divRef, write, read, clear, focus } = useXterm()
 
-    const { addModule, run } = usePython({
+    const { addModule, run: run_python } = usePython({
         stdout: write,
         stdin: read,
     })
 
+    const run_current_code = async () => {
+        setRunning(true)
+        clear()
+        focus() // focus on the terminal
+        await run_python!(createDewyRunner(source))
+        setRunning(false)
+        // focus back on the code editor
+    }
+
     // initialize dewy modules and entry point
     useEffect(() => {
-        if (addModule === undefined || run == undefined) return
+        if (addModule === undefined || run_python == undefined) return
         ;(async () => {
             for (const mod of dewy_interpreter_source) {
                 await addModule(mod)
@@ -111,7 +120,7 @@ const DewyDemo = ({ dewy_interpreter_source, dewy_examples }: DewyDemoProps): JS
             setReady(true)
         })()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [addModule, run])
+    }, [addModule, run_python])
 
     return (
         <>
@@ -123,6 +132,11 @@ const DewyDemo = ({ dewy_interpreter_source, dewy_examples }: DewyDemoProps): JS
                     language={dewy_lang()}
                     theme={dewy_theme}
                     readonly={running}
+                    keyListener={async (keys, event) => {
+                        if (keys.length === 2 && keys.includes('Control') && keys.includes('Enter')) {
+                            run_current_code()
+                        }
+                    }}
                 />
                 <div>
                     <button
@@ -130,12 +144,7 @@ const DewyDemo = ({ dewy_interpreter_source, dewy_examples }: DewyDemoProps): JS
                             'font-gentona text-2xl py-2 px-4 rounded-md',
                             running ? 'bg-[#343434] text-gray-500' : 'bg-[#232323] hover:bg-[#404040] text-white',
                         )}
-                        onClick={async () => {
-                            setRunning(true)
-                            clear()
-                            await run!(createDewyRunner(source))
-                            setRunning(false)
-                        }}
+                        onClick={run_current_code}
                         disabled={running}
                     >
                         Run

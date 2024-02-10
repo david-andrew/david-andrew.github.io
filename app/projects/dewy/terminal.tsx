@@ -9,6 +9,7 @@ type TerminalInterface = {
     write: (msg: string) => void
     read: () => Promise<string>
     clear: () => void
+    focus: () => void
 }
 
 export const useXterm = (): TerminalInterface => {
@@ -89,5 +90,9 @@ export const useXterm = (): TerminalInterface => {
         xtermRef.current?.clear()
     }
 
-    return { divRef, read, write, clear }
+    const focus = () => {
+        xtermRef.current?.focus()
+    }
+
+    return { divRef, read, write, clear, focus }
 }

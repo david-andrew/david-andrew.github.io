@@ -68,6 +68,7 @@ export const Code = ({ language, style: style_str, code }: { language?: Language
 }
 
 import { useCodeMirror, Extension, BasicSetupOptions } from '@uiw/react-codemirror'
+import CodeMirror from '@uiw/react-codemirror'
 import { LanguageSupport, StreamLanguage } from '@codemirror/language'
 import { useState, useEffect, useRef } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -155,6 +156,42 @@ export const get_lang_support = <T extends BaseTokenizerState>(
     }
 }
 
+const KeyListener = ({
+    children,
+    onKey,
+}: {
+    children: React.ReactNode
+    onKey?: (currentKeys: string[], event: KeyboardEvent) => void
+}) => {
+    // keeps track of the currently pressed keys
+    const keys = useRef([] as string[])
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            const key = event.key
+            keys.current = [...new Set([...keys.current, key])] // Add the key to the list of currently pressed keys (ensuring no duplicates)
+            onKey?.(keys.current, event) // Call the provided callback function with the current keys
+        }
+        const handleKeyUp = (event: KeyboardEvent) => {
+            const key = event.key
+            keys.current = keys.current.filter((k) => k !== key) // Remove the key from the list of currently pressed keys
+            onKey?.(keys.current, event) // Call the provided callback function with the current keys
+        }
+
+        // Attach the event listener to the window object
+        window.addEventListener('keydown', handleKeyDown)
+        window.addEventListener('keyup', handleKeyUp)
+
+        // Cleanup function to remove the event listener
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown)
+            window.removeEventListener('keyup', handleKeyUp)
+        }
+    }, [onKey]) // Re-attach the listener if the onKey callback changes
+
+    return <div>{children}</div>
+}
+
 export type CodeEditorProps = {
     text: string
     setText?: (s: string) => void
@@ -164,6 +201,7 @@ export type CodeEditorProps = {
     theme: Extension
     language: LanguageSupport
     onFocus?: () => void
+    keyListener?: (keys: string[], event: KeyboardEvent) => void
     className?: string
 }
 
@@ -176,6 +214,7 @@ export const CodeEditor = ({
     theme,
     language,
     onFocus,
+    keyListener,
     className,
 }: CodeEditorProps): JSX.Element => {
     const editor = useRef(null)
@@ -226,6 +265,7 @@ export const CodeEditor = ({
             completionKeymap: false,
             lintKeymap: false,
             autocompletion: false,
+            defaultKeymap: false,
 
             // bracketMatching?: boolean;
             // closeBrackets?: boolean;
@@ -244,9 +284,11 @@ export const CodeEditor = ({
     return (
         <div className={twMerge('w-full rounded-md overflow-hidden', className)} ref={parent}>
             <HorizontalScroll className="w-full">
-                <div onFocus={onFocus}>
-                    <div ref={editor} />
-                </div>
+                <KeyListener onKey={keyListener}>
+                    <div onFocus={onFocus}>
+                        <div ref={editor} />
+                    </div>
+                </KeyListener>
             </HorizontalScroll>
         </div>
     )
