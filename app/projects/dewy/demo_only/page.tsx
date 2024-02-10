@@ -24,10 +24,8 @@ const Content = ({ dewy_interpreter_source }: { dewy_interpreter_source: PyModul
     useEffect(() => {
         const resizeObserver = new ResizeObserver((entries) => {
             for (let entry of entries) {
-                // handle the resize event here
-                // console.log('Size changed', entry.contentRect)
-                const { width, height } = entry.contentRect
                 // Post message to parent with size
+                const { width, height } = entry.contentRect
                 window.parent.postMessage({ width, height }, '*') //anywhere is welcome to iframe and receive the message
             }
         })

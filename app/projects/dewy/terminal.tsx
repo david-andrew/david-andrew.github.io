@@ -11,17 +11,28 @@ type TerminalInterface = {
     read: () => Promise<string>
     clear: () => void
     focus: () => void
+    fitWidth: () => void
 }
 
 export const useXterm = (minLines: number = 4, maxLines: number = 25): TerminalInterface => {
     const divRef = useRef<HTMLDivElement>(null)
     const xtermRef = useRef<Terminal>()
+    const fitAddonRef = useRef<FitAddon>()
     const inputBufferRef = useRef<string[]>()
     const inputDoneCallbackRef = useRef<(input: string) => void>()
-    const initNumLines = 1
+    const initNumLines = 1 // this is how many blank lines after user input to display
     const [numLines, setNumLines] = useDebouncedState(initNumLines, 20)
 
     useEffect(() => {
+        // when container resizes, fit the terminal to the new width
+        const resizeObserver = new ResizeObserver(() => {
+            fitWidth()
+        })
+
+        if (divRef.current) {
+            resizeObserver.observe(divRef.current)
+        }
+
         // Initialize Xterm
         if (divRef.current && !xtermRef.current) {
             const term = new Terminal({
@@ -33,6 +44,7 @@ export const useXterm = (minLines: number = 4, maxLines: number = 25): TerminalI
             term.loadAddon(fitAddon)
             term.open(divRef.current)
             fitAddon.fit()
+            fitAddonRef.current = fitAddon
 
             // Call the input callback whenever user types something
             term.onData((data) => {
@@ -64,8 +76,6 @@ export const useXterm = (minLines: number = 4, maxLines: number = 25): TerminalI
                 return true
             })
 
-            //TODO: right arrow should only work if not at the end of the current input. And left arrow should stop at the beginning of the current input
-
             // Store the term reference for later use
             xtermRef.current = term
         }
@@ -75,13 +85,14 @@ export const useXterm = (minLines: number = 4, maxLines: number = 25): TerminalI
             if (xtermRef.current) {
                 xtermRef.current.dispose()
             }
+            if (divRef.current) {
+                resizeObserver.unobserve(divRef.current)
+            }
         }
     }, [])
 
     useEffect(() => {
-        if (xtermRef.current) {
-            xtermRef.current.resize(80, Math.min(Math.max(numLines, minLines), maxLines))
-        }
+        xtermRef.current?.resize(xtermRef.current.cols, Math.min(Math.max(numLines, minLines), maxLines))
     }, [numLines])
 
     // set state to reading and wait for input to resolve
@@ -111,5 +122,12 @@ export const useXterm = (minLines: number = 4, maxLines: number = 25): TerminalI
         xtermRef.current?.focus()
     }
 
-    return { divRef, read, write, clear, focus }
+    const fitWidth = () => {
+        if (!xtermRef.current || !fitAddonRef.current) return
+        const rows = xtermRef.current.rows
+        fitAddonRef.current.fit()
+        xtermRef.current.resize(xtermRef.current.cols, rows)
+    }
+
+    return { divRef, read, write, clear, focus, fitWidth }
 }
