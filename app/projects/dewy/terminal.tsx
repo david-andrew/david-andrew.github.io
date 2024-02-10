@@ -2,6 +2,7 @@
 import { useEffect, useRef } from 'react'
 import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
+import { useDebouncedState } from '@/app/(hooks)/debounce'
 import 'xterm/css/xterm.css'
 
 type TerminalInterface = {
@@ -17,6 +18,7 @@ export const useXterm = (): TerminalInterface => {
     const xtermRef = useRef<Terminal>()
     const inputBufferRef = useRef<string[]>()
     const inputDoneCallbackRef = useRef<(input: string) => void>()
+    const [numLines, setNumLines] = useDebouncedState(1, 20)
 
     useEffect(() => {
         // Initialize Xterm
@@ -40,6 +42,7 @@ export const useXterm = (): TerminalInterface => {
                         inputBufferRef.current = undefined
                         inputDoneCallbackRef.current = undefined
                         term.write('\r\n')
+                        setNumLines((prev) => prev + 1)
                     } else if (data === '\x7f' || data === '\b') {
                         if (inputBufferRef.current.length > 0) {
                             inputBufferRef.current.pop()
@@ -74,6 +77,13 @@ export const useXterm = (): TerminalInterface => {
         }
     }, [])
 
+    useEffect(() => {
+        if (xtermRef.current) {
+            xtermRef.current.resize(80, Math.min(Math.max(numLines, 4), 25))
+        }
+        console.log('numLines:', numLines)
+    }, [numLines])
+
     // set state to reading and wait for input to resolve
     const read = async (): Promise<string> => {
         return new Promise((resolve) => {
@@ -84,10 +94,13 @@ export const useXterm = (): TerminalInterface => {
 
     const write = (msg: string) => {
         xtermRef.current?.write(msg)
+        //count the number of newlines in the message and update the line count
+        setNumLines((prev) => prev + (msg.match(/\n/g) || []).length)
     }
 
     const clear = () => {
         xtermRef.current?.clear()
+        setNumLines(1)
     }
 
     const focus = () => {
