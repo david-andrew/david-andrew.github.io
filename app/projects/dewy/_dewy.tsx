@@ -86,7 +86,7 @@ except Exception as e:
 
 export type DewyDemoProps = {
     dewy_interpreter_source: PyModule[]
-    dewy_examples: FetchedDewySourceExamples
+    dewy_examples?: FetchedDewySourceExamples
 }
 
 const DewyDemo = ({ dewy_interpreter_source, dewy_examples }: DewyDemoProps): JSX.Element => {
@@ -158,42 +158,44 @@ const DewyDemo = ({ dewy_interpreter_source, dewy_examples }: DewyDemoProps): JS
                 {/* Note the terminal element needs to exist from the start, else xterm won't hook in correctly */}
                 <div className="border-2 border-white rounded-md" ref={divRef} />
 
-                <div className="w-full">
-                    <Accordion title="Working Examples">
-                        {/* list of buttons, one for each example working program */}
-                        <div className="flex flex-row flex-wrap gap-2">
-                            {dewy_examples.good_examples.map(({ name, code }, idx) => (
-                                <button
-                                    key={idx}
-                                    className="font-gentona text-2xl px-4 h-[3.5em] whitespace-pre bg-[#232323] hover:bg-[#404040] text-white rounded-md"
-                                    onClick={() => {
-                                        clear()
-                                        setSource(code)
-                                    }}
-                                >
-                                    {name}
-                                </button>
-                            ))}
-                        </div>
-                    </Accordion>
-                    <Accordion title="Broken Examples">
-                        {/* list of buttons, one for each example broken program */}
-                        <div className="flex flex-row flex-wrap gap-2">
-                            {dewy_examples.bad_examples.map(({ name, code }, idx) => (
-                                <button
-                                    key={idx}
-                                    className="font-gentona text-2xl px-4 h-[3.5em] whitespace-pre bg-[#232323] hover:bg-[#404040] text-white rounded-md"
-                                    onClick={() => {
-                                        clear()
-                                        setSource(code)
-                                    }}
-                                >
-                                    {name}
-                                </button>
-                            ))}
-                        </div>
-                    </Accordion>
-                </div>
+                {dewy_examples !== undefined && (
+                    <div className="w-full">
+                        <Accordion title="Working Examples">
+                            {/* list of buttons, one for each example working program */}
+                            <div className="flex flex-row flex-wrap gap-2">
+                                {dewy_examples.good_examples.map(({ name, code }, idx) => (
+                                    <button
+                                        key={idx}
+                                        className="font-gentona text-2xl px-4 h-[3.5em] whitespace-pre bg-[#232323] hover:bg-[#404040] text-white rounded-md"
+                                        onClick={() => {
+                                            clear()
+                                            setSource(code)
+                                        }}
+                                    >
+                                        {name}
+                                    </button>
+                                ))}
+                            </div>
+                        </Accordion>
+                        <Accordion title="Broken Examples">
+                            {/* list of buttons, one for each example broken program */}
+                            <div className="flex flex-row flex-wrap gap-2">
+                                {dewy_examples.bad_examples.map(({ name, code }, idx) => (
+                                    <button
+                                        key={idx}
+                                        className="font-gentona text-2xl px-4 h-[3.5em] whitespace-pre bg-[#232323] hover:bg-[#404040] text-white rounded-md"
+                                        onClick={() => {
+                                            clear()
+                                            setSource(code)
+                                        }}
+                                    >
+                                        {name}
+                                    </button>
+                                ))}
+                            </div>
+                        </Accordion>
+                    </div>
+                )}
 
                 {/* loading spinner over whole element while not ready */}
                 {!ready && (
