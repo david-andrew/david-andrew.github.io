@@ -8,7 +8,6 @@ import { useSearchParams } from 'next/navigation'
 const Page = async (): Promise<JSX.Element> => {
     const dewy_interpreter_source = await fetch_dewy_interpreter_source()
 
-    // check url parameter for initial code to give to demo
     return (
         <div className="w-screen h-screen absolute top-0 left-0 z-50 bg-black overflow-y-scroll">
             {<Content dewy_interpreter_source={dewy_interpreter_source} />}
@@ -17,6 +16,7 @@ const Page = async (): Promise<JSX.Element> => {
 }
 
 const Content = ({ dewy_interpreter_source }: { dewy_interpreter_source: PyModule[] }): JSX.Element => {
+    // check url parameter for initial code to give to demo
     const searchParams = useSearchParams()
     const src = searchParams.get('src') || 'printl"Hello, World!"'
     const containerRef = useRef<HTMLDivElement>(null)
