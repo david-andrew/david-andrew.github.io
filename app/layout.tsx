@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Navbar } from '@/app/(components)/navbar'
 import { ColorPicker } from '@/app/(components)/color'
-import { GithubTimestampsProvider, ProjectsContextProvider, GithubTimestampsFetcher } from '@/app/projects/context'
+import { GithubTimestampsProvider, ProjectsContextProvider } from '@/app/projects/context'
 import { getProjects } from '@/app/projects/fetch'
 import { twMerge } from 'tailwind-merge'
 
@@ -27,7 +27,6 @@ const RootLayout = async ({ children }: { children: React.ReactNode }): Promise<
                     <Navbar />
                     <div style={{ height: 'calc(100vh - var(--navbar-height))' }} className="overflow-x-hidden">
                         <GithubTimestampsProvider>
-                            <GithubTimestampsFetcher projects={projects} />
                             <ProjectsContextProvider>{children}</ProjectsContextProvider>
                         </GithubTimestampsProvider>
                     </div>
