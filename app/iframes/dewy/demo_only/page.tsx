@@ -1,12 +1,24 @@
 'use client'
 import { useRef, useEffect } from 'react'
+import { PyModule } from '@/app/(hooks)/pyodide'
+import { DewyDemo } from '@/app/projects/dewy/dewy'
+import { fetch_dewy_interpreter_source } from '@/app/projects/dewy/fetch_dewy'
 import { useSearchParams } from 'next/navigation'
-import { DewyCodeBlock } from '../code_block'
 
-const Page = (): JSX.Element => {
+const Page = async (): Promise<JSX.Element> => {
+    const dewy_interpreter_source = await fetch_dewy_interpreter_source()
+
+    return (
+        <div className="w-screen h-screen absolute top-0 left-0 z-50 bg-black overflow-y-scroll">
+            {<Content dewy_interpreter_source={dewy_interpreter_source} />}
+        </div>
+    )
+}
+
+const Content = ({ dewy_interpreter_source }: { dewy_interpreter_source: PyModule[] }): JSX.Element => {
     // check url parameter for initial code to give to demo
     const searchParams = useSearchParams()
-    const src = searchParams.get('src') || "printl'Hello, World!'"
+    const src = searchParams.get('src') || 'printl"Hello, World!"'
     const id = searchParams.get('id') || 'DewyIframe'
     const containerRef = useRef<HTMLDivElement>(null)
 
@@ -27,11 +39,9 @@ const Page = (): JSX.Element => {
     }, [])
 
     return (
-        <div className="w-screen h-screen absolute top-0 left-0 z-50 bg-black overflow-y-hidden">
-            {/* -my-6 to counteract the margin from the code block. */}
-            {/* TODO: make the codeblock not include my-6 */}
-            <div ref={containerRef} className="-my-6">
-                <DewyCodeBlock src={src} />
+        <div ref={containerRef}>
+            <div className="p-2">
+                <DewyDemo dewy_interpreter_source={dewy_interpreter_source} initial_code={src} />
             </div>
         </div>
     )
