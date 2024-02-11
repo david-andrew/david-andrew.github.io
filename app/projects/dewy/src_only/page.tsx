@@ -6,9 +6,8 @@ import { DewyCodeBlock } from '../code_block'
 const Page = (): JSX.Element => {
     // check url parameter for initial code to give to demo
     const searchParams = useSearchParams()
-    const src =
-        searchParams.get('src') || //"printl'Hello, World!'"
-        'printl"Hello, World!"\nprintl"Welcome to Dewy!"\nprintl"Type your code here and press the run button to see it run."'
+    const src = searchParams.get('src') || "printl'Hello, World!'"
+    const id = searchParams.get('id') || 'DewyIframe'
     const containerRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
@@ -16,7 +15,7 @@ const Page = (): JSX.Element => {
             for (let entry of entries) {
                 // Post message to parent with size
                 const { width, height } = entry.contentRect
-                window.parent.postMessage({ width, height }, '*') //anywhere is welcome to iframe and receive the message
+                window.parent.postMessage({ width, height, id }, '*') //anywhere is welcome to iframe and receive the message
             }
         })
 
