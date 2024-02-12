@@ -30,8 +30,8 @@ const Page = (): JSX.Element => {
         <div className="w-screen h-screen absolute top-0 left-0 z-50 bg-black overflow-y-hidden">
             {/* -my-6 to counteract the margin from the code block. */}
             {/* TODO: make the codeblock not include my-6 */}
-            <div ref={containerRef} className="-my-6">
-                <DewyCodeBlock src={src} />
+            <div ref={containerRef}>
+                <DewyCodeBlock src={src} className="my-0 text-lg md:text-lg" />
             </div>
         </div>
     )
