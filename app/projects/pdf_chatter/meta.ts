@@ -1,10 +1,10 @@
 import { ProjectMeta } from '../types'
-import logo from '@/app/(images)/logo.png' //TODO: probably use openai logo
+import pypi_logo from '@/app/(images)/icons/pypi_logo.svg' //TODO: probably use openai logo
 
 export const meta: ProjectMeta = {
     title: 'PDF Chatter',
-    imgSrc: logo,
+    imgSrc: pypi_logo,
     summary: 'LLM powered Q&A over extracted PDF text',
     github: 'pdf-chatter',
-    tags: ['Python', 'Optical Character Recognition (OCR)', 'Large Language Models (LLMs)'],
+    tags: ['Python', 'Optical Character Recognition (OCR)', 'Large Language Models (LLMs)', 'Nougat-OCR', 'GPT-4'],
 }

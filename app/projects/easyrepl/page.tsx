@@ -27,8 +27,19 @@ while True:
             </P>
             <P>
                 So I created a super simple library, <Link href="https://pypi.org/project/easyrepl">easyrepl</Link>,
-                that allows you to quickly throw together a REPL through a flexible API.
+                that allows you to quickly throw together a REPL through a flexible API. It really is just providing a
+                nice interface around the <Code code="readline" /> module, but It&apos;s been a great quality of life
+                improvement for me. Feel free to check it out!
             </P>
+            <H3>Getting Started</H3>
+            <P>Install the package from PyPI:</P>
+            <CodeBlock
+                language="bash"
+                code={`\
+pip install easyrepl
+`}
+            />
+            <P>Then you can use it in your python code like so:</P>
             <CodeBlock
                 language="python"
                 code={`\
@@ -39,10 +50,6 @@ for user_input in REPL():
     print(response)
 `}
             />
-            <P>
-                It really is just providing a nice interface around the <Code code="readline" /> module, but It&apos;s
-                been a great quality of life improvement for me. Feel free to check it out!
-            </P>
             <H3>Links</H3>
             <IconBulletList>
                 <IconBullet icon="pypi logo">
