@@ -1,7 +1,6 @@
 import { Link, H3, P } from '@/app/(components)/ui'
 import { IconBullet, IconBulletList } from '@/app/(components)/icon_bullet'
-import { CodeBlock, Code } from '@/app/(components)/syntax'
-// import { Collage } from '@/app/(components)/collage'
+import { CodeBlock } from '@/app/(components)/syntax'
 import Image from 'next/image'
 import pdf_chatter_demo from '@/app/(images)/pdf_chatter/pdf-chatter-demo.gif'
 

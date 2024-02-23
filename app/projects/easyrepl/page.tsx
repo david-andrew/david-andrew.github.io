@@ -22,8 +22,8 @@ while True:
                 However this actually lacks a lot of the conveniences and functionality of more full fledged REPLs. For
                 example, you cannot move the cursor, use the up/down arrows to navigate history, use common keyboard
                 shortcuts like ctrl-l to clear the screen, etc. Python itself does actually support rich input with
-                support these in the <Code code="cmd" /> and <Code code="readline" /> modules, but it's not quite as
-                plug and play as I&apos;d have liked.
+                support these in the <Code code="cmd" /> and <Code code="readline" /> modules, but it&apos;s not quite
+                as plug and play as I&apos;d have liked.
             </P>
             <P>
                 So I created a super simple library, <Link href="https://pypi.org/project/easyrepl">easyrepl</Link>,
