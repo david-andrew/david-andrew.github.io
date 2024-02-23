@@ -22,6 +22,7 @@ import jhu_shield from '@/app/(images)/icons/jhu_shield.png'
 import idt_starburst from '@/app/(images)/icons/idt_starburst.png'
 import jataware_logo from '@/app/(images)/icons/jataware_logo.png'
 import trello from '@/app/(images)/icons/trello.svg'
+import pypi_logo from '@/app/(images)/icons/pypi_logo.svg'
 import { twMerge } from 'tailwind-merge'
 
 //TODO: is there a way to specify the type of the object keys?
@@ -50,6 +51,7 @@ const icon_map = {
     'idt starburst': idt_starburst,
     'jataware logo': jataware_logo,
     trello,
+    'pypi logo': pypi_logo,
 } as const
 type Icon = keyof typeof icon_map
 
