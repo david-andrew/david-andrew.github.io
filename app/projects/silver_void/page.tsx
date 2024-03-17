@@ -33,9 +33,9 @@ const Page = async (): Promise<JSX.Element> => {
                 All assets except the milky way image (public domain here:{' '}
                 <Link href="https://commons.wikimedia.org/wiki/File:ESO_-_Milky_Way.jpg">ESO - Mikly Way</Link>) were
                 made by me. Sound effects are pot and pan recordings layered/edited in audacity, and the soundtrack is
-                piano improv recorded with my phone. There's not much art to speak of, as ships, bullets, and explosions
-                are all just simple polygons combined into slightly more complex shapes. The game itself was made in the
-                Godot game engine
+                piano improv recorded with my phone. There&apos;s not much art to speak of, as ships, bullets, and
+                explosions are all just simple polygons combined into slightly more complex shapes. The game itself was
+                made in the Godot game engine
             </P>
             <H3>Cut Features</H3>
             <P>
