@@ -10,6 +10,7 @@ const recommendedOrder: string[] = [
     'dewy_old',
     'website',
     'so_voice',
+    'silver_void',
     'pdf_chatter',
     'terminal_ray_tracer',
     'easyrepl',
