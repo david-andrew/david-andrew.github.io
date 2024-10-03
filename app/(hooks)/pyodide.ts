@@ -89,45 +89,80 @@ export type PyModule = {
 }
 
 // python for loading modules from strings in pyodide
+// properly handles module path imports (e.g. from ..mod import func)
 const module_loader_py = `
-import importlib.abc
-import importlib.machinery
+from importlib.abc import Loader, MetaPathFinder
+from importlib.machinery import ModuleSpec
 import sys
+from types import ModuleType
 
 # Simulated file contents
-file_contents: dict[str,str] = {}
+source_map: dict[str, str] = {}
 
 # Register a file
-def register_file(name, code):
-    file_contents[name] = code
-
-# Custom module loader
-class StringLoader(importlib.abc.Loader):
-    def __init__(self, name, code):
-        self.name = name
-        self.code = code
-
-    def get_source(self, fullname):
-        return self.code
-
-    def get_filename(self, fullname):
-        return '<string_loader: {}>'.format(fullname)
-
-    def is_package(self, fullname):
-        return False
-
-    def exec_module(self, module):
-        exec(compile(self.get_source(module.__name__), self.get_filename(module.__name__), 'exec'), module.__dict__)
+def register_file(name: str, code: str):
+    source_map[name] = code
 
 # Custom module finder
-class StringFinder(importlib.abc.MetaPathFinder):
-    def find_spec(self, fullname, path, target=None):
-        if fullname in file_contents:
-            return importlib.machinery.ModuleSpec(fullname, StringLoader(fullname, file_contents[fullname]), is_package=False)
+class StringFinder(MetaPathFinder):
+    def find_spec(self, fullname: str, path, target=None):
+        spec = self._find_py_file_spec(fullname)
+        if spec is not None:
+            return spec
+
+        spec = self._find_package_init_spec(fullname)
+        if spec is not None:
+            return spec
+
         return None
 
-# Install the custom finder
-sys.meta_path.insert(0, StringFinder())
+    def _find_py_file_spec(self, fullname: str):
+        route = f"{fullname.replace('.', '/')}.py"
+        source = source_map.get(route)
+        if source is None:
+            return None
+        loader = StringLoader(fullname, source, route)
+        modspec = ModuleSpec(fullname, loader, origin=route)
+        return modspec #ModuleSpec(fullname, loader, origin=route)
+
+    def _find_package_init_spec(self, fullname: str):
+        route = f"{fullname.replace('.', '/')}/__init__.py"
+        source = source_map.get(route)
+        if source is None:
+            return None
+        loader = StringLoader(fullname, source, route)
+        spec = ModuleSpec(fullname, loader, origin=route, is_package=True)
+        return spec
+
+# Custom module loader
+class StringLoader(Loader):
+    def __init__(self, fullname, source_code, route):
+        self.fullname = fullname
+        self.source_code = source_code
+        self.route = route
+
+    def create_module(self, spec):
+        module = sys.modules.get(spec.name)
+        if module is None:
+            module = ModuleType(spec.name)
+            sys.modules[spec.name] = module
+        return module
+
+    def get_source(self, name):
+        return self.source_code
+
+    def get_filename(self, fullname):
+        return f'<string_loader: {fullname}>'
+
+    def is_package(self, fullname):
+        return self.route.endswith('__init__.py')
+
+    def exec_module(self, module):
+        module.__file__ = self.route
+        exec(compile(self.source_code, self.route, 'exec'), module.__dict__)
+        return module
+
+sys.meta_path.append(StringFinder())
 `
 
 type UsePythonProps = {

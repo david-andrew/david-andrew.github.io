@@ -30,41 +30,33 @@ import { twMerge } from 'tailwind-merge'
 const createDewyRunner = (src: string) => {
     const escaped_source = src.replace(/\\/g, '\\\\').replace(/'/g, "\\'")
     return `
-# turn off any printing while importing stuff
-import sys
-import io
-_stdout = sys.stdout
-_stderr = sys.stderr
-sys.stdout = io.StringIO()
-sys.stderr = io.StringIO()
-
-# silent imports
-from tokenizer import tokenize
-from postok import post_process
-from parser import top_level_parse
-from dewy import Scope, Builtin
+from src.tokenizer import tokenize
+from src.postok import post_process
+from src.postparse import post_parse
+from src.parser import top_level_parse
+from src.backend.python import top_level_evaluate, BuiltinFuncs
 from functools import partial
 
-# turn printing back on
-sys.stdout = _stdout
-sys.stderr = _stderr
 
+#TBD if this is needed, causes an error, and seems to work without...
 # update the builtin print function to flush after every use
-Builtin.funcs = {
-    'print': partial(print, end='', flush=True),
-    'printl': partial(print, flush=True),
-    'readl': input
-}
+#BuiltinFuncs.print = partial(print, end='', flush=True)
+#BuiltinFuncs.printl = partial(print, flush=True),
+#BuiltinFuncs.readl = input
+
 
 # define main entry point
 def dewy(src:str):
+    # tokenize and parse
     tokens = tokenize(src)
     post_process(tokens)
+    ast = top_level_parse(tokens)
+    ast = post_parse(ast)
 
-    root = Scope.default()
-    ast = top_level_parse(tokens, root)
-    res = ast.eval(root)
-    # if res: print(res) #causes weird behavior in most cases
+    # run the program
+    res = top_level_evaluate(ast)
+    # if res is not void: print(res) #causes weird behavior in most cases
+
 
 # replace pdb.set_trace with a message and exit(1)
 import pdb
@@ -73,13 +65,16 @@ def pdb_set_trace():
     exit(1)
 pdb.set_trace = pdb_set_trace
 
+
 # run dewy source code
 try:
     dewy('''${escaped_source}'''); sys.stdout.flush()
 except IOError:
     print('ERROR: failed to read input. exiting.', flush=True)
 except Exception as e:
-    print(f'ERROR: {e}')
+    import traceback
+    stack = traceback.format_exc()
+    print(f'ERROR: {e}\\n{stack}', flush=True)
     print('ERROR: encountered problem while running. exiting.', flush=True)
 `
 }

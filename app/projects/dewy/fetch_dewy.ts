@@ -2,11 +2,28 @@ import { isDefined, try_or_undefined } from '@/app/utils'
 import { PyModule } from '@/app/(hooks)/pyodide'
 
 export const fetch_dewy_interpreter_source = async (): Promise<PyModule[]> => {
-    const root = 'https://raw.githubusercontent.com/david-andrew/dewy-lang/master/src/compiler/'
-    const files = ['backend', 'dewy', 'frontend', 'parser', 'postok', 'tokenizer', 'utils']
-
+    const root = 'https://raw.githubusercontent.com/david-andrew/dewy-lang/master/'
+    const files = [
+        'src/__init__.py',
+        'src/frontend.py',
+        'src/parser.py',
+        'src/postok.py',
+        'src/postparse.py',
+        'src/syntax.py',
+        'src/tokenizer.py',
+        'src/utils.py',
+        'src/backend/__init__.py',
+        'src/backend/arm.py',
+        'src/backend/c.py',
+        'src/backend/llvm.py',
+        'src/backend/python.py',
+        'src/backend/qbe.py',
+        'src/backend/riscv.py',
+        'src/backend/shell.py',
+        'src/backend/x86_64.py',
+    ]
     const contents = files.map(async (file) => {
-        const url = `${root}${file}.py`
+        const url = `${root}${file}`
         const response = await fetch(url)
         return {
             name: file,
