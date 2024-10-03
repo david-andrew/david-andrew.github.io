@@ -109,9 +109,8 @@ lines = ['FizzBuzz' '1' '2' 'Fizz' '4' 'Buzz' 'Fizz' '7' '8' 'Fizz' 'Buzz' '11' 
             <P>
                 Currently I&apos;m working through a simple interpreter for the language (powering the demo above).
                 I&apos;ve got a tokenizer, a basic interpreter backend, and handling of a few basic types of syntaxes
-                via the parser. But the majority of the syntax is still unimplemented, hence the long list of
-                &quot;Broken Examples&quot;. Thus the current focus is finishing parser support for the rest of the
-                syntax features.
+                via the parser. But much of the syntax is still unimplemented, hence the long list of &quot;Broken
+                Examples&quot;. Thus the current focus is finishing parser support for the rest of the syntax features.
             </P>
             <P>
                 Previously I had been doing a lot of development on bleeding edge{' '}
@@ -121,10 +120,16 @@ lines = ['FizzBuzz' '1' '2' 'Fizz' '4' 'Buzz' 'Fizz' '7' '8' 'Fizz' 'Buzz' '11' 
                 future when the language is further along.
             </P>
             <P>
-                After the parser is complete, the next steps will be working on compiling to{' '}
-                <Link href="https://en.wikipedia.org/wiki/LLVM#Intermediate_representation">LLVM IR</Link> (and possibly
-                to C as a portable alternative), as well as starting to build out the standard library, and then
-                bootstrapping the compiler to be able to compile itself.
+                After the parser is complete, the next steps will be working on compiling to different backends.
+                Initially I was planning to target{' '}
+                <Link href="https://en.wikipedia.org/wiki/LLVM#Intermediate_representation">LLVM</Link> as the primary
+                backend, however I recently discovered <Link href="https://c9x.me/compile/">QBE</Link>, which is a much
+                lighter alternative that supposedly gets 70% of the performance of LLVM for only 10% of the code. Longer
+                term I&apos;m interested in supporting a wider range of backend targets, like C, a universal{' '}
+                <Link href="https://en.wikipedia.org/wiki/Polyglot_(computing)">polyglot</Link> targeting many scripting
+                languages simultaneously (sh, bash, windows cmd, powershell, javascript, python, etc.), and eventually
+                LLVM too. At some point I&apos;ll start building out the standard library, and bootstrapping the
+                compiler to be able to compile itself&mdash;at which point we might be ready for a version 0 release!
             </P>
             <H3>About the Demo</H3>
             <P>
@@ -150,9 +155,9 @@ lines = ['FizzBuzz' '1' '2' 'Fizz' '4' 'Buzz' 'Fizz' '7' '8' 'Fizz' 'Buzz' '11' 
                 fetch (at website build time) the source code directly from{' '}
                 <Link href="https://github.com/david-andrew/dewy-lang/tree/master/src/compiler">github</Link>. I then
                 abuse the python import lib to allow loading &quot;modules&quot; directly from strings, and then pass
-                all of the dewy source in as modules. Then I have a little wrapper function for the entry point which
-                receives the source code string, and runs the program. The entry point can then be called from the
-                browser via a javascript wrapper function.
+                all of the dewy source in as string modules. Then I have a little wrapper function for the entry point
+                which receives a dewy source code string, and runs the program. The entry point can then be called from
+                the browser via a javascript wrapper function.
             </P>
             <P>
                 The final piece of the puzzle is the text entry, and terminal emulator. For text input, I&apos;m using
