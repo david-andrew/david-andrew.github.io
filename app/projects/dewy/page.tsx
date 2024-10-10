@@ -88,7 +88,7 @@ word_grid = [multiples.values word_bools]\`.map(
 raw_lines = word_grid\`.map(line_words => line_words.join(''))
 
 lines = [raw_lines range]\`.map(
-    (raw_line, i) => if raw_line.length =? 0 '{i}' else raw_line
+    (raw_line i) => if raw_line.length =? 0 '{i}' else raw_line
 )
 
 lines.join('\\n') |> printl`}
