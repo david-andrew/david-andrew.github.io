@@ -261,9 +261,9 @@ const operators = new Set(
         '=>',
         '->',
         '<->',
-        '<-',
         '.',
         ':',
+        ':>',
 
         // shift_operators
         '<<',
