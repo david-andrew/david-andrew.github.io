@@ -77,12 +77,12 @@ loop i in [0..100)
                 src={`multiples = [3 -> 'Fizz' 5 -> 'Buzz' /{7 -> 'Bazz' 11 -> 'Bar'}/]
 range = [0..100)
 
-//indexing at [, ..] and [..,] adds singleton dimensions
-word_bools = range[, ..] .% multiples.keys[..,] .=? 0
+//indexing at [new ..] and [.. new] adds singleton dimensions wherever there is new
+word_bools = range[new ..] .% multiples.keys[.. new] .=? 0
 
 // \` means transpose, which behaves like python's zip()
 word_grid = [multiples.values word_bools]\`.map(
-[word bools] => bools.map(b => if b word else '')
+    [word bools] => bools.map(b => if b word else '')
 )
 
 raw_lines = word_grid\`.map(line_words => line_words.join(''))
@@ -91,7 +91,7 @@ lines = [raw_lines range]\`.map(
     (raw_line i) => if raw_line.length =? 0 '{i}' else raw_line
 )
 
-lines.join('\\n') |> printl`}
+lines.join'\\n' |> printl`}
             />
             <P>For clarity, the variables at each step look like so:</P>
             <DewyCodeBlock
