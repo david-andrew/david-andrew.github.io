@@ -5,6 +5,7 @@ export const fetch_dewy_interpreter_source = async (): Promise<PyModule[]> => {
     const root = 'https://raw.githubusercontent.com/david-andrew/dewy-lang/master/'
     const files = [
         'src/__init__.py',
+        'src/dtypes.py',
         'src/frontend.py',
         'src/parser.py',
         'src/postok.py',
@@ -17,7 +18,8 @@ export const fetch_dewy_interpreter_source = async (): Promise<PyModule[]> => {
         'src/backend/c.py',
         'src/backend/llvm.py',
         'src/backend/python.py',
-        'src/backend/qbe.py',
+        'src/backend/qbe/__init__.py',
+        'src/backend/qbe/qbe.py',
         'src/backend/riscv.py',
         'src/backend/shell.py',
         'src/backend/x86_64.py',
