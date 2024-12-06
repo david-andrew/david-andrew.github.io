@@ -8,6 +8,9 @@ To use this converter, SVG must be a single path:
 6. save as plain SVG
 7. run this script on the SVG file
 
+Note you may need to play with the paths a bit as sometimes they get a bit messed up during msdf conversion (e.g. envelope shape in wrong spot, etc)
+TBD exact fix, but perhaps just delete and paste back in the problematic chunk
+
 
 business card dimensions are
 - 3.5 x 2 inches
