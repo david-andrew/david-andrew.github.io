@@ -109,6 +109,12 @@ def read_meta(font: FontName):
         for char in meta['chars']
     ]
 
+
+    # DEBUG add a slight y-offset to 'a' and 'n' to make them look better
+    for char in chars:
+        if char.ch in ['a', 'n', 'v', 'r', 'c', 'o', 'm', 'e', 'w']:
+            char.yoffset += 1.0
+
     # create a map from each letter to the corresponding Char/Kerning object
     char_map = {char.ch: char for char in chars}
     kerning_map = {(kerning.first, kerning.second): kerning for kerning in kernings}

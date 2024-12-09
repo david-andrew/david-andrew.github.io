@@ -6,7 +6,8 @@ const Page = () => {
     return (
         <>
             <div className="flex flex-col h-full">
-                <div className="w-full flex flex-row items-center justify-center flex-grow">
+                <iframe src="https://david-andrew.github.io/BusinessCard/" className="flex-grow" />
+                {/* <div className="w-full flex flex-row items-center justify-center flex-grow">
                     <div className="outline outline-white py-16 px-10 md:py-20 md:px-10 lg:py-36 lg:px-20">
                         <IconBulletList>
                             <IconBullet responsive icon="envelope">
@@ -25,8 +26,8 @@ const Page = () => {
                             </IconBullet>
                         </IconBulletList>
                     </div>
-                </div>
-                <NavbarDummy />
+                </div> */}
+                {/* <NavbarDummy /> */}
             </div>
         </>
     )
