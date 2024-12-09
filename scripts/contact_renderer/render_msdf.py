@@ -237,8 +237,8 @@ if __name__ == '__main__':
     
     
     # save the 2 canvases
-    Image.fromarray(layer0).save('layer0.png')
-    Image.fromarray(layer1).save('layer1.png')
+    Image.fromarray(invert_canvas(layer0)).save('layer0.png')
+    Image.fromarray(invert_canvas(layer1)).save('layer1.png')
     
     # plt.imshow(np.concatenate((layer0, layer1), axis=0)); plt.show()
     plt.imshow(layer0); plt.show()
