@@ -4,6 +4,7 @@ from typing import Literal, TypedDict, cast
 from json import loads
 
 import numpy as np
+from scipy.ndimage import shift
 from matplotlib import pyplot as plt
 from PIL import Image
 
@@ -131,33 +132,78 @@ def load_from_atlas(font: FontName, ch: str) -> np.ndarray:
     return patch
 
 
-def render_sentence(font: FontName, text: str) -> np.ndarray:
+def invert_canvas(canvas: np.ndarray) -> np.ndarray:
+    canvas = canvas.copy()
+    canvas[:, :, :3] = 255 - canvas[:, :, :3]
+    return canvas
+
+def render_sentence(font: FontName, text: str, canvas_size: tuple[int, int], origin: tuple[int, int], name:str) -> np.ndarray:
+    y0, x0 = origin
     charset, char_map, kerning_map, meta = read_meta(font)
     atlas = load_atlas(font)
-    patches = []
-    x = 0
-    y = 0
+    patches: list[np.ndarray] = []
+    chars: list[Char] = []
+
     for ch in text:
         char = char_map[ch]
+        
         patch = atlas[char.y:char.y+char.height, char.x:char.x+char.width]
+        pre_y_pad = np.ceil(max(0, -char.yoffset)).astype(int)
+        post_y_pad = np.ceil(max(0, char.yoffset)).astype(int)
+        pre_x_pad = np.ceil(max(0, -char.xoffset)).astype(int)
+        post_x_pad = np.ceil(max(0, char.xoffset)).astype(int)
+        patch = np.pad(patch, ((pre_y_pad, post_y_pad), (pre_x_pad, post_x_pad), (0, 0)), mode='constant', constant_values=255)
+        # y-offset shift
+        patch = shift(patch, (char.yoffset, char.xoffset, 0), mode='nearest')
+
+        # kerning shift if any
+        if len(chars) > 0 and (kerning := kerning_map.get((chars[-1].ch, ch))):
+            patch = shift(patch, (0, kerning.value, 0), mode='nearest')
+
         patches.append(patch)
-        x += char.xadvance
-        y += char.yoffset
+        chars.append(char)
     
     height = max(patch.shape[0] for patch in patches)
     width = sum(patch.shape[1] for patch in patches)
-    canvas = np.zeros((height, width, 4), dtype=np.uint8)
+    canvas0 = np.ones((*canvas_size, 4), dtype=np.uint8) * 255
+    canvas1 = np.ones((*canvas_size, 4), dtype=np.uint8) * 255
     x = 0
-    for patch in patches:
-        canvas[:patch.shape[0], x:x+patch.shape[1], :] = patch
-        x += patch.shape[1]
+    for i, (patch, char) in enumerate(zip(patches, chars)):
+        # plt.imshow(s); plt.show()
+        
+        canvas = canvas0 if i % 2 == 0 else canvas1
+        canvas[y0:y0+patch.shape[0], x0+x:x0+x+patch.shape[1], :] = patch
+        x += int(char.xadvance)
 
-    plt.imshow(canvas); plt.show()
+    # plt.imshow(np.concatenate((canvas0, canvas1), axis=0)); plt.show()
 
-    return canvas
+
+    # return canvas
+
+    # padd so that both are square
+    # max_dim = max(canvas0.shape[0], canvas0.shape[1], canvas1.shape[0], canvas1.shape[1])
+    # c0y_pad = max_dim - canvas0.shape[0]
+    # c0x_pad = max_dim - canvas0.shape[1]
+    # c1y_pad = max_dim - canvas1.shape[0]
+    # c1x_pad = max_dim - canvas1.shape[1]
+    # canvas0 = np.pad(canvas0, ((c0y_pad//2, c0y_pad - c0y_pad//2), (c0x_pad//2, c0x_pad - c0x_pad//2), (0, 0)), mode='constant', constant_values=0)
+    # canvas1 = np.pad(canvas1, ((c1y_pad//2, c1y_pad - c1y_pad//2), (c1x_pad//2, c1x_pad - c1x_pad//2), (0, 0)), mode='constant', constant_values=0)
+
+    # save the 2 canvases
+    # Image.fromarray(canvas0).save(f'{name}_0.png')
+    # Image.fromarray(canvas1).save(f'{name}_1.png')
 
 
     # return np.concatenate(patches, axis=1)
+
+    # set any fully transparent/empty sections to white
+    mask0 = np.all(canvas0 == [0, 0, 0, 0], axis=-1)
+    mask1 = np.all(canvas1 == [0, 0, 0, 0], axis=-1)
+    canvas0[mask0] = [255, 255, 255, 255]
+    canvas1[mask1] = [255, 255, 255, 255]
+
+
+    return canvas0, canvas1
 
 
 
@@ -172,8 +218,31 @@ if __name__ == '__main__':
     # load_from_atlas('Quadon', 'y')
     # load_from_atlas('Quadon', '4')
     # load_from_atlas('Quadon', '-')
-    render_sentence('Quadon', 'david.andrew.engineer@gmail.com')
-    render_sentence('Quadon', 'https://www.linkedin.com/in/dewy')
-    pdb.set_trace()
+
+    canvas_size = (585, 1024)
+
+    email0, email1 = render_sentence('Quadon', 'david.andrew.engineer@gmail.com', canvas_size, (230, 220), 'email')
+    linkd0, linkd1 = render_sentence('Quadon', 'https://www.linkedin.com/in/dewy', canvas_size, (333, 220), 'linkedin')
+    
+    # combine the email and linkedin lines to make 2 layers
+    layer0 = np.minimum(email0, linkd0)
+    layer1 = np.minimum(email1, linkd1)
+
+
+    # debug load the icons and see if they're in the right spot
+    icons = Image.open('icons.png')
+    icons = np.array(icons)
+    # plt.imshow(np.minimum(icons,layer0)); plt.show()
+    plt.imshow(np.minimum(np.minimum(icons,layer0), layer1)); plt.show()
+    
+    
+    # save the 2 canvases
+    Image.fromarray(layer0).save('layer0.png')
+    Image.fromarray(layer1).save('layer1.png')
+    
+    # plt.imshow(np.concatenate((layer0, layer1), axis=0)); plt.show()
+    plt.imshow(layer0); plt.show()
+
+    # pdb.set_trace()
     
     # print(meta)
