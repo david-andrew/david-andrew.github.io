@@ -15,12 +15,12 @@ const hex_to_rgb = (hex: string): [number, number, number] => {
 const Page = () => {
     // keep track of/watch for changes of the accent color in document.documentElement.style.getPropertyValue('--accent-color')
     const [accentColor, setAccentColor] = useState<string>()
+    const [iframeReady, setIframeReady] = useState(false)
     const iframeRef = useRef<HTMLIFrameElement>(null)
 
     // watch for changes to the accent color
     useEffect(() => {
         const updateAccentColor = () => {
-            // console.log('updateAccentColor', document.documentElement.style.getPropertyValue('--accent-color'))
             setAccentColor(document.documentElement.style.getPropertyValue('--accent-color'))
         }
         updateAccentColor()
@@ -31,20 +31,30 @@ const Page = () => {
         return () => observer.disconnect()
     }, [])
 
+
+    // set up a listener for READY message from the iframe, in case it takes a moment to start
+    useEffect(() => {
+        const listener = (event: MessageEvent) => {
+            if (event.data.type === 'READY') { setIframeReady(true) }
+        }
+        window.addEventListener('message', listener)
+        return () => window.removeEventListener('message', listener)
+    }, [])
+
     // post the accent color to the iframe
     useEffect(() => {
         if (iframeRef.current?.contentWindow && accentColor) {
             const color = hex_to_rgb(accentColor)
-            console.log('posting color', color)
             iframeRef.current.contentWindow.postMessage({type: 'SET_COLOR', color}, 'https://david-andrew.github.io')
         }
-    }, [accentColor])
+    }, [accentColor, iframeReady])
 
     return (
         <>
             <div className="flex flex-col h-full">
                 <iframe 
                     src="https://david-andrew.github.io/BusinessCard/" 
+                    // src="http://localhost:5173"
                     className="absolute inset-0 w-full h-full"
                     ref={iframeRef}
                  />
