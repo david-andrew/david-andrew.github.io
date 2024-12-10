@@ -34,7 +34,9 @@ const Page = () => {
     // post the accent color to the iframe
     useEffect(() => {
         if (iframeRef.current?.contentWindow && accentColor) {
-            iframeRef.current.contentWindow.postMessage({type: 'SET_COLOR', color: hex_to_rgb(accentColor)}, '*')
+            const color = hex_to_rgb(accentColor)
+            console.log('posting color', color)
+            iframeRef.current.contentWindow.postMessage({type: 'SET_COLOR', color}, 'https://david-andrew.github.io')
         }
     }, [accentColor])
 
