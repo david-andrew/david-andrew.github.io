@@ -5,6 +5,6 @@ export const meta: ProjectMeta = {
     title: 'Silver Void',
     imgSrc: silver_void,
     github: 'SilverVoid',
-    summary: 'Submission for Acerola Jam 0',
+    summary: '3D 6DoF space combat game. Submission for Acerola Jam 0',
     tags: ['Godot', 'GDScript', '3D Game', 'Space Simulator', 'Bullet Hell'],
 }

@@ -11,6 +11,7 @@ const recommendedOrder: string[] = [
     'website',
     'so_voice',
     'silver_void',
+    'dropfold',
     'pdf_chatter',
     'terminal_ray_tracer',
     'easyrepl',
@@ -56,7 +57,7 @@ const Card = ({ imgSrc, title, timestamp, description, tags, onClick }: CardProp
     return (
         <div
             className="
-                flex flex-col md:flex-row items-center md:space-x-6 p-4 
+                flex flex-col md:flex-row items-center md:space-x-6 p-4
                 border-solid border-black hover:border-white border-2
                 cursor-pointer select-none
                 "
