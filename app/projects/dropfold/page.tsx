@@ -6,11 +6,11 @@ const page = (): JSX.Element => {
     return (
         <>
             <P>
-                For the 2024 GMTK Game Jam, I decided I wanted to make a game about folding paper. The idea was that you
-                would start with a piece of paper and make up to 10 folds to create a paper airplane which would then be
-                thrown. There was then going to be a little physics simulation of the flight, and players would be
-                scored on how well theirs flew. Suffice to say, I was overscoped for the 48 hour jam, as we are all wont
-                to do.
+                For the <Link href="https://itch.io/jam/gmtk-2024">2024 GMTK Game Jam</Link>, I decided I wanted to make
+                a game about folding paper. The idea was that you would start with a piece of paper and make up to 10
+                folds to create a paper airplane which would then be thrown. There was then going to be a little physics
+                simulation of the flight, and players would be scored on how well theirs flew. Suffice to say, I was
+                overscoped for the 48 hour jam, as we are all wont to do.
             </P>
             <P>
                 It&apos;s written in pure typescript with <Link href="https://vite.dev/">Vite</Link> for the bundler and{' '}
