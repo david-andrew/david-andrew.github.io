@@ -20,7 +20,7 @@ const page = (): JSX.Element => {
                 Here&apos;s a demo:
             </P>
             <P>
-                <iframe src="https://david-andrew.github.io/dropfold" className="w-full h-[40em] outline" />
+                <iframe src="https://david-andrew.github.io/dropfold" className="w-full h-[35em] outline" />
             </P>
             <P className="mb-2">
                 This version includes several improvements over the{' '}
@@ -29,6 +29,7 @@ const page = (): JSX.Element => {
             <UL>
                 <li>better click location detection (e.g. can drag off the edge)</li>
                 <li>shader textures for the paper</li>
+                <li>support for touch screens</li>
                 <li>lots of backend cleanup, e.g. initial support for fold obstacles</li>
             </UL>
             <P>

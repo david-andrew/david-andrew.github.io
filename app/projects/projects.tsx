@@ -7,7 +7,6 @@ import { Dropdown } from '@/app/(components)/dropdown'
 
 const recommendedOrder: string[] = [
     'dewy',
-    'dewy_old',
     'website',
     'so_voice',
     'silver_void',
@@ -16,6 +15,7 @@ const recommendedOrder: string[] = [
     'terminal_ray_tracer',
     'easyrepl',
     'timelapse',
+    'dewy_old',
     'nand2tetris',
     'musical_dl',
     'ensemble_peabody',

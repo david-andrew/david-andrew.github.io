@@ -19,6 +19,11 @@ const Page = (): JSX.Element => {
                     <Link href="https://emscripten.org/">Emscripten</Link>. Used to host the{' '}
                     <Link href="/projects/dewy_old">SRNGLR parser demo</Link> written in C
                 </li>
+                <li>
+                    <Link href="https://threejs.org/">THREE.js</Link>. Used to run the{' '}
+                    <Link href="/contact">Contact Page</Link> and{' '}
+                    <Link href="/projects/dropfold">Paper Folding Simulator</Link> demo
+                </li>
             </UL>
             <H3>Source Code</H3>
             <IconBulletList>
