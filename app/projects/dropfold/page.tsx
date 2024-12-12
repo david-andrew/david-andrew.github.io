@@ -43,7 +43,10 @@ const page = (): JSX.Element => {
                 more complex than just a single one. The main culprit is dealing figuring out which paper sections
                 (facets) participate in the fold, and any obstacles that prevent a fold from passing some point. The
                 number of different cases to handle has thus far been out of my reach.{' '}
-                <b>If you are familiar with computational origami and how it might apply here, please contact me!</b>
+                <b>
+                    If you are familiar with computational origami and how it might apply here, please contact me!
+                    I&apos;d love to pick your brain!
+                </b>
             </P>
             <H3>Links</H3>
             <IconBulletList>
