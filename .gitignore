@@ -36,3 +36,9 @@ next-env.d.ts
 
 # log of svg files processed by fit icon script
 scripts/processed*.txt
+
+
+# direnv and nix shell
+.envrc
+shell.nix
+.direnv/
