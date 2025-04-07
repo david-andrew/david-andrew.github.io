@@ -3,15 +3,16 @@ import { PyModule } from '@/app/(hooks)/pyodide'
 
 export const fetch_dewy_interpreter_source = async (): Promise<PyModule[]> => {
     const root = 'https://raw.githubusercontent.com/david-andrew/dewy-lang/master/'
+    // TODO: make this just grab all src/*.py files in the repo!
     const files = [
         'src/__init__.py',
-        'src/dtypes.py',
         'src/frontend.py',
         'src/parser.py',
         'src/postok.py',
         'src/postparse.py',
         'src/syntax.py',
         'src/tokenizer.py',
+        'src/typecheck.py',
         'src/utils.py',
         'src/backend/__init__.py',
         'src/backend/arm.py',
