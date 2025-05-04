@@ -97,6 +97,7 @@ export const parse_lang = <T,>(code: string, state: T, get_matchers: (state: T) 
 
     while (index < code.length) {
         const matchers = get_matchers(state)
+        // TODO: this should actually look for the longest match out of all matchers rather than just take the first one
         let token = matchers.reduce<Token | Token[] | undefined>(
             (token, matcher) => (token ? token : matcher(code.slice(index), state)),
             undefined,

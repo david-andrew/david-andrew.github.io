@@ -47,7 +47,7 @@ const match_keyword = (s: string): Token | undefined => {
 const digits = new Set('0123456789')
 const alpha = new Set('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
 const greek = new Set('ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩαβγδεζηθικλμνξοπρςστυφχψω')
-const misc = new Set('_!$&°')
+const misc = new Set('_?!$&°')
 
 // start character is alpha, greek, or misc
 const start_characters = new Set([...alpha, ...greek, ...misc])
@@ -251,6 +251,7 @@ const operators = new Set(
         '??',
         'else',
         '=',
+        "::",
         ':=',
         'as',
         'in',
@@ -264,6 +265,7 @@ const operators = new Set(
         '.',
         ':',
         ':>',
+        'of',
 
         // shift_operators
         '<<',
