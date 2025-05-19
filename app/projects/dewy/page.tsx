@@ -56,7 +56,7 @@ const Page = async (): Promise<JSX.Element> => {
             </UL>
             <P>An example of the common FizzBuzz program implemented in Dewy might look like this:</P>
             <DewyCodeBlock
-                src={`multiples = [3 -> 'Fizz' 5 -> 'Buzz' /{7 -> 'Bazz' 11 -> 'Bar'}/]
+                src={`multiples = [3 -> 'Fizz' 5 -> 'Buzz' %{7 -> 'Bazz' 11 -> 'Bar'}%]
 loop i in [0..100)
 {
     printed_words = false
