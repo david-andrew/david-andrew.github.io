@@ -215,6 +215,11 @@ const operators = new Set(
         '-',
         '*',
         '/',
+        '//',
+        'tdiv',
+        'rdiv',
+        'cdiv',
+        'fdiv',
         'not',
         '@',
         '...',
@@ -229,7 +234,13 @@ const operators = new Set(
         '-',
         '*',
         '/',
-        '%',
+        '//',
+        'tdiv',
+        'rdiv',
+        'cdiv',
+        'fdiv',
+        'mod',
+        'rem',
         '^',
         '=?',
         '>?',
@@ -305,7 +316,7 @@ const match_whitespace = (s: string): Token | undefined => {
 
 //#line_comment = '/\/' '\n'~* / '\n'~;                       // single line comment
 const match_line_comment = (s: string): Token | undefined => {
-    if (s.startsWith('//')) {
+    if (s.startsWith('%')) {
         let i = 2
         while (i < s.length && s[i] != '\n') {
             i++
@@ -320,7 +331,7 @@ const match_block_comment = (s: string, state: TokenizerState): Token | undefine
     //start the block comment
     const context = get_context(state)
     if (context.type === 'block') {
-        if (s.startsWith('/{')) {
+        if (s.startsWith('%{')) {
             state.context_stack.push({ type: 'block_comment' })
             return { type: 'comment', start: 0, end: 2 }
         } else {
@@ -334,12 +345,12 @@ const match_block_comment = (s: string, state: TokenizerState): Token | undefine
     //interior and end of the block comment
     let i = 0
     while (state.context_stack.at(-1)?.type === 'block_comment' && i < s.length) {
-        if (s.startsWith('/{', i)) {
+        if (s.startsWith('%{', i)) {
             state.context_stack.push({ type: 'block_comment' })
             i += 2
             continue
         }
-        if (s.startsWith('}/', i)) {
+        if (s.startsWith('}%', i)) {
             state.context_stack.pop()
             i += 2
             continue

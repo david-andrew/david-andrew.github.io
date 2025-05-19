@@ -62,7 +62,7 @@ loop i in [0..100)
     printed_words = false
     loop [multiple word] in multiples 
     {
-        if i % multiple =? 0 
+        if i mod multiple =? 0 
         { 
             print(multiple)
             printed_words = true
@@ -74,13 +74,13 @@ loop i in [0..100)
             />
             <P>Or a more functional style implementation might look like this:</P>
             <DewyCodeBlock
-                src={`multiples = [3 -> 'Fizz' 5 -> 'Buzz' /{7 -> 'Bazz' 11 -> 'Bar'}/]
+                src={`multiples = [3 -> 'Fizz' 5 -> 'Buzz' %{7 -> 'Bazz' 11 -> 'Bar'}%]
 range = [0..100)
 
-//indexing at [new ..] and [.. new] adds singleton dimensions wherever there is new
-word_bools = range[new ..] .% multiples.keys[.. new] .=? 0
+% indexing at [new ..] and [.. new] adds singleton dimensions wherever there is new
+word_bools = range[new ..] .mod multiples.keys[.. new] .=? 0
 
-// \` means transpose, which behaves like python's zip()
+% \` means transpose, which behaves like python's zip()
 word_grid = [multiples.values word_bools]\`.map(
     [word bools] => bools.map(b => if b word else '')
 )
