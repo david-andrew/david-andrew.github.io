@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
 import { writeMessage, Channel, makeServiceWorkerChannel } from 'sync-message'
-import { PyodideWorker, InputRequester } from '@/app/projects/dewy/pyodideWorker'
+import { PyodideWorker, InputRequester } from '@/app/projects/dewy_2025/pyodideWorker'
 import * as Comlink from 'comlink'
 import { Remote } from 'comlink'
 
@@ -51,7 +51,7 @@ export const usePyodide = ({
     useEffect(() => {
         if (channel) {
             ;(async () => {
-                const worker = new Worker(new URL('@/app/projects/dewy/pyodideWorker.ts', import.meta.url))
+                const worker = new Worker(new URL('@/app/projects/dewy_2025/pyodideWorker.ts', import.meta.url))
                 const workerProxy = Comlink.wrap<PyodideWorker>(worker)
 
                 // set required values and callbacks

@@ -1,7 +1,7 @@
 'use client'
 import { useRef, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { DewyCodeBlock } from '@/app/projects/dewy/code_block'
+import { DewyCodeBlock } from '@/app/projects/dewy_2025/code_block'
 
 const Page = (): JSX.Element => {
     // check url parameter for initial code to give to demo

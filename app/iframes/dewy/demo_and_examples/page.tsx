@@ -1,5 +1,5 @@
-import { DewyDemo } from '@/app/projects/dewy/dewy'
-import { fetch_dewy_interpreter_source, fetch_dewy_examples } from '@/app/projects/dewy/fetch_dewy'
+import { DewyDemo } from '@/app/projects/dewy_2025/dewy'
+import { fetch_dewy_interpreter_source, fetch_dewy_examples } from '@/app/projects/dewy_2025/fetch_dewy'
 
 const Page = async (): Promise<JSX.Element> => {
     const dewy_interpreter_source = await fetch_dewy_interpreter_source()

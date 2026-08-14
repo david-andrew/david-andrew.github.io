@@ -3,7 +3,7 @@ import { IconBullet, IconBulletList } from '@/app/(components)/icon_bullet'
 import { DewyCodeBlock } from './code_block'
 import { DewyDemo } from './dewy'
 
-import { fetch_dewy_interpreter_source, fetch_dewy_examples } from './fetch_dewy'
+import { DEWY_COMMIT, fetch_dewy_interpreter_source, fetch_dewy_examples } from './fetch_dewy'
 
 const Page = async (): Promise<JSX.Element> => {
     const dewy_interpreter_source = await fetch_dewy_interpreter_source()
@@ -64,12 +64,12 @@ loop i in [0..100)
     {
         if i mod multiple =? 0 
         { 
-            print(multiple)
+            print(word)
             printed_words = true
         }
     }
     if not printed_words print(i)
-    printl()
+    printl
 }`}
             />
             <P>Or a more functional style implementation might look like this:</P>
@@ -107,10 +107,12 @@ lines = ['FizzBuzz' '1' '2' 'Fizz' '4' 'Buzz' 'Fizz' '7' '8' 'Fizz' 'Buzz' '11' 
             />
             <H3>Current Status</H3>
             <P>
-                Currently I&apos;m working through a simple interpreter for the language (powering the demo above).
-                I&apos;ve got a tokenizer, a basic interpreter backend, and handling of a few basic types of syntaxes
-                via the parser. But much of the syntax is still unimplemented, hence the long list of &quot;Broken
-                Examples&quot;. Thus the current focus is finishing parser support for the rest of the syntax features.
+                Most recent work on this project is detailed in <Link href="/projects/dewy">projects/dewy</Link>.
+                The demo above is a frozen snapshot of the Python interpreter from{' '}
+                <Link href={`https://github.com/david-andrew/dewy-lang/tree/${DEWY_COMMIT}`}>this dewy-lang commit</Link>,
+                capturing progress up through april 2025. That interpreter has a
+                tokenizer, a basic backend, and handling of a few basic types of syntaxes via the parser. Much of the
+                syntax is still unimplemented, hence the long list of &quot;Broken Examples&quot;.
             </P>
             <P>
                 Previously I had been doing a lot of development on bleeding edge{' '}
@@ -152,12 +154,12 @@ lines = ['FizzBuzz' '1' '2' 'Fizz' '4' 'Buzz' 'Fizz' '7' '8' 'Fizz' 'Buzz' '11' 
             </P>
             <P>
                 Now that python is handled, the next aspect is getting the Dewy interpreter itself to run. For this, I
-                fetch (at website build time) the source code directly from{' '}
-                <Link href="https://github.com/david-andrew/dewy-lang/tree/master/src/compiler">github</Link>. I then
-                abuse the python import lib to allow loading &quot;modules&quot; directly from strings, and then pass
-                all of the dewy source in as string modules. Then I have a little wrapper function for the entry point
-                which receives a dewy source code string, and runs the program. The entry point can then be called from
-                the browser via a javascript wrapper function.
+                fetch (at website build time) the interpreter source from a{' '}
+                <Link href={`https://github.com/david-andrew/dewy-lang/tree/${DEWY_COMMIT}/src`}>pinned commit</Link>{' '}
+                of the dewy-lang repo. I then abuse the python import lib to allow loading &quot;modules&quot; directly
+                from strings, and then pass all of the dewy source in as string modules. Then I have a little wrapper
+                function for the entry point which receives a dewy source code string, and runs the program. The entry
+                point can then be called from the browser via a javascript wrapper function.
             </P>
             <P>
                 The final piece of the puzzle is the text entry, and terminal emulator. For text input, I&apos;m using

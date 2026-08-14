@@ -13,7 +13,7 @@ const Page = (): JSX.Element => {
             <UL>
                 <li>
                     <Link href="https://pyodide.org/en/stable/">Pyodide</Link>. Used to host the{' '}
-                    <Link href="/projects/dewy">Dewy compiler demo</Link> written python
+                    <Link href="/projects/dewy_2025">Dewy compiler demo</Link> written python
                 </li>
                 <li>
                     <Link href="https://emscripten.org/">Emscripten</Link>. Used to host the{' '}

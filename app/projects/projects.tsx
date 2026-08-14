@@ -6,7 +6,6 @@ import { useGithubTimestampsContext, useProjectsContext } from './context'
 import { Dropdown } from '@/app/(components)/dropdown'
 
 const recommendedOrder: string[] = [
-    'dewy',
     'website',
     'so_voice',
     'silver_void',
@@ -15,6 +14,7 @@ const recommendedOrder: string[] = [
     'terminal_ray_tracer',
     'easyrepl',
     'timelapse',
+    'dewy_2025',
     'dewy_old',
     'nand2tetris',
     'musical_dl',

@@ -1,12 +1,17 @@
 import { isDefined, try_or_undefined } from '@/app/utils'
 import { PyModule } from '@/app/(hooks)/pyodide'
 
+// Last dewy-lang commit where the Python interpreter and examples still share
+// the same syntax. Later master rewrote examples/docs (# comments, $ hashtags)
+// without updating this interpreter; the compiler rewrite lives in src/cleanparse.
+export const DEWY_COMMIT = '36f31d9c2ac46d67e8a865ab78adedc9fe52607b'
+const DEWY_ROOT = `https://raw.githubusercontent.com/david-andrew/dewy-lang/${DEWY_COMMIT}/`
+
 export const fetch_dewy_interpreter_source = async (): Promise<PyModule[]> => {
-    const root = 'https://raw.githubusercontent.com/david-andrew/dewy-lang/master/'
-    // TODO: make this just grab all src/*.py files in the repo!
     const files = [
         'src/__init__.py',
         'src/frontend.py',
+        'src/myargparse.py',
         'src/parser.py',
         'src/postok.py',
         'src/postparse.py',
@@ -26,8 +31,11 @@ export const fetch_dewy_interpreter_source = async (): Promise<PyModule[]> => {
         'src/backend/x86_64.py',
     ]
     const contents = files.map(async (file) => {
-        const url = `${root}${file}`
+        const url = `${DEWY_ROOT}${file}`
         const response = await fetch(url)
+        if (!response.ok) {
+            throw new Error(`Failed to fetch Dewy source ${file} (${response.status})`)
+        }
         return {
             name: file,
             code: await response.text(),
@@ -48,17 +56,16 @@ export type FetchedDewySourceExamples = {
 }
 
 export const fetch_dewy_examples = async (): Promise<FetchedDewySourceExamples> => {
-    const root = 'https://raw.githubusercontent.com/david-andrew/dewy-lang/master/'
-    const readme_url = `${root}README.md`
+    const readme_url = `${DEWY_ROOT}README.md`
     const readme_response = await fetch(readme_url)
+    if (!readme_response.ok) {
+        throw new Error(`Failed to fetch Dewy README (${readme_response.status})`)
+    }
     const readme = await readme_response.text()
 
     // find the lines that are part of the table of examples
     const readme_lines = readme.split('\n')
-    const start = readme_lines.findIndex((line) =>
-        // TODO: make this a more robust check
-        line.includes('| Filename                                                        | status |'),
-    )
+    const start = readme_lines.findIndex((line) => line.includes('| Filename') && line.includes('| status |'))
     const end = readme_lines.findIndex((line, i) => i > start && !line.startsWith('|'))
     const example_lines = readme_lines.slice(start, end)
 
@@ -96,17 +103,19 @@ export const fetch_dewy_examples = async (): Promise<FetchedDewySourceExamples> 
             path: link.split(']')[1].split('(')[1].split(')')[0],
         }
     })
-    const fetchContents = async ({ name, path }: FileAndPath) => {
-        const url = `${root}${path}`
+    const fetchContents = async ({ name, path }: FileAndPath): Promise<DewySource | undefined> => {
+        const url = `${DEWY_ROOT}${path}`
         const response = await fetch(url)
+        if (!response.ok) return undefined
         return { name, code: await response.text() }
     }
 
-    const good_examples = good_rows.map(convertMarkdownLink).filter(isDefined).map(fetchContents)
-    const bad_examples = bad_rows.map(convertMarkdownLink).filter(isDefined).map(fetchContents)
+    const good_examples = (
+        await Promise.all(good_rows.map(convertMarkdownLink).filter(isDefined).map(fetchContents))
+    ).filter(isDefined)
+    const bad_examples = (
+        await Promise.all(bad_rows.map(convertMarkdownLink).filter(isDefined).map(fetchContents))
+    ).filter(isDefined)
 
-    return {
-        good_examples: await Promise.all(good_examples),
-        bad_examples: await Promise.all(bad_examples),
-    }
+    return { good_examples, bad_examples }
 }

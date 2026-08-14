@@ -1,8 +1,8 @@
 'use client'
 import { useRef, useEffect } from 'react'
 import { PyModule } from '@/app/(hooks)/pyodide'
-import { DewyDemo } from '@/app/projects/dewy/dewy'
-import { fetch_dewy_interpreter_source } from '@/app/projects/dewy/fetch_dewy'
+import { DewyDemo } from '@/app/projects/dewy_2025/dewy'
+import { fetch_dewy_interpreter_source } from '@/app/projects/dewy_2025/fetch_dewy'
 import { useSearchParams } from 'next/navigation'
 
 const Page = async (): Promise<JSX.Element> => {

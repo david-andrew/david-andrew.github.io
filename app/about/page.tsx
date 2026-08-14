@@ -150,7 +150,7 @@ const Page = () => {
             </P>
             <P>
                 In my spare time, I&apos;ve worked on a number of interesting side projects, including a{' '}
-                <Link href="/projects/dewy">custom programming language</Link>, a{' '}
+                <Link href="/projects/dewy_2025">custom programming language</Link>, a{' '}
                 <Link href="/projects/so_voice">deep learning music synthesizer</Link>,{' '}
                 <Link href="/projects/escort_mission">several</Link> <Link href="/projects/mehve">video</Link>{' '}
                 <Link href="/projects/ziggy_v">games</Link>, as well as a few other{' '}
