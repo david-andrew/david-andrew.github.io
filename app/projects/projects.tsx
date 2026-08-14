@@ -6,14 +6,22 @@ import { useGithubTimestampsContext, useProjectsContext } from './context'
 import { Dropdown } from '@/app/(components)/dropdown'
 
 const recommendedOrder: string[] = [
+    'dewy',
+    'udewy',
+    'paper_golf',
+    'toki',
     'website',
     'so_voice',
     'silver_void',
+    'fractal_tones',
     'dropfold',
+    'turtles',
+    'epochlore',
     'pdf_chatter',
     'terminal_ray_tracer',
     'easyrepl',
     'timelapse',
+    'prettyerr',
     'dewy_2025',
     'dewy_old',
     'nand2tetris',

@@ -1,6 +1,6 @@
 'use client'
 import { createContext, useContext, useState, useEffect } from 'react'
-import { SortOption, sortOptionsList, FetchedProjectMeta } from './types'
+import { SortOption, sortOptionsList, FetchedProjectMeta, resolveGithubRef } from './types'
 import { convertToDate, isDefined } from '@/app/utils'
 
 // global state for keeping track of the sort option for projects
@@ -57,7 +57,10 @@ export const useFetchGithubTimestamps = (projects: FetchedProjectMeta[]) => {
                     }
                     return [project.route, date] as [string, Date]
                 }
-                const res = await fetch(`https://api.github.com/repos/david-andrew/${project.github}/commits`)
+                const { owner, repo, path } = resolveGithubRef(project.github)
+                const params = new URLSearchParams({ per_page: '1' })
+                if (path) params.set('path', path)
+                const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/commits?${params}`)
                 if (!res.ok) {
                     console.error('bad fetch', project, res)
                     return undefined

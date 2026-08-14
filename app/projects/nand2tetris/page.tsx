@@ -17,7 +17,7 @@ const Page = async (): Promise<JSX.Element> => {
             </P>
             <P>
                 I&apos;ve always had a passing interest in computer architecture (especially since it&apos;s closely
-                related to <Link href="/projects/dewy_2025">my passion of programming language design</Link>), and I finally
+                related to <Link href="/projects/dewy">my passion of programming language design</Link>), and I finally
                 got around to completing the course, which was a ton of fun! This page is mainly to link to my solutions
                 for each of the course&apos;s projects.
             </P>

@@ -281,7 +281,7 @@ const Page = (): JSX.Element => {
             <H3>About</H3>
             <P>
                 This is mostly old work experimenting with different parser-generator technologies for{' '}
-                <Link href="/projects/dewy_2025">dewy</Link>. The above demo is a C implementation of a Scannerless
+                <Link href="/projects/dewy">dewy</Link>. The above demo is a C implementation of a Scannerless
                 Right-Nulled Generalized Left-Right (SRNGLR) parser-generator. You can specify a grammar using my
                 context-free grammar syntax, and provide an input string which will be parsed according to that grammar.
                 You can then view parse forest and other various outputs from the parser in the results table. There are

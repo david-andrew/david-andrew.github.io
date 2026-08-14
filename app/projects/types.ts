@@ -1,5 +1,19 @@
 import { StaticImageData } from 'next/image'
 
+export type GithubSpec = {
+    repo: string
+    owner?: string
+    path?: string
+}
+export type GithubRef = string | GithubSpec
+
+export const resolveGithubRef = (github: GithubRef): { owner: string; repo: string; path?: string } => {
+    if (typeof github === 'string') {
+        return { owner: 'david-andrew', repo: github }
+    }
+    return { owner: github.owner ?? 'david-andrew', repo: github.repo, path: github.path }
+}
+
 export type ProjectMeta = {
     title: string
     imgSrc: StaticImageData //image to display on summary card
@@ -7,7 +21,7 @@ export type ProjectMeta = {
     tags?: string[] //notable things related to this project
     externalLink?: string
 } & //either a github repo to pull timestamp from or a raw timestamp string
-({ github: string; lastUpdated?: never } | { lastUpdated: string; github?: never })
+    ({ github: GithubRef; lastUpdated?: never } | { lastUpdated: string; github?: never })
 
 export type FetchedProjectMeta = ProjectMeta & { route: string } //, timestamp: Date|undefined };
 
