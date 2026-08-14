@@ -19,14 +19,15 @@ const page = (): JSX.Element => {
             <P>
                 <iframe
                     src="https://david-andrew.github.io/fractal_tones/"
-                    className="w-full h-[35em] outline"
+                    className="w-full h-[90em] outline overflow-hidden"
                     title="Fractal Tones"
+                    scrolling="no"
                 />
             </P>
             <H3>Links</H3>
             <IconBulletList>
                 <IconBullet icon="chrome">
-                    <Link href="https://david-andrew.github.io/fractal_tones/">Live Demo</Link>
+                    <Link href="https://david-andrew.github.io/fractal_tones/">Demo Page</Link>
                 </IconBullet>
                 <IconBullet icon="github">
                     <Link href="https://github.com/david-andrew/fractal_tones">Github Repo</Link>
