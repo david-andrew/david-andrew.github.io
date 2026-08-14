@@ -8,7 +8,7 @@ const page = (): JSX.Element => {
             <P>
                 While working on <Link href="/projects/dewy">Dewy</Link>, I wanted to include a pretty error reporting
                 system, so I ended up building a pretty robust error reporting library reminiscent of Nushell&apos;s
-                error reporting. It turned out quite well, so I broke it out into it&apos;s own package:
+                error reporting. It turned out quite well, so I broke it out into it&apos;s own package:{' '}
                 <Link href="https://pypi.org/project/prettyerr">prettyerr</Link>
             </P>
             <H3>Getting Started</H3>
